@@ -6,6 +6,8 @@
 #Include Info.ahk
 #Include Mouse.ahk
 #Include WindowManager.ahk
+#Include Runner.ahk
+#Include Registers.ahk
 
 SetKeyDelay -1
 CoordMode "Mouse", "Screen"
@@ -43,11 +45,11 @@ exitVim() {
 	StateBulb[4].Destroy() ; Special
 	StateBulb[5].Destroy() ; Move windows
 	StateBulb[6].Destroy() ; Mouse Movement
-	 ; StateBulb[4].Destroy() ; Delete
-	 ; StateBulb[5].Destroy() ; Change
-	 ; StateBulb[6].Destroy() ; Yank
-	 ; StateBulb[7].Destroy() ; Window
-	 ; StateBulb[8].Destroy() ; Fmode
+	; StateBulb[4].Destroy() ; Delete
+	; StateBulb[5].Destroy() ; Change
+	; StateBulb[6].Destroy() ; Yank
+	; StateBulb[7].Destroy() ; Window
+	; StateBulb[8].Destroy() ; Fmode
 	Exit
 }
 
@@ -96,6 +98,31 @@ gotoCMode() {
 	Send "{Right}"
 }
 
+gotoNormalnoInfo() {
+	StateBulb[6].Destroy() ; Mouse Movement
+	StateBulb[5].Destroy() ; Move windows
+	StateBulb[4].Destroy()
+	if visualMode == true {
+		StateBulb[3].Destroy()
+	}
+	if insertMode == true {
+		StateBulb[2].Destroy()
+	}
+	global normalMode := true
+	global visualMode := false
+	global insertMode := false
+	global visualLineMode := false
+	global dMode := false
+	global cMode := false
+	global fMode := false
+	global yMode := false
+	global windowMode := false
+	global WindowManagerMode := false
+	global mouseManagerMode := false
+	StateBulb[1].Create()
+	Send "{Left}"
+	Send "+{Right}"
+}
 gotoNormal() {
 	StateBulb[6].Destroy() ; Mouse Movement
 	StateBulb[5].Destroy() ; Move windows
@@ -161,8 +188,28 @@ gotoInsert() {
 	Infos.DestroyAll()
 	Infos("Insert Mode", 1500)
 }
+gotoInsertnoInfo() {
+	StateBulb[6].Destroy() ; Mouse Movement
+	StateBulb[5].Destroy() ; Move windows
+	StateBulb[4].Destroy()
+	if visualMode == true {
+		StateBulb[3].Destroy()
+	}
+	global normalMode := false
+	global visualMode := false
+	global insertMode := true
+	global visualLineMode := false
+	global dMode := false
+	global fMode := false
+	global yMode := false
+	global windowMode := false
+	global cMode := false
+	global WindowManagerMode := false
+	global mouseManagerMode := false
+	StateBulb[2].Create()
+}
 
-fMotion(){
+fMotion() {
 	StateBulb[4].Create()
 	global normalMode := false
 	ih := InputHook("C")
@@ -180,7 +227,7 @@ fMotion(){
 	ClipWait 1
 	Haystack := A_Clipboard
 	A_Clipboard := oldclip
-	FoundPos := InStr(Haystack, var )
+	FoundPos := InStr(Haystack, var)
 	Send "{Home}"
 	loop FoundPos {
 		Send "{Right}"
@@ -190,7 +237,7 @@ fMotion(){
 	global normalMode := true
 }
 
-delChanYanfMotion(){
+delChanYanfMotion() {
 	StateBulb[4].Create()
 	ih := InputHook("C")
 	ih.KeyOpt("{All}", "ESI") ;End Keys & Suppress
@@ -207,13 +254,13 @@ delChanYanfMotion(){
 	ClipWait 1
 	Haystack := A_Clipboard
 	A_Clipboard := oldclip
-	FoundPos := InStr(Haystack, var )
+	FoundPos := InStr(Haystack, var)
 	Send "{Home}"
 	loop FoundPos {
 		Send "+{Right}"
 	}
 }
-delChanYantMotion(){
+delChanYantMotion() {
 	StateBulb[4].Create()
 	ih := InputHook("C")
 	ih.KeyOpt("{All}", "ESI") ;End Keys & Suppress
@@ -230,7 +277,7 @@ delChanYantMotion(){
 	ClipWait 1
 	Haystack := A_Clipboard
 	A_Clipboard := oldclip
-	FoundPos := InStr(Haystack, var )
+	FoundPos := InStr(Haystack, var)
 	Send "{Home}"
 	loop FoundPos {
 		Send "+{Right}"
@@ -240,8 +287,8 @@ delChanYantMotion(){
 
 $CapsLock::Control
 +!Control::CapsLock
-+#r::Reload
-+#e::Edit
++#r:: Reload
++#e:: Edit
 
 
 ; Define the hotkey to enable the keybindings
@@ -253,9 +300,9 @@ $CapsLock::Control
 ^]:: {
 	gotoNormal()
 	gotoMouseMode()
-	Mouse.SmallMove  := 20
+	Mouse.SmallMove := 20
 	Mouse.MediumMove := 70
-	Mouse.BigMove    := 200
+	Mouse.BigMove := 200
 	exit
 }
 
@@ -269,54 +316,54 @@ HotIf "fMode = 1"
 #HotIf windowMode = 1
 HotIf "windowMode = 1"
 
--::Return
-`;::Return
-=::Return
-,::Return
-.::Return
-/::Return
-'::Return
-[::Return
-]::Return
-\::Return
-a::Return
-b::Return
-c::Return
-d::Return
-e::Return
-f::Return
-g::Return
-h::Return
-i::Return
-j::Return
-k::Return
-l::Return
-m::Return
-n::Return
-o::Return
-p::Return
-r::Return
-s::Return
-u::Return
-v::Return
-w::Return
-x::Return
-y::Return
-z::Return
-0::Return
-1::Return
-2::Return
-3::Return
-4::Return
-5::Return
-6::Return
-7::Return
-8::Return
-9::Return
+-:: Return
+`;:: Return
+=:: Return
+,:: Return
+.:: Return
+/:: Return
+':: Return
+[:: Return
+]:: Return
+\:: Return
+a:: Return
+b:: Return
+c:: Return
+d:: Return
+e:: Return
+f:: Return
+g:: Return
+h:: Return
+i:: Return
+j:: Return
+k:: Return
+l:: Return
+m:: Return
+n:: Return
+o:: Return
+p:: Return
+r:: Return
+s:: Return
+u:: Return
+v:: Return
+w:: Return
+x:: Return
+y:: Return
+z:: Return
+0:: Return
+1:: Return
+2:: Return
+3:: Return
+4:: Return
+5:: Return
+6:: Return
+7:: Return
+8:: Return
+9:: Return
 
 
-^w::Return
-^e::Return
+^w:: Return
+^e:: Return
 
 !Esc:: {
 	exitVim()
@@ -327,25 +374,25 @@ Esc:: {
 	Exit
 }
 
-*q::{
+*q:: {
 	Send "^w"
 	gotoNormal()
 	Exit
 }
 
-t::{
+t:: {
 	Send "^t"
 	gotoNormal()
 	Exit
 }
 
-+t::{
++t:: {
 	Send "^+t"
 	gotoNormal()
 	Exit
 }
 
-#HotIf 
+#HotIf
 
 ; yank mode
 #HotIf yMode = 1
@@ -361,44 +408,44 @@ Esc:: {
 	Exit
 }
 
--::Return
-`;::Return
-=::Return
-,::Return
-.::Return
-/::Return
-'::Return
-[::Return
-]::Return
-\::Return
-a::Return
-c::Return
-d::Return
-g::Return
-h::Return
-j::Return
-k::Return
-l::Return
-m::Return
-n::Return
-o::Return
-p::Return
-q::Return
-r::Return
-s::Return
-u::Return
-v::Return
-x::Return
-z::Return
-1::Return
-2::Return
-3::Return
-4::Return
-5::Return
-6::Return
-7::Return
-8::Return
-9::Return
+-:: Return
+`;:: Return
+=:: Return
+,:: Return
+.:: Return
+/:: Return
+':: Return
+[:: Return
+]:: Return
+\:: Return
+a:: Return
+c:: Return
+d:: Return
+g:: Return
+h:: Return
+j:: Return
+k:: Return
+l:: Return
+m:: Return
+n:: Return
+o:: Return
+p:: Return
+q:: Return
+r:: Return
+s:: Return
+u:: Return
+v:: Return
+x:: Return
+z:: Return
+1:: Return
+2:: Return
+3:: Return
+4:: Return
+5:: Return
+6:: Return
+7:: Return
+8:: Return
+9:: Return
 
 f:: {
 	delChanYanfMotion()
@@ -473,44 +520,44 @@ Esc:: {
 	Exit
 }
 
--::Return
-`;::Return
-=::Return
-,::Return
-.::Return
-/::Return
-'::Return
-[::Return
-]::Return
-\::Return
-a::Return
-d::Return
-g::Return
-h::Return
-j::Return
-k::Return
-l::Return
-m::Return
-n::Return
-o::Return
-p::Return
-q::Return
-r::Return
-s::Return
-u::Return
-v::Return
-x::Return
-y::Return
-z::Return
-1::Return
-2::Return
-3::Return
-4::Return
-5::Return
-6::Return
-7::Return
-8::Return
-9::Return
+-:: Return
+`;:: Return
+=:: Return
+,:: Return
+.:: Return
+/:: Return
+':: Return
+[:: Return
+]:: Return
+\:: Return
+a:: Return
+d:: Return
+g:: Return
+h:: Return
+j:: Return
+k:: Return
+l:: Return
+m:: Return
+n:: Return
+o:: Return
+p:: Return
+q:: Return
+r:: Return
+s:: Return
+u:: Return
+v:: Return
+x:: Return
+y:: Return
+z:: Return
+1:: Return
+2:: Return
+3:: Return
+4:: Return
+5:: Return
+6:: Return
+7:: Return
+8:: Return
+9:: Return
 
 f:: {
 	delChanYanfMotion()
@@ -580,44 +627,44 @@ w:: {
 HotIf "dMode = 1"
 
 
--::Return
-=::Return
-,::Return
-`;::Return
-.::Return
-/::Return
-'::Return
-[::Return
-]::Return
-\::Return
-a::Return
-c::Return
-g::Return
-h::Return
-j::Return
-k::Return
-l::Return
-m::Return
-n::Return
-o::Return
-p::Return
-q::Return
-r::Return
-s::Return
-u::Return
-v::Return
-x::Return
-y::Return
-z::Return
-1::Return
-2::Return
-3::Return
-4::Return
-5::Return
-6::Return
-7::Return
-8::Return
-9::Return
+-:: Return
+=:: Return
+,:: Return
+`;:: Return
+.:: Return
+/:: Return
+':: Return
+[:: Return
+]:: Return
+\:: Return
+a:: Return
+c:: Return
+g:: Return
+h:: Return
+j:: Return
+k:: Return
+l:: Return
+m:: Return
+n:: Return
+o:: Return
+p:: Return
+q:: Return
+r:: Return
+s:: Return
+u:: Return
+v:: Return
+x:: Return
+y:: Return
+z:: Return
+1:: Return
+2:: Return
+3:: Return
+4:: Return
+5:: Return
+6:: Return
+7:: Return
+8:: Return
+9:: Return
 
 f:: {
 	delChanYanfMotion()
@@ -706,13 +753,13 @@ Esc:: {
 	Exit
 }
 
-^u::{
+^u:: {
 	Send "{Home}+{End}"
 	Send "{BS}"
 	Exit
 }
 
-^x::{
+^x:: {
 	Send "+{Home}"
 	Send "{BS}"
 	Exit
@@ -721,7 +768,8 @@ Esc:: {
 ^k:: Send "+{end}{Delete}"
 
 ^w:: {
-	Send "^{bs}"
+	Send "^+{Left}"
+	Send "{bs}"
 	Exit
 }
 
@@ -828,9 +876,14 @@ $!l:: {
 #HotIf normalMode = 1
 HotIf "normalMode = 1"
 
--::Return
-`;::Return
-`::Return
+-:: Return
+`;:: Return
++;:: {
+	gotoInsertnoInfo()
+	Runner.openRunner()
+	gotoNormalnoInfo()
+}
+`:: Return
 +`:: {
 	if visualMode == true {
 		oldclip := A_Clipboard
@@ -877,40 +930,42 @@ HotIf "normalMode = 1"
 	}
 	Exit
 }
-=::Return
-,::Return
-.::Return
-/::Return
-'::Return
-[::Return
-\::Return
-m:: { 
+=:: Return
+,:: Return
+.:: Return
+/:: Return
+':: Return
++':: {
+	Exit
+}
+[:: Return
+\:: Return
+m:: {
 	gotoMwMode()
 	Exit
 }
-n::Return
-q::Return
-r::Return
-s::{
+n:: Return
+q:: Return
+r:: Return
+s:: {
 	Send "{BS}"
 	gotoInsert()
 	Exit
 }
-t::Return
-z::Return
-1::Return
-2::Return
-3::Return
-4::Return
-5::Return
-6::Return
-7::Return
-8::Return
-9::Return
+t:: Return
+z:: Return
+1:: Return
+2:: Return
+3:: Return
+4:: Return
+5:: Return
+6:: Return
+7:: Return
+8:: Return
+9:: Return
 
 
-
-+f::{
++f:: {
 	StateBulb[4].Create()
 	global normalMode := false
 	ih := InputHook("C")
@@ -939,7 +994,7 @@ z::Return
 	StateBulb[4].Destroy()
 }
 
-f::{
+f:: {
 	StateBulb[4].Create()
 	global normalMode := false
 	ih := InputHook("C")
@@ -956,7 +1011,7 @@ f::{
 	Send "{Left}"
 	ClipWait 1
 	Haystack := A_Clipboard
-	FoundPos := InStr(Haystack, var )
+	FoundPos := InStr(Haystack, var)
 	loop FoundPos {
 		Send "{Right}"
 	}
@@ -966,12 +1021,12 @@ f::{
 	StateBulb[4].Destroy()
 }
 
-g::{
+g:: {
 	Send "^{Home}"
 	Exit
 }
 
-+g::{
++g:: {
 	Send "^{End}"
 	Exit
 }
@@ -1373,79 +1428,77 @@ a:: {
 #HotIf
 
 
-
-
 #HotIf WindowManagerMode = 1
 HotIf "WindowManagerMode = 1"
 
-h::WindowManager().MoveLeft(Mouse.MediumMove)
-k::WindowManager().MoveUp(Mouse.MediumMove)
-j::WindowManager().MoveDown(Mouse.MediumMove)
-l::WindowManager().MoveRight(Mouse.MediumMove)
+h:: WindowManager().MoveLeft(Mouse.MediumMove)
+k:: WindowManager().MoveUp(Mouse.MediumMove)
+j:: WindowManager().MoveDown(Mouse.MediumMove)
+l:: WindowManager().MoveRight(Mouse.MediumMove)
 
-+h::WindowManager().MoveLeft(Mouse.SmallMove)
-+k::WindowManager().MoveUp(Mouse.SmallMove)
-+j::WindowManager().MoveDown(Mouse.SmallMove)
-+l::WindowManager().MoveRight(Mouse.SmallMove)
++h:: WindowManager().MoveLeft(Mouse.SmallMove)
++k:: WindowManager().MoveUp(Mouse.SmallMove)
++j:: WindowManager().MoveDown(Mouse.SmallMove)
++l:: WindowManager().MoveRight(Mouse.SmallMove)
 
-^h::WindowManager().MoveLeft(Mouse.BigMove)
-^k::WindowManager().MoveUp(Mouse.BigMove)
-^j::WindowManager().MoveDown(Mouse.BigMove)
-^l::WindowManager().MoveRight(Mouse.BigMove)
+^h:: WindowManager().MoveLeft(Mouse.BigMove)
+^k:: WindowManager().MoveUp(Mouse.BigMove)
+^j:: WindowManager().MoveDown(Mouse.BigMove)
+^l:: WindowManager().MoveRight(Mouse.BigMove)
 
 
-s::WindowManager().DecreaseWidth(Mouse.MediumMove)
-f::WindowManager().IncreaseHeight(Mouse.MediumMove)
-d::WindowManager().DecreaseHeight(Mouse.MediumMove)
-g::WindowManager().IncreaseWidth(Mouse.MediumMove)
+s:: WindowManager().DecreaseWidth(Mouse.MediumMove)
+f:: WindowManager().IncreaseHeight(Mouse.MediumMove)
+d:: WindowManager().DecreaseHeight(Mouse.MediumMove)
+g:: WindowManager().IncreaseWidth(Mouse.MediumMove)
 
-+s::WindowManager().DecreaseWidth(Mouse.SmallMove)
-+f::WindowManager().IncreaseHeight(Mouse.SmallMove)
-+d::WindowManager().DecreaseHeight(Mouse.SmallMove)
-+g::WindowManager().IncreaseWidth(Mouse.SmallMove)
++s:: WindowManager().DecreaseWidth(Mouse.SmallMove)
++f:: WindowManager().IncreaseHeight(Mouse.SmallMove)
++d:: WindowManager().DecreaseHeight(Mouse.SmallMove)
++g:: WindowManager().IncreaseWidth(Mouse.SmallMove)
 
-^s::WindowManager().DecreaseWidth(Mouse.BigMove)
-^f::WindowManager().IncreaseHeight(Mouse.BigMove)
-^d::WindowManager().DecreaseHeight(Mouse.BigMove)
-^g::WindowManager().IncreaseWidth(Mouse.BigMove)
+^s:: WindowManager().DecreaseWidth(Mouse.BigMove)
+^f:: WindowManager().IncreaseHeight(Mouse.BigMove)
+^d:: WindowManager().DecreaseHeight(Mouse.BigMove)
+^g:: WindowManager().IncreaseWidth(Mouse.BigMove)
 
-1::WinMove(0,                     0,,, "A")
-2::WinMove(Mouse.FarLeftX,        0,,, "A")
-3::WinMove(Mouse.HighLeftX,       0,,, "A")
-4::WinMove(Mouse.MiddleLeftX,     0,,, "A")
-5::WinMove(Mouse.LowLeftX,        0,,, "A")
-6::WinMove(Mouse.LessThanMiddleX, 0,,, "A")
-7::WinMove(Mouse.MiddleX,         0,,, "A")
-8::WinMove(Mouse.MoreThanMiddleX, 0,,, "A")
-9::WinMove(Mouse.LowRightX,       0,,, "A")
-0::WinMove(Mouse.MiddleRightX,    0,,, "A")
+1:: WinMove(0, 0, , , "A")
+2:: WinMove(Mouse.FarLeftX, 0, , , "A")
+3:: WinMove(Mouse.HighLeftX, 0, , , "A")
+4:: WinMove(Mouse.MiddleLeftX, 0, , , "A")
+5:: WinMove(Mouse.LowLeftX, 0, , , "A")
+6:: WinMove(Mouse.LessThanMiddleX, 0, , , "A")
+7:: WinMove(Mouse.MiddleX, 0, , , "A")
+8:: WinMove(Mouse.MoreThanMiddleX, 0, , , "A")
+9:: WinMove(Mouse.LowRightX, 0, , , "A")
+0:: WinMove(Mouse.MiddleRightX, 0, , , "A")
 
-+1::WinMove(0,                     Mouse.MiddleY,,, "A")
-+2::WinMove(Mouse.FarLeftX,        Mouse.MiddleY,,, "A")
-+3::WinMove(Mouse.HighLeftX,       Mouse.MiddleY,,, "A")
-+4::WinMove(Mouse.MiddleLeftX,     Mouse.MiddleY,,, "A")
-+5::WinMove(Mouse.LowLeftX,        Mouse.MiddleY,,, "A")
-+6::WinMove(Mouse.LessThanMiddleX, Mouse.MiddleY,,, "A")
-+7::WinMove(Mouse.MiddleX,         Mouse.MiddleY,,, "A")
-+8::WinMove(Mouse.MoreThanMiddleX, Mouse.MiddleY,,, "A")
-+9::WinMove(Mouse.LowRightX,       Mouse.MiddleY,,, "A")
-+0::WinMove(Mouse.MiddleRightX,    Mouse.MiddleY,,, "A")
++1:: WinMove(0, Mouse.MiddleY, , , "A")
++2:: WinMove(Mouse.FarLeftX, Mouse.MiddleY, , , "A")
++3:: WinMove(Mouse.HighLeftX, Mouse.MiddleY, , , "A")
++4:: WinMove(Mouse.MiddleLeftX, Mouse.MiddleY, , , "A")
++5:: WinMove(Mouse.LowLeftX, Mouse.MiddleY, , , "A")
++6:: WinMove(Mouse.LessThanMiddleX, Mouse.MiddleY, , , "A")
++7:: WinMove(Mouse.MiddleX, Mouse.MiddleY, , , "A")
++8:: WinMove(Mouse.MoreThanMiddleX, Mouse.MiddleY, , , "A")
++9:: WinMove(Mouse.LowRightX, Mouse.MiddleY, , , "A")
++0:: WinMove(Mouse.MiddleRightX, Mouse.MiddleY, , , "A")
 
-^1::WinMove(0,                     Mouse.LowY,,, "A")
-^2::WinMove(Mouse.FarLeftX,        Mouse.LowY,,, "A")
-^3::WinMove(Mouse.HighLeftX,       Mouse.LowY,,, "A")
-^4::WinMove(Mouse.MiddleLeftX,     Mouse.LowY,,, "A")
-^5::WinMove(Mouse.LowLeftX,        Mouse.LowY,,, "A")
-^6::WinMove(Mouse.LessThanMiddleX, Mouse.LowY,,, "A")
-^7::WinMove(Mouse.MiddleX,         Mouse.LowY,,, "A")
-^8::WinMove(Mouse.MoreThanMiddleX, Mouse.LowY,,, "A")
-^9::WinMove(Mouse.LowRightX,       Mouse.LowY,,, "A")
-^0::WinMove(Mouse.MiddleRightX,    Mouse.LowY,,, "A")
+^1:: WinMove(0, Mouse.LowY, , , "A")
+^2:: WinMove(Mouse.FarLeftX, Mouse.LowY, , , "A")
+^3:: WinMove(Mouse.HighLeftX, Mouse.LowY, , , "A")
+^4:: WinMove(Mouse.MiddleLeftX, Mouse.LowY, , , "A")
+^5:: WinMove(Mouse.LowLeftX, Mouse.LowY, , , "A")
+^6:: WinMove(Mouse.LessThanMiddleX, Mouse.LowY, , , "A")
+^7:: WinMove(Mouse.MiddleX, Mouse.LowY, , , "A")
+^8:: WinMove(Mouse.MoreThanMiddleX, Mouse.LowY, , , "A")
+^9:: WinMove(Mouse.LowRightX, Mouse.LowY, , , "A")
+^0:: WinMove(Mouse.MiddleRightX, Mouse.LowY, , , "A")
 
-a::WindowManager().SetFullHeight()
-q::WindowManager().SetHalfHeight()
-w::WindowManager().SetHalfWidth()
-e::WindowManager().SetFullWidth()
+a:: WindowManager().SetFullHeight()
+q:: WindowManager().SetHalfHeight()
+w:: WindowManager().SetHalfWidth()
+e:: WindowManager().SetFullWidth()
 
 Esc:: {
 	gotoNormal()
@@ -1457,7 +1510,7 @@ Esc:: {
 }
 
 
-#HotIf 
+#HotIf
 
 #HotIf mouseManagerMode = 1
 HotIf "mouseManagerMode = 1"
@@ -1472,60 +1525,60 @@ i:: {
 
 !l:: Send "!{Right}"
 
-+h::Mouse.MoveLeft(Mouse.MediumMove)
-+k::Mouse.MoveUp(Mouse.MediumMove)
-+j::Mouse.MoveDown(Mouse.MediumMove)
-+l::Mouse.MoveRight(Mouse.MediumMove)
++h:: Mouse.MoveLeft(Mouse.MediumMove)
++k:: Mouse.MoveUp(Mouse.MediumMove)
++j:: Mouse.MoveDown(Mouse.MediumMove)
++l:: Mouse.MoveRight(Mouse.MediumMove)
 
-h::Mouse.MoveLeft(Mouse.SmallMove)
-k::Mouse.MoveUp(Mouse.SmallMove)
-j::Mouse.MoveDown(Mouse.SmallMove)
-l::Mouse.MoveRight(Mouse.SmallMove)
+h:: Mouse.MoveLeft(Mouse.SmallMove)
+k:: Mouse.MoveUp(Mouse.SmallMove)
+j:: Mouse.MoveDown(Mouse.SmallMove)
+l:: Mouse.MoveRight(Mouse.SmallMove)
 
-^h::Mouse.MoveLeft(Mouse.BigMove)
-^k::Mouse.MoveUp(Mouse.BigMove)
-^j::Mouse.MoveDown(Mouse.BigMove)
-^l::Mouse.MoveRight(Mouse.BigMove)
+^h:: Mouse.MoveLeft(Mouse.BigMove)
+^k:: Mouse.MoveUp(Mouse.BigMove)
+^j:: Mouse.MoveDown(Mouse.BigMove)
+^l:: Mouse.MoveRight(Mouse.BigMove)
 
-*y::Click()
-*u::Click("Right")
-*n::Click("Middle")
-#y::Mouse.HoldIfUp("L")
-#u::Mouse.HoldIfUp("R")
-#n::Mouse.HoldIfUp("M")
+*y:: Click()
+*u:: Click("Right")
+*n:: Click("Middle")
+#y:: Mouse.HoldIfUp("L")
+#u:: Mouse.HoldIfUp("R")
+#n:: Mouse.HoldIfUp("M")
 
-1::MouseMove(Mouse.FarLeftX,        Mouse.MiddleY)
-2::MouseMove(Mouse.HighLeftX,       Mouse.MiddleY)
-3::MouseMove(Mouse.MiddleLeftX,     Mouse.MiddleY)
-4::MouseMove(Mouse.LowLeftX,        Mouse.MiddleY)
-5::MouseMove(Mouse.LessThanMiddleX, Mouse.MiddleY)
-6::MouseMove(Mouse.MoreThanMiddleX, Mouse.MiddleY)
-7::MouseMove(Mouse.LowRightX,       Mouse.MiddleY)
-8::MouseMove(Mouse.MiddleRightX,    Mouse.MiddleY)
-9::MouseMove(Mouse.HighRightX,      Mouse.MiddleY)
-0::MouseMove(Mouse.FarRightX,       Mouse.MiddleY)
+1:: MouseMove(Mouse.FarLeftX, Mouse.MiddleY)
+2:: MouseMove(Mouse.HighLeftX, Mouse.MiddleY)
+3:: MouseMove(Mouse.MiddleLeftX, Mouse.MiddleY)
+4:: MouseMove(Mouse.LowLeftX, Mouse.MiddleY)
+5:: MouseMove(Mouse.LessThanMiddleX, Mouse.MiddleY)
+6:: MouseMove(Mouse.MoreThanMiddleX, Mouse.MiddleY)
+7:: MouseMove(Mouse.LowRightX, Mouse.MiddleY)
+8:: MouseMove(Mouse.MiddleRightX, Mouse.MiddleY)
+9:: MouseMove(Mouse.HighRightX, Mouse.MiddleY)
+0:: MouseMove(Mouse.FarRightX, Mouse.MiddleY)
 
-^1::MouseMove(Mouse.FarLeftX,        Mouse.TopY)
-^2::MouseMove(Mouse.HighLeftX,       Mouse.TopY)
-^3::MouseMove(Mouse.MiddleLeftX,     Mouse.TopY)
-^4::MouseMove(Mouse.LowLeftX,        Mouse.TopY)
-^5::MouseMove(Mouse.LessThanMiddleX, Mouse.TopY)
-^6::MouseMove(Mouse.MoreThanMiddleX, Mouse.TopY)
-^7::MouseMove(Mouse.LowRightX,       Mouse.TopY)
-^8::MouseMove(Mouse.MiddleRightX,    Mouse.TopY)
-^9::MouseMove(Mouse.HighRightX,      Mouse.TopY)
-^0::MouseMove(Mouse.FarRightX,       Mouse.TopY)
+^1:: MouseMove(Mouse.FarLeftX, Mouse.TopY)
+^2:: MouseMove(Mouse.HighLeftX, Mouse.TopY)
+^3:: MouseMove(Mouse.MiddleLeftX, Mouse.TopY)
+^4:: MouseMove(Mouse.LowLeftX, Mouse.TopY)
+^5:: MouseMove(Mouse.LessThanMiddleX, Mouse.TopY)
+^6:: MouseMove(Mouse.MoreThanMiddleX, Mouse.TopY)
+^7:: MouseMove(Mouse.LowRightX, Mouse.TopY)
+^8:: MouseMove(Mouse.MiddleRightX, Mouse.TopY)
+^9:: MouseMove(Mouse.HighRightX, Mouse.TopY)
+^0:: MouseMove(Mouse.FarRightX, Mouse.TopY)
 
-+1::MouseMove(Mouse.FarLeftX,        Mouse.BottomY)
-+2::MouseMove(Mouse.HighLeftX,       Mouse.BottomY)
-+3::MouseMove(Mouse.MiddleLeftX,     Mouse.BottomY)
-+4::MouseMove(Mouse.LowLeftX,        Mouse.BottomY)
-+5::MouseMove(Mouse.LessThanMiddleX, Mouse.BottomY)
-+6::MouseMove(Mouse.MoreThanMiddleX, Mouse.BottomY)
-+7::MouseMove(Mouse.LowRightX,       Mouse.BottomY)
-+8::MouseMove(Mouse.MiddleRightX,    Mouse.BottomY)
-+9::MouseMove(Mouse.HighRightX,      Mouse.BottomY)
-+0::MouseMove(Mouse.FarRightX,       Mouse.BottomY)
++1:: MouseMove(Mouse.FarLeftX, Mouse.BottomY)
++2:: MouseMove(Mouse.HighLeftX, Mouse.BottomY)
++3:: MouseMove(Mouse.MiddleLeftX, Mouse.BottomY)
++4:: MouseMove(Mouse.LowLeftX, Mouse.BottomY)
++5:: MouseMove(Mouse.LessThanMiddleX, Mouse.BottomY)
++6:: MouseMove(Mouse.MoreThanMiddleX, Mouse.BottomY)
++7:: MouseMove(Mouse.LowRightX, Mouse.BottomY)
++8:: MouseMove(Mouse.MiddleRightX, Mouse.BottomY)
++9:: MouseMove(Mouse.HighRightX, Mouse.BottomY)
++0:: MouseMove(Mouse.FarRightX, Mouse.BottomY)
 
 Esc:: {
 	gotoNormal()
@@ -1545,4 +1598,4 @@ $^y::
 {
 	Send "{WheelUp}"
 }
-#HotIf 
+#HotIf

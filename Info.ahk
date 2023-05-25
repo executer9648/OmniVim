@@ -88,7 +88,7 @@ class Infos {
 			return false
 		}
 		; Hotkey("Escape", "Off")
-		Hotkey("^Escape", "Off")
+		Hotkey("^Space", "Off")
 		if this.spaceIndex <= Infos.maxNumberedHotkeys
 			Hotkey("F" this.spaceIndex, "Off")
 		this.gInfo.Destroy()
@@ -164,7 +164,7 @@ class Infos {
 	_SetupHotkeysAndEvents() {
 		HotIfWinExist("ahk_id " this.gInfo.Hwnd)
 		; Hotkey("Escape", this.bfDestroy, "On")
-		Hotkey("^Escape", Infos.foDestroyAll, "On")
+		Hotkey("^Space", Infos.foDestroyAll, "On")
 		if this.spaceIndex <= Infos.maxNumberedHotkeys
 			Hotkey("F" this.spaceIndex, this.bfDestroy, "On")
 		this.gcText.OnEvent("Click", this.bfDestroy)

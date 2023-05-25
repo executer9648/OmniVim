@@ -10,7 +10,7 @@ class Registers {
 	 * In milliseconds.
 	 * @type {Integer}
 	 */
-	static InfoTimeout := 500
+	static InfoTimeout := 1000
 
 	/**
 	 * The directory where you keep all of your register files.
@@ -227,6 +227,7 @@ class Registers {
 	 * (configurable by modifying Registers.MaxPeekCharacters)
 	 */
 	static PeekNonEmpty() {
+		Infos.DestroyAll()
 		loop files Registers.RegistersDirectory "\*.txt" {
 			text := ReadFile(A_LoopFileFullPath)
 			if !text {

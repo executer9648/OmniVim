@@ -6,11 +6,7 @@
 
 #SingleInstance Force
 
-^+;:: {
-	if !input := CleanInputBox().WaitForInput() {
-		return false
-	}
-
+class Runner {
 	static runner_commands := Map(
 		"regn", () => Registers(GetInput("L1", "{Esc}").Input).WriteOrAppend(CleanInputBox().WaitForInput().Replace("``n", "`n")),
 		"reg", () => Registers.PeekNonEmpty(),
@@ -18,20 +14,27 @@
 
 	static runner_regex := Map(
 		"cp", (input) => (A_Clipboard := input, Info('"' input '" copied')),
+		"reg", (input) => Registers(input).Look(),
 	)
 
-	if runner_commands.Has(input) {
-		runner_commands[input].Call()
-		return
-	}
+	static openRunner() {
+		if !input := CleanInputBox().WaitForInput() {
+			return false
+		}
 
-	regex := "^("
-	for key, _ in runner_regex {
-		regex .= key "|"
-	}
-	regex .= ") (.+)"
-	result := input.RegexMatch(regex)
-	if runner_regex.Has(result[1])
-		runner_regex[result[1]].Call(result[2])
+		if this.runner_commands.Has(input) {
+			this.runner_commands[input].Call()
+			return
+		}
 
+		regex := "^("
+		for key, _ in this.runner_regex {
+			regex .= key "|"
+		}
+		regex .= ") (.+)"
+		result := input.RegexMatch(regex)
+		if this.runner_regex.Has(result[1])
+			this.runner_regex[result[1]].Call(result[2])
+
+	}
 }
