@@ -988,6 +988,7 @@ $^w:: {
 }
 
 e:: {
+	Send "+{Right}"
 	Send "^{Right}"
 	Send "{Left 2}"
 	Send "+{Right}"
@@ -1018,6 +1019,16 @@ d::
 		Exit
 	}
 	gotoDMode()
+}
+
++^y::
+{
+	Send "+{WheelDown}"
+}
+
++^e::
+{
+	Send "+{WheelUp}"
 }
 
 ^e::
