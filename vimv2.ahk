@@ -10,6 +10,7 @@
 #Include Registers.ahk
 
 SetKeyDelay -1
+SetMouseDelay -1
 CoordMode "Mouse", "Screen"
 
 ; Set initial state to normal (disabled)
@@ -123,6 +124,7 @@ gotoNormalnoInfo() {
 	Send "{Left}"
 	Send "+{Right}"
 }
+
 gotoNormal() {
 	StateBulb[6].Destroy() ; Mouse Movement
 	StateBulb[5].Destroy() ; Move windows
@@ -150,6 +152,7 @@ gotoNormal() {
 	Send "{Left}"
 	Send "+{Right}"
 }
+
 gotoVisual() {
 	global normalMode := true
 	global visualMode := true
@@ -166,6 +169,7 @@ gotoVisual() {
 	Infos.DestroyAll()
 	Infos("Visual Mode", 1500)
 }
+
 gotoInsert() {
 	StateBulb[6].Destroy() ; Mouse Movement
 	StateBulb[5].Destroy() ; Move windows
@@ -188,6 +192,7 @@ gotoInsert() {
 	Infos.DestroyAll()
 	Infos("Insert Mode", 1500)
 }
+
 gotoInsertnoInfo() {
 	StateBulb[6].Destroy() ; Mouse Movement
 	StateBulb[5].Destroy() ; Move windows
@@ -260,6 +265,7 @@ delChanYanfMotion() {
 		Send "+{Right}"
 	}
 }
+
 delChanYantMotion() {
 	StateBulb[4].Create()
 	ih := InputHook("C")
@@ -289,7 +295,6 @@ $CapsLock::Control
 +!Control::CapsLock
 +#r:: Reload
 +#e:: Edit
-
 
 ; Define the hotkey to enable the keybindings
 ^[:: {
@@ -360,8 +365,6 @@ z:: Return
 7:: Return
 8:: Return
 9:: Return
-
-
 ^w:: Return
 ^e:: Return
 
@@ -369,6 +372,7 @@ z:: Return
 	exitVim()
 	Exit
 }
+
 Esc:: {
 	gotoNormal()
 	Exit
@@ -626,7 +630,6 @@ w:: {
 #HotIf dMode = 1
 HotIf "dMode = 1"
 
-
 -:: Return
 =:: Return
 ,:: Return
@@ -672,6 +675,7 @@ f:: {
 	gotoNormal()
 	Exit
 }
+
 t:: {
 	delChanYantMotion()
 	Send "^x"
@@ -692,6 +696,7 @@ Esc:: {
 	gotoNormal()
 	Exit
 }
+
 !Esc:: {
 	exitVim()
 	Exit
@@ -1031,7 +1036,6 @@ g:: {
 	Exit
 }
 
-
 $^w:: {
 	if visualMode == true {
 		Exit
@@ -1142,7 +1146,7 @@ i:: {
 	}
 }
 
-$h:: {
+h:: {
 	if visualMode == true
 	{
 		Send "+{left}"
@@ -1156,7 +1160,7 @@ $h:: {
 	}
 }
 
-$j:: {
+j:: {
 	if visualLineMode == true
 	{
 		Send "+{Down}"
@@ -1175,7 +1179,7 @@ $j:: {
 	}
 }
 
-$k:: {
+k:: {
 	if visualLineMode == true
 	{
 		Send "+{Up}"
@@ -1194,7 +1198,7 @@ $k:: {
 	}
 }
 
-$l:: {
+l:: {
 	if visualMode == true
 	{
 		Send "+{Right}"
@@ -1425,6 +1429,7 @@ a:: {
 		Exit
 	}
 }
+
 #HotIf
 
 
@@ -1509,12 +1514,10 @@ Esc:: {
 	exitVim()
 }
 
-
 #HotIf
 
 #HotIf mouseManagerMode = 1
 HotIf "mouseManagerMode = 1"
-
 
 i:: {
 	gotoInsert()
@@ -1522,7 +1525,6 @@ i:: {
 }
 
 !h:: Send "!{Left}"
-
 !l:: Send "!{Right}"
 
 +h:: Mouse.MoveLeft(Mouse.MediumMove)
@@ -1530,7 +1532,7 @@ i:: {
 +j:: Mouse.MoveDown(Mouse.MediumMove)
 +l:: Mouse.MoveRight(Mouse.MediumMove)
 
-h:: Mouse.MoveLeft(Mouse.SmallMove)
+h:: Mouse.MoveLeftnew(Mouse.SmallMove)
 k:: Mouse.MoveUp(Mouse.SmallMove)
 j:: Mouse.MoveDown(Mouse.SmallMove)
 l:: Mouse.MoveRight(Mouse.SmallMove)
