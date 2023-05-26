@@ -17,6 +17,34 @@ class Mouse {
 	static BigMove := 200
 
 	static HorizontalSeparator := 20
+	static numberRow := 15 ;14
+	static qRow := 28 ;14
+	static aRow := 26 ;13
+	static zRow := 23 ;12
+	static spaceRow := 16 ;8
+	static keyboardCol := 10 ;5
+
+	static tildaCol := A_ScreenHeight // Mouse.keyboardCol
+	static tabCol := A_ScreenHeight // Mouse.keyboardCol * 3
+	static capsCol := A_ScreenHeight // 2
+	static shiftCol := A_ScreenHeight // Mouse.keyboardCol * 7
+	static spaceCol := A_ScreenHeight // Mouse.keyboardCol * 9
+
+	static x1 := A_ScreenWidth / Mouse.numberRow
+	static x2 := A_ScreenWidth / Mouse.numberRow * 2
+	static x3 := A_ScreenWidth / Mouse.numberRow * 3
+	static x4 := A_ScreenWidth / Mouse.numberRow * 4
+	static x5 := A_ScreenWidth / Mouse.numberRow * 5
+	static x6 := A_ScreenWidth / Mouse.numberRow * 6
+	static x7 := A_ScreenWidth / Mouse.numberRow * 7
+	static x8 := A_ScreenWidth / Mouse.numberRow * 8
+	static x9 := A_ScreenWidth / Mouse.numberRow * 9
+	static x10 := A_ScreenWidth / Mouse.numberRow * 10
+	static x11 := A_ScreenWidth / Mouse.numberRow * 11
+	static x12 := A_ScreenWidth / Mouse.numberRow * 12
+	static x13 := A_ScreenWidth / Mouse.numberRow * 13
+	static x14 := A_ScreenWidth / Mouse.numberRow * 14
+
 	static VerticalSeparator := 7
 
 	static TopY := A_ScreenHeight // Mouse.VerticalSeparator
