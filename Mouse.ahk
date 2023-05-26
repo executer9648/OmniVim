@@ -5,7 +5,7 @@ CoordMode "Mouse", "Screen"
 class Mouse {
 
 	static g_MouseSpeed := 1
-	static g_MouseAccelerationSpeed := 1
+	static g_MouseAccelerationSpeed := 10
 	static g_MouseMaxSpeed := 5
 	static g_MouseCurrentAccelerationSpeed := 0
 	static g_MouseCurrentSpeed := this.g_MouseSpeed
@@ -118,13 +118,18 @@ class Mouse {
 
 	static ButtonAcceleration()
 	{
+		global
+
 		this.g_MouseCurrentAccelerationSpeed := 0
 		this.g_MouseCurrentSpeed := this.g_MouseSpeed
+
 		this.ButtonAccelerationStart()
 	}
 
 	static ButtonAccelerationStart()
 	{
+		global
+
 		if this.g_MouseAccelerationSpeed >= 1
 		{
 			if this.g_MouseMaxSpeed > this.g_MouseCurrentSpeed
@@ -137,28 +142,141 @@ class Mouse {
 		}
 
 		;g_MouseRotationAngle convertion to speed of button direction
+		this.g_MouseCurrentSpeedToDirection := 0
+		this.g_MouseCurrentSpeedToDirection /= 90.0
+		this.g_Temp := this.g_MouseCurrentSpeedToDirection
+
+		if this.g_Temp >= 0
+		{
+			if this.g_Temp < 1
+			{
+				this.g_MouseCurrentSpeedToDirection := 1
+				this.g_MouseCurrentSpeedToDirection -= this.g_Temp
+				this.EndMouseCurrentSpeedToDirectionCalculation()
+				return
+			}
+		}
+		if this.g_Temp >= 1
+		{
+			if this.g_Temp < 2
+			{
+				this.g_MouseCurrentSpeedToDirection := 0
+				this.g_Temp -= 1
+				this.g_MouseCurrentSpeedToDirection -= this.g_Temp
+				this.EndMouseCurrentSpeedToDirectionCalculation()
+				return
+			}
+		}
+		if this.g_Temp >= 2
+		{
+			if this.g_Temp < 3
+			{
+				this.g_MouseCurrentSpeedToDirection := -1
+				this.g_Temp -= 2
+				this.g_MouseCurrentSpeedToDirection += this.g_Temp
+				this.EndMouseCurrentSpeedToDirectionCalculation()
+				return
+			}
+		}
+		if this.g_Temp >= 3
+		{
+			if this.g_Temp < 4
+			{
+				this.g_MouseCurrentSpeedToDirection := 0
+				this.g_Temp -= 3
+				this.g_MouseCurrentSpeedToDirection += this.g_Temp
+				this.EndMouseCurrentSpeedToDirectionCalculation()
+				return
+			}
+		}
+		this.EndMouseCurrentSpeedToDirectionCalculation()
+	}
+
+	static EndMouseCurrentSpeedToDirectionCalculation()
+	{
+		global
+
+		;g_MouseRotationAngle convertion to speed of 90 degrees to right
+		this.g_MouseCurrentSpeedToSide := 0
+		this.g_MouseCurrentSpeedToSide /= 90.0
+		this.g_Temp := Mod(this.g_MouseCurrentSpeedToSide, 4)
+
+		if this.g_Temp >= 0
+		{
+			if this.g_Temp < 1
+			{
+				this.g_MouseCurrentSpeedToSide := 0
+				this.g_MouseCurrentSpeedToSide += this.g_Temp
+				this.EndMouseCurrentSpeedToSideCalculation()
+				return
+			}
+		}
+		if this.g_Temp >= 1
+		{
+			if this.g_Temp < 2
+			{
+				this.g_MouseCurrentSpeedToSide := 1
+				this.g_Temp -= 1
+				this.g_MouseCurrentSpeedToSide -= this.g_Temp
+				this.EndMouseCurrentSpeedToSideCalculation()
+				return
+			}
+		}
+		if this.g_Temp >= 2
+		{
+			if this.g_Temp < 3
+			{
+				this.g_MouseCurrentSpeedToSide := 0
+				this.g_Temp -= 2
+				this.g_MouseCurrentSpeedToSide -= this.g_Temp
+				this.EndMouseCurrentSpeedToSideCalculation()
+				return
+			}
+		}
+		if this.g_Temp >= 3
+		{
+			if this.g_Temp < 4
+			{
+				this.g_MouseCurrentSpeedToSide := -1
+				this.g_Temp -= 3
+				this.g_MouseCurrentSpeedToSide += this.g_Temp
+				this.EndMouseCurrentSpeedToSideCalculation()
+				return
+			}
+		}
 		this.EndMouseCurrentSpeedToSideCalculation()
 	}
 
 	static EndMouseCurrentSpeedToSideCalculation()
 	{
+		global
+
 		this.g_MouseCurrentSpeedToDirection *= this.g_MouseCurrentSpeed
+		this.g_MouseCurrentSpeedToSide *= this.g_MouseCurrentSpeed
+
+		this.g_Temp := Mod(0, 2)
+		if this.g_Temp = 1
+		{
+			this.g_MouseCurrentSpeedToSide *= 2
+			this.g_MouseCurrentSpeedToDirection *= 2
+		}
 	}
 
 	static ButtonAccelerationEnd()
 	{
-		if GetKeyState(this.g_Button, "P")
+		global
+
+		if GetKeyState(g_Button, "P")
 		{
-			this.ButtonAccelerationStart
+			this.ButtonAccelerationStart()
 			return
 		}
 
 		SetTimer , 0
-		this.g_MouseCurrentAccelerationSpeed := 0
-		this.g_MouseCurrentSpeed := this.g_MouseSpeed
-		this.g_Button := 0
+		g_MouseCurrentAccelerationSpeed := 0
+		g_MouseCurrentSpeed := this.g_MouseSpeed
+		g_Button := 0
 	}
-
 
 	static MoveLeftnew(howMuch) {
 		this.ButtonAcceleration() ; zeroizes the mouse speed and accel

@@ -8,6 +8,7 @@
 #Include WindowManager.ahk
 #Include Runner.ahk
 #Include Registers.ahk
+#Include mousetest.ahk
 
 SetKeyDelay -1
 SetMouseDelay -1
@@ -1532,10 +1533,16 @@ i:: {
 +j:: Mouse.MoveDown(Mouse.MediumMove)
 +l:: Mouse.MoveRight(Mouse.MediumMove)
 
-h:: Mouse.MoveLeftnew(Mouse.SmallMove)
-k:: Mouse.MoveUp(Mouse.SmallMove)
-j:: Mouse.MoveDown(Mouse.SmallMove)
-l:: Mouse.MoveRight(Mouse.SmallMove)
+
+Hotkey "h", ButtonAcceleration
+Hotkey "j", ButtonAcceleration
+Hotkey "k", ButtonAcceleration
+Hotkey "l", ButtonAcceleration
+
+; h:: Mouse.MoveLeft(Mouse.SmallMove)
+; k:: Mouse.MoveUp(Mouse.SmallMove)
+; j:: Mouse.MoveDown(Mouse.SmallMove)
+; l:: Mouse.MoveRight(Mouse.SmallMove)
 
 ^h:: Mouse.MoveLeft(Mouse.BigMove)
 ^k:: Mouse.MoveUp(Mouse.BigMove)

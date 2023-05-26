@@ -124,45 +124,45 @@ g_Button := 0
 SetKeyDelay -1
 SetMouseDelay -1
 
-Hotkey "*Numpad0", ButtonLeftClick
-Hotkey "*NumpadIns", ButtonLeftClickIns
-Hotkey "*Numpad5", ButtonMiddleClick
-Hotkey "*NumpadClear", ButtonMiddleClickClear
-Hotkey "*NumpadDot", ButtonRightClick
-Hotkey "*NumpadDel", ButtonRightClickDel
-Hotkey "*NumpadDiv", ButtonX1Click
-Hotkey "*NumpadMult", ButtonX2Click
+; Hotkey "*Numpad0", ButtonLeftClick
+; Hotkey "*NumpadIns", ButtonLeftClickIns
+; Hotkey "*Numpad5", ButtonMiddleClick
+; Hotkey "*NumpadClear", ButtonMiddleClickClear
+; Hotkey "*NumpadDot", ButtonRightClick
+; Hotkey "*NumpadDel", ButtonRightClickDel
+; Hotkey "*NumpadDiv", ButtonX1Click
+; Hotkey "*NumpadMult", ButtonX2Click
 
-Hotkey "*NumpadSub", ButtonWheelAcceleration
-Hotkey "*NumpadAdd", ButtonWheelAcceleration
+; Hotkey "*NumpadSub", ButtonWheelAcceleration
+; Hotkey "*NumpadAdd", ButtonWheelAcceleration
 
-Hotkey "*NumpadUp", ButtonAcceleration
-Hotkey "*NumpadDown", ButtonAcceleration
-Hotkey "*NumpadLeft", ButtonAcceleration
-Hotkey "*NumpadRight", ButtonAcceleration
-Hotkey "*NumpadHome", ButtonAcceleration
-Hotkey "*NumpadEnd", ButtonAcceleration
-Hotkey "*NumpadPgUp", ButtonAcceleration
-Hotkey "*NumpadPgDn", ButtonAcceleration
+; Hotkey "*NumpadUp", ButtonAcceleration
+; Hotkey "*NumpadDown", ButtonAcceleration
+; Hotkey "*NumpadLeft", ButtonAcceleration
+; Hotkey "*NumpadRight", ButtonAcceleration
+; Hotkey "*NumpadHome", ButtonAcceleration
+; Hotkey "*NumpadEnd", ButtonAcceleration
+; Hotkey "*NumpadPgUp", ButtonAcceleration
+; Hotkey "*NumpadPgDn", ButtonAcceleration
 
-Hotkey "Numpad8", ButtonSpeedUp
-Hotkey "Numpad2", ButtonSpeedDown
-Hotkey "Numpad7", ButtonAccelerationSpeedUp
-Hotkey "Numpad1", ButtonAccelerationSpeedDown
-Hotkey "Numpad9", ButtonMaxSpeedUp
-Hotkey "Numpad3", ButtonMaxSpeedDown
+; Hotkey "Numpad8", ButtonSpeedUp
+; Hotkey "Numpad2", ButtonSpeedDown
+; Hotkey "Numpad7", ButtonAccelerationSpeedUp
+; Hotkey "Numpad1", ButtonAccelerationSpeedDown
+; Hotkey "Numpad9", ButtonMaxSpeedUp
+; Hotkey "Numpad3", ButtonMaxSpeedDown
 
-Hotkey "Numpad6", ButtonRotationAngleUp
-Hotkey "Numpad4", ButtonRotationAngleDown
+; Hotkey "Numpad6", ButtonRotationAngleUp
+; Hotkey "Numpad4", ButtonRotationAngleDown
 
-Hotkey "!Numpad8", ButtonWheelSpeedUp
-Hotkey "!Numpad2", ButtonWheelSpeedDown
-Hotkey "!Numpad7", ButtonWheelAccelerationSpeedUp
-Hotkey "!Numpad1", ButtonWheelAccelerationSpeedDown
-Hotkey "!Numpad9", ButtonWheelMaxSpeedUp
-Hotkey "!Numpad3", ButtonWheelMaxSpeedDown
+; Hotkey "!Numpad8", ButtonWheelSpeedUp
+; Hotkey "!Numpad2", ButtonWheelSpeedDown
+; Hotkey "!Numpad7", ButtonWheelAccelerationSpeedUp
+; Hotkey "!Numpad1", ButtonWheelAccelerationSpeedDown
+; Hotkey "!Numpad9", ButtonWheelMaxSpeedUp
+; Hotkey "!Numpad3", ButtonWheelMaxSpeedDown
 
-ToggleKeyActivationSupport  ; Initialize based on current ScrollLock state.
+; ToggleKeyActivationSupport  ; Initialize based on current ScrollLock state.
 
 ;Key activation support
 
@@ -573,7 +573,8 @@ EndMouseCurrentSpeedToSideCalculation()
 
 	g_Temp := Mod(g_MouseRotationAnglePart, 2)
 
-	if g_Button = "NumpadUp"
+
+	if g_Button = "k"
 	{
 		if g_Temp = 1
 		{
@@ -584,7 +585,7 @@ EndMouseCurrentSpeedToSideCalculation()
 		g_MouseCurrentSpeedToDirection *= -1
 		MouseMove g_MouseCurrentSpeedToSide, g_MouseCurrentSpeedToDirection, 0, "R"
 	}
-	else if g_Button = "NumpadDown"
+	else if g_Button = "j"
 	{
 		if g_Temp = 1
 		{
@@ -595,7 +596,7 @@ EndMouseCurrentSpeedToSideCalculation()
 		g_MouseCurrentSpeedToSide *= -1
 		MouseMove g_MouseCurrentSpeedToSide, g_MouseCurrentSpeedToDirection, 0, "R"
 	}
-	else if g_Button = "NumpadLeft"
+	else if g_Button = "h"
 	{
 		if g_Temp = 1
 		{
@@ -608,7 +609,7 @@ EndMouseCurrentSpeedToSideCalculation()
 
 		MouseMove g_MouseCurrentSpeedToDirection, g_MouseCurrentSpeedToSide, 0, "R"
 	}
-	else if g_Button = "NumpadRight"
+	else if g_Button = "l"
 	{
 		if g_Temp = 1
 		{
