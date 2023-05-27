@@ -17,6 +17,7 @@ CoordMode "Mouse", "Screen"
 ; Set initial state to normal (disabled)
 global normalMode := false
 global dMode := false
+global gMode := false
 global yMode := false
 global fMode := false
 global cMode := false
@@ -33,6 +34,7 @@ exitVim() {
 	Global normalMode := false
 	Global insertMode := false
 	global dMode := false
+	global gMode := false
 	global yMode := false
 	global cMode := false
 	global fMode := false
@@ -82,6 +84,12 @@ gotoFMode() {
 	StateBulb[4].Create()
 }
 
+gotoGMode() {
+	global normalMode := false
+	global gMode := true
+	StateBulb[4].Create()
+}
+
 gotoDMode() {
 	global normalMode := false
 	global dMode := true
@@ -118,6 +126,7 @@ gotoNormalnoInfo() {
 	global insertMode := false
 	global visualLineMode := false
 	global dMode := false
+	global gMode := false
 	global cMode := false
 	global fMode := false
 	global yMode := false
@@ -144,6 +153,7 @@ gotoNormal() {
 	global insertMode := false
 	global visualLineMode := false
 	global dMode := false
+	global gMode := false
 	global cMode := false
 	global fMode := false
 	global yMode := false
@@ -163,6 +173,7 @@ gotoVisual() {
 	global insertMode := false
 	global visualLineMode := false
 	global dMode := false
+	global gMode := false
 	global yMode := false
 	global fMode := false
 	global cMode := false
@@ -186,6 +197,7 @@ gotoInsert() {
 	global insertMode := true
 	global visualLineMode := false
 	global dMode := false
+	global gMode := false
 	global fMode := false
 	global yMode := false
 	global windowMode := false
@@ -209,6 +221,7 @@ gotoInsertnoInfo() {
 	global insertMode := true
 	global visualLineMode := false
 	global dMode := false
+	global gMode := false
 	global fMode := false
 	global yMode := false
 	global windowMode := false
@@ -931,6 +944,28 @@ w:: {
 }
 
 #HotIf
+
+
+; g mode
+#HotIf gMode = 1
+HotIf "gMode = 1"
+t::{ 
+	Send "^{tab}"
+	gotoNormal()
+	Exit
+}
++t::{
+	Send "+^{tab}"
+	gotoNormal()
+	Exit
+}
+g::{ 
+	Send "{Home}"
+	gotoNormal()
+	Exit
+}
+
+#HotIf
 ; Delete mode
 #HotIf dMode = 1
 HotIf "dMode = 1"
@@ -1243,7 +1278,11 @@ HotIf "normalMode = 1"
 =:: Return
 ,:: Return
 .:: Return
-/:: Return
+/:: {
+	Send "^f"
+	gotoInsert()
+	Exit
+}
 ':: Return
 +':: {
 	Exit
@@ -1254,7 +1293,16 @@ m:: {
 	gotoMwMode()
 	Exit
 }
-n:: Return
+n:: {
+	Send "^f"
+	Send "{Enter}"
+	Exit
+}
++n:: {
+	Send "^f"
+	Send "+{Enter}"
+	Exit
+}
 q:: Return
 r:: Return
 s:: {
@@ -1332,7 +1380,7 @@ f:: {
 }
 
 g:: {
-	Send "^{Home}"
+	gotoGMode()
 	Exit
 }
 
@@ -1546,6 +1594,23 @@ l:: {
 	Exit
 }
 
+!h::{
+	Send "{Left}"
+	Exit
+}
+!l::{
+	Send "{Right}"
+	Exit
+}
+!j::{
+	Send "{Down}"
+	Exit
+}
+!k::{
+	Send "{Up}"
+	Exit
+}
+
 +a:: {
 	Send "{end}"
 	gotoInsert()
@@ -1697,43 +1762,43 @@ a:: {
 	Exit
 }
 
-!j:: {
-	if visualLineMode == true
-	{
-		Send "+{Down}"
-		Send "+{End}"
-	}
-	else if visualMode == true
-	{
-		Send "+{Down}"
-	}
-	else
-	{
-		Send "{Left}"
-		Send "{Down}"
-		Send "+{Right}"
-		Exit
-	}
-}
+; !j:: {
+; 	if visualLineMode == true
+; 	{
+; 		Send "+{Down}"
+; 		Send "+{End}"
+; 	}
+; 	else if visualMode == true
+; 	{
+; 		Send "+{Down}"
+; 	}
+; 	else
+; 	{
+; 		Send "{Left}"
+; 		Send "{Down}"
+; 		Send "+{Right}"
+; 		Exit
+; 	}
+; }
 
-!k:: {
-	if visualLineMode == true
-	{
-		Send "+{Up}"
-		Send "+{Home}"
-	}
-	else if visualMode == true
-	{
-		Send "+{Up}"
-	}
-	else
-	{
-		Send "{Left}"
-		Send "{Up}"
-		Send "+{Right}"
-		Exit
-	}
-}
+; !k:: {
+; 	if visualLineMode == true
+; 	{
+; 		Send "+{Up}"
+; 		Send "+{Home}"
+; 	}
+; 	else if visualMode == true
+; 	{
+; 		Send "+{Up}"
+; 	}
+; 	else
+; 	{
+; 		Send "{Left}"
+; 		Send "{Up}"
+; 		Send "+{Right}"
+; 		Exit
+; 	}
+; }
 
 #HotIf
 
@@ -1781,18 +1846,18 @@ l:: WindowManager().MoveRight(Mouse.MediumMove)
 
 
 s:: WindowManager().DecreaseWidth(Mouse.MediumMove)
-f:: WindowManager().IncreaseHeight(Mouse.MediumMove)
-d:: WindowManager().DecreaseHeight(Mouse.MediumMove)
+d:: WindowManager().IncreaseHeight(Mouse.MediumMove)
+f:: WindowManager().DecreaseHeight(Mouse.MediumMove)
 g:: WindowManager().IncreaseWidth(Mouse.MediumMove)
 
 +s:: WindowManager().DecreaseWidth(Mouse.SmallMove)
-+f:: WindowManager().IncreaseHeight(Mouse.SmallMove)
-+d:: WindowManager().DecreaseHeight(Mouse.SmallMove)
++d:: WindowManager().IncreaseHeight(Mouse.SmallMove)
++f:: WindowManager().DecreaseHeight(Mouse.SmallMove)
 +g:: WindowManager().IncreaseWidth(Mouse.SmallMove)
 
 ^s:: WindowManager().DecreaseWidth(Mouse.BigMove)
-^f:: WindowManager().IncreaseHeight(Mouse.BigMove)
-^d:: WindowManager().DecreaseHeight(Mouse.BigMove)
+^d:: WindowManager().IncreaseHeight(Mouse.BigMove)
+^f:: WindowManager().DecreaseHeight(Mouse.BigMove)
 ^g:: WindowManager().IncreaseWidth(Mouse.BigMove)
 
 1:: WinMove(0, 0, , , "A")
@@ -1849,7 +1914,6 @@ HotIf "mouseManagerMode = 1"
 
 c:: Return
 r:: Return
-v:: Return
 z:: Return
 ,:: Return
 .:: Return
@@ -1920,7 +1984,7 @@ hotkey "+a", ButtonMaxSpeedDown
 *g:: Click("Right")
 *b:: Click("Middle")
 
-#t:: Mouse.HoldIfUp("L")
+v:: Mouse.HoldIfUp("L")
 #g:: Mouse.HoldIfUp("R")
 #b:: Mouse.HoldIfUp("M")
 
