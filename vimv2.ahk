@@ -1848,13 +1848,8 @@ Esc:: {
 HotIf "mouseManagerMode = 1"
 
 c:: Return
-g:: Return
-m:: Return
-p:: Return
 r:: Return
-t:: Return
 v:: Return
-x:: Return
 z:: Return
 ,:: Return
 .:: Return
@@ -1864,12 +1859,24 @@ z:: Return
 ]:: Return
 \:: Return
 
+x:: {
+	Send "{BackSpace}"
+}
+d:: {
+	Send "{Delete}"
+}
+y:: {
+	Send "^c"
+}
+p:: {
+	Send "^v"
+}
 
 f:: {
 	gotoFMode()
 }
 
-i:: {
++i:: {
 	gotoInsert()
 	Exit
 }
@@ -1896,8 +1903,8 @@ hotkey "q", ButtonSpeedUp
 hotkey "a", ButtonSpeedDown
 hotkey "w", ButtonAccelerationSpeedUp
 hotkey "s", ButtonAccelerationSpeedDown
-hotkey "e", ButtonMaxSpeedUp
-hotkey "d", ButtonMaxSpeedDown
+hotkey "+q", ButtonMaxSpeedUp
+hotkey "+a", ButtonMaxSpeedDown
 
 ; h:: Mouse.MoveLeft(Mouse.SmallMove)
 ; k:: Mouse.MoveUp(Mouse.SmallMove)
@@ -1909,12 +1916,12 @@ hotkey "d", ButtonMaxSpeedDown
 ^j:: Mouse.MoveDown(Mouse.BigMove)
 ^l:: Mouse.MoveRight(Mouse.BigMove)
 
-*y:: Click()
-*o:: Click("Right")
+*t:: Click()
+*g:: Click("Right")
 *b:: Click("Middle")
 
-#y:: Mouse.HoldIfUp("L")
-#o:: Mouse.HoldIfUp("R")
+#t:: Mouse.HoldIfUp("L")
+#g:: Mouse.HoldIfUp("R")
 #b:: Mouse.HoldIfUp("M")
 
 1:: MouseMove(Mouse.FarLeftX, Mouse.MiddleY)
