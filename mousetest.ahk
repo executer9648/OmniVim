@@ -583,7 +583,12 @@ EndMouseCurrentSpeedToSideCalculation()
 		}
 
 		g_MouseCurrentSpeedToDirection *= -1
-		MouseMove g_MouseCurrentSpeedToSide, g_MouseCurrentSpeedToDirection, 0, "R"
+
+		MouseGetPos &x, &y
+		x += g_MouseCurrentSpeedToSide
+		y += g_MouseCurrentSpeedToDirection
+		DllCall("SetCursorPos", "int", x, "int", y)
+		; MouseMove g_MouseCurrentSpeedToSide, g_MouseCurrentSpeedToDirection, 0, "R"
 	}
 	else if g_Button = "j"
 	{
@@ -594,7 +599,12 @@ EndMouseCurrentSpeedToSideCalculation()
 		}
 
 		g_MouseCurrentSpeedToSide *= -1
-		MouseMove g_MouseCurrentSpeedToSide, g_MouseCurrentSpeedToDirection, 0, "R"
+
+		MouseGetPos &x, &y
+		x += g_MouseCurrentSpeedToSide
+		y += g_MouseCurrentSpeedToDirection
+		DllCall("SetCursorPos", "int", x, "int", y)
+		; MouseMove g_MouseCurrentSpeedToSide, g_MouseCurrentSpeedToDirection, 0, "R"
 	}
 	else if g_Button = "h"
 	{
@@ -607,7 +617,11 @@ EndMouseCurrentSpeedToSideCalculation()
 		g_MouseCurrentSpeedToSide *= -1
 		g_MouseCurrentSpeedToDirection *= -1
 
-		MouseMove g_MouseCurrentSpeedToDirection, g_MouseCurrentSpeedToSide, 0, "R"
+		MouseGetPos &x, &y
+		x += g_MouseCurrentSpeedToDirection
+		y += g_MouseCurrentSpeedToSide
+		DllCall("SetCursorPos", "int", x, "int", y)
+		; MouseMove g_MouseCurrentSpeedToDirection, g_MouseCurrentSpeedToSide, 0, "R"
 	}
 	else if g_Button = "l"
 	{
@@ -617,9 +631,13 @@ EndMouseCurrentSpeedToSideCalculation()
 			g_MouseCurrentSpeedToDirection *= 2
 		}
 
-		MouseMove g_MouseCurrentSpeedToDirection, g_MouseCurrentSpeedToSide, 0, "R"
+		MouseGetPos &x, &y
+		x += g_MouseCurrentSpeedToDirection
+		y += g_MouseCurrentSpeedToSide
+		DllCall("SetCursorPos", "int", x, "int", y)
+		; MouseMove g_MouseCurrentSpeedToDirection, g_MouseCurrentSpeedToSide, 0, "R"
 	}
-	else if g_Button = "NumpadHome"
+	else if g_Button = "u"
 	{
 		g_Temp := g_MouseCurrentSpeedToDirection
 		g_Temp -= g_MouseCurrentSpeedToSide
@@ -627,34 +645,52 @@ EndMouseCurrentSpeedToSideCalculation()
 		g_Temp2 := g_MouseCurrentSpeedToDirection
 		g_Temp2 += g_MouseCurrentSpeedToSide
 		g_Temp2 *= -1
-		MouseMove g_Temp, g_Temp2, 0, "R"
+
+		MouseGetPos &x, &y
+		x += g_Temp
+		y += g_Temp2
+		DllCall("SetCursorPos", "int", x, "int", y)
+		; MouseMove g_Temp, g_Temp2, 0, "R"
 	}
-	else if g_Button = "NumpadPgUp"
+	else if g_Button = "i"
 	{
 		g_Temp := g_MouseCurrentSpeedToDirection
 		g_Temp += g_MouseCurrentSpeedToSide
 		g_Temp2 := g_MouseCurrentSpeedToDirection
 		g_Temp2 -= g_MouseCurrentSpeedToSide
 		g_Temp2 *= -1
-		MouseMove g_Temp, g_Temp2, 0, "R"
+
+		MouseGetPos &x, &y
+		x += g_Temp
+		y += g_Temp2
+		DllCall("SetCursorPos", "int", x, "int", y)
+		; MouseMove g_Temp, g_Temp2, 0, "R"
 	}
-	else if g_Button = "NumpadEnd"
+	else if g_Button = "n"
 	{
 		g_Temp := g_MouseCurrentSpeedToDirection
 		g_Temp += g_MouseCurrentSpeedToSide
 		g_Temp *= -1
 		g_Temp2 := g_MouseCurrentSpeedToDirection
 		g_Temp2 -= g_MouseCurrentSpeedToSide
-		MouseMove g_Temp, g_Temp2, 0, "R"
+		MouseGetPos &x, &y
+		x += g_Temp
+		y += g_Temp2
+		DllCall("SetCursorPos", "int", x, "int", y)
+		; MouseMove g_Temp, g_Temp2, 0, "R"
 	}
-	else if g_Button = "NumpadPgDn"
+	else if g_Button = "m"
 	{
 		g_Temp := g_MouseCurrentSpeedToDirection
 		g_Temp -= g_MouseCurrentSpeedToSide
 		g_Temp2 *= -1
 		g_Temp2 := g_MouseCurrentSpeedToDirection
 		g_Temp2 += g_MouseCurrentSpeedToSide
-		MouseMove g_Temp, g_Temp2, 0, "R"
+		MouseGetPos &x, &y
+		x += g_Temp
+		y += g_Temp2
+		DllCall("SetCursorPos", "int", x, "int", y)
+		; MouseMove g_Temp, g_Temp2, 0, "R"
 	}
 
 	SetTimer ButtonAccelerationEnd, 10

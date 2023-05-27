@@ -461,156 +461,160 @@ p:: {
 	Exit
 }
 LControl:: {
-	MouseMove(Mouse.x1, Mouse.capsCol)
+	MouseMove(Mouse.ax1, Mouse.capsCol)
 	gotoMouseMode()
 	Exit
 }
 a:: {
-	MouseMove(Mouse.x2, Mouse.capsCol)
+	MouseMove(Mouse.ax2, Mouse.capsCol)
 	gotoMouseMode()
 	Exit
 }
 s:: {
-	MouseMove(Mouse.x3, Mouse.capsCol)
+	MouseMove(Mouse.ax3, Mouse.capsCol)
 	gotoMouseMode()
 	Exit
 }
 d:: {
-	MouseMove(Mouse.x4, Mouse.capsCol)
+	MouseMove(Mouse.ax4, Mouse.capsCol)
 	gotoMouseMode()
 	Exit
 }
 f:: {
-	MouseMove(Mouse.x5, Mouse.capsCol)
+	MouseMove(Mouse.ax5, Mouse.capsCol)
 	gotoMouseMode()
 	Exit
 }
 g:: {
-	MouseMove(Mouse.x6, Mouse.capsCol)
+	MouseMove(Mouse.ax6, Mouse.capsCol)
 	gotoMouseMode()
 	Exit
 }
 h:: {
-	MouseMove(Mouse.x7, Mouse.capsCol)
+	MouseMove(Mouse.ax7, Mouse.capsCol)
 	gotoMouseMode()
 	Exit
 }
 j:: {
-	MouseMove(Mouse.x8, Mouse.capsCol)
+	MouseMove(Mouse.ax8, Mouse.capsCol)
 	gotoMouseMode()
 	Exit
 }
 k:: {
-	MouseMove(Mouse.x9, Mouse.capsCol)
+	MouseMove(Mouse.ax9, Mouse.capsCol)
 	gotoMouseMode()
 	Exit
 }
 l:: {
-	MouseMove(Mouse.x10, Mouse.capsCol)
+	MouseMove(Mouse.ax10, Mouse.capsCol)
 	gotoMouseMode()
 	Exit
 }
 `;:: {
-	MouseMove(Mouse.x11, Mouse.capsCol)
+	MouseMove(Mouse.ax11, Mouse.capsCol)
 	gotoMouseMode()
 	Exit
 }
 ':: {
-	MouseMove(Mouse.x12, Mouse.capsCol)
+	MouseMove(Mouse.ax12, Mouse.capsCol)
 	gotoMouseMode()
 	Exit
 }
 Enter:: {
-	MouseMove(Mouse.x13, Mouse.capsCol)
+	MouseMove(Mouse.ax13, Mouse.capsCol)
 	gotoMouseMode()
 	Exit
 }
 
 LShift:: {
-	MouseMove(Mouse.x1, Mouse.shiftCol)
+	MouseMove(Mouse.zx1, Mouse.shiftCol)
 	gotoMouseMode()
 	Exit
 }
 z:: {
-	MouseMove(Mouse.x2, Mouse.shiftCol)
+	MouseMove(Mouse.zx2, Mouse.shiftCol)
 	gotoMouseMode()
 	Exit
 }
 x:: {
-	MouseMove(Mouse.x3, Mouse.shiftCol)
+	MouseMove(Mouse.zx3, Mouse.shiftCol)
 	gotoMouseMode()
 	Exit
 }
 c:: {
-	MouseMove(Mouse.x4, Mouse.shiftCol)
+	MouseMove(Mouse.zx4, Mouse.shiftCol)
 	gotoMouseMode()
 	Exit
 }
 v:: {
-	MouseMove(Mouse.x5, Mouse.shiftCol)
+	MouseMove(Mouse.zx5, Mouse.shiftCol)
 	gotoMouseMode()
 	Exit
 }
 b:: {
-	MouseMove(Mouse.x6, Mouse.shiftCol)
+	MouseMove(Mouse.zx6, Mouse.shiftCol)
 	gotoMouseMode()
 	Exit
 }
 n:: {
-	MouseMove(Mouse.x7, Mouse.shiftCol)
+	MouseMove(Mouse.zx7, Mouse.shiftCol)
 	gotoMouseMode()
 	Exit
 }
 m:: {
-	MouseMove(Mouse.x8, Mouse.shiftCol)
+	MouseMove(Mouse.zx8, Mouse.shiftCol)
 	gotoMouseMode()
 	Exit
 }
 ,:: {
-	MouseMove(Mouse.x9, Mouse.shiftCol)
+	MouseMove(Mouse.zx9, Mouse.shiftCol)
 	gotoMouseMode()
 	Exit
 }
 .:: {
-	MouseMove(Mouse.x10, Mouse.shiftCol)
+	MouseMove(Mouse.zx10, Mouse.shiftCol)
 	gotoMouseMode()
 	Exit
 }
 /:: {
-	MouseMove(Mouse.x11, Mouse.shiftCol)
+	MouseMove(Mouse.zx11, Mouse.shiftCol)
 	gotoMouseMode()
 	Exit
 }
 RShift:: {
-	MouseMove(Mouse.x12, Mouse.shiftCol)
+	MouseMove(Mouse.zx12, Mouse.shiftCol)
 	gotoMouseMode()
 	Exit
 }
 
 LWin:: {
-	MouseMove(Mouse.x1, Mouse.spaceCol)
+	MouseMove(Mouse.sx1, Mouse.spaceCol)
 	gotoMouseMode()
 	Exit
 }
 LAlt:: {
-	MouseMove(Mouse.x2, Mouse.spaceCol)
+	MouseMove(Mouse.sx2, Mouse.spaceCol)
 	gotoMouseMode()
 	Exit
 }
 Space:: {
-	MouseMove(Mouse.x3, Mouse.spaceCol)
+	MouseMove(Mouse.sx3, Mouse.spaceCol)
 	gotoMouseMode()
 	Exit
 }
 RAlt:: {
-	MouseMove(Mouse.x4, Mouse.spaceCol)
+	MouseMove(Mouse.sx4, Mouse.spaceCol)
 	gotoMouseMode()
 	Exit
 }
 ; fn key
-; shfit+10 key
+AppsKey:: {
+	MouseMove(Mouse.sx5, Mouse.spaceCol)
+	gotoMouseMode()
+	Exit
+}
 Rctrl:: {
-	MouseMove(Mouse.x5, Mouse.spaceCol)
+	MouseMove(Mouse.sx6, Mouse.spaceCol)
 	gotoMouseMode()
 	Exit
 }
@@ -1737,6 +1741,29 @@ a:: {
 #HotIf WindowManagerMode = 1
 HotIf "WindowManagerMode = 1"
 
+b:: Return
+c:: Return
+i:: Return
+m:: Return
+n:: Return
+o:: Return
+p:: Return
+r:: Return
+t:: Return
+u:: Return
+v:: Return
+x:: Return
+y:: Return
+z:: Return
+,:: Return
+.:: Return
+/:: Return
+':: Return
+[:: Return
+]:: Return
+\:: Return
+
+
 h:: WindowManager().MoveLeft(Mouse.MediumMove)
 k:: WindowManager().MoveUp(Mouse.MediumMove)
 j:: WindowManager().MoveDown(Mouse.MediumMove)
@@ -1820,10 +1847,27 @@ Esc:: {
 #HotIf mouseManagerMode = 1
 HotIf "mouseManagerMode = 1"
 
+c:: Return
+g:: Return
+m:: Return
+p:: Return
+r:: Return
+t:: Return
+v:: Return
+x:: Return
+z:: Return
+,:: Return
+.:: Return
+/:: Return
+':: Return
+[:: Return
+]:: Return
+\:: Return
+
+
 f:: {
 	gotoFMode()
 }
-
 
 i:: {
 	gotoInsert()
@@ -1839,10 +1883,21 @@ i:: {
 +l:: Mouse.MoveRight(Mouse.MediumMove)
 
 
+Hotkey "u", ButtonAcceleration
+Hotkey "i", ButtonAcceleration
+Hotkey "n", ButtonAcceleration
+Hotkey "m", ButtonAcceleration
 Hotkey "h", ButtonAcceleration
 Hotkey "j", ButtonAcceleration
 Hotkey "k", ButtonAcceleration
 Hotkey "l", ButtonAcceleration
+
+hotkey "q", ButtonSpeedUp
+hotkey "a", ButtonSpeedDown
+hotkey "w", ButtonAccelerationSpeedUp
+hotkey "s", ButtonAccelerationSpeedDown
+hotkey "e", ButtonMaxSpeedUp
+hotkey "d", ButtonMaxSpeedDown
 
 ; h:: Mouse.MoveLeft(Mouse.SmallMove)
 ; k:: Mouse.MoveUp(Mouse.SmallMove)
@@ -1855,12 +1910,12 @@ Hotkey "l", ButtonAcceleration
 ^l:: Mouse.MoveRight(Mouse.BigMove)
 
 *y:: Click()
-*u:: Click("Right")
-*n:: Click("Middle")
-#y:: Mouse.HoldIfUp("L")
-#u:: Mouse.HoldIfUp("R")
-#n:: Mouse.HoldIfUp("M")
+*o:: Click("Right")
+*b:: Click("Middle")
 
+#y:: Mouse.HoldIfUp("L")
+#o:: Mouse.HoldIfUp("R")
+#b:: Mouse.HoldIfUp("M")
 
 1:: MouseMove(Mouse.FarLeftX, Mouse.MiddleY)
 2:: MouseMove(Mouse.HighLeftX, Mouse.MiddleY)

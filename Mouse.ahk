@@ -18,17 +18,53 @@ class Mouse {
 
 	static HorizontalSeparator := 20
 	static numberRow := 15 ;14
-	static qRow := 28 ;14
-	static aRow := 26 ;13
-	static zRow := 23 ;12
-	static spaceRow := 16 ;8
-	static keyboardCol := 10 ;5
+	static qRow := 15 ;14
+	static aRow := 14 ;13
+	static zRow := 13 ;12
+	static spaceRow := 7 ;6
+	static keyboardCol := 6 ;5
 
-	static tildaCol := A_ScreenHeight // Mouse.keyboardCol
-	static tabCol := A_ScreenHeight // Mouse.keyboardCol * 3
-	static capsCol := A_ScreenHeight // 2
-	static shiftCol := A_ScreenHeight // Mouse.keyboardCol * 7
-	static spaceCol := A_ScreenHeight // Mouse.keyboardCol * 9
+	static tildaCol := A_ScreenHeight / Mouse.keyboardCol
+	static tabCol := A_ScreenHeight / Mouse.keyboardCol * 2
+	static capsCol := A_ScreenHeight / Mouse.keyboardCol * 3
+	static shiftCol := A_ScreenHeight / Mouse.keyboardCol * 4
+	static spaceCol := A_ScreenHeight / Mouse.keyboardCol * 5
+
+	static sx1 := A_ScreenWidth / Mouse.spaceRow
+	static sx2 := A_ScreenWidth / Mouse.spaceRow * 2
+	static sx3 := A_ScreenWidth / Mouse.spaceRow * 3
+	static sx4 := A_ScreenWidth / Mouse.spaceRow * 4
+	static sx5 := A_ScreenWidth / Mouse.spaceRow * 5
+	static sx6 := A_ScreenWidth / Mouse.spaceRow * 6
+	static sx7 := A_ScreenWidth / Mouse.spaceRow * 7
+	static sx8 := A_ScreenWidth / Mouse.spaceRow * 8
+
+	static zx1 := A_ScreenWidth / Mouse.zRow
+	static zx2 := A_ScreenWidth / Mouse.zRow * 2
+	static zx3 := A_ScreenWidth / Mouse.zRow * 3
+	static zx4 := A_ScreenWidth / Mouse.zRow * 4
+	static zx5 := A_ScreenWidth / Mouse.zRow * 5
+	static zx6 := A_ScreenWidth / Mouse.zRow * 6
+	static zx7 := A_ScreenWidth / Mouse.zRow * 7
+	static zx8 := A_ScreenWidth / Mouse.zRow * 8
+	static zx9 := A_ScreenWidth / Mouse.zRow * 9
+	static zx10 := A_ScreenWidth / Mouse.zRow * 10
+	static zx11 := A_ScreenWidth / Mouse.zRow * 11
+	static zx12 := A_ScreenWidth / Mouse.zRow * 12
+
+	static ax1 := A_ScreenWidth / Mouse.aRow
+	static ax2 := A_ScreenWidth / Mouse.aRow * 2
+	static ax3 := A_ScreenWidth / Mouse.aRow * 3
+	static ax4 := A_ScreenWidth / Mouse.aRow * 4
+	static ax5 := A_ScreenWidth / Mouse.aRow * 5
+	static ax6 := A_ScreenWidth / Mouse.aRow * 6
+	static ax7 := A_ScreenWidth / Mouse.aRow * 7
+	static ax8 := A_ScreenWidth / Mouse.aRow * 8
+	static ax9 := A_ScreenWidth / Mouse.aRow * 9
+	static ax10 := A_ScreenWidth / Mouse.aRow * 10
+	static ax11 := A_ScreenWidth / Mouse.aRow * 11
+	static ax12 := A_ScreenWidth / Mouse.aRow * 12
+	static ax13 := A_ScreenWidth / Mouse.aRow * 13
 
 	static x1 := A_ScreenWidth / Mouse.numberRow
 	static x2 := A_ScreenWidth / Mouse.numberRow * 2
