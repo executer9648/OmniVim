@@ -1138,7 +1138,7 @@ w:: {
 HotIf "insertMode = 1"
 
 !Esc:: {
-	;exitVim()
+	exitVim()
 	gotoNormal()
 	Exit
 }
@@ -1148,9 +1148,9 @@ Esc:: {
 		gotoNormal()
 		gotoMouseMode()
 	}
-;	else {
-;		gotoNormal()
-;	}
+	else {
+		gotoNormal()
+	}
 	Exit
 }
 
@@ -1290,6 +1290,7 @@ HotIf "normalMode = 1"
 		oldclip := A_Clipboard
 		Send "^c"
 		ClipWait 1
+		sleep 10
 		formatstr := A_Clipboard
 		if RegExMatch(formatstr, "^[A-Z\s\p{P}]+$") {
 			string1 := StrLower(formatstr)
@@ -1312,18 +1313,19 @@ HotIf "normalMode = 1"
 		oldclip := A_Clipboard
 		Send "^c"
 		ClipWait 1
+		sleep 10
 		formatstr := A_Clipboard
 		if RegExMatch(formatstr, "^[A-Z\s\p{P}]+$") {
 			string1 := StrLower(formatstr)
-			SendText string1
+			Send string1
 		}
 		else if RegExMatch(formatstr, "^[a-z\s\p{P}]+$") {
 			string1 := StrUpper(formatstr)
-			SendText string1
+			Send string1
 		}
 		else {
 			string1 := StrUpper(formatstr)
-			SendText string1
+			Send string1
 		}
 		Send "{Left}"
 		Send "+{Right}"
