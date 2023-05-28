@@ -28,6 +28,7 @@ global insertMode := false
 global WindowManagerMode := false
 global mouseManagerMode := false
 global WasInMouseManagerMode := false
+global WasInWindowManagerMode := false
 
 exitVim() {
 	Infos.DestroyAll()
@@ -76,6 +77,7 @@ gotoMouseMode() {
 	global normalMode := false
 	global mouseManagerMode := true
 	global WasInMouseManagerMode := false
+	global WasInWindowManagerMode := false
 	global fMode := false
 	StateBulb[6].Create()
 	StateBulb[4].Destroy()
@@ -164,6 +166,7 @@ gotoNormal() {
 	global windowMode := false
 	global WindowManagerMode := false
 	global WasInMouseManagerMode := false
+	global WasInWindowManagerMode := false
 	global mouseManagerMode := false
 	StateBulb[1].Create()
 	Infos.DestroyAll()
@@ -338,305 +341,734 @@ $CapsLock::Control
 HotIf "fMode = 1"
 
 `:: {
-	MouseMove(Mouse.x1, Mouse.tildaCol)
-	gotoMouseMode()
+	if WasInWindowManagerMode == true {
+		WinMove(Mouse.x1, Mouse.tildaCol, , , "A")
+		gotoNormal()
+		gotoMwMode()
+	}
+	else {
+		MouseMove(Mouse.x1, Mouse.tildaCol)
+		gotoNormal()
+		gotoMouseMode()
+	}
 	Exit
 }
 1:: {
-	MouseMove(Mouse.x2, Mouse.tildaCol)
-	gotoMouseMode()
+	if WasInWindowManagerMode == true {
+		WinMove(Mouse.x2, Mouse.tildaCol, , , "A")
+		gotoNormal()
+		gotoMwMode()
+	}
+	else {
+		MouseMove(Mouse.x2, Mouse.tildaCol)
+		gotoMouseMode()
+	}
 	Exit
 }
 2:: {
+	if WasInWindowManagerMode == true {
+		WinMove(Mouse.x3, Mouse.tildaCol, , , "A")
+		gotoNormal()
+		gotoMwMode()
+	}
+	else {
 	MouseMove(Mouse.x3, Mouse.tildaCol)
 	gotoMouseMode()
 	Exit
+	}
 }
 3:: {
+	if WasInWindowManagerMode == true {
+		WinMove(Mouse.x4, Mouse.tildaCol, , , "A")
+		gotoNormal()
+		gotoMwMode()
+	}
+	else {
 	MouseMove(Mouse.x4, Mouse.tildaCol)
 	gotoMouseMode()
 	Exit
+	}
 }
 4:: {
+	if WasInWindowManagerMode == true {
+		WinMove(Mouse.x5, Mouse.tildaCol, , , "A")
+		gotoNormal()
+		gotoMwMode()
+	}
+	else {
 	MouseMove(Mouse.x5, Mouse.tildaCol)
 	gotoMouseMode()
 	Exit
+	}
 }
 5:: {
+	if WasInWindowManagerMode == true {
+		WinMove(Mouse.x6, Mouse.tildaCol, , , "A")
+		gotoNormal()
+		gotoMwMode()
+	}
+	else {
 	MouseMove(Mouse.x6, Mouse.tildaCol)
 	gotoMouseMode()
 	Exit
+	}
 }
 6:: {
+	if WasInWindowManagerMode == true {
+		WinMove(Mouse.x7, Mouse.tildaCol, , , "A")
+		gotoNormal()
+		gotoMwMode()
+	}
+	else {
 	MouseMove(Mouse.x7, Mouse.tildaCol)
 	gotoMouseMode()
 	Exit
+	}
 }
 7:: {
+	if WasInWindowManagerMode == true {
+		WinMove(Mouse.x8, Mouse.tildaCol, , , "A")
+		gotoNormal()
+		gotoMwMode()
+	}
+	else {
 	MouseMove(Mouse.x8, Mouse.tildaCol)
 	gotoMouseMode()
 	Exit
+	}
 }
 8:: {
+	if WasInWindowManagerMode == true {
+		WinMove(Mouse.x9, Mouse.tildaCol, , , "A")
+		gotoNormal()
+		gotoMwMode()
+	}
+	else {
 	MouseMove(Mouse.x9, Mouse.tildaCol)
 	gotoMouseMode()
 	Exit
+	}
 }
 9:: {
+	if WasInWindowManagerMode == true {
+		WinMove(Mouse.x10, Mouse.tildaCol, , , "A")
+		gotoNormal()
+		gotoMwMode()
+	}
+	else {
 	MouseMove(Mouse.x10, Mouse.tildaCol)
 	gotoMouseMode()
 	Exit
+	}
 }
 0:: {
+	if WasInWindowManagerMode == true {
+		WinMove(Mouse.x11, Mouse.tildaCol, , , "A")
+		gotoNormal()
+		gotoMwMode()
+	}
+	else {
 	MouseMove(Mouse.x11, Mouse.tildaCol)
 	gotoMouseMode()
 	Exit
+	}
 }
 -:: {
+	if WasInWindowManagerMode == true {
+		WinMove(Mouse.x12, Mouse.tildaCol, , , "A")
+		gotoNormal()
+		gotoMwMode()
+	}
+	else {
 	MouseMove(Mouse.x12, Mouse.tildaCol)
 	gotoMouseMode()
 	Exit
+	}
 }
 =:: {
+	if WasInWindowManagerMode == true {
+		WinMove(Mouse.x13, Mouse.tildaCol, , , "A")
+		gotoNormal()
+		gotoMwMode()
+	}
+	else {
 	MouseMove(Mouse.x13, Mouse.tildaCol)
 	gotoMouseMode()
 	Exit
+	}
 }
 BackSpace:: {
+	if WasInWindowManagerMode == true {
+		WinMove(Mouse.x14, Mouse.tildaCol, , , "A")
+		gotoNormal()
+		gotoMwMode()
+	}
+	else {
 	MouseMove(Mouse.x14, Mouse.tildaCol)
 	gotoMouseMode()
 	Exit
+	}
 }
 
 tab:: {
+	if WasInWindowManagerMode == true {
+		WinMove(Mouse.x4, 0, , , "A")
+		gotoNormal()
+		gotoMwMode()
+	}
+	else {
 	MouseMove(Mouse.x1, Mouse.tabCol)
 	gotoMouseMode()
 	Exit
+	}
 }
 q:: {
+	if WasInWindowManagerMode == true {
+		WinMove(Mouse.x4, 0, , , "A")
+		gotoNormal()
+		gotoMwMode()
+	}
+	else {
 	MouseMove(Mouse.x2, Mouse.tabCol)
 	gotoMouseMode()
 	Exit
+	}
 }
 w:: {
+	if WasInWindowManagerMode == true {
+		WinMove(Mouse.x4, 0, , , "A")
+		gotoNormal()
+		gotoMwMode()
+	}
+	else {
 	MouseMove(Mouse.x3, Mouse.tabCol)
 	gotoMouseMode()
 	Exit
+	}
 }
 e:: {
+	if WasInWindowManagerMode == true {
+		WinMove(Mouse.x4, 0, , , "A")
+		gotoNormal()
+		gotoMwMode()
+	}
+	else {
 	MouseMove(Mouse.x4, Mouse.tabCol)
 	gotoMouseMode()
 	Exit
+	}
 }
 r:: {
+	if WasInWindowManagerMode == true {
+		WinMove(Mouse.x4, 0, , , "A")
+		gotoNormal()
+		gotoMwMode()
+	}
+	else {
 	MouseMove(Mouse.x5, Mouse.tabCol)
 	gotoMouseMode()
 	Exit
+	}
 }
 t:: {
+	if WasInWindowManagerMode == true {
+		WinMove(Mouse.x4, 0, , , "A")
+		gotoNormal()
+		gotoMwMode()
+	}
+	else {
 	MouseMove(Mouse.x6, Mouse.tabCol)
 	gotoMouseMode()
 	Exit
+	}
 }
 y:: {
+	if WasInWindowManagerMode == true {
+		WinMove(Mouse.x4, 0, , , "A")
+		gotoNormal()
+		gotoMwMode()
+	}
+	else {
 	MouseMove(Mouse.x7, Mouse.tabCol)
 	gotoMouseMode()
 	Exit
+	}
 }
 u:: {
+	if WasInWindowManagerMode == true {
+		WinMove(Mouse.x4, 0, , , "A")
+		gotoNormal()
+		gotoMwMode()
+	}
+	else {
 	MouseMove(Mouse.x8, Mouse.tabCol)
 	gotoMouseMode()
 	Exit
+	}
 }
 i:: {
+	if WasInWindowManagerMode == true {
+		WinMove(Mouse.x4, 0, , , "A")
+		gotoNormal()
+		gotoMwMode()
+	}
+	else {
 	MouseMove(Mouse.x9, Mouse.tabCol)
 	gotoMouseMode()
 	Exit
+	}
 }
 o:: {
+	if WasInWindowManagerMode == true {
+		WinMove(Mouse.x4, 0, , , "A")
+		gotoNormal()
+		gotoMwMode()
+	}
+	else {
 	MouseMove(Mouse.x10, Mouse.tabCol)
 	gotoMouseMode()
 	Exit
+	}
 }
 p:: {
+	if WasInWindowManagerMode == true {
+		WinMove(Mouse.x4, 0, , , "A")
+		gotoNormal()
+		gotoMwMode()
+	}
+	else {
 	MouseMove(Mouse.x11, Mouse.tabCol)
 	gotoMouseMode()
 	Exit
+	}
 }
 [:: {
+	if WasInWindowManagerMode == true {
+		WinMove(Mouse.x4, 0, , , "A")
+		gotoNormal()
+		gotoMwMode()
+	}
+	else {
 	MouseMove(Mouse.x12, Mouse.tabCol)
 	gotoMouseMode()
 	Exit
+	}
 }
 ]:: {
+	if WasInWindowManagerMode == true {
+		WinMove(Mouse.x4, 0, , , "A")
+		gotoNormal()
+		gotoMwMode()
+	}
+	else {
 	MouseMove(Mouse.x13, Mouse.tabCol)
 	gotoMouseMode()
 	Exit
+	}
 }
 \:: {
+	if WasInWindowManagerMode == true {
+		WinMove(Mouse.x4, 0, , , "A")
+		gotoNormal()
+		gotoMwMode()
+	}
+	else {
 	MouseMove(Mouse.x14, Mouse.tabCol)
 	gotoMouseMode()
 	Exit
+	}
 }
 LControl:: {
+	if WasInWindowManagerMode == true {
+		WinMove(Mouse.x4, 0, , , "A")
+		gotoNormal()
+		gotoMwMode()
+	}
+	else {
 	MouseMove(Mouse.ax1, Mouse.capsCol)
 	gotoMouseMode()
 	Exit
+	}
 }
 a:: {
+	if WasInWindowManagerMode == true {
+		WinMove(Mouse.x4, 0, , , "A")
+		gotoNormal()
+		gotoMwMode()
+	}
+	else {
 	MouseMove(Mouse.ax2, Mouse.capsCol)
 	gotoMouseMode()
 	Exit
+	}
 }
 s:: {
+	if WasInWindowManagerMode == true {
+		WinMove(Mouse.x4, 0, , , "A")
+		gotoNormal()
+		gotoMwMode()
+	}
+	else {
 	MouseMove(Mouse.ax3, Mouse.capsCol)
 	gotoMouseMode()
 	Exit
+	}
 }
 d:: {
+	if WasInWindowManagerMode == true {
+		WinMove(Mouse.x4, 0, , , "A")
+		gotoNormal()
+		gotoMwMode()
+	}
+	else {
 	MouseMove(Mouse.ax4, Mouse.capsCol)
 	gotoMouseMode()
 	Exit
+	}
 }
 f:: {
+	if WasInWindowManagerMode == true {
+		WinMove(Mouse.x4, 0, , , "A")
+		gotoNormal()
+		gotoMwMode()
+	}
+	else {
 	MouseMove(Mouse.ax5, Mouse.capsCol)
 	gotoMouseMode()
 	Exit
+	}
 }
 g:: {
+	if WasInWindowManagerMode == true {
+		WinMove(Mouse.x4, 0, , , "A")
+		gotoNormal()
+		gotoMwMode()
+	}
+	else {
 	MouseMove(Mouse.ax6, Mouse.capsCol)
 	gotoMouseMode()
 	Exit
+	}
 }
 h:: {
+	if WasInWindowManagerMode == true {
+		WinMove(Mouse.x4, 0, , , "A")
+		gotoNormal()
+		gotoMwMode()
+	}
+	else {
 	MouseMove(Mouse.ax7, Mouse.capsCol)
 	gotoMouseMode()
 	Exit
+	}
 }
 j:: {
+	if WasInWindowManagerMode == true {
+		WinMove(Mouse.x4, 0, , , "A")
+		gotoNormal()
+		gotoMwMode()
+	}
+	else {
 	MouseMove(Mouse.ax8, Mouse.capsCol)
 	gotoMouseMode()
 	Exit
+	}
 }
 k:: {
+	if WasInWindowManagerMode == true {
+		WinMove(Mouse.x4, 0, , , "A")
+		gotoNormal()
+		gotoMwMode()
+	}
+	else {
 	MouseMove(Mouse.ax9, Mouse.capsCol)
 	gotoMouseMode()
 	Exit
+	}
 }
 l:: {
+	if WasInWindowManagerMode == true {
+		WinMove(Mouse.x4, 0, , , "A")
+		gotoNormal()
+		gotoMwMode()
+	}
+	else {
 	MouseMove(Mouse.ax10, Mouse.capsCol)
 	gotoMouseMode()
 	Exit
+	}
 }
 `;:: {
+	if WasInWindowManagerMode == true {
+		WinMove(Mouse.x4, 0, , , "A")
+		gotoNormal()
+		gotoMwMode()
+	}
+	else {
 	MouseMove(Mouse.ax11, Mouse.capsCol)
 	gotoMouseMode()
 	Exit
+	}
 }
 ':: {
+	if WasInWindowManagerMode == true {
+		WinMove(Mouse.x4, 0, , , "A")
+		gotoNormal()
+		gotoMwMode()
+	}
+	else {
 	MouseMove(Mouse.ax12, Mouse.capsCol)
 	gotoMouseMode()
 	Exit
+	}
 }
 Enter:: {
+	if WasInWindowManagerMode == true {
+		WinMove(Mouse.x4, 0, , , "A")
+		gotoNormal()
+		gotoMwMode()
+	}
+	else {
 	MouseMove(Mouse.ax13, Mouse.capsCol)
 	gotoMouseMode()
 	Exit
+	}
 }
 
 LShift:: {
+	if WasInWindowManagerMode == true {
+		WinMove(Mouse.x4, 0, , , "A")
+		gotoNormal()
+		gotoMwMode()
+	}
+	else {
 	MouseMove(Mouse.zx1, Mouse.shiftCol)
 	gotoMouseMode()
 	Exit
+	}
 }
 z:: {
+	if WasInWindowManagerMode == true {
+		WinMove(Mouse.x4, 0, , , "A")
+		gotoNormal()
+		gotoMwMode()
+	}
+	else {
 	MouseMove(Mouse.zx2, Mouse.shiftCol)
 	gotoMouseMode()
 	Exit
+	}
 }
 x:: {
+	if WasInWindowManagerMode == true {
+		WinMove(Mouse.x4, 0, , , "A")
+		gotoNormal()
+		gotoMwMode()
+	}
+	else {
 	MouseMove(Mouse.zx3, Mouse.shiftCol)
 	gotoMouseMode()
 	Exit
+	}
 }
 c:: {
+	if WasInWindowManagerMode == true {
+		WinMove(Mouse.x4, 0, , , "A")
+		gotoNormal()
+		gotoMwMode()
+	}
+	else {
 	MouseMove(Mouse.zx4, Mouse.shiftCol)
 	gotoMouseMode()
 	Exit
+	}
 }
 v:: {
+	if WasInWindowManagerMode == true {
+		WinMove(Mouse.x4, 0, , , "A")
+		gotoNormal()
+		gotoMwMode()
+	}
+	else {
 	MouseMove(Mouse.zx5, Mouse.shiftCol)
 	gotoMouseMode()
 	Exit
+	}
 }
 b:: {
+	if WasInWindowManagerMode == true {
+		WinMove(Mouse.x4, 0, , , "A")
+		gotoNormal()
+		gotoMwMode()
+	}
+	else {
 	MouseMove(Mouse.zx6, Mouse.shiftCol)
 	gotoMouseMode()
 	Exit
+	}
 }
 n:: {
+	if WasInWindowManagerMode == true {
+		WinMove(Mouse.x4, 0, , , "A")
+		gotoNormal()
+		gotoMwMode()
+	}
+	else {
 	MouseMove(Mouse.zx7, Mouse.shiftCol)
 	gotoMouseMode()
 	Exit
+	}
 }
 m:: {
+	if WasInWindowManagerMode == true {
+		WinMove(Mouse.x4, 0, , , "A")
+		gotoNormal()
+		gotoMwMode()
+	}
+	else {
 	MouseMove(Mouse.zx8, Mouse.shiftCol)
 	gotoMouseMode()
 	Exit
+	}
 }
 ,:: {
+	if WasInWindowManagerMode == true {
+		WinMove(Mouse.x4, 0, , , "A")
+		gotoNormal()
+		gotoMwMode()
+	}
+	else {
 	MouseMove(Mouse.zx9, Mouse.shiftCol)
 	gotoMouseMode()
 	Exit
+	}
 }
 .:: {
+	if WasInWindowManagerMode == true {
+		WinMove(Mouse.x4, 0, , , "A")
+		gotoNormal()
+		gotoMwMode()
+	}
+	else {
 	MouseMove(Mouse.zx10, Mouse.shiftCol)
 	gotoMouseMode()
 	Exit
+	}
 }
 /:: {
+	if WasInWindowManagerMode == true {
+		WinMove(Mouse.x4, 0, , , "A")
+		gotoNormal()
+		gotoMwMode()
+	}
+	else {
 	MouseMove(Mouse.zx11, Mouse.shiftCol)
 	gotoMouseMode()
 	Exit
+	}
 }
 RShift:: {
+	if WasInWindowManagerMode == true {
+		WinMove(Mouse.x4, 0, , , "A")
+		gotoNormal()
+		gotoMwMode()
+	}
+	else {
 	MouseMove(Mouse.zx12, Mouse.shiftCol)
 	gotoMouseMode()
 	Exit
+	}
 }
 
 LWin:: {
+	if WasInWindowManagerMode == true {
+		WinMove(Mouse.x4, 0, , , "A")
+		gotoNormal()
+		gotoMwMode()
+	}
+	else {
 	MouseMove(Mouse.sx1, Mouse.spaceCol)
 	gotoMouseMode()
 	Exit
+	}
 }
 LAlt:: {
+	if WasInWindowManagerMode == true {
+		WinMove(Mouse.x4, 0, , , "A")
+		gotoNormal()
+		gotoMwMode()
+	}
+	else {
 	MouseMove(Mouse.sx2, Mouse.spaceCol)
 	gotoMouseMode()
 	Exit
+	}
 }
 Space:: {
+	if WasInWindowManagerMode == true {
+		WinMove(Mouse.x4, 0, , , "A")
+		gotoNormal()
+		gotoMwMode()
+	}
+	else {
 	MouseMove(Mouse.sx3, Mouse.spaceCol)
 	gotoMouseMode()
 	Exit
+	}
 }
 RAlt:: {
+	if WasInWindowManagerMode == true {
+		WinMove(Mouse.x4, 0, , , "A")
+		gotoNormal()
+		gotoMwMode()
+	}
+	else {
 	MouseMove(Mouse.sx4, Mouse.spaceCol)
 	gotoMouseMode()
 	Exit
+	}
 }
 ; fn key
 AppsKey:: {
+	if WasInWindowManagerMode == true {
+		WinMove(Mouse.x4, 0, , , "A")
+		gotoNormal()
+		gotoMwMode()
+	}
+	else {
 	MouseMove(Mouse.sx5, Mouse.spaceCol)
 	gotoMouseMode()
 	Exit
+	}
 }
 Rctrl:: {
+	if WasInWindowManagerMode == true {
+		WinMove(Mouse.x4, 0, , , "A")
+		gotoNormal()
+		gotoMwMode()
+	}
+	else {
 	MouseMove(Mouse.sx6, Mouse.spaceCol)
 	gotoMouseMode()
 	Exit
+	}
 }
 
+Esc:: {
+	if ( WasInMouseManagerMode == true) {
+		gotoNormal()
+		gotoMouseMode()
+	}
+	else {
+		gotoNormal()
+	}
+	Exit
+}
+
+!Esc:: {
+	exitVim()
+	Exit
+}
 
 #HotIf
 
@@ -999,18 +1431,55 @@ w:: {
 #HotIf gMode = 1
 HotIf "gMode = 1"
 t::{ 
-	Send "^{tab}"
-	gotoNormal()
+	if WasInMouseManagerMode == true {
+		Send "^{tab}"
+		gotoNormal()
+		gotoMouseMode()
+	}
+	else {
+		Send "^{tab}"
+		gotoNormal()
+	}
 	Exit
 }
 +t::{
-	Send "+^{tab}"
-	gotoNormal()
+	if WasInMouseManagerMode == true {
+		Send "^+{tab}"
+		gotoNormal()
+		gotoMouseMode()
+	}
+	else {
+		Send "^+{tab}"
+		gotoNormal()
+	}
 	Exit
 }
 g::{ 
-	Send "{Home}"
-	gotoNormal()
+	if WasInMouseManagerMode == true {
+		Send "{Home}"
+		gotoNormal()
+		gotoMouseMode()
+	}
+	else {
+		Send "{Home}"
+		gotoNormal()
+	}
+	Exit
+}
+
+Esc:: {
+	if ( WasInMouseManagerMode == true) {
+		gotoNormal()
+		gotoMouseMode()
+	}
+	else {
+		gotoNormal()
+	}
+	Exit
+}
+
+!Esc:: {
+	exitVim()
 	Exit
 }
 
@@ -1438,6 +1907,7 @@ f:: {
 }
 
 g:: {
+	global WasInMouseManagerMode := true
 	gotoGMode()
 	Exit
 }
@@ -1867,7 +2337,11 @@ HotIf "WindowManagerMode = 1"
 b:: Return
 c:: Return
 i:: Return
-m:: Return
+m:: {
+	global WasInWindowManagerMode := true
+	gotoFMode()
+	Exit
+}
 n:: Return
 o:: Return
 p:: Return
@@ -2013,7 +2487,11 @@ p:: {
 f:: {
 	gotoFMode()
 }
-
+g:: {
+	global WasInMouseManagerMode := true
+	gotoGMode()
+	Exit
+}
 i:: {
 	global WasInMouseManagerMode := true
 	gotoInsert()
@@ -2060,12 +2538,12 @@ hotkey "+a", ButtonMaxSpeedDown
 ^j:: Mouse.MoveDown(Mouse.BigMove)
 ^l:: Mouse.MoveRight(Mouse.BigMove)
 
-*t:: Click()
-*g:: Click("Right")
+t:: Click()
++t:: Click("Right")
 *b:: Click("Middle")
 
 v:: Mouse.HoldIfUp("L")
-#g:: Mouse.HoldIfUp("R")
++v:: Mouse.HoldIfUp("R")
 #b:: Mouse.HoldIfUp("M")
 
 1:: MouseMove(Mouse.FarLeftX, Mouse.MiddleY)
