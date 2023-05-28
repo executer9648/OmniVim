@@ -27,6 +27,7 @@ global visualLineMode := false
 global insertMode := false
 global WindowManagerMode := false
 global mouseManagerMode := false
+global WasInMouseManagerMode := false
 
 exitVim() {
 	Infos.DestroyAll()
@@ -58,12 +59,14 @@ exitVim() {
 }
 
 gotoWindowMode() {
+	global mouseManagerMode := false
 	global normalMode := false
 	global windowMode := true
 	StateBulb[4].Create()
 }
 
 gotoMwMode() {
+	global mouseManagerMode := false
 	global normalMode := false
 	global WindowManagerMode := true
 	StateBulb[5].Create()
@@ -72,6 +75,7 @@ gotoMwMode() {
 gotoMouseMode() {
 	global normalMode := false
 	global mouseManagerMode := true
+	global WasInMouseManagerMode := false
 	global fMode := false
 	StateBulb[6].Create()
 	StateBulb[4].Destroy()
@@ -159,6 +163,7 @@ gotoNormal() {
 	global yMode := false
 	global windowMode := false
 	global WindowManagerMode := false
+	global WasInMouseManagerMode := false
 	global mouseManagerMode := false
 	StateBulb[1].Create()
 	Infos.DestroyAll()
@@ -690,27 +695,71 @@ z:: Return
 	exitVim()
 	Exit
 }
-
 Esc:: {
-	gotoNormal()
+	if ( WasInMouseManagerMode == true) {
+		gotoNormal()
+		gotoMouseMode()
+	}
+	else {
+		gotoNormal()
+	}
 	Exit
 }
-
-*q:: {
+q:: {
 	Send "^w"
-	gotoNormal()
+	if ( WasInMouseManagerMode == true) {
+		gotoNormal()
+		gotoMouseMode()
+	}
+	else {
+		gotoNormal()
+	}
+	Exit
+}
+^q:: {
+	Send "^w"
+	if ( WasInMouseManagerMode == true) {
+		gotoNormal()
+		gotoMouseMode()
+	}
+	else {
+		gotoNormal()
+	}
+	Exit
+}
++q:: {
+	Send "!{f4}"
+	if ( WasInMouseManagerMode == true) {
+		gotoNormal()
+		gotoMouseMode()
+	}
+	else {
+		gotoNormal()
+	}
 	Exit
 }
 
 t:: {
 	Send "^t"
-	gotoNormal()
+	if ( WasInMouseManagerMode == true) {
+		gotoNormal()
+		gotoMouseMode()
+	}
+	else {
+		gotoNormal()
+	}
 	Exit
 }
 
 +t:: {
 	Send "^+t"
-	gotoNormal()
+	if ( WasInMouseManagerMode == true) {
+		gotoNormal()
+		gotoMouseMode()
+	}
+	else {
+		gotoNormal()
+	}
 	Exit
 }
 
@@ -1094,7 +1143,13 @@ HotIf "insertMode = 1"
 }
 
 Esc:: {
-	gotoNormal()
+	if ( WasInMouseManagerMode == true) {
+		gotoNormal()
+		gotoMouseMode()
+	}
+	else {
+		gotoNormal()
+	}
 	Exit
 }
 
@@ -1899,12 +1954,19 @@ w:: WindowManager().SetHalfWidth()
 e:: WindowManager().SetFullWidth()
 
 Esc:: {
-	gotoNormal()
+	if ( WasInMouseManagerMode == true) {
+		gotoNormal()
+		gotoMouseMode()
+	}
+	else {
+		gotoNormal()
+	}
 	Exit
 }
 
 !Esc:: {
 	exitVim()
+	Exit
 }
 
 #HotIf
@@ -1915,7 +1977,6 @@ HotIf "mouseManagerMode = 1"
 c:: Return
 r:: Return
 z:: Return
-,:: Return
 .:: Return
 /:: Return
 ':: Return
@@ -1935,13 +1996,29 @@ y:: {
 p:: {
 	Send "^v"
 }
+^w:: {
+	if visualMode == true {
+		Exit
+	}
+	else {
+		global WasInMouseManagerMode := true
+		gotoWindowMode()
+	}
+	Exit
+}
 
 f:: {
 	gotoFMode()
 }
 
-+i:: {
+i:: {
+	global WasInMouseManagerMode := true
 	gotoInsert()
+	Exit
+}
+m:: {
+	global WasInMouseManagerMode := true
+	gotoMwMode()
 	Exit
 }
 
@@ -1955,9 +2032,9 @@ f:: {
 
 
 Hotkey "u", ButtonAcceleration
-Hotkey "i", ButtonAcceleration
+Hotkey "o", ButtonAcceleration
 Hotkey "n", ButtonAcceleration
-Hotkey "m", ButtonAcceleration
+Hotkey ",", ButtonAcceleration
 Hotkey "h", ButtonAcceleration
 Hotkey "j", ButtonAcceleration
 Hotkey "k", ButtonAcceleration

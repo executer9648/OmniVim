@@ -652,7 +652,7 @@ EndMouseCurrentSpeedToSideCalculation()
 		DllCall("SetCursorPos", "int", x, "int", y)
 		; MouseMove g_Temp, g_Temp2, 0, "R"
 	}
-	else if g_Button = "i"
+	else if g_Button = "o"
 	{
 		g_Temp := g_MouseCurrentSpeedToDirection
 		g_Temp += g_MouseCurrentSpeedToSide
@@ -679,7 +679,7 @@ EndMouseCurrentSpeedToSideCalculation()
 		DllCall("SetCursorPos", "int", x, "int", y)
 		; MouseMove g_Temp, g_Temp2, 0, "R"
 	}
-	else if g_Button = "m"
+	else if g_Button = ","
 	{
 		g_Temp := g_MouseCurrentSpeedToDirection
 		g_Temp -= g_MouseCurrentSpeedToSide
