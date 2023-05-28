@@ -1138,7 +1138,8 @@ w:: {
 HotIf "insertMode = 1"
 
 !Esc:: {
-	exitVim()
+	;exitVim()
+	gotoNormal()
 	Exit
 }
 
@@ -1147,9 +1148,9 @@ Esc:: {
 		gotoNormal()
 		gotoMouseMode()
 	}
-	else {
-		gotoNormal()
-	}
+;	else {
+;		gotoNormal()
+;	}
 	Exit
 }
 
