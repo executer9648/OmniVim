@@ -9,6 +9,8 @@
 #Include Runner.ahk
 #Include Registers.ahk
 #Include mousetest.ahk
+#Include GetInput.ahk
+
 
 SetKeyDelay -1
 SetMouseDelay -1
@@ -20,6 +22,7 @@ global dMode := false
 global gMode := false
 global yMode := false
 global fMode := false
+global regMode := false
 global cMode := false
 global windowMode := false
 global visualMode := false
@@ -28,7 +31,9 @@ global insertMode := false
 global WindowManagerMode := false
 global mouseManagerMode := false
 global WasInMouseManagerMode := false
+global WasInRegMode := false
 global WasInWindowManagerMode := false
+global wasinCmdMode := false
 
 exitVim() {
 	Infos.DestroyAll()
@@ -36,6 +41,7 @@ exitVim() {
 	Global normalMode := false
 	Global insertMode := false
 	global dMode := false
+	global regMode := false
 	global gMode := false
 	global yMode := false
 	global cMode := false
@@ -51,6 +57,7 @@ exitVim() {
 	StateBulb[4].Destroy() ; Special
 	StateBulb[5].Destroy() ; Move windows
 	StateBulb[6].Destroy() ; Mouse Movement
+	StateBulb[7].Destroy() ; reg Mode
 	; StateBulb[4].Destroy() ; Delete
 	; StateBulb[5].Destroy() ; Change
 	; StateBulb[6].Destroy() ; Yank
@@ -77,6 +84,8 @@ gotoMouseMode() {
 	global normalMode := false
 	global mouseManagerMode := true
 	global WasInMouseManagerMode := false
+	global wasinCmdMode := false
+	global WasInRegMode := false
 	global WasInWindowManagerMode := false
 	global fMode := false
 	StateBulb[6].Create()
@@ -101,6 +110,12 @@ gotoDMode() {
 	global dMode := true
 	StateBulb[4].Create()
 	Send "{Right}"
+}
+
+gotoRegMode() {
+	global normalMode := false
+	global regMode := true
+	StateBulb[4].Create()
 }
 
 gotoYMode() {
@@ -132,12 +147,17 @@ gotoNormalnoInfo() {
 	global insertMode := false
 	global visualLineMode := false
 	global dMode := false
+	global regMode := false
 	global gMode := false
 	global cMode := false
 	global fMode := false
 	global yMode := false
 	global windowMode := false
 	global WindowManagerMode := false
+	global WasInMouseManagerMode := false
+	global wasinCmdMode := false
+	global WasInRegMode := false
+	global WasInWindowManagerMode := false
 	global mouseManagerMode := false
 	StateBulb[1].Create()
 	Send "{Left}"
@@ -159,6 +179,7 @@ gotoNormal() {
 	global insertMode := false
 	global visualLineMode := false
 	global dMode := false
+	global regMode := false
 	global gMode := false
 	global cMode := false
 	global fMode := false
@@ -166,6 +187,8 @@ gotoNormal() {
 	global windowMode := false
 	global WindowManagerMode := false
 	global WasInMouseManagerMode := false
+	global wasinCmdMode := false
+	global WasInRegMode := false
 	global WasInWindowManagerMode := false
 	global mouseManagerMode := false
 	StateBulb[1].Create()
@@ -181,6 +204,7 @@ gotoVisual() {
 	global insertMode := false
 	global visualLineMode := false
 	global dMode := false
+	global regMode := false
 	global gMode := false
 	global yMode := false
 	global fMode := false
@@ -205,6 +229,7 @@ gotoInsert() {
 	global insertMode := true
 	global visualLineMode := false
 	global dMode := false
+	global regMode := false
 	global gMode := false
 	global fMode := false
 	global yMode := false
@@ -229,6 +254,7 @@ gotoInsertnoInfo() {
 	global insertMode := true
 	global visualLineMode := false
 	global dMode := false
+	global regMode := false
 	global gMode := false
 	global fMode := false
 	global yMode := false
@@ -372,9 +398,9 @@ HotIf "fMode = 1"
 		gotoMwMode()
 	}
 	else {
-	MouseMove(Mouse.x3, Mouse.tildaCol)
-	gotoMouseMode()
-	Exit
+		MouseMove(Mouse.x3, Mouse.tildaCol)
+		gotoMouseMode()
+		Exit
 	}
 }
 3:: {
@@ -384,9 +410,9 @@ HotIf "fMode = 1"
 		gotoMwMode()
 	}
 	else {
-	MouseMove(Mouse.x4, Mouse.tildaCol)
-	gotoMouseMode()
-	Exit
+		MouseMove(Mouse.x4, Mouse.tildaCol)
+		gotoMouseMode()
+		Exit
 	}
 }
 4:: {
@@ -396,9 +422,9 @@ HotIf "fMode = 1"
 		gotoMwMode()
 	}
 	else {
-	MouseMove(Mouse.x5, Mouse.tildaCol)
-	gotoMouseMode()
-	Exit
+		MouseMove(Mouse.x5, Mouse.tildaCol)
+		gotoMouseMode()
+		Exit
 	}
 }
 5:: {
@@ -408,9 +434,9 @@ HotIf "fMode = 1"
 		gotoMwMode()
 	}
 	else {
-	MouseMove(Mouse.x6, Mouse.tildaCol)
-	gotoMouseMode()
-	Exit
+		MouseMove(Mouse.x6, Mouse.tildaCol)
+		gotoMouseMode()
+		Exit
 	}
 }
 6:: {
@@ -420,9 +446,9 @@ HotIf "fMode = 1"
 		gotoMwMode()
 	}
 	else {
-	MouseMove(Mouse.x7, Mouse.tildaCol)
-	gotoMouseMode()
-	Exit
+		MouseMove(Mouse.x7, Mouse.tildaCol)
+		gotoMouseMode()
+		Exit
 	}
 }
 7:: {
@@ -432,9 +458,9 @@ HotIf "fMode = 1"
 		gotoMwMode()
 	}
 	else {
-	MouseMove(Mouse.x8, Mouse.tildaCol)
-	gotoMouseMode()
-	Exit
+		MouseMove(Mouse.x8, Mouse.tildaCol)
+		gotoMouseMode()
+		Exit
 	}
 }
 8:: {
@@ -444,9 +470,9 @@ HotIf "fMode = 1"
 		gotoMwMode()
 	}
 	else {
-	MouseMove(Mouse.x9, Mouse.tildaCol)
-	gotoMouseMode()
-	Exit
+		MouseMove(Mouse.x9, Mouse.tildaCol)
+		gotoMouseMode()
+		Exit
 	}
 }
 9:: {
@@ -456,9 +482,9 @@ HotIf "fMode = 1"
 		gotoMwMode()
 	}
 	else {
-	MouseMove(Mouse.x10, Mouse.tildaCol)
-	gotoMouseMode()
-	Exit
+		MouseMove(Mouse.x10, Mouse.tildaCol)
+		gotoMouseMode()
+		Exit
 	}
 }
 0:: {
@@ -468,9 +494,9 @@ HotIf "fMode = 1"
 		gotoMwMode()
 	}
 	else {
-	MouseMove(Mouse.x11, Mouse.tildaCol)
-	gotoMouseMode()
-	Exit
+		MouseMove(Mouse.x11, Mouse.tildaCol)
+		gotoMouseMode()
+		Exit
 	}
 }
 -:: {
@@ -480,9 +506,9 @@ HotIf "fMode = 1"
 		gotoMwMode()
 	}
 	else {
-	MouseMove(Mouse.x12, Mouse.tildaCol)
-	gotoMouseMode()
-	Exit
+		MouseMove(Mouse.x12, Mouse.tildaCol)
+		gotoMouseMode()
+		Exit
 	}
 }
 =:: {
@@ -492,9 +518,9 @@ HotIf "fMode = 1"
 		gotoMwMode()
 	}
 	else {
-	MouseMove(Mouse.x13, Mouse.tildaCol)
-	gotoMouseMode()
-	Exit
+		MouseMove(Mouse.x13, Mouse.tildaCol)
+		gotoMouseMode()
+		Exit
 	}
 }
 BackSpace:: {
@@ -504,9 +530,9 @@ BackSpace:: {
 		gotoMwMode()
 	}
 	else {
-	MouseMove(Mouse.x14, Mouse.tildaCol)
-	gotoMouseMode()
-	Exit
+		MouseMove(Mouse.x14, Mouse.tildaCol)
+		gotoMouseMode()
+		Exit
 	}
 }
 
@@ -517,9 +543,9 @@ tab:: {
 		gotoMwMode()
 	}
 	else {
-	MouseMove(Mouse.x1, Mouse.tabCol)
-	gotoMouseMode()
-	Exit
+		MouseMove(Mouse.x1, Mouse.tabCol)
+		gotoMouseMode()
+		Exit
 	}
 }
 q:: {
@@ -529,9 +555,9 @@ q:: {
 		gotoMwMode()
 	}
 	else {
-	MouseMove(Mouse.x2, Mouse.tabCol)
-	gotoMouseMode()
-	Exit
+		MouseMove(Mouse.x2, Mouse.tabCol)
+		gotoMouseMode()
+		Exit
 	}
 }
 w:: {
@@ -541,9 +567,9 @@ w:: {
 		gotoMwMode()
 	}
 	else {
-	MouseMove(Mouse.x3, Mouse.tabCol)
-	gotoMouseMode()
-	Exit
+		MouseMove(Mouse.x3, Mouse.tabCol)
+		gotoMouseMode()
+		Exit
 	}
 }
 e:: {
@@ -553,9 +579,9 @@ e:: {
 		gotoMwMode()
 	}
 	else {
-	MouseMove(Mouse.x4, Mouse.tabCol)
-	gotoMouseMode()
-	Exit
+		MouseMove(Mouse.x4, Mouse.tabCol)
+		gotoMouseMode()
+		Exit
 	}
 }
 r:: {
@@ -565,9 +591,9 @@ r:: {
 		gotoMwMode()
 	}
 	else {
-	MouseMove(Mouse.x5, Mouse.tabCol)
-	gotoMouseMode()
-	Exit
+		MouseMove(Mouse.x5, Mouse.tabCol)
+		gotoMouseMode()
+		Exit
 	}
 }
 t:: {
@@ -577,9 +603,9 @@ t:: {
 		gotoMwMode()
 	}
 	else {
-	MouseMove(Mouse.x6, Mouse.tabCol)
-	gotoMouseMode()
-	Exit
+		MouseMove(Mouse.x6, Mouse.tabCol)
+		gotoMouseMode()
+		Exit
 	}
 }
 y:: {
@@ -589,9 +615,9 @@ y:: {
 		gotoMwMode()
 	}
 	else {
-	MouseMove(Mouse.x7, Mouse.tabCol)
-	gotoMouseMode()
-	Exit
+		MouseMove(Mouse.x7, Mouse.tabCol)
+		gotoMouseMode()
+		Exit
 	}
 }
 u:: {
@@ -601,9 +627,9 @@ u:: {
 		gotoMwMode()
 	}
 	else {
-	MouseMove(Mouse.x8, Mouse.tabCol)
-	gotoMouseMode()
-	Exit
+		MouseMove(Mouse.x8, Mouse.tabCol)
+		gotoMouseMode()
+		Exit
 	}
 }
 i:: {
@@ -613,9 +639,9 @@ i:: {
 		gotoMwMode()
 	}
 	else {
-	MouseMove(Mouse.x9, Mouse.tabCol)
-	gotoMouseMode()
-	Exit
+		MouseMove(Mouse.x9, Mouse.tabCol)
+		gotoMouseMode()
+		Exit
 	}
 }
 o:: {
@@ -625,9 +651,9 @@ o:: {
 		gotoMwMode()
 	}
 	else {
-	MouseMove(Mouse.x10, Mouse.tabCol)
-	gotoMouseMode()
-	Exit
+		MouseMove(Mouse.x10, Mouse.tabCol)
+		gotoMouseMode()
+		Exit
 	}
 }
 p:: {
@@ -637,9 +663,9 @@ p:: {
 		gotoMwMode()
 	}
 	else {
-	MouseMove(Mouse.x11, Mouse.tabCol)
-	gotoMouseMode()
-	Exit
+		MouseMove(Mouse.x11, Mouse.tabCol)
+		gotoMouseMode()
+		Exit
 	}
 }
 [:: {
@@ -649,9 +675,9 @@ p:: {
 		gotoMwMode()
 	}
 	else {
-	MouseMove(Mouse.x12, Mouse.tabCol)
-	gotoMouseMode()
-	Exit
+		MouseMove(Mouse.x12, Mouse.tabCol)
+		gotoMouseMode()
+		Exit
 	}
 }
 ]:: {
@@ -661,9 +687,9 @@ p:: {
 		gotoMwMode()
 	}
 	else {
-	MouseMove(Mouse.x13, Mouse.tabCol)
-	gotoMouseMode()
-	Exit
+		MouseMove(Mouse.x13, Mouse.tabCol)
+		gotoMouseMode()
+		Exit
 	}
 }
 \:: {
@@ -673,9 +699,9 @@ p:: {
 		gotoMwMode()
 	}
 	else {
-	MouseMove(Mouse.x14, Mouse.tabCol)
-	gotoMouseMode()
-	Exit
+		MouseMove(Mouse.x14, Mouse.tabCol)
+		gotoMouseMode()
+		Exit
 	}
 }
 LControl:: {
@@ -685,9 +711,9 @@ LControl:: {
 		gotoMwMode()
 	}
 	else {
-	MouseMove(Mouse.ax1, Mouse.capsCol)
-	gotoMouseMode()
-	Exit
+		MouseMove(Mouse.ax1, Mouse.capsCol)
+		gotoMouseMode()
+		Exit
 	}
 }
 a:: {
@@ -697,9 +723,9 @@ a:: {
 		gotoMwMode()
 	}
 	else {
-	MouseMove(Mouse.ax2, Mouse.capsCol)
-	gotoMouseMode()
-	Exit
+		MouseMove(Mouse.ax2, Mouse.capsCol)
+		gotoMouseMode()
+		Exit
 	}
 }
 s:: {
@@ -709,9 +735,9 @@ s:: {
 		gotoMwMode()
 	}
 	else {
-	MouseMove(Mouse.ax3, Mouse.capsCol)
-	gotoMouseMode()
-	Exit
+		MouseMove(Mouse.ax3, Mouse.capsCol)
+		gotoMouseMode()
+		Exit
 	}
 }
 d:: {
@@ -721,9 +747,9 @@ d:: {
 		gotoMwMode()
 	}
 	else {
-	MouseMove(Mouse.ax4, Mouse.capsCol)
-	gotoMouseMode()
-	Exit
+		MouseMove(Mouse.ax4, Mouse.capsCol)
+		gotoMouseMode()
+		Exit
 	}
 }
 f:: {
@@ -733,9 +759,9 @@ f:: {
 		gotoMwMode()
 	}
 	else {
-	MouseMove(Mouse.ax5, Mouse.capsCol)
-	gotoMouseMode()
-	Exit
+		MouseMove(Mouse.ax5, Mouse.capsCol)
+		gotoMouseMode()
+		Exit
 	}
 }
 g:: {
@@ -745,9 +771,9 @@ g:: {
 		gotoMwMode()
 	}
 	else {
-	MouseMove(Mouse.ax6, Mouse.capsCol)
-	gotoMouseMode()
-	Exit
+		MouseMove(Mouse.ax6, Mouse.capsCol)
+		gotoMouseMode()
+		Exit
 	}
 }
 h:: {
@@ -757,9 +783,9 @@ h:: {
 		gotoMwMode()
 	}
 	else {
-	MouseMove(Mouse.ax7, Mouse.capsCol)
-	gotoMouseMode()
-	Exit
+		MouseMove(Mouse.ax7, Mouse.capsCol)
+		gotoMouseMode()
+		Exit
 	}
 }
 j:: {
@@ -769,9 +795,9 @@ j:: {
 		gotoMwMode()
 	}
 	else {
-	MouseMove(Mouse.ax8, Mouse.capsCol)
-	gotoMouseMode()
-	Exit
+		MouseMove(Mouse.ax8, Mouse.capsCol)
+		gotoMouseMode()
+		Exit
 	}
 }
 k:: {
@@ -781,9 +807,9 @@ k:: {
 		gotoMwMode()
 	}
 	else {
-	MouseMove(Mouse.ax9, Mouse.capsCol)
-	gotoMouseMode()
-	Exit
+		MouseMove(Mouse.ax9, Mouse.capsCol)
+		gotoMouseMode()
+		Exit
 	}
 }
 l:: {
@@ -793,9 +819,9 @@ l:: {
 		gotoMwMode()
 	}
 	else {
-	MouseMove(Mouse.ax10, Mouse.capsCol)
-	gotoMouseMode()
-	Exit
+		MouseMove(Mouse.ax10, Mouse.capsCol)
+		gotoMouseMode()
+		Exit
 	}
 }
 `;:: {
@@ -805,9 +831,9 @@ l:: {
 		gotoMwMode()
 	}
 	else {
-	MouseMove(Mouse.ax11, Mouse.capsCol)
-	gotoMouseMode()
-	Exit
+		MouseMove(Mouse.ax11, Mouse.capsCol)
+		gotoMouseMode()
+		Exit
 	}
 }
 ':: {
@@ -817,9 +843,9 @@ l:: {
 		gotoMwMode()
 	}
 	else {
-	MouseMove(Mouse.ax12, Mouse.capsCol)
-	gotoMouseMode()
-	Exit
+		MouseMove(Mouse.ax12, Mouse.capsCol)
+		gotoMouseMode()
+		Exit
 	}
 }
 Enter:: {
@@ -829,9 +855,9 @@ Enter:: {
 		gotoMwMode()
 	}
 	else {
-	MouseMove(Mouse.ax13, Mouse.capsCol)
-	gotoMouseMode()
-	Exit
+		MouseMove(Mouse.ax13, Mouse.capsCol)
+		gotoMouseMode()
+		Exit
 	}
 }
 
@@ -842,9 +868,9 @@ LShift:: {
 		gotoMwMode()
 	}
 	else {
-	MouseMove(Mouse.zx1, Mouse.shiftCol)
-	gotoMouseMode()
-	Exit
+		MouseMove(Mouse.zx1, Mouse.shiftCol)
+		gotoMouseMode()
+		Exit
 	}
 }
 z:: {
@@ -854,9 +880,9 @@ z:: {
 		gotoMwMode()
 	}
 	else {
-	MouseMove(Mouse.zx2, Mouse.shiftCol)
-	gotoMouseMode()
-	Exit
+		MouseMove(Mouse.zx2, Mouse.shiftCol)
+		gotoMouseMode()
+		Exit
 	}
 }
 x:: {
@@ -866,9 +892,9 @@ x:: {
 		gotoMwMode()
 	}
 	else {
-	MouseMove(Mouse.zx3, Mouse.shiftCol)
-	gotoMouseMode()
-	Exit
+		MouseMove(Mouse.zx3, Mouse.shiftCol)
+		gotoMouseMode()
+		Exit
 	}
 }
 c:: {
@@ -878,9 +904,9 @@ c:: {
 		gotoMwMode()
 	}
 	else {
-	MouseMove(Mouse.zx4, Mouse.shiftCol)
-	gotoMouseMode()
-	Exit
+		MouseMove(Mouse.zx4, Mouse.shiftCol)
+		gotoMouseMode()
+		Exit
 	}
 }
 v:: {
@@ -890,9 +916,9 @@ v:: {
 		gotoMwMode()
 	}
 	else {
-	MouseMove(Mouse.zx5, Mouse.shiftCol)
-	gotoMouseMode()
-	Exit
+		MouseMove(Mouse.zx5, Mouse.shiftCol)
+		gotoMouseMode()
+		Exit
 	}
 }
 b:: {
@@ -902,9 +928,9 @@ b:: {
 		gotoMwMode()
 	}
 	else {
-	MouseMove(Mouse.zx6, Mouse.shiftCol)
-	gotoMouseMode()
-	Exit
+		MouseMove(Mouse.zx6, Mouse.shiftCol)
+		gotoMouseMode()
+		Exit
 	}
 }
 n:: {
@@ -914,9 +940,9 @@ n:: {
 		gotoMwMode()
 	}
 	else {
-	MouseMove(Mouse.zx7, Mouse.shiftCol)
-	gotoMouseMode()
-	Exit
+		MouseMove(Mouse.zx7, Mouse.shiftCol)
+		gotoMouseMode()
+		Exit
 	}
 }
 m:: {
@@ -926,9 +952,9 @@ m:: {
 		gotoMwMode()
 	}
 	else {
-	MouseMove(Mouse.zx8, Mouse.shiftCol)
-	gotoMouseMode()
-	Exit
+		MouseMove(Mouse.zx8, Mouse.shiftCol)
+		gotoMouseMode()
+		Exit
 	}
 }
 ,:: {
@@ -938,9 +964,9 @@ m:: {
 		gotoMwMode()
 	}
 	else {
-	MouseMove(Mouse.zx9, Mouse.shiftCol)
-	gotoMouseMode()
-	Exit
+		MouseMove(Mouse.zx9, Mouse.shiftCol)
+		gotoMouseMode()
+		Exit
 	}
 }
 .:: {
@@ -950,9 +976,9 @@ m:: {
 		gotoMwMode()
 	}
 	else {
-	MouseMove(Mouse.zx10, Mouse.shiftCol)
-	gotoMouseMode()
-	Exit
+		MouseMove(Mouse.zx10, Mouse.shiftCol)
+		gotoMouseMode()
+		Exit
 	}
 }
 /:: {
@@ -962,9 +988,9 @@ m:: {
 		gotoMwMode()
 	}
 	else {
-	MouseMove(Mouse.zx11, Mouse.shiftCol)
-	gotoMouseMode()
-	Exit
+		MouseMove(Mouse.zx11, Mouse.shiftCol)
+		gotoMouseMode()
+		Exit
 	}
 }
 RShift:: {
@@ -974,9 +1000,9 @@ RShift:: {
 		gotoMwMode()
 	}
 	else {
-	MouseMove(Mouse.zx12, Mouse.shiftCol)
-	gotoMouseMode()
-	Exit
+		MouseMove(Mouse.zx12, Mouse.shiftCol)
+		gotoMouseMode()
+		Exit
 	}
 }
 
@@ -987,9 +1013,9 @@ LWin:: {
 		gotoMwMode()
 	}
 	else {
-	MouseMove(Mouse.sx1, Mouse.spaceCol)
-	gotoMouseMode()
-	Exit
+		MouseMove(Mouse.sx1, Mouse.spaceCol)
+		gotoMouseMode()
+		Exit
 	}
 }
 LAlt:: {
@@ -999,9 +1025,9 @@ LAlt:: {
 		gotoMwMode()
 	}
 	else {
-	MouseMove(Mouse.sx2, Mouse.spaceCol)
-	gotoMouseMode()
-	Exit
+		MouseMove(Mouse.sx2, Mouse.spaceCol)
+		gotoMouseMode()
+		Exit
 	}
 }
 Space:: {
@@ -1011,9 +1037,9 @@ Space:: {
 		gotoMwMode()
 	}
 	else {
-	MouseMove(Mouse.sx3, Mouse.spaceCol)
-	gotoMouseMode()
-	Exit
+		MouseMove(Mouse.sx3, Mouse.spaceCol)
+		gotoMouseMode()
+		Exit
 	}
 }
 RAlt:: {
@@ -1023,9 +1049,9 @@ RAlt:: {
 		gotoMwMode()
 	}
 	else {
-	MouseMove(Mouse.sx4, Mouse.spaceCol)
-	gotoMouseMode()
-	Exit
+		MouseMove(Mouse.sx4, Mouse.spaceCol)
+		gotoMouseMode()
+		Exit
 	}
 }
 ; fn key
@@ -1036,9 +1062,9 @@ AppsKey:: {
 		gotoMwMode()
 	}
 	else {
-	MouseMove(Mouse.sx5, Mouse.spaceCol)
-	gotoMouseMode()
-	Exit
+		MouseMove(Mouse.sx5, Mouse.spaceCol)
+		gotoMouseMode()
+		Exit
 	}
 }
 Rctrl:: {
@@ -1048,14 +1074,14 @@ Rctrl:: {
 		gotoMwMode()
 	}
 	else {
-	MouseMove(Mouse.sx6, Mouse.spaceCol)
-	gotoMouseMode()
-	Exit
+		MouseMove(Mouse.sx6, Mouse.spaceCol)
+		gotoMouseMode()
+		Exit
 	}
 }
 
 Esc:: {
-	if ( WasInMouseManagerMode == true) {
+	if (WasInMouseManagerMode == true) {
 		gotoNormal()
 		gotoMouseMode()
 	}
@@ -1128,7 +1154,7 @@ z:: Return
 	Exit
 }
 Esc:: {
-	if ( WasInMouseManagerMode == true) {
+	if (WasInMouseManagerMode == true) {
 		gotoNormal()
 		gotoMouseMode()
 	}
@@ -1139,7 +1165,7 @@ Esc:: {
 }
 q:: {
 	Send "^w"
-	if ( WasInMouseManagerMode == true) {
+	if (WasInMouseManagerMode == true) {
 		gotoNormal()
 		gotoMouseMode()
 	}
@@ -1150,7 +1176,7 @@ q:: {
 }
 ^q:: {
 	Send "^w"
-	if ( WasInMouseManagerMode == true) {
+	if (WasInMouseManagerMode == true) {
 		gotoNormal()
 		gotoMouseMode()
 	}
@@ -1161,7 +1187,7 @@ q:: {
 }
 +q:: {
 	Send "!{f4}"
-	if ( WasInMouseManagerMode == true) {
+	if (WasInMouseManagerMode == true) {
 		gotoNormal()
 		gotoMouseMode()
 	}
@@ -1173,7 +1199,7 @@ q:: {
 
 t:: {
 	Send "^t"
-	if ( WasInMouseManagerMode == true) {
+	if (WasInMouseManagerMode == true) {
 		gotoNormal()
 		gotoMouseMode()
 	}
@@ -1185,7 +1211,7 @@ t:: {
 
 +t:: {
 	Send "^+t"
-	if ( WasInMouseManagerMode == true) {
+	if (WasInMouseManagerMode == true) {
 		gotoNormal()
 		gotoMouseMode()
 	}
@@ -1430,7 +1456,7 @@ w:: {
 ; g mode
 #HotIf gMode = 1
 HotIf "gMode = 1"
-t::{ 
+t:: {
 	if WasInMouseManagerMode == true {
 		Send "^{tab}"
 		gotoNormal()
@@ -1442,7 +1468,7 @@ t::{
 	}
 	Exit
 }
-+t::{
++t:: {
 	if WasInMouseManagerMode == true {
 		Send "^+{tab}"
 		gotoNormal()
@@ -1454,7 +1480,7 @@ t::{
 	}
 	Exit
 }
-g::{ 
+g:: {
 	if WasInMouseManagerMode == true {
 		Send "{Home}"
 		gotoNormal()
@@ -1468,7 +1494,7 @@ g::{
 }
 
 Esc:: {
-	if ( WasInMouseManagerMode == true) {
+	if (WasInMouseManagerMode == true) {
 		gotoNormal()
 		gotoMouseMode()
 	}
@@ -1484,6 +1510,13 @@ Esc:: {
 }
 
 #HotIf
+
+#HotIf regMode = 1
+HotIf "regMode = 1"
+
+
+#HotIf
+
 ; Delete mode
 #HotIf dMode = 1
 HotIf "dMode = 1"
@@ -1613,9 +1646,12 @@ HotIf "insertMode = 1"
 }
 
 Esc:: {
-	if ( WasInMouseManagerMode == true) {
+	if (WasInMouseManagerMode == true) {
 		gotoNormal()
 		gotoMouseMode()
+	}
+	else if (wasinCmdMode == true) {
+		Send "{Esc}"
 	}
 	else {
 		gotoNormal()
@@ -1750,6 +1786,7 @@ HotIf "normalMode = 1"
 `;:: Return
 +;:: {
 	gotoInsertnoInfo()
+	global wasinCmdMode := true
 	Runner.openRunner()
 	gotoNormalnoInfo()
 }
@@ -1763,15 +1800,15 @@ HotIf "normalMode = 1"
 		formatstr := A_Clipboard
 		if RegExMatch(formatstr, "^[A-Z\s\p{P}]+$") {
 			string1 := StrLower(formatstr)
-			SendText string1
+			ClipSend(string1, , false)
 		}
 		else if RegExMatch(formatstr, "^[a-z\s\p{P}]+$") {
 			string1 := StrUpper(formatstr)
-			SendText string1
+			ClipSend(string1, , false)
 		}
 		else {
 			string1 := StrUpper(formatstr)
-			SendText string1
+			ClipSend(string1, , false)
 		}
 		Send "{Left}"
 		Send "+{Right}"
@@ -1812,7 +1849,66 @@ HotIf "normalMode = 1"
 }
 ':: Return
 +':: {
-	Exit
+	global normalMode := false
+	StateBulb[7].Create()
+	rego := InputHook("C")
+	rego.KeyOpt("{All}", "ESI") ;End Keys & Suppress
+	rego.KeyOpt("{LCtrl}{RCtrl}{LAlt}{RAlt}{LShift}{RShift}{LWin}{RWin}", "-ES") ;Exclude the modifiers
+	rego.Start()
+	rego.Wait()
+	var := rego.EndMods
+	var .= rego.EndKey
+	reg := rego.EndKey
+	if var == "<!Escape" {
+		exitVim()
+		Exit
+	}
+	else if reg == "Escape" {
+		StateBulb[7].Destroy()
+		global normalMode := true
+		Exit
+	}
+	rego := InputHook("C")
+	rego.KeyOpt("{All}", "ESI") ;End Keys & Suppress
+	rego.KeyOpt("{LCtrl}{RCtrl}{LAlt}{RAlt}{LShift}{RShift}{LWin}{RWin}", "-ES") ;Exclude the modifiers
+	rego.Start()
+	rego.Wait()
+	var := rego.EndMods
+	var .= rego.EndKey
+	operator := rego.EndKey
+	if var == "<!Escape" {
+		exitVim()
+		Exit
+	}
+	else if operator == "Escape" {
+		StateBulb[7].Destroy()
+		global normalMode := true
+		Exit
+	}
+	else if (operator == "y") {
+		Send "^c"
+		ClipWait 1
+		Sleep 10
+		Registers(reg).WriteOrAppend()
+	}
+	else if (operator == "d") {
+		Send "^x"
+		ClipWait 1
+		Sleep 10
+		Registers(reg).WriteOrAppend()
+	}
+	else if (operator == "p") {
+		Registers(reg).Paste()
+	}
+	else if (operator == "l") {
+		Registers(reg).Look()
+	}
+	else if (operator == "m") {
+		secReg := GetInput("L1", "{Esc}").Input
+		Registers(reg).Move(secReg)
+	}
+	StateBulb[7].Destroy()
+	global normalMode := true
 }
 [:: Return
 \:: Return
@@ -2122,19 +2218,19 @@ l:: {
 	Exit
 }
 
-!h::{
+!h:: {
 	Send "{Left}"
 	Exit
 }
-!l::{
+!l:: {
 	Send "{Right}"
 	Exit
 }
-!j::{
+!j:: {
 	Send "{Down}"
 	Exit
 }
-!k::{
+!k:: {
 	Send "{Up}"
 	Exit
 }
@@ -2203,13 +2299,13 @@ w:: {
 }
 
 O:: {
-	Send "{End}{Enter}"
+	Send "{End}+{Enter}"
 	gotoInsert()
 	Exit
 }
 
 +O:: {
-	Send "{Home}{Enter}{Up}"
+	Send "{Home}+{Enter}{Up}"
 	gotoInsert()
 	Exit
 }
@@ -2337,7 +2433,8 @@ HotIf "WindowManagerMode = 1"
 b:: Return
 c:: Return
 i:: Return
-m:: {
+m:: Return
+!f:: {
 	global WasInWindowManagerMode := true
 	gotoFMode()
 	Exit
@@ -2431,7 +2528,7 @@ w:: WindowManager().SetHalfWidth()
 e:: WindowManager().SetFullWidth()
 
 Esc:: {
-	if ( WasInMouseManagerMode == true) {
+	if (WasInMouseManagerMode == true) {
 		gotoNormal()
 		gotoMouseMode()
 	}

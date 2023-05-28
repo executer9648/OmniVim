@@ -77,15 +77,15 @@ A_MaxHotkeysPerInterval := 500
 #UseHook
 
 g_MouseSpeed := 1
-g_MouseAccelerationSpeed := 1
-g_MouseMaxSpeed := 5
+g_MouseAccelerationSpeed := 10
+g_MouseMaxSpeed := 20
 
 ;Mouse wheel speed is also set on Control Panel. As that
 ;will affect the normal mouse behavior, the real speed of
 ;these three below are times the normal mouse wheel speed.
 g_MouseWheelSpeed := 1
-g_MouseWheelAccelerationSpeed := 1
-g_MouseWheelMaxSpeed := 5
+g_MouseWheelAccelerationSpeed := 10
+g_MouseWheelMaxSpeed := 20
 
 g_MouseRotationAngle := 0
 
