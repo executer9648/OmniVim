@@ -17,6 +17,7 @@ SetMouseDelay -1
 CoordMode "Mouse", "Screen"
 
 ; Set initial state to normal (disabled)
+global counter := 0
 global normalMode := false
 global dMode := false
 global gMode := false
@@ -1869,7 +1870,7 @@ HotIf "normalMode = 1"
 		Exit
 	}
 	rego := InputHook("C")
-	rego.KeyOpt("{All}", "ESI") ;End Keys & Suppress
+	rego.KeyOpt("{All}", "ESI") ;End Keys & Ruppress
 	rego.KeyOpt("{LCtrl}{RCtrl}{LAlt}{RAlt}{LShift}{RShift}{LWin}{RWin}", "-ES") ;Exclude the modifiers
 	rego.Start()
 	rego.Wait()
@@ -1935,15 +1936,70 @@ s:: {
 }
 t:: Return
 z:: Return
-1:: Return
-2:: Return
-3:: Return
-4:: Return
-5:: Return
-6:: Return
-7:: Return
-8:: Return
-9:: Return
+
+1:: {
+	global counter
+	if counter >= 0 {
+		counter *= 10
+		counter += 1
+	}
+}
+2:: {
+	global counter
+	if counter >= 0 {
+		counter *= 10
+		counter += 2
+	}
+}
+3:: {
+	global counter
+	if counter >= 0 {
+		counter *= 10
+		counter += 3
+	}
+}
+4:: {
+	global counter
+	if counter >= 0 {
+		counter *= 10
+		counter += 4
+	}
+}
+5:: {
+	global counter
+	if counter >= 0 {
+		counter *= 10
+		counter += 5
+	}
+}
+6:: {
+	global counter
+	if counter >= 0 {
+		counter *= 10
+		counter += 6
+	}
+}
+7:: {
+	global counter
+	if counter >= 0 {
+		counter *= 10
+		counter += 7
+	}
+}
+8:: {
+	global counter
+	if counter >= 0 {
+		counter *= 10
+		counter += 8
+	}
+}
+9:: {
+	global counter
+	if counter >= 0 {
+		counter *= 10
+		counter += 9
+	}
+}
 
 
 +f:: {
@@ -2124,6 +2180,29 @@ i:: {
 }
 
 h:: {
+	global counter
+	if counter != 0 {
+		while (counter > 0)
+		{
+			MsgBox counter
+			if visualMode == true
+			{
+				Send "+{left}"
+				Exit
+			}
+			else
+			{
+				Send "{Left}"
+				Send "{Left}"
+				Send "+{Right}"
+				Exit
+			}
+			Sleep 1000
+			counter -= 1
+		}
+		counter := 0
+		Exit
+	}
 	if visualMode == true
 	{
 		Send "+{left}"
@@ -2175,6 +2254,19 @@ k:: {
 	}
 }
 
+Space:: {
+	if visualMode == true
+	{
+		Send "+{Right}"
+	}
+	else
+	{
+		Send "{Left}"
+		Send "{Right}"
+		Send "+{Right}"
+		Exit
+	}
+}
 l:: {
 	if visualMode == true
 	{
