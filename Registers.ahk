@@ -45,7 +45,7 @@ class Registers {
 	 * You can still peek them using Peek()
 	 * @type {String}
 	 */
-	static ExplicitPeekOnly := "suf"
+	static ExplicitPeekOnly := ""
 
 	/**
 	 * Manage your clipboards by writing it to different files.
@@ -196,28 +196,28 @@ class Registers {
 	}
 
 	; /**
-	; * Run the contents of a register with the Run() function.
-	; * One line == one command.
-	; * For example, you can store 5 links in a register and run that register to open those 5 links at once.
-	; * Lines that start with `;` are considered comments and don't get ran
+	; * run the contents of a register with the run() function.
+	; * one line == one command.
+	; * for example, you can store 5 links in a register and run that register to open those 5 links at once.
+	; * lines that start with `;` are considered comments and don't get ran
 	; */
-	; Run(showOutput := true) {
-	; cmdie := Cmd()
+	; run(showoutput := true) {
+	; cmdie := cmd()
 	; output := ""
-	; text := this.Read()
-	; text := StrReplace(text, "`r")
-	; commands := StrSplit(text, "`n")
+	; text := this.read()
+	; text := strreplace(text, "`r")
+	; commands := strsplit(text, "`n")
 	; for index, command in commands {
 	; if command ~= "^;"
 	; continue
 	; if command ~= "^http" {
-	; Run(command)
+	; run(command)
 	; continue
 	; }
-	; output .= cmdie.Execute(command).StdOut
+	; output .= cmdie.execute(command).stdout
 	; }
-	; if output && showOutput
-	; Infos(output)
+	; if output && showoutput
+	; infos(output)
 	; }
 
 	/**

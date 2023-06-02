@@ -52,6 +52,7 @@ exitVim() {
 	global WindowManagerMode := false
 	global mouseManagerMode := false
 	Global visualLineMode := false
+	global counter := 0
 	StateBulb[1].Destroy() ; Vim
 	StateBulb[2].Destroy() ; Insert
 	StateBulb[3].Destroy() ; Visual
@@ -192,6 +193,7 @@ gotoNormal() {
 	global WasInRegMode := false
 	global WasInWindowManagerMode := false
 	global mouseManagerMode := false
+	global counter := 0
 	StateBulb[1].Create()
 	Infos.DestroyAll()
 	Infos("Normal Mode", 1500)
@@ -1458,6 +1460,21 @@ w:: {
 #HotIf gMode = 1
 HotIf "gMode = 1"
 t:: {
+	global counter
+	if counter != 0 {
+		Loop counter {
+			Send "^{tab}"
+		}
+		counter := 0
+		if WasInMouseManagerMode == true {
+			gotoNormal()
+			gotoMouseMode()
+		}
+		else {
+			gotoNormal()
+		}
+		Exit
+	}
 	if WasInMouseManagerMode == true {
 		Send "^{tab}"
 		gotoNormal()
@@ -1470,6 +1487,21 @@ t:: {
 	Exit
 }
 +t:: {
+	global counter
+	if counter != 0 {
+		Loop counter {
+			Send "^+{tab}"
+		}
+		counter := 0
+		if WasInMouseManagerMode == true {
+			gotoNormal()
+			gotoMouseMode()
+		}
+		else {
+			gotoNormal()
+		}
+		Exit
+	}
 	if WasInMouseManagerMode == true {
 		Send "^+{tab}"
 		gotoNormal()
@@ -1908,6 +1940,10 @@ HotIf "normalMode = 1"
 		secReg := GetInput("L1", "{Esc}").Input
 		Registers(reg).Move(secReg)
 	}
+	else if (operator == "s") {
+		secReg := GetInput("L1", "{Esc}").Input
+		Registers(reg).SwitchContents(secReg)
+	}
 	StateBulb[7].Destroy()
 	global normalMode := true
 }
@@ -2059,7 +2095,6 @@ f:: {
 }
 
 g:: {
-	global WasInMouseManagerMode := true
 	gotoGMode()
 	Exit
 }
@@ -2182,23 +2217,17 @@ i:: {
 h:: {
 	global counter
 	if counter != 0 {
-		while (counter > 0)
-		{
-			MsgBox counter
+		Loop counter {
 			if visualMode == true
 			{
 				Send "+{left}"
-				Exit
 			}
 			else
 			{
 				Send "{Left}"
 				Send "{Left}"
 				Send "+{Right}"
-				Exit
 			}
-			Sleep 1000
-			counter -= 1
 		}
 		counter := 0
 		Exit
@@ -2217,6 +2246,28 @@ h:: {
 }
 
 j:: {
+	global counter
+	if counter != 0 {
+		Loop counter {
+			if visualLineMode == true
+			{
+				Send "+{Down}"
+				Send "+{End}"
+			}
+			else if visualMode == true
+			{
+				Send "+{Down}"
+			}
+			else
+			{
+				Send "{Left}"
+				Send "{Down}"
+				Send "+{Right}"
+			}
+		}
+		counter := 0
+		Exit
+	}
 	if visualLineMode == true
 	{
 		Send "+{Down}"
@@ -2236,6 +2287,28 @@ j:: {
 }
 
 k:: {
+	global counter
+	if counter != 0 {
+		Loop counter {
+			if visualLineMode == true
+			{
+				Send "+{Up}"
+				Send "+{Home}"
+			}
+			else if visualMode == true
+			{
+				Send "+{Up}"
+			}
+			else
+			{
+				Send "{Left}"
+				Send "{Up}"
+				Send "+{Right}"
+			}
+		}
+		counter := 0
+		Exit
+	}
 	if visualLineMode == true
 	{
 		Send "+{Up}"
@@ -2268,6 +2341,23 @@ Space:: {
 	}
 }
 l:: {
+	global counter
+	if counter != 0 {
+		Loop counter {
+			if visualMode == true
+			{
+				Send "+{Right}"
+			}
+			else
+			{
+				Send "{Left}"
+				Send "{Right}"
+				Send "+{Right}"
+			}
+		}
+		counter := 0
+		Exit
+	}
 	if visualMode == true
 	{
 		Send "+{Right}"
@@ -2444,6 +2534,11 @@ p:: {
 
 0::
 {
+	global counter
+	if counter != 0 {
+		counter *= 10
+		exit
+	}
 	if visualMode == true
 	{
 		Send "+{home}"
@@ -2644,7 +2739,11 @@ c:: Return
 r:: Return
 z:: Return
 .:: Return
-/:: Return
+/:: {
+	Send "^f"
+	gotoInsert()
+	Exit
+}
 ':: Return
 [:: Return
 ]:: Return
