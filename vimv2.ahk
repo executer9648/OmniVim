@@ -1,6 +1,7 @@
 ﻿#SingleInstance
 #MaxThreadsBuffer True
-#MaxThreadsPerHotkey 5
+#MaxThreads 200
+#MaxThreadsPerHotkey 100
 #UseHook
 #Include StateBulb.ahk
 #Include Info.ahk
@@ -11,10 +12,17 @@
 #Include mousetest.ahk
 #Include GetInput.ahk
 
+A_HotkeyInterval := 0
 
-SetKeyDelay -1
+SetKeyDelay 10000
 SetMouseDelay -1
 CoordMode "Mouse", "Screen"
+
+
+$CapsLock::Control
++!Control::CapsLock
++#r:: Reload
++#e:: Edit
 
 ; Set initial state to normal (disabled)
 global counter := 0
@@ -195,8 +203,8 @@ gotoNormal() {
 	global mouseManagerMode := false
 	global counter := 0
 	StateBulb[1].Create()
-	Infos.DestroyAll()
-	Infos("Normal Mode", 1500)
+	; Infos.DestroyAll()
+	; Infos("Normal Mode", 1500)
 	Send "{Left}"
 	Send "+{Right}"
 }
@@ -216,8 +224,8 @@ gotoVisual() {
 	global WindowManagerMode := false
 	global mouseManagerMode := false
 	StateBulb[3].Create()
-	Infos.DestroyAll()
-	Infos("Visual Mode", 1500)
+	; Infos.DestroyAll()
+	; Infos("Visual Mode", 1500)
 }
 
 gotoInsert() {
@@ -241,8 +249,8 @@ gotoInsert() {
 	global WindowManagerMode := false
 	global mouseManagerMode := false
 	StateBulb[2].Create()
-	Infos.DestroyAll()
-	Infos("Insert Mode", 1500)
+	; Infos.DestroyAll()
+	; Infos("Insert Mode", 1500)
 }
 
 gotoInsertnoInfo() {
@@ -345,10 +353,6 @@ delChanYantMotion() {
 	Send "{Left}"
 }
 
-$CapsLock::Control
-+!Control::CapsLock
-+#r:: Reload
-+#e:: Edit
 
 ; Define the hotkey to enable the keybindings
 ^[:: {
@@ -1135,7 +1139,6 @@ r:: Return
 s:: Return
 u:: Return
 v:: Return
-w:: Return
 x:: Return
 y:: Return
 z:: Return
@@ -1214,6 +1217,18 @@ t:: {
 
 +t:: {
 	Send "^+t"
+	if (WasInMouseManagerMode == true) {
+		gotoNormal()
+		gotoMouseMode()
+	}
+	else {
+		gotoNormal()
+	}
+	Exit
+}
+
+w:: {
+	Send "^!{Tab}"
 	if (WasInMouseManagerMode == true) {
 		gotoNormal()
 		gotoMouseMode()
@@ -1827,21 +1842,21 @@ HotIf "normalMode = 1"
 +`:: {
 	if visualMode == true {
 		oldclip := A_Clipboard
+		A_Clipboard := ""
 		Send "^c"
-		ClipWait 1
-		sleep 10
+		ClipWait
 		formatstr := A_Clipboard
-		if RegExMatch(formatstr, "^[A-Z\s\p{P}]+$") {
+		if RegExMatch(formatstr, "^[A-Z\s\p{P}!]+$") {
 			string1 := StrLower(formatstr)
-			ClipSend(string1, , false)
+			SendText string1
 		}
-		else if RegExMatch(formatstr, "^[a-z\s\p{P}]+$") {
+		else if RegExMatch(formatstr, "^[a-z\s\p{P}!]+$") {
 			string1 := StrUpper(formatstr)
-			ClipSend(string1, , false)
+			SendText string1
 		}
 		else {
 			string1 := StrUpper(formatstr)
-			ClipSend(string1, , false)
+			SendText string1
 		}
 		Send "{Left}"
 		Send "+{Right}"
@@ -1850,21 +1865,21 @@ HotIf "normalMode = 1"
 	}
 	else {
 		oldclip := A_Clipboard
+		A_Clipboard := ""
 		Send "^c"
-		ClipWait 1
-		sleep 10
+		ClipWait
 		formatstr := A_Clipboard
 		if RegExMatch(formatstr, "^[A-Z\s\p{P}]+$") {
 			string1 := StrLower(formatstr)
-			Send string1
+			SendText string1
 		}
 		else if RegExMatch(formatstr, "^[a-z\s\p{P}]+$") {
 			string1 := StrUpper(formatstr)
-			Send string1
+			SendText string1
 		}
 		else {
 			string1 := StrUpper(formatstr)
-			Send string1
+			SendText string1
 		}
 		Send "{Left}"
 		Send "+{Right}"
@@ -1943,6 +1958,9 @@ HotIf "normalMode = 1"
 	else if (operator == "s") {
 		secReg := GetInput("L1", "{Esc}").Input
 		Registers(reg).SwitchContents(secReg)
+	}
+	else if (operator == "x") {
+		Registers(reg).Truncate()
 	}
 	StateBulb[7].Destroy()
 	global normalMode := true
@@ -2184,8 +2202,8 @@ v:: {
 	Global visualMode := true
 	Send "{Left}"
 	StateBulb[3].Create()
-	Infos.DestroyAll()
-	Infos("Visual Mode", 1500)
+	; Infos.DestroyAll()
+	; Infos("Visual Mode", 1500)
 	Exit
 }
 
@@ -2195,8 +2213,8 @@ v:: {
 	Global visualMode := true
 	Global visualLineMode := true
 	StateBulb[3].Create()
-	Infos.DestroyAll()
-	Infos("Visual Mode", 1500)
+	; Infos.DestroyAll()
+	; Infos("Visual Mode", 1500)
 	Exit
 }
 
