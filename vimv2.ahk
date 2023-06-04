@@ -2133,6 +2133,25 @@ $^w:: {
 }
 
 e:: {
+	global counter
+	if counter != 0 {
+		Loop counter {
+			if visualMode == true
+			{
+				Send "^+{Right}"
+				Send "+{Left}"
+			}
+			else
+			{
+				Send "+{Right}"
+				Send "^{Right}"
+				Send "{Left 2}"
+				Send "+{Right}"
+			}
+		}
+		counter := 0
+		Exit
+	}
 	Send "+{Right}"
 	Send "^{Right}"
 	Send "{Left 2}"
@@ -2218,7 +2237,7 @@ v:: {
 	Exit
 }
 
-i:: {
+*i:: {
 	if visualMode == true
 	{
 		Send "^{Left}"
@@ -2470,6 +2489,23 @@ x:: {
 }
 
 b:: {
+	global counter
+	if counter != 0 {
+		Loop counter {
+			if visualMode == true
+			{
+				Send "^+{Left}"
+			}
+			else
+			{
+				Send "{Left}"
+				Send "^{Left}"
+				Send "+{Right}"
+			}
+		}
+		counter := 0
+		Exit
+	}
 	if visualMode == true
 	{
 		Send "^+{Left}"
@@ -2485,6 +2521,22 @@ b:: {
 }
 
 w:: {
+	global counter
+	if counter != 0 {
+		Loop counter {
+			if visualMode == true
+			{
+				Send "^+{Right}"
+			}
+			else
+			{
+				Send "^{Right}"
+				Send "+{Right}"
+			}
+		}
+		counter := 0
+		Exit
+	}
 	if visualMode == true
 	{
 		Send "^+{Right}"

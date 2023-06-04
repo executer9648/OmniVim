@@ -10,6 +10,7 @@ class Runner {
 	static runner_commands := Map(
 		"regn", () => Registers(GetInput("L1", "{Esc}").Input).WriteOrAppend(CleanInputBox().WaitForInput().Replace("``n", "`n")),
 		"reg", () => Registers.PeekNonEmpty(),
+		"w", () => Send("^s"),
 	)
 
 	static runner_regex := Map(
