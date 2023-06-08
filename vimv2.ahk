@@ -18,7 +18,6 @@ SetKeyDelay 10000
 SetMouseDelay -1
 CoordMode "Mouse", "Screen"
 
-
 $CapsLock::Control
 +!Control::CapsLock
 +#r:: Reload
@@ -170,8 +169,6 @@ gotoNormalnoInfo() {
 	global WasInWindowManagerMode := false
 	global mouseManagerMode := false
 	StateBulb[1].Create()
-	Send "{Left}"
-	Send "+{Right}"
 }
 
 gotoNormal() {
@@ -205,8 +202,6 @@ gotoNormal() {
 	StateBulb[1].Create()
 	; Infos.DestroyAll()
 	; Infos("Normal Mode", 1500)
-	Send "{Left}"
-	Send "+{Right}"
 }
 
 gotoVisual() {
@@ -1169,18 +1164,22 @@ Esc:: {
 	}
 	Exit
 }
-q:: {
-	Send "^w"
-	if (WasInMouseManagerMode == true) {
-		gotoNormal()
-		gotoMouseMode()
+*q:: {
+	global counter
+	if counter != 0 {
+		Loop counter {
+			Send "^w"
+		}
+		counter := 0
+		if WasInMouseManagerMode == true {
+			gotoNormal()
+			gotoMouseMode()
+		}
+		else {
+			gotoNormal()
+		}
+		Exit
 	}
-	else {
-		gotoNormal()
-	}
-	Exit
-}
-^q:: {
 	Send "^w"
 	if (WasInMouseManagerMode == true) {
 		gotoNormal()
@@ -1192,6 +1191,21 @@ q:: {
 	Exit
 }
 +q:: {
+	global counter
+	if counter != 0 {
+		Loop counter {
+			Send "!{f4}"
+		}
+		counter := 0
+		if WasInMouseManagerMode == true {
+			gotoNormal()
+			gotoMouseMode()
+		}
+		else {
+			gotoNormal()
+		}
+		Exit
+	}
 	Send "!{f4}"
 	if (WasInMouseManagerMode == true) {
 		gotoNormal()
@@ -1204,6 +1218,21 @@ q:: {
 }
 
 t:: {
+	global counter
+	if counter != 0 {
+		Loop counter {
+			Send "^t"
+		}
+		counter := 0
+		if WasInMouseManagerMode == true {
+			gotoNormal()
+			gotoMouseMode()
+		}
+		else {
+			gotoNormal()
+		}
+		Exit
+	}
 	Send "^t"
 	if (WasInMouseManagerMode == true) {
 		gotoNormal()
@@ -1216,6 +1245,21 @@ t:: {
 }
 
 +t:: {
+	global counter
+	if counter != 0 {
+		Loop counter {
+			Send "^+t"
+		}
+		counter := 0
+		if WasInMouseManagerMode == true {
+			gotoNormal()
+			gotoMouseMode()
+		}
+		else {
+			gotoNormal()
+		}
+		Exit
+	}
 	Send "^+t"
 	if (WasInMouseManagerMode == true) {
 		gotoNormal()
@@ -1823,6 +1867,29 @@ $!l:: {
 	Exit
 }
 
+^r:: {
+	StateBulb[7].Create()
+	rego := InputHook("C")
+	rego.KeyOpt("{All}", "ESI") ;End Keys & Suppress
+	rego.KeyOpt("{LCtrl}{RCtrl}{LAlt}{RAlt}{LShift}{RShift}{LWin}{RWin}", "-ES") ;Exclude the modifiers
+	rego.Start()
+	rego.Wait()
+	var := rego.EndMods
+	var .= rego.EndKey
+	reg := rego.EndKey
+	if var == "<!Escape" {
+		exitVim()
+		Exit
+	}
+	else if reg == "Escape" {
+		StateBulb[7].Destroy()
+		global normalMode := true
+		Exit
+	}
+	Registers(reg).Paste()
+	StateBulb[7].Destroy()
+}
+
 #HotIf
 
 
@@ -2377,6 +2444,7 @@ Space:: {
 		Exit
 	}
 }
+
 l:: {
 	global counter
 	if counter != 0 {
