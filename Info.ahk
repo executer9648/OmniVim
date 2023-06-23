@@ -9,7 +9,7 @@ class Infos {
 	 * @param text *String*
 	 * @param autoCloseTimeout *Integer* in milliseconds. Doesn't close automatically
 	 */
-	__New(text, autoCloseTimeout := 0) {
+	__New(text, autoCloseTimeout := 0, islast := false) {
 		this.autoCloseTimeout := autoCloseTimeout
 		this.text := text
 		this._CreateGui()
@@ -20,7 +20,10 @@ class Infos {
 		}
 		this._SetupHotkeysAndEvents()
 		this._SetupAutoclose()
-		this._Show()
+		if islast
+			this._ShowLast()
+		else
+			this._Show()
 	}
 
 
@@ -154,10 +157,13 @@ class Infos {
 		if !IsSet(spaceIndex)
 			return false
 		this.spaceIndex := spaceIndex
+		this.lastSpot := Infos.spots.Length - 1
 		return true
 	}
 
 	_CalculateYCoord() => Round(this.spaceIndex * Infos.guiWidth - Infos.guiWidth)
+
+	_CalculateLastCoord() => Round(this.lastSpot * Infos.guiWidth - Infos.guiWidth)
 
 	_StopDueToNoSpace() => this.gInfo.Destroy()
 
@@ -178,6 +184,7 @@ class Infos {
 	}
 
 	_Show() => this.gInfo.Show("AutoSize NA x0 y" this._CalculateYCoord())
+	_ShowLast() => this.gInfo.Show("AutoSize NA x0 y" this._CalculateLastCoord())
 
 }
 

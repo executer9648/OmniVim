@@ -352,6 +352,7 @@ delChanYantMotion() {
 ; Define the hotkey to enable the keybindings
 ^[:: {
 	gotoNormal()
+	; mylang()
 	Exit
 }
 
@@ -363,6 +364,18 @@ delChanYantMotion() {
 	Mouse.BigMove := 200
 	exit
 }
+
+; mylang() {
+; 	; SetFormat, Integer, H
+; 	; aac1 := DllCall("GetKeyboardLayout", int, DllCall("GetWindowThreadProcessId", int, WinActive("A"), int, 0))
+; 	; MsgBox AAC1 = %aac1%
+; 	; SetFormat, Integer, D
+
+; 	VarSetStrCapacity(kbd, 9)
+; 	if DllCall("GetKeyboardLayoutNameA", uint, &kbd)
+; 		MsgBox %kbd%
+; 	return
+; }
 
 ; f mode
 #HotIf fMode = 1
@@ -1964,6 +1977,7 @@ HotIf "normalMode = 1"
 }
 ':: Return
 +':: {
+	inf := Infos('"', , true)
 	global normalMode := false
 	StateBulb[7].Create()
 	rego := InputHook("C")
@@ -1976,13 +1990,19 @@ HotIf "normalMode = 1"
 	reg := rego.EndKey
 	if var == "<!Escape" {
 		exitVim()
+		inf.Destroy()
 		Exit
 	}
 	else if reg == "Escape" {
 		StateBulb[7].Destroy()
 		global normalMode := true
+		inf.Destroy()
 		Exit
 	}
+	inf.Destroy()
+	infs := '"'
+	infs .= reg
+	inf := Infos(infs, , true)
 	rego := InputHook("C")
 	rego.KeyOpt("{All}", "ESI") ;End Keys & Ruppress
 	rego.KeyOpt("{LCtrl}{RCtrl}{LAlt}{RAlt}{LShift}{RShift}{LWin}{RWin}", "-ES") ;Exclude the modifiers
@@ -1993,11 +2013,13 @@ HotIf "normalMode = 1"
 	operator := rego.EndKey
 	if var == "<!Escape" {
 		exitVim()
+		inf.Destroy()
 		Exit
 	}
 	else if operator == "Escape" {
 		StateBulb[7].Destroy()
 		global normalMode := true
+		inf.Destroy()
 		Exit
 	}
 	else if (operator == "y") {
@@ -2031,6 +2053,7 @@ HotIf "normalMode = 1"
 	}
 	StateBulb[7].Destroy()
 	global normalMode := true
+	inf.Destroy()
 }
 [:: Return
 \:: Return
@@ -2619,13 +2642,15 @@ w:: {
 }
 
 O:: {
-	Send "{End}+{Enter}"
+	Send "{End}"
+	Send "+{Enter}"
 	gotoInsert()
 	Exit
 }
 
 +O:: {
-	Send "{Home}+{Enter}{Up}"
+	Send "{Home}"
+	Send "+{Enter}{Up}"
 	gotoInsert()
 	Exit
 }
