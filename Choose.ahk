@@ -1,4 +1,4 @@
-#Include <Tools\Info>
+#Include Info.ahk
 
 Choose(options*) {
 	infoObjs := [Infos("")]

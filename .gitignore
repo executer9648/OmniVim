@@ -2,3 +2,4 @@
 *.un~
 *.ahk~
 vimv2.exe
+.vscode/settings.json

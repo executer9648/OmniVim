@@ -11,6 +11,7 @@
 #Include Registers.ahk
 #Include mousetest.ahk
 #Include GetInput.ahk
+#Include Language.ahk
 
 A_HotkeyInterval := 0
 
@@ -22,6 +23,7 @@ $CapsLock::Control
 +!Control::CapsLock
 +#r:: Reload
 +#e:: Edit
+
 
 ; Set initial state to normal (disabled)
 global counter := 0
@@ -67,11 +69,13 @@ exitVim() {
 	StateBulb[5].Destroy() ; Move windows
 	StateBulb[6].Destroy() ; Mouse Movement
 	StateBulb[7].Destroy() ; reg Mode
+	StateBulb[StateBulb.MaxBulbs - 1].Destroy()
 	; StateBulb[4].Destroy() ; Delete
 	; StateBulb[5].Destroy() ; Change
 	; StateBulb[6].Destroy() ; Yank
 	; StateBulb[7].Destroy() ; Window
 	; StateBulb[8].Destroy() ; Fmode
+	Language.Current := Language.prevLanguge
 	Exit
 }
 
@@ -1779,6 +1783,11 @@ Esc:: {
 ^k:: Send "+{end}{Delete}"
 
 ^w:: {
+	if Language.prevLanguge := "Hebrew" {
+		Send "^+{Right}"
+		Send "{bs}"
+		Exit
+	}
 	Send "^+{Left}"
 	Send "{bs}"
 	Exit
@@ -1910,6 +1919,9 @@ $!l:: {
 #HotIf normalMode = 1
 HotIf "normalMode = 1"
 
+LAlt & LShift:: {
+	Language.ToggleBulb()
+}
 -:: Return
 `;:: Return
 +;:: {
@@ -2581,6 +2593,36 @@ x:: {
 
 b:: {
 	global counter
+	if Language.prevLanguge := "Hebrew" {
+		if counter != 0 {
+			Loop counter {
+				if visualMode == true
+				{
+					Send "^+{Right}"
+				}
+				else
+				{
+					Send "{Right}"
+					Send "^{Right}"
+					Send "+{Left}"
+				}
+			}
+			counter := 0
+			Exit
+		}
+		if visualMode == true
+		{
+			Send "^+{Right}"
+		}
+		else
+		{
+			Send "{Right}"
+			Send "^{Right}"
+			Send "+{Left}"
+			Exit
+		}
+		Exit
+	}
 	if counter != 0 {
 		Loop counter {
 			if visualMode == true
@@ -2613,6 +2655,35 @@ b:: {
 
 w:: {
 	global counter
+	if Language.prevLanguge := "Hebrew" {
+		if counter != 0 {
+			Loop counter {
+				if visualMode == true
+				{
+					Send "^+{Left}"
+				}
+				else
+				{
+					Send "^{Left}"
+					Send "+{Left}"
+				}
+			}
+			counter := 0
+			Exit
+		}
+		if visualMode == true
+		{
+			Send "^+{Left}"
+			Exit
+		}
+		else
+		{
+			Send "^{Left}"
+			Send "+{Left}"
+			Exit
+		}
+		Exit
+	}
 	if counter != 0 {
 		Loop counter {
 			if visualMode == true
