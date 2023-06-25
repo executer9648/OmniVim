@@ -1934,6 +1934,10 @@ HotIf "normalMode = 1"
 #Space:: {
 	Language.ToggleBulb()
 }
+#h:: Send "{Left}"
+#j:: Send "{Down}"
+#k:: Send "{Up}"
+#l:: Send "{Right}"
 -:: Return
 `;:: Return
 +;:: {
@@ -2983,6 +2987,10 @@ Esc:: {
 #HotIf mouseManagerMode = 1
 HotIf "mouseManagerMode = 1"
 
+#h:: Send "{Left}"
+#j:: Send "{Down}"
+#k:: Send "{Up}"
+#l:: Send "{Right}"
 c:: Return
 r:: Return
 z:: Return
