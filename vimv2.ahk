@@ -75,7 +75,6 @@ exitVim() {
 	; StateBulb[6].Destroy() ; Yank
 	; StateBulb[7].Destroy() ; Window
 	; StateBulb[8].Destroy() ; Fmode
-	Language.Current := Language.prevLanguge
 	Exit
 }
 
@@ -1748,6 +1747,9 @@ w:: {
 #HotIf insertMode = 1
 HotIf "insertMode = 1"
 
+#Space:: {
+	Language.ToggleBulb()
+}
 !Esc:: {
 	exitVim()
 	gotoNormal()
@@ -1783,7 +1785,7 @@ Esc:: {
 ^k:: Send "+{end}{Delete}"
 
 ^w:: {
-	if Language.prevLanguge := "Hebrew" {
+	if Language.prevLanguge == "Hebrew" {
 		Send "^+{Right}"
 		Send "{bs}"
 		Exit
@@ -1919,7 +1921,7 @@ $!l:: {
 #HotIf normalMode = 1
 HotIf "normalMode = 1"
 
-LAlt & LShift:: {
+#Space:: {
 	Language.ToggleBulb()
 }
 -:: Return
@@ -2593,7 +2595,7 @@ x:: {
 
 b:: {
 	global counter
-	if Language.prevLanguge := "Hebrew" {
+	if Language.prevLanguge == "Hebrew" {
 		if counter != 0 {
 			Loop counter {
 				if visualMode == true
@@ -2655,7 +2657,7 @@ b:: {
 
 w:: {
 	global counter
-	if Language.prevLanguge := "Hebrew" {
+	if Language.prevLanguge == "Hebrew" {
 		if counter != 0 {
 			Loop counter {
 				if visualMode == true
