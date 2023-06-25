@@ -12,6 +12,7 @@
 #Include mousetest.ahk
 #Include GetInput.ahk
 #Include Language.ahk
+;qR4]rS1\bC6$tN8[
 
 A_HotkeyInterval := 0
 
