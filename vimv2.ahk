@@ -1820,7 +1820,7 @@ Esc:: {
 	Exit
 }
 
-!h:: {
+$!h:: {
 	Send "{Left}"
 	Exit
 }
@@ -1934,10 +1934,6 @@ HotIf "normalMode = 1"
 #Space:: {
 	Language.ToggleBulb()
 }
-#h:: Send "{Left}"
-#j:: Send "{Down}"
-#k:: Send "{Up}"
-#l:: Send "{Right}"
 -:: Return
 `;:: Return
 +;:: {
@@ -2527,7 +2523,7 @@ l:: {
 	}
 }
 
-^h:: {
+^!h:: {
 	if visualMode == true
 	{
 		Send "^+{Left}"
@@ -2542,7 +2538,7 @@ l:: {
 	Exit
 }
 
-^l:: {
+^!l:: {
 	if visualMode == true
 	{
 		Send "^+{Right}"
@@ -2987,10 +2983,6 @@ Esc:: {
 #HotIf mouseManagerMode = 1
 HotIf "mouseManagerMode = 1"
 
-#h:: Send "{Left}"
-#j:: Send "{Down}"
-#k:: Send "{Up}"
-#l:: Send "{Right}"
 c:: Return
 r:: Return
 z:: Return
@@ -3048,6 +3040,8 @@ m:: {
 }
 
 !h:: Send "!{Left}"
+!j:: Send "!{Down}"
+!k:: Send "!{Up}"
 !l:: Send "!{Right}"
 
 +h:: Mouse.MoveLeft(Mouse.MediumMove)
