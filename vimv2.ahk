@@ -2246,6 +2246,18 @@ $^w:: {
 	Exit
 }
 
+#t:: {
+	global counter
+	if counter != 0 {
+		Loop counter {
+			Send "#t"
+		}
+		counter := 0
+		Exit
+	}
+	Send "#t"
+}
+
 e:: {
 	global counter
 	if counter != 0 {
