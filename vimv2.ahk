@@ -12,7 +12,6 @@
 #Include mousetest.ahk
 #Include GetInput.ahk
 #Include Language.ahk
-;qR4]rS1\bC6$tN8[
 
 A_HotkeyInterval := 0
 
@@ -26,8 +25,14 @@ $CapsLock::Control
 +#e:: Edit
 ^#h:: Send "^#{Left}"
 ^#l:: Send "^#{Right}"
-!#h:: Send "!#{Left}"
-!#l:: Send "!#{Right}"
++#h:: Send "+#{Left}"
++#j:: Send "+#{Down}"
++#k:: Send "+#{Up}"
++#l:: Send "+#{Right}"
+!#h:: Send "#{Left}"
+!#j:: Send "#{Down}"
+!#k:: Send "#{Up}"
+!#l:: Send "#{Right}"
 
 ; Set initial state to normal (disabled)
 global counter := 0
