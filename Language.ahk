@@ -64,6 +64,16 @@ class Language {
 		}
 	}
 
+	static GetKeyboardLanguage()
+	{
+		if !ThreadId := DllCall("user32.dll\GetWindowThreadProcessId", "Ptr", WinActive("A"), "UInt", 0, "UInt")
+			return false
+
+		if !KBLayout := DllCall("user32.dll\GetKeyboardLayout", "UInt", ThreadId, "UInt")
+			return false
+
+		return KBLayout & 0xFFFF
+	}
 
 	static _GetCurrentLanguageCode() => "0x" Format("{:x}", dllCall("GetKeyboardLayout", "int", 0))
 
@@ -72,3 +82,15 @@ class Language {
 	}
 
 }
+
+; if !LangID := GetKeyboardLanguage()
+; {
+; 	MsgBox "GetKeyboardLayout function failed "
+; 	return
+; }
+
+; if (LangID = 0x0409)
+; 	MsgBox "Language is EN"
+; else if (LangID = 0x040D)
+; 	MsgBox "Language is HE"
+; return

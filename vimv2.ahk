@@ -23,7 +23,10 @@ $CapsLock::Control
 +!Control::CapsLock
 +#r:: Reload
 +#e:: Edit
-
+^#h:: Send "^#{Left}"
+^#l:: Send "^#{Right}"
+!#h:: Send "!#{Left}"
+!#l:: Send "!#{Right}"
 
 ; Set initial state to normal (disabled)
 global counter := 0
@@ -1785,7 +1788,8 @@ Esc:: {
 ^k:: Send "+{end}{Delete}"
 
 ^w:: {
-	if Language.prevLanguge == "Hebrew" {
+	langid := Language.GetKeyboardLanguage()
+	if (LangID = 0x040D) {
 		Send "^+{Right}"
 		Send "{bs}"
 		Exit
@@ -2595,7 +2599,8 @@ x:: {
 
 b:: {
 	global counter
-	if Language.prevLanguge == "Hebrew" {
+	langid := Language.GetKeyboardLanguage()
+	if (LangID = 0x040D) {
 		if counter != 0 {
 			Loop counter {
 				if visualMode == true
@@ -2657,7 +2662,8 @@ b:: {
 
 w:: {
 	global counter
-	if Language.prevLanguge == "Hebrew" {
+	langid := Language.GetKeyboardLanguage()
+	if (LangID = 0x040D) {
 		if counter != 0 {
 			Loop counter {
 				if visualMode == true
