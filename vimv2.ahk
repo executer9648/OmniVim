@@ -1941,8 +1941,12 @@ BackSpace:: {
 	global infcounter
 	counter := counter / 10
 	counter := Floor(counter)
-	infcounter.Destroy()
-	infcounter := Infos(counter, , true)
+	if counter == 0 {
+		infcounter.Destroy()
+	} else {
+		infcounter.Destroy()
+		infcounter := Infos(counter, , true)
+	}
 	Send "{BackSpace}"
 }
 
