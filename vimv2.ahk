@@ -57,6 +57,8 @@ global WasInMouseManagerMode := false
 global WasInRegMode := false
 global WasInWindowManagerMode := false
 global wasinCmdMode := false
+global infcounter := Infos("")
+infcounter.Destroy()
 
 exitVim() {
 	Infos.DestroyAll()
@@ -1934,6 +1936,15 @@ $!l:: {
 #HotIf normalMode = 1
 HotIf "normalMode = 1"
 
+BackSpace:: {
+	global counter
+	global infcounter
+	counter := counter / 10
+	infcounter.Destroy()
+	infcounter := Infos(counter, , true)
+	Send "{BackSpace}"
+}
+
 #Space:: {
 	Language.ToggleBulb()
 }
@@ -2110,66 +2121,93 @@ z:: Return
 
 1:: {
 	global counter
+	global infcounter
 	if counter >= 0 {
 		counter *= 10
 		counter += 1
 	}
+	infcounter.Destroy()
+	infcounter := Infos(counter, , true)
 }
 2:: {
 	global counter
+	global infcounter
 	if counter >= 0 {
 		counter *= 10
 		counter += 2
 	}
+	infcounter.Destroy()
+	infcounter := Infos(counter, , true)
 }
 3:: {
 	global counter
+	global infcounter
 	if counter >= 0 {
 		counter *= 10
 		counter += 3
 	}
+	infcounter.Destroy()
+	infcounter := Infos(counter, , true)
 }
 4:: {
 	global counter
+	global infcounter
 	if counter >= 0 {
 		counter *= 10
 		counter += 4
 	}
+	infcounter.Destroy()
+	infcounter := Infos(counter, , true)
 }
 5:: {
 	global counter
+	global infcounter
 	if counter >= 0 {
 		counter *= 10
 		counter += 5
 	}
+	infcounter.Destroy()
+	infcounter := Infos(counter, , true)
 }
 6:: {
 	global counter
+	global infcounter
 	if counter >= 0 {
 		counter *= 10
 		counter += 6
 	}
+	infcounter.Destroy()
+	infcounter := Infos(counter, , true)
 }
 7:: {
 	global counter
+	global infcounter
 	if counter >= 0 {
 		counter *= 10
 		counter += 7
 	}
+	infcounter.Destroy()
+	infcounter := Infos(counter, , true)
 }
 8:: {
 	global counter
+	global infcounter
 	if counter >= 0 {
 		counter *= 10
 		counter += 8
 	}
+	infcounter.Destroy()
+	infcounter := Infos(counter, , true)
 }
 9:: {
 	global counter
+	global infcounter
 	if counter >= 0 {
 		counter *= 10
 		counter += 9
 	}
+	infcounter.Destroy()
+	infcounter := Infos(counter, , true)
 }
 
 
@@ -2205,12 +2243,61 @@ z:: Return
 f:: {
 	StateBulb[4].Create()
 	global normalMode := false
-	ih := InputHook("C")
-	ih.KeyOpt("{All}", "ESI") ;End Keys & Suppress
-	ih.KeyOpt("{LCtrl}{RCtrl}{LAlt}{RAlt}{LShift}{RShift}{LWin}{RWin}", "-ES") ;Exclude the modifiers
-	ih.Start()
-	ih.Wait()
-	var := ih.EndKey
+	global counter
+	global infcounter
+	if counter != 0 {
+		Loop counter {
+			ih := InputHook("C")
+			ih.KeyOpt("{All}", "ESI") ;End Keys & Suppress
+			ih.KeyOpt("{LCtrl}{RCtrl}{LAlt}{RAlt}{LShift}{RShift}{LWin}{RWin}", "-ES") ;Exclude the modifiers
+			ih.Start()
+			ih.Wait()
+			check := ih.EndMods
+			check .= ih.EndKey
+			check2 := ih.EndKey
+			if check == "<!Escape" {
+				exitVim()
+				infcounter.Destroy()
+				Exit
+			} else if check2 == "Escape" {
+				StateBulb[4].Destroy()
+				global normalMode := true
+				infcounter.Destroy()
+				Exit
+			} else if check2 == "Backspace" {
+				counter += 1
+				trimed := RTrim(var, 'asdfg')
+				MsgBox trimed
+				var := trimed
+			} else {
+				var .= ih.EndKey
+			}
+			infcounter.Destroy()
+			infcounter := Infos(var, , true)
+		}
+		counter := 0
+	}
+	else {
+		ih := InputHook("C")
+		ih.KeyOpt("{All}", "ESI") ;End Keys & Suppress
+		ih.KeyOpt("{LCtrl}{RCtrl}{LAlt}{RAlt}{LShift}{RShift}{LWin}{RWin}", "-ES") ;Exclude the modifiers
+		ih.Start()
+		ih.Wait()
+		var := ih.EndKey
+		check := ih.EndMods
+		check .= ih.EndKey
+		check2 := ih.EndKey
+		if check == "<!Escape" {
+			exitVim()
+			infcounter.Destroy()
+			Exit
+		} else if check2 == "Escape" {
+			StateBulb[4].Destroy()
+			global normalMode := true
+			infcounter.Destroy()
+			Exit
+		}
+	}
 	oldclip := A_Clipboard
 	A_Clipboard := ""
 	Send "{Right}"
@@ -2228,6 +2315,7 @@ f:: {
 	global normalMode := true
 	StateBulb[4].Destroy()
 }
+
 
 g:: {
 	gotoGMode()
@@ -2335,6 +2423,8 @@ d::
 }
 
 Esc:: {
+	global infcounter
+	global counter
 	if visualMode == true
 	{
 		gotoNormal()
@@ -2342,6 +2432,8 @@ Esc:: {
 	else
 	{
 		Send "{Esc}"
+		infcounter.Destroy()
+		counter := 0
 		Exit
 	}
 }
@@ -2798,8 +2890,11 @@ p:: {
 0::
 {
 	global counter
+	global infcounter
 	if counter != 0 {
 		counter *= 10
+		infcounter.Destroy()
+		infcounter := Infos(counter, , true)
 		exit
 	}
 	if visualMode == true
