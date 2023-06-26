@@ -33,6 +33,10 @@ $CapsLock::Control
 !#j:: Send "#{Down}"
 !#k:: Send "#{Up}"
 !#l:: Send "#{Right}"
+!h:: Send "{Left}"
+!j:: Send "{Down}"
+!k:: Send "{Up}"
+!l:: Send "{Right}"
 
 ; Set initial state to normal (disabled)
 global counter := 0
@@ -1500,7 +1504,6 @@ i:: {
 c:: {
 	Send "{Home}+{End}"
 	Send "^x"
-	Send "{Delete}"
 	gotoInsert()
 	Exit
 }
