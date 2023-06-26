@@ -1940,6 +1940,7 @@ BackSpace:: {
 	global counter
 	global infcounter
 	counter := counter / 10
+	counter := Floor(counter)
 	infcounter.Destroy()
 	infcounter := Infos(counter, , true)
 	Send "{BackSpace}"
@@ -2214,39 +2215,14 @@ z:: Return
 +f:: {
 	StateBulb[4].Create()
 	global normalMode := false
-	ih := InputHook("C")
-	ih.KeyOpt("{All}", "ESI") ;End Keys & Suppress
-	ih.KeyOpt("{LCtrl}{RCtrl}{LAlt}{RAlt}{LShift}{RShift}{LWin}{RWin}", "-ES") ;Exclude the modifiers
-	ih.Start()
-	ih.Wait()
-	var := ih.EndKey
-	oldclip := A_Clipboard
-	A_Clipboard := ""
-	Send "{Left}"
-	Send "+{Home}"
-	Send "^c"
-	Send "{Right}"
-	ClipWait 1
-	Haystack := A_Clipboard
-	A_Clipboard := oldclip
-	FoundPos := InStr(Haystack, var, false, -1)
-	Send "{Home}"
-	loop FoundPos {
-		Send "{Right}"
-	}
-	Send "{Left}"
-	Send "+{Right}"
-	global normalMode := true
-	StateBulb[4].Destroy()
-}
-
-f:: {
-	StateBulb[4].Create()
-	global normalMode := false
 	global counter
 	global infcounter
+	cvar := "" counter
+	cvar .= "F"
+	infcounter.Destroy()
+	infcounter := Infos(cvar, , true)
 	if counter != 0 {
-		Loop counter {
+		while counter > 0 {
 			ih := InputHook("C")
 			ih.KeyOpt("{All}", "ESI") ;End Keys & Suppress
 			ih.KeyOpt("{LCtrl}{RCtrl}{LAlt}{RAlt}{LShift}{RShift}{LWin}{RWin}", "-ES") ;Exclude the modifiers
@@ -2265,15 +2241,101 @@ f:: {
 				infcounter.Destroy()
 				Exit
 			} else if check2 == "Backspace" {
-				counter += 1
-				trimed := RTrim(var, 'asdfg')
-				MsgBox trimed
+				counter += 2
+				trimed := SubStr(var, 1, StrLen(var) - 1)
 				var := trimed
+			} else if check2 == "Space" {
+				Continue
 			} else {
 				var .= ih.EndKey
 			}
 			infcounter.Destroy()
 			infcounter := Infos(var, , true)
+			counter -= 1
+		}
+		counter := 0
+	}
+	else {
+		ih := InputHook("C")
+		ih.KeyOpt("{All}", "ESI") ;End Keys & Suppress
+		ih.KeyOpt("{LCtrl}{RCtrl}{LAlt}{RAlt}{LShift}{RShift}{LWin}{RWin}", "-ES") ;Exclude the modifiers
+		ih.Start()
+		ih.Wait()
+		var := ih.EndKey
+		check := ih.EndMods
+		check .= ih.EndKey
+		check2 := ih.EndKey
+		if check == "<!Escape" {
+			exitVim()
+			infcounter.Destroy()
+			Exit
+		} else if check2 == "Escape" {
+			StateBulb[4].Destroy()
+			global normalMode := true
+			infcounter.Destroy()
+			Exit
+		}
+	}
+	oldclip := A_Clipboard
+	A_Clipboard := ""
+	Send "{Left}"
+	Send "+{Home}"
+	Send "^c"
+	Send "{Right}"
+	ClipWait 1
+	Haystack := A_Clipboard
+	FoundPos := InStr(Haystack, var, false, -1)
+	Send "{Home}"
+	loop FoundPos {
+		Send "{Right}"
+	}
+	Send "{Left}"
+	Send "+{Right}"
+	global normalMode := true
+	infcounter.Destroy()
+	StateBulb[4].Destroy()
+}
+
+f:: {
+	StateBulb[4].Create()
+	global normalMode := false
+	global counter
+	global infcounter
+	cvar := "" counter
+	cvar .= "f"
+	infcounter.Destroy()
+	infcounter := Infos(cvar, , true)
+	if counter != 0 {
+		while counter > 0 {
+			ih := InputHook("C")
+			ih.KeyOpt("{All}", "ESI") ;End Keys & Suppress
+			ih.KeyOpt("{LCtrl}{RCtrl}{LAlt}{RAlt}{LShift}{RShift}{LWin}{RWin}", "-ES") ;Exclude the modifiers
+			ih.Start()
+			ih.Wait()
+			check := ih.EndMods
+			check .= ih.EndKey
+			check2 := ih.EndKey
+			if check == "<!Escape" {
+				exitVim()
+				infcounter.Destroy()
+				Exit
+			} else if check2 == "Escape" {
+				StateBulb[4].Destroy()
+				global normalMode := true
+				infcounter.Destroy()
+				Exit
+			} else if check2 == "Backspace" {
+				counter += 2
+				trimed := SubStr(var, 1, StrLen(var) - 1)
+				var := trimed
+			} else if check2 == "Space" {
+				Continue
+			} else {
+				var .= ih.EndKey
+			}
+			infcounter.Destroy()
+			infcounter := Infos(var, , true)
+			counter -= 1
 		}
 		counter := 0
 	}
@@ -2313,6 +2375,7 @@ f:: {
 	Send "{Left}"
 	Send "+{Right}"
 	global normalMode := true
+	infcounter.Destroy()
 	StateBulb[4].Destroy()
 }
 
