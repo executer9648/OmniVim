@@ -14,6 +14,7 @@
 #Include Language.ahk
 
 A_HotkeyInterval := 0
+A_MenuMaskKey := "vkFF"
 
 SetKeyDelay 10000
 SetMouseDelay -1
@@ -31,12 +32,12 @@ $CapsLock::Control
 +#l:: Send "+#{Right}"
 !#h:: Send "#{Left}"
 !#j:: Send "#{Down}"
-!#k:: Send "#{Up}"
-!#l:: Send "#{Right}"
-!h:: Send "{Left}"
-!j:: Send "{Down}"
-!k:: Send "{Up}"
-!l:: Send "{Right}"
+!#k:: SendInput "#{Up}"
+$!#l:: Send "#{Right}"
+$!h:: Send "{Left}"
+$!j:: Send "{Down}"
+$!k:: Send "{Up}"
+$!l:: Send "{Right}"
 
 ; Set initial state to normal (disabled)
 global counter := 0
@@ -1699,7 +1700,6 @@ t:: {
 i:: {
 	Send "^{Left}"
 	Send "^+{Right}"
-	Send "+{Left}"
 	Send "^x"
 	gotoNormal()
 	Exit
@@ -1796,7 +1796,7 @@ Esc:: {
 	Exit
 }
 
-^k:: Send "+{end}{Delete}"
+^k:: Send "+{end}{bs}"
 
 ^w:: {
 	langid := Language.GetKeyboardLanguage()
@@ -2411,6 +2411,7 @@ $^w:: {
 			Send "#t"
 		}
 		counter := 0
+		infcounter.Destroy()
 		Exit
 	}
 	Send "#t"
@@ -2434,6 +2435,7 @@ e:: {
 			}
 		}
 		counter := 0
+		infcounter.Destroy()
 		Exit
 	}
 	Send "+{Right}"
@@ -2541,6 +2543,7 @@ v:: {
 
 h:: {
 	global counter
+	global infcounter
 	if counter != 0 {
 		Loop counter {
 			if visualMode == true
@@ -2555,6 +2558,7 @@ h:: {
 			}
 		}
 		counter := 0
+		infcounter.Destroy()
 		Exit
 	}
 	if visualMode == true
@@ -2779,6 +2783,7 @@ x:: {
 
 b:: {
 	global counter
+	global infcounter
 	langid := Language.GetKeyboardLanguage()
 	if (LangID = 0x040D) {
 		if counter != 0 {
@@ -2795,6 +2800,7 @@ b:: {
 				}
 			}
 			counter := 0
+			infcounter.Destroy()
 			Exit
 		}
 		if visualMode == true
@@ -2842,6 +2848,7 @@ b:: {
 
 w:: {
 	global counter
+	global infcounter
 	langid := Language.GetKeyboardLanguage()
 	if (LangID = 0x040D) {
 		if counter != 0 {
@@ -2857,6 +2864,7 @@ w:: {
 				}
 			}
 			counter := 0
+			infcounter.Destroy()
 			Exit
 		}
 		if visualMode == true
