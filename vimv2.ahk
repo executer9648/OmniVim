@@ -2238,8 +2238,10 @@ z:: Return
 			if check == "<!Escape" {
 				exitVim()
 				infcounter.Destroy()
+				counter := 0
 				Exit
 			} else if check2 == "Escape" {
+				counter := 0
 				StateBulb[4].Destroy()
 				global normalMode := true
 				infcounter.Destroy()
@@ -2322,11 +2324,13 @@ f:: {
 			if check == "<!Escape" {
 				exitVim()
 				infcounter.Destroy()
+				counter := 0
 				Exit
 			} else if check2 == "Escape" {
 				StateBulb[4].Destroy()
 				global normalMode := true
 				infcounter.Destroy()
+				counter := 0
 				Exit
 			} else if check2 == "Backspace" {
 				counter += 2
