@@ -320,12 +320,155 @@ fMotion() {
 
 delChanYanfMotion() {
 	StateBulb[4].Create()
-	ih := InputHook("C")
-	ih.KeyOpt("{All}", "ESI") ;End Keys & Suppress
-	ih.KeyOpt("{LCtrl}{RCtrl}{LAlt}{RAlt}{LShift}{RShift}{LWin}{RWin}", "-ES") ;Exclude the modifiers
-	ih.Start()
-	ih.Wait()
-	var := ih.EndKey
+	global normalMode := false
+	global counter
+	global infcounter
+	cvar := "" counter
+	cvar .= "f"
+	infcounter.Destroy()
+	infcounter := Infos(cvar, , true)
+	if counter != 0 {
+		while counter > 0 {
+			ih := InputHook("C")
+			ih.KeyOpt("{All}", "ESI") ;End Keys & Suppress
+			ih.KeyOpt("{LCtrl}{RCtrl}{LAlt}{RAlt}{LShift}{RShift}{LWin}{RWin}", "-ES") ;Exclude the modifiers
+			ih.Start()
+			ih.Wait()
+			check := ih.EndMods
+			check .= ih.EndKey
+			check2 := ih.EndKey
+			if check == "<!Escape" {
+				exitVim()
+				infcounter.Destroy()
+				counter := 0
+				Exit
+			} else if check2 == "Escape" {
+				StateBulb[4].Destroy()
+				global normalMode := true
+				infcounter.Destroy()
+				counter := 0
+				Exit
+			} else if check2 == "Backspace" {
+				counter += 2
+				trimed := SubStr(var, 1, StrLen(var) - 1)
+				var := trimed
+			} else if check2 == "Space" {
+				Continue
+			} else {
+				var .= ih.EndKey
+			}
+			infcounter.Destroy()
+			infcounter := Infos(var, , true)
+			counter -= 1
+		}
+		counter := 0
+	}
+	else {
+		ih := InputHook("C")
+		ih.KeyOpt("{All}", "ESI") ;End Keys & Suppress
+		ih.KeyOpt("{LCtrl}{RCtrl}{LAlt}{RAlt}{LShift}{RShift}{LWin}{RWin}", "-ES") ;Exclude the modifiers
+		ih.Start()
+		ih.Wait()
+		var := ih.EndKey
+		check := ih.EndMods
+		check .= ih.EndKey
+		check2 := ih.EndKey
+		if check == "<!Escape" {
+			exitVim()
+			infcounter.Destroy()
+			Exit
+		} else if check2 == "Escape" {
+			StateBulb[4].Destroy()
+			global normalMode := true
+			infcounter.Destroy()
+			Exit
+		}
+	}
+	oldclip := A_Clipboard
+	A_Clipboard := ""
+	Send "{Right}"
+	Send "+{End}"
+	Send "^c"
+	Send "{Left}"
+	ClipWait 1
+	Haystack := A_Clipboard
+	FoundPos := InStr(Haystack, var)
+	loop FoundPos {
+		Send "{Right}"
+	}
+	Send "{Left}"
+	Send "+{Right}"
+	global normalMode := true
+	infcounter.Destroy()
+	StateBulb[4].Destroy()
+}
+
+delChanYanFMotionc() {
+	StateBulb[4].Create()
+	global normalMode := false
+	global counter
+	global infcounter
+	cvar := "" counter
+	cvar .= "F"
+	infcounter.Destroy()
+	infcounter := Infos(cvar, , true)
+	if counter != 0 {
+		while counter > 0 {
+			ih := InputHook("C")
+			ih.KeyOpt("{All}", "ESI") ;End Keys & Suppress
+			ih.KeyOpt("{LCtrl}{RCtrl}{LAlt}{RAlt}{LShift}{RShift}{LWin}{RWin}", "-ES") ;Exclude the modifiers
+			ih.Start()
+			ih.Wait()
+			check := ih.EndMods
+			check .= ih.EndKey
+			check2 := ih.EndKey
+			if check == "<!Escape" {
+				exitVim()
+				infcounter.Destroy()
+				counter := 0
+				Exit
+			} else if check2 == "Escape" {
+				counter := 0
+				StateBulb[4].Destroy()
+				global normalMode := true
+				infcounter.Destroy()
+				Exit
+			} else if check2 == "Backspace" {
+				counter += 2
+				trimed := SubStr(var, 1, StrLen(var) - 1)
+				var := trimed
+			} else if check2 == "Space" {
+				Continue
+			} else {
+				var .= ih.EndKey
+			}
+			infcounter.Destroy()
+			infcounter := Infos(var, , true)
+			counter -= 1
+		}
+		counter := 0
+	}
+	else {
+		ih := InputHook("C")
+		ih.KeyOpt("{All}", "ESI") ;End Keys & Suppress
+		ih.KeyOpt("{LCtrl}{RCtrl}{LAlt}{RAlt}{LShift}{RShift}{LWin}{RWin}", "-ES") ;Exclude the modifiers
+		ih.Start()
+		ih.Wait()
+		var := ih.EndKey
+		check := ih.EndMods
+		check .= ih.EndKey
+		check2 := ih.EndKey
+		if check == "<!Escape" {
+			exitVim()
+			infcounter.Destroy()
+			Exit
+		} else if check2 == "Escape" {
+			StateBulb[4].Destroy()
+			global normalMode := true
+			infcounter.Destroy()
+			Exit
+		}
+	}
 	oldclip := A_Clipboard
 	A_Clipboard := ""
 	Send "{Left}"
@@ -334,12 +477,16 @@ delChanYanfMotion() {
 	Send "{Right}"
 	ClipWait 1
 	Haystack := A_Clipboard
-	A_Clipboard := oldclip
-	FoundPos := InStr(Haystack, var)
+	FoundPos := InStr(Haystack, var, false, -1)
 	Send "{Home}"
 	loop FoundPos {
-		Send "+{Right}"
+		Send "{Right}"
 	}
+	Send "{Left}"
+	Send "+{Right}"
+	global normalMode := true
+	infcounter.Destroy()
+	StateBulb[4].Destroy()
 }
 
 delChanYantMotion() {
@@ -1497,8 +1644,55 @@ t:: {
 
 i:: {
 	Send "^{Left}"
-	Send "^+{Right}"
-	Send "+{Left}"
+	; Send "^+{Right}"
+	oldclip := A_Clipboard
+	A_Clipboard := ""
+	Send "+{End}"
+	Send "^c"
+	Send "{Left}"
+	ClipWait 1
+	Haystack := A_Clipboard
+	A_Clipboard := oldclip
+	FoundPos := 0
+	if FoundPos == 0
+		FoundPos := InStr(Haystack, " ")
+	if FoundPos == 0
+		FoundPos := InStr(Haystack, ".")
+	if FoundPos == 0
+		FoundPos := InStr(Haystack, ",")
+	if FoundPos == 0
+		FoundPos := InStr(Haystack, "/")
+	if FoundPos == 0
+		FoundPos := InStr(Haystack, ";")
+	if FoundPos == 0
+		FoundPos := InStr(Haystack, "'")
+	if FoundPos == 0
+		FoundPos := InStr(Haystack, "[")
+	if FoundPos == 0
+		FoundPos := InStr(Haystack, "]")
+	if FoundPos == 0
+		FoundPos := InStr(Haystack, "\")
+	if FoundPos == 0
+		FoundPos := InStr(Haystack, "\s")
+	if FoundPos == 0
+		FoundPos := InStr(Haystack, "\r")
+	if FoundPos == 0
+		FoundPos := InStr(Haystack, "\n")
+	if FoundPos == 0
+		FoundPos := InStr(Haystack, "\t")
+	if FoundPos == 0
+		FoundPos := InStr(Haystack, "-")
+	if FoundPos == 0
+		FoundPos := InStr(Haystack, "=")
+	if FoundPos == 0
+		Send "^+{Right}"
+	else {
+		loop FoundPos {
+			Send "+{Right}"
+		}
+		Send "+{Left}"
+	}
+	sleep 100
 	Send "^x"
 	gotoInsert()
 	Exit
@@ -1698,8 +1892,61 @@ t:: {
 }
 
 i:: {
+	; Send "^{Left}"
+	; Send "^+{Right}"
+	; Send "^x"
+	; gotoNormal()
+	; Exit
 	Send "^{Left}"
-	Send "^+{Right}"
+	; Send "^+{Right}"
+	oldclip := A_Clipboard
+	A_Clipboard := ""
+	Send "+{End}"
+	Send "^c"
+	Send "{Left}"
+	ClipWait 1
+	Haystack := A_Clipboard
+	A_Clipboard := oldclip
+	FoundPos := 0
+	if FoundPos == 0
+		FoundPos := InStr(Haystack, " ")
+	if FoundPos == 0
+		FoundPos := InStr(Haystack, ".")
+	if FoundPos == 0
+		FoundPos := InStr(Haystack, ",")
+	if FoundPos == 0
+		FoundPos := InStr(Haystack, "/")
+	if FoundPos == 0
+		FoundPos := InStr(Haystack, ";")
+	if FoundPos == 0
+		FoundPos := InStr(Haystack, "'")
+	if FoundPos == 0
+		FoundPos := InStr(Haystack, "[")
+	if FoundPos == 0
+		FoundPos := InStr(Haystack, "]")
+	if FoundPos == 0
+		FoundPos := InStr(Haystack, "\")
+	if FoundPos == 0
+		FoundPos := InStr(Haystack, "\s")
+	if FoundPos == 0
+		FoundPos := InStr(Haystack, "\r")
+	if FoundPos == 0
+		FoundPos := InStr(Haystack, "\n")
+	if FoundPos == 0
+		FoundPos := InStr(Haystack, "\t")
+	if FoundPos == 0
+		FoundPos := InStr(Haystack, "-")
+	if FoundPos == 0
+		FoundPos := InStr(Haystack, "=")
+	if FoundPos == 0 {
+		Send "^+{Right}"
+	}
+	else {
+		loop FoundPos {
+			Send "+{Right}"
+		}
+	}
+	sleep 100
 	Send "^x"
 	gotoNormal()
 	Exit
