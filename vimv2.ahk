@@ -1761,6 +1761,37 @@ w:: {
 #HotIf insertMode = 1
 HotIf "insertMode = 1"
 
+^r:: {
+	global insertMode := false
+	global normalMode := false
+	inf := Infos('"', , true)
+	StateBulb[7].Create()
+	rego := InputHook("C")
+	rego.KeyOpt("{All}", "ESI") ;End Keys & Suppress
+	rego.KeyOpt("{LCtrl}{RCtrl}{LAlt}{RAlt}{LShift}{RShift}{LWin}{RWin}", "-ES") ;Exclude the modifiers
+	rego.Start()
+	rego.Wait()
+	var := rego.EndMods
+	var .= rego.EndKey
+	reg := rego.EndKey
+	if var == "<!Escape" {
+		exitVim()
+		Exit
+	}
+	else if reg == "Escape" {
+		StateBulb[7].Destroy()
+		inf.Destroy()
+		global insertMode := true
+		global normalMode := true
+		Exit
+	}
+	Registers(reg).Paste()
+	StateBulb[7].Destroy()
+	inf.Destroy()
+	global insertMode := true
+	global normalMode := true
+}
+
 #Space:: {
 	Language.ToggleBulb()
 }
@@ -1906,28 +1937,6 @@ $!l:: {
 	Exit
 }
 
-^r:: {
-	StateBulb[7].Create()
-	rego := InputHook("C")
-	rego.KeyOpt("{All}", "ESI") ;End Keys & Suppress
-	rego.KeyOpt("{LCtrl}{RCtrl}{LAlt}{RAlt}{LShift}{RShift}{LWin}{RWin}", "-ES") ;Exclude the modifiers
-	rego.Start()
-	rego.Wait()
-	var := rego.EndMods
-	var .= rego.EndKey
-	reg := rego.EndKey
-	if var == "<!Escape" {
-		exitVim()
-		Exit
-	}
-	else if reg == "Escape" {
-		StateBulb[7].Destroy()
-		global normalMode := true
-		Exit
-	}
-	Registers(reg).Paste()
-	StateBulb[7].Destroy()
-}
 
 #HotIf
 
