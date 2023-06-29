@@ -22,22 +22,28 @@ CoordMode "Mouse", "Screen"
 
 $CapsLock::Control
 +!Control::CapsLock
+
+~Alt:: Send "{Blind}{vkFF}"
+
 +#r:: Reload
 +#e:: Edit
 ^#h:: Send "^#{Left}"
 ^#l:: Send "^#{Right}"
+
 +#h:: Send "+#{Left}"
 +#j:: Send "+#{Down}"
 +#k:: Send "+#{Up}"
 +#l:: Send "+#{Right}"
+
 !#h:: Send "#{Left}"
 !#j:: Send "#{Down}"
-!#k:: SendInput "#{Up}"
-$!#l:: Send "#{Right}"
-$!h:: Send "{Left}"
-$!j:: Send "{Down}"
-$!k:: Send "{Up}"
-$!l:: Send "{Right}"
+!#k:: Send "#{Up}"
+!#l:: Send "#{Right}"
+
+!h:: Send "{Left}"
+!j:: Send "{Down}"
+!k:: Send "{Up}"
+!l:: Send "{Right}"
 
 ; Set initial state to normal (disabled)
 global counter := 0
@@ -2004,13 +2010,16 @@ w:: {
 
 #HotIf
 
+; #HotIf WinActive("A")
+; ~Alt:: Send "{Blind}{vkE8}"
+; #HotIf
+
 ; insert Mode
 #HotIf insertMode = 1
 HotIf "insertMode = 1"
 
 ^r:: {
 	global insertMode := false
-	global normalMode := false
 	inf := Infos('"', , true)
 	StateBulb[7].Create()
 	rego := InputHook("C")
@@ -2029,14 +2038,12 @@ HotIf "insertMode = 1"
 		StateBulb[7].Destroy()
 		inf.Destroy()
 		global insertMode := true
-		global normalMode := true
 		Exit
 	}
 	Registers(reg).Paste()
 	StateBulb[7].Destroy()
 	inf.Destroy()
 	global insertMode := true
-	global normalMode := true
 }
 
 #Space:: {
@@ -2103,7 +2110,7 @@ Esc:: {
 	Exit
 }
 
-$!h:: {
+!h:: {
 	Send "{Left}"
 	Exit
 }
@@ -2128,12 +2135,12 @@ $!h:: {
 	Exit
 }
 
-$!j:: {
+!j:: {
 	Send "{Down}"
 	Exit
 }
 
-$!k:: {
+!k:: {
 	Send "{Up}"
 	Exit
 }
@@ -2143,7 +2150,7 @@ $!k:: {
 	Exit
 }
 
-$!l:: {
+!l:: {
 	Send "{Right}"
 	Exit
 }
@@ -2371,7 +2378,39 @@ n:: {
 	Exit
 }
 q:: Return
-r:: Return
+r:: {
+	global normalMode := false
+	StateBulb[4].Create()
+	ih := InputHook("C")
+	ih.KeyOpt("{All}", "ESI") ;End Keys & Suppress
+	ih.KeyOpt("{LCtrl}{RCtrl}{LAlt}{RAlt}{LShift}{RShift}{LWin}{RWin}", "-ES") ;Exclude the modifiers
+	ih.Start()
+	ih.Wait()
+	check := ih.EndMods
+	check .= ih.EndKey
+	check2 := ih.EndKey
+	if check == "<!Escape" {
+		exitVim()
+		Exit
+	} else if check2 == "Escape" {
+		StateBulb[4].Destroy()
+		global normalMode := true
+		Exit
+	} else if check2 == "Backspace" {
+		StateBulb[4].Destroy()
+		global normalMode := true
+		Exit
+	} else if check2 == "Space" {
+		StateBulb[4].Destroy()
+		global normalMode := true
+		Exit
+	}
+	SendText check2
+	StateBulb[4].Destroy()
+	Send "{Left}"
+	Send "+{Right}"
+	global normalMode := true
+}
 s:: {
 	Send "{BS}"
 	gotoInsert()
@@ -2760,7 +2799,8 @@ Esc:: {
 	}
 	else
 	{
-		Send "{Esc}"
+		if counter == 0
+			Send "{Esc}"
 		infcounter.Destroy()
 		counter := 0
 		Exit
