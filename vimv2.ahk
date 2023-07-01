@@ -21,11 +21,18 @@ SetMouseDelay -1
 CoordMode "Mouse", "Screen"
 
 $CapsLock::Control
-+!Control::CapsLock
++!#Control::CapsLock
 
 ~Alt:: Send "{Blind}{vkFF}"
+; #InputLevel 1
+; LAlt:: SendEvent "h"
+; #InputLevel 0
+; h & j:: MsgBox "works"
 
-+#r:: Reload
++^#r:: Reload
+#SuspendExempt
++^#s:: Suspend  ; Ctrl+Alt+S
+#SuspendExempt False
 +#e:: Edit
 ^#h:: Send "^#{Left}"
 ^#l:: Send "^#{Right}"
@@ -52,12 +59,11 @@ global dMode := false
 global gMode := false
 global yMode := false
 global fMode := false
-global regMode := false
 global cMode := false
-global windowMode := false
 global visualMode := false
 global visualLineMode := false
 global insertMode := false
+global windowMode := false
 global WindowManagerMode := false
 global mouseManagerMode := false
 global WasInMouseManagerMode := false
@@ -524,7 +530,6 @@ delChanYantMotion() {
 ; Define the hotkey to enable the keybindings
 ^[:: {
 	gotoNormal()
-	; mylang()
 	Exit
 }
 
@@ -1831,12 +1836,6 @@ Esc:: {
 	exitVim()
 	Exit
 }
-
-#HotIf
-
-#HotIf regMode = 1
-HotIf "regMode = 1"
-
 
 #HotIf
 

@@ -69,20 +69,24 @@ class Infos {
 	 * @param newText *String*
 	 * @returns {Infos} the class object
 	 */
-	ReplaceText(newText) {
+	ReplaceText(newText, islast := false) {
 
 		try WinExist(this.gInfo)
 		catch
 			return Infos(newText, this.autoCloseTimeout)
 
-		if StrLen(newText) = StrLen(this.gcText.Text) {
+		if StrLen(newText) == StrLen(this.gcText.Text) {
 			this.gcText.Text := newText
 			this._SetupAutoclose()
 			return this
 		}
-
 		Infos.spots[this.spaceIndex] := false
-		return Infos(newText, this.autoCloseTimeout)
+		if islast {
+			return Infos(newText, this.autoCloseTimeout, true)
+		}
+		else {
+			return Infos(newText, this.autoCloseTimeout)
+		}
 	}
 
 	Destroy(*) {
