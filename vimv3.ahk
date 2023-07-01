@@ -76,7 +76,7 @@ global shiftpPLaceHolder := shiftpOpr()
 global guPLaceHolder := guOpr()
 global gshiftuPLaceHolder := gshiftuOpr()
 global tildaPLaceHolder := tildaOpr()
-vimInfo.destroy()
+Infos.DestroyAll()
 turnOffAll()
 
 turnoffBulbs() {
@@ -191,7 +191,7 @@ counterFunc(number) {
 		counter *= 10
 		counter += number
 	}
-	vimInfo.changeText(counter)
+	vimInfo.changeCounter(counter)
 }
 
 ; normal Mode
@@ -212,7 +212,7 @@ BackSpace:: {
 	if counter == 0 {
 		vimInfo.destroy()
 	} else {
-		vimInfo.changeText(counter)
+		vimInfo.changeCounter(counter)
 	}
 	try WinExist(vimInfo.infoText.gInfo)
 	catch
@@ -274,6 +274,7 @@ a:: {
 	gotoInsert()
 }
 b:: {
+	Send "{Left}"
 	global regActive
 	if regActive
 		zeroize()
@@ -363,6 +364,7 @@ f:: {
 }
 g:: Return ; need to figure out how !todo
 h:: {
+	Send "{Left}"
 	global counter
 	global opr
 	motion.h_motion(counter, opr)
@@ -382,6 +384,7 @@ i:: {
 	}
 }
 j:: {
+	Send "{Left}"
 	Global counter
 	global opr
 	motion.j_motion(counter)
@@ -390,6 +393,7 @@ j:: {
 	StateBulb[4].Destroy()
 }
 k:: {
+	Send "{Left}"
 	Global counter
 	global opr
 	motion.k_motion(counter)
@@ -478,7 +482,7 @@ u:: {
 	zeroize()
 }
 v:: {
-	; go to visual mode !todo
+	manager.visualMode := true
 }
 w:: {
 	Global counter

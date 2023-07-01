@@ -31,7 +31,6 @@ class motion {
 		}
 	}
 	static b_motion(counter := 0, opr := operator(), ishelper := false) {
-		Send "{Left}"
 		if counter == 0 {
 			counter := 1
 		}
@@ -162,7 +161,6 @@ class motion {
 		return "cancel"
 	}
 	static h_motion(counter := 0, opr := operator(), ishelper := false) {
-		Send "{Left}"
 		if counter == 0 {
 			counter := 1
 		}
@@ -183,7 +181,6 @@ class motion {
 		}
 	}
 	static j_motion(counter := 0) {
-		Send "{Left}"
 		if counter == 0 {
 			counter := 1
 		}
@@ -198,7 +195,6 @@ class motion {
 		}
 	}
 	static k_motion(counter := 0) {
-		Send "{Left}"
 		if counter == 0 {
 			counter := 1
 		}
@@ -252,7 +248,7 @@ class motion {
 		}
 	}
 	static n0_motion(opr := operator()) {
-		Send "^+{Home}"
+		Send "+{Home}"
 
 		; opr action
 		if !opr.isSuper {
@@ -267,7 +263,7 @@ class motion {
 		}
 	}
 	static n4_motion(opr := operator()) {
-		Send "^+{End}"
+		Send "+{End}"
 
 		; opr action
 		if !opr.isSuper {
@@ -277,6 +273,7 @@ class motion {
 			return
 		}
 		else {
+			Send "{Right}"
 			Send "{Left}"
 			Send "+{Right}"
 		}
