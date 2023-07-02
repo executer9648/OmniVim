@@ -27,8 +27,8 @@ class vimInfo {
 
 	static addText(text) {
 		this.text .= text
-		this.infoText.Destroy()
 		output := this.text this.counter
+		this.infoText.Destroy()
 		this.infoText := Infos(this.text, , true)
 		; this.infoText.ReplaceText(this.text, true)
 	}

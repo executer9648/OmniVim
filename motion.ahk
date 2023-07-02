@@ -4,6 +4,7 @@
 #Include Language.ahk
 
 class motion {
+	static directionCounter := 0
 	static w_motion(counter := 0, opr := operator(), ishelper := false) {
 		if counter == 0 {
 			counter := 1
@@ -181,30 +182,44 @@ class motion {
 		}
 	}
 	static j_motion(counter := 0) {
+		if manager.visualLineMode == true
+			this.directionCounter -= 1
 		if counter == 0 {
 			counter := 1
 		}
 		Loop counter {
-			Send "{Down}"
+			Send "+{Down}"
 		}
 		if manager.visualMode {
 			return
 		}
 		else {
+			Send "{Right}"
+			Send "{Left}"
 			Send "+{Right}"
 		}
 	}
 	static k_motion(counter := 0) {
+		if manager.visualLineMode == true {
+			this.directionCounter += 1
+			if this.directionCounter > 0 {
+				Send "{end}"
+				Send "+{home}"
+			}
+
+		}
 		if counter == 0 {
 			counter := 1
 		}
 		Loop counter {
-			Send "{Up}"
+			Send "+{Up}"
 		}
 		if manager.visualMode {
 			return
 		}
 		else {
+			Send "{Right}"
+			Send "{Left}"
 			Send "+{Right}"
 		}
 	}

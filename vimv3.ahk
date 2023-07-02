@@ -1,7 +1,7 @@
 #SingleInstance
 #MaxThreadsBuffer True
 #MaxThreads 200
-#MaxThreadsPerHotkey 100
+#MaxThreadsPerHotkey 200
 #UseHook
 #Include StateBulb.ahk
 #Include Mouse.ahk
@@ -16,7 +16,7 @@
 #Include operator.ahk
 #Include vimInfo.ahk
 
-A_HotkeyInterval := 0
+A_HotkeyInterval := 0.1
 A_MenuMaskKey := "vkFF"
 
 SetKeyDelay 10000
@@ -62,6 +62,7 @@ $CapsLock::Control
 	Mouse.BigMove := 200
 }
 
+global monitorCount := 0
 global opr := operator()
 global zeroPlaceHolder := operator()
 global yPlaceHolder := yOpr()
@@ -104,13 +105,16 @@ turnOffAll() {
 	global WasInWindowManagerMode := false
 	manager.reg := "1"
 	manager.visualMode := false
+	manager.visualLineMode := false
 	global zeroPlaceHolder
 	global opr := zeroPlaceHolder
 }
 zeroize() {
 	manager.reg := "1"
-	global zeroPlaceHolder
+	manager.visualMode := false
+	manager.visualLineMode := false
 	global counter := 0
+	global zeroPlaceHolder
 	global opr := zeroPlaceHolder
 	StateBulb[2].Destroy() ; Insert
 	StateBulb[3].Destroy() ; Visual
@@ -121,6 +125,13 @@ zeroize() {
 	StateBulb[StateBulb.MaxBulbs - 1].Destroy()
 }
 gotoNormal() {
+	global monitorCount
+	if monitorCount == 0 {
+		monitorCount := MonitorGetCount()
+	}
+	else if monitorCount != MonitorGetCount() {
+		Reload
+	}
 	turnOffAll()
 	turnoffBulbs()
 	global normalMode := true
@@ -133,7 +144,7 @@ gotoInsert() {
 	StateBulb[1].Create()
 	StateBulb[2].Create()
 }
-gotoWindowMode() {
+gotoWMode() {
 	turnOffAll()
 	turnoffBulbs()
 	StateBulb[1].Create()
@@ -150,6 +161,13 @@ gotoMwMode() {
 	StateBulb[6].Create()
 }
 gotoMouseMode() {
+	global monitorCount
+	if monitorCount == 0 {
+		monitorCount := MonitorGetCount()
+	}
+	else if monitorCount != MonitorGetCount() {
+		Reload
+	}
 	turnOffAll()
 	turnoffBulbs()
 	global mouseManagerMode := true
@@ -249,8 +267,9 @@ BackSpace:: {
 	else if manager.reg == "cancel"
 		Exit
 	else {
-		vimInfo.addText(manager.reg)
 		global regActive := true
+		global normalMode := true
+		StateBulb[1].Create()
 	}
 }
 [:: Return
@@ -334,6 +353,10 @@ e:: {
 	zeroize()
 	vimInfo.destroy()
 }
+^e::
+{
+	Send "{WheelDown}"
+}
 f:: {
 	global counter
 	global normalMode := false
@@ -364,6 +387,8 @@ f:: {
 }
 g:: Return ; need to figure out how !todo
 h:: {
+	if manager.visualLineMode == true
+		return
 	Send "{Left}"
 	global counter
 	global opr
@@ -384,7 +409,8 @@ i:: {
 	}
 }
 j:: {
-	Send "{Left}"
+	if manager.visualLineMode != true
+		Send "{Left}"
 	Global counter
 	global opr
 	motion.j_motion(counter)
@@ -393,7 +419,8 @@ j:: {
 	StateBulb[4].Destroy()
 }
 k:: {
-	Send "{Left}"
+	if manager.visualLineMode != true
+		Send "{Left}"
 	Global counter
 	global opr
 	motion.k_motion(counter)
@@ -443,9 +470,11 @@ p:: {
 		Send "{Left}"
 		Send "+{Right}"
 		zeroize()
+		vimInfo.destroy()
 	}
 	else {
 		zeroize()
+		vimInfo.destroy()
 	}
 }
 q:: Return
@@ -461,11 +490,12 @@ r:: {
 	}
 	else {
 		zeroize()
+		vimInfo.destroy()
+		StateBulb[4].Destroy()
 	}
 }
 s:: {
 	global opr
-	global zeroPlaceHolder
 	global sPlaceHolder
 	if opr.isSuper == true {
 		opr := sPlaceHolder
@@ -474,6 +504,8 @@ s:: {
 	}
 	else {
 		zeroize()
+		vimInfo.destroy()
+		StateBulb[4].Destroy()
 	}
 }
 t:: Return
@@ -483,6 +515,13 @@ u:: {
 }
 v:: {
 	manager.visualMode := true
+}
++v:: {
+	motion.directionCounter := 0
+	manager.visualMode := true
+	manager.visualLineMode := true
+	Send "{home}"
+	Send "+{end}"
 }
 w:: {
 	Global counter
@@ -505,20 +544,34 @@ x:: {
 	}
 }
 y:: {
+	StateBulb[4].Create()
+	vimInfo.addText("y")
 	global opr
 	global zeroPlaceHolder
 	global yPlaceHolder
-	if opr.isSuper == true {
-		opr := yPlaceHolder
-		opr.action()
+	if opr is yOpr {
+		opr.action2()
+		vimInfo.destroy()
 		zeroize()
+		StateBulb[4].Destroy()
+	}
+	else if opr.isSuper == true {
+		opr := yPlaceHolder
 	}
 	else {
 		zeroize()
+		vimInfo.destroy()
+		StateBulb[4].Destroy()
 	}
+}
+^y::
+{
+	Send "{WheelUp}"
 }
 z:: Return
 0:: {
+	if manager.visualLineMode == true
+		return
 	global opr
 	motion.n0_motion(opr)
 	zeroize()
@@ -529,6 +582,8 @@ z:: Return
 3:: counterFunc(3)
 4:: counterFunc(4)
 +4:: {
+	if manager.visualLineMode == true
+		return
 	global opr
 	motion.n4_motion(opr)
 	zeroize()
@@ -564,7 +619,6 @@ HotIf "insertMode = 1"
 
 !Esc:: {
 	exitVim()
-	gotoNormal()
 	Exit
 }
 
@@ -740,7 +794,7 @@ p:: {
 }
 ^w:: {
 	global WasInMouseManagerMode := true
-	gotoWindowMode()
+	gotoWMode()
 	Exit
 }
 

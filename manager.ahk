@@ -20,13 +20,14 @@ class manager {
 			} else if check2 == "Space" {
 				return "cancel"
 			} else {
-				var .= ih.EndKey
+				var .= check2
 			}
-			vimInfo.changeText(var)
+			vimInfo.addText(var)
 			counter -= 1
 		}
 		return var
 	}
 	static reg := "1"
 	static visualMode := false
+	static visualLineMode := false
 }

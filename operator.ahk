@@ -20,9 +20,21 @@ class yOpr extends operator {
 		Registers(manager.reg).WriteOrAppend()
 	}
 	action2() {
-		Send "{Home}+{End}"
+		oldclip := A_Clipboard
+		Send "+{Home}"
 		Send "^c"
+		ClipWait 1
+		var1 := A_Clipboard
+		Send "{Right}"
+		Send "+{End}"
+		Send "^c"
+		ClipWait 1
+		var2 := A_Clipboard
+		Send "{Left}"
+		Send "+{Right}"
+		A_Clipboard := var1 var2
 		Registers(manager.reg).WriteOrAppend()
+		A_Clipboard := oldclip
 	}
 }
 class dOpr extends operator {
