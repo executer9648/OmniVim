@@ -1,7 +1,7 @@
 ﻿#SingleInstance
 #MaxThreadsBuffer True
-#MaxThreads 200
-#MaxThreadsPerHotkey 100
+#MaxThreads 255
+#MaxThreadsPerHotkey 155
 #UseHook
 #Include StateBulb.ahk
 #Include Info.ahk
@@ -16,6 +16,10 @@
 A_HotkeyInterval := 0
 A_MenuMaskKey := "vkFF"
 
+SetWinDelay -1
+SetControlDelay -1
+SetMouseDelay -1
+ListLines 0
 SetKeyDelay 10000
 SetMouseDelay -1
 CoordMode "Mouse", "Screen"

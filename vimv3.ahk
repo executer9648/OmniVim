@@ -19,8 +19,12 @@
 A_HotkeyInterval := 0
 A_MenuMaskKey := "vkFF"
 
-SetKeyDelay 10000
+SetKeyDelay -1, -1
+SetWinDelay -1
+SetControlDelay -1
 SetMouseDelay -1
+ListLines 0
+
 CoordMode "Mouse", "Screen"
 
 $CapsLock::Control
