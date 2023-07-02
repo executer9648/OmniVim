@@ -1,7 +1,7 @@
 #SingleInstance
 #MaxThreadsBuffer True
-#MaxThreads 200
-#MaxThreadsPerHotkey 200
+#MaxThreads 255
+#MaxThreadsPerHotkey 255
 #UseHook
 #Include StateBulb.ahk
 #Include Mouse.ahk
@@ -16,7 +16,7 @@
 #Include operator.ahk
 #Include vimInfo.ahk
 
-A_HotkeyInterval := 0.1
+A_HotkeyInterval := 0
 A_MenuMaskKey := "vkFF"
 
 SetKeyDelay 10000
@@ -918,8 +918,12 @@ $^y::
 ; g mode
 #HotIf gMode = 1
 HotIf "gMode = 1"
+
+global counter
+global WasInMouseManagerMode
 t:: {
 	global counter
+	global WasInMouseManagerMode
 	if counter != 0 {
 		Loop counter {
 			Send "^{tab}"
