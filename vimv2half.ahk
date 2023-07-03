@@ -1703,7 +1703,6 @@ b:: {
 			Send "^+{Right}"
 		}
 		Send "^c"
-		Send "{right}"
 		Send "{Left}"
 		Send "+{right}"
 		gotoNormal()
@@ -1720,6 +1719,7 @@ b:: {
 		Send "^+{Left}"
 	}
 	Send "^c"
+	Send "{right}"
 	Send "{Left}"
 	Send "+{right}"
 	gotoNormal()
@@ -1957,7 +1957,6 @@ b:: {
 			Send "^+{Right}"
 		}
 		Send "^x"
-		Send "{right}"
 		Send "{Left}"
 		Send "+{right}"
 		gotoInsert()
@@ -1974,6 +1973,7 @@ b:: {
 		Send "^+{Left}"
 	}
 	Send "^x"
+	Send "{right}"
 	Send "{Left}"
 	Send "+{right}"
 	gotoInsert()
@@ -2356,7 +2356,6 @@ b:: {
 			Send "^+{Right}"
 		}
 		Send "^x"
-		Send "{right}"
 		Send "{Left}"
 		Send "+{right}"
 		gotoNormal()
@@ -2373,6 +2372,7 @@ b:: {
 		Send "^+{Left}"
 	}
 	Send "^x"
+	Send "{right}"
 	Send "{Left}"
 	Send "+{right}"
 	gotoNormal()
