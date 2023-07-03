@@ -3130,6 +3130,11 @@ d::
 		gotoNormal()
 		Exit
 	}
+	if counter != 0
+		cvar := "" counter
+	cvar .= "d"
+	infcounter.Destroy()
+	infcounter := Infos(cvar, , true)
 	gotoDMode()
 }
 
@@ -3433,9 +3438,12 @@ c:: {
 		gotoInsert()
 		Exit
 	}
-	else {
-		gotoCMode()
-	}
+	if counter != 0
+		cvar := "" counter
+	cvar .= "c"
+	infcounter.Destroy()
+	infcounter := Infos(cvar, , true)
+	gotoCMode()
 }
 
 x:: {
@@ -3608,9 +3616,12 @@ y:: {
 		Send "^c"
 		Exit
 	}
-	else {
-		gotoYMode()
-	}
+	if counter != 0
+		cvar := "" counter
+	cvar .= "y"
+	infcounter.Destroy()
+	infcounter := Infos(cvar, , true)
+	gotoYMode()
 }
 
 +p:: {
