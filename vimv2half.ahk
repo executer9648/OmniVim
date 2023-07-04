@@ -58,6 +58,7 @@ $CapsLock::Control
 
 ; Set initial state to normal (disabled)
 global counter := 0
+global monitorCount := 0
 global normalMode := false
 global dMode := false
 global gMode := false
@@ -218,6 +219,13 @@ gotoNormalnoInfo() {
 }
 
 gotoNormal() {
+	global monitorCount
+	if monitorCount == 0 {
+		monitorCount := MonitorGetCount()
+	}
+	else if monitorCount != MonitorGetCount() {
+		Reload
+	}
 	StateBulb[6].Destroy() ; Mouse Movement
 	StateBulb[5].Destroy() ; Move windows
 	StateBulb[4].Destroy()
