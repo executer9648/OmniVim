@@ -173,7 +173,11 @@ gotoDMode() {
 	global normalMode := false
 	global dMode := true
 	StateBulb[4].Create()
-	Send "{Right}"
+	langid := Language.GetKeyboardLanguage()
+	if (LangID = 0x040D) {
+		Send "{Right}"
+	} else
+		Send "{Left}"
 }
 
 gotoRegMode() {
@@ -186,14 +190,22 @@ gotoYMode() {
 	global normalMode := false
 	global yMode := true
 	StateBulb[4].Create()
-	Send "{Right}"
+	langid := Language.GetKeyboardLanguage()
+	if (LangID = 0x040D) {
+		Send "{Right}"
+	} else
+		Send "{Left}"
 }
 
 gotoCMode() {
 	global normalMode := false
 	global cMode := true
 	StateBulb[4].Create()
-	Send "{Right}"
+	langid := Language.GetKeyboardLanguage()
+	if (LangID = 0x040D) {
+		Send "{Right}"
+	} else
+		Send "{Left}"
 }
 
 gotoNormalnoInfo() {
@@ -3865,7 +3877,6 @@ Esc:: {
 #HotIf mouseManagerMode = 1
 HotIf "mouseManagerMode = 1"
 
-c:: Return
 r:: Return
 z:: Return
 .:: Return
@@ -3884,6 +3895,12 @@ x:: {
 }
 d:: {
 	Send "{Delete}"
+}
+c:: {
+	Send "{Delete}"
+	global WasInMouseManagerMode := true
+	gotoInsert()
+	Exit
 }
 y:: {
 	Send "^c"
@@ -3931,6 +3948,12 @@ m:: {
 +j:: Mouse.MoveDown(Mouse.MediumMove)
 +l:: Mouse.MoveRight(Mouse.MediumMove)
 
++u:: {
+	Send "^z"
+}
+^r:: {
+	Send "^y"
+}
 
 Hotkey "u", ButtonAcceleration
 Hotkey "o", ButtonAcceleration
