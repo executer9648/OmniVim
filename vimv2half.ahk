@@ -1,7 +1,7 @@
 #SingleInstance
 #MaxThreadsBuffer True
 #MaxThreads 255
-#MaxThreadsPerHotkey 155
+#MaxThreadsPerHotkey 255
 #UseHook
 #Include StateBulb.ahk
 #Include Info.ahk
@@ -78,15 +78,16 @@ global wasinCmdMode := false
 global infcounter := Infos("")
 infcounter.Destroy()
 
-chCounter(number) {
+chCounter(number, mode := "") {
 	global counter
 	global infcounter
 	if counter >= 0 {
 		counter *= 10
 		counter += number
 	}
+	text := mode counter
 	infcounter.Destroy()
-	infcounter := Infos(counter, , true)
+	infcounter := Infos(text, , true)
 }
 
 exitVim() {
@@ -137,6 +138,13 @@ gotoMwMode() {
 }
 
 gotoMouseMode() {
+	global monitorCount
+	if monitorCount == 0 {
+		monitorCount := MonitorGetCount()
+	}
+	else if monitorCount != MonitorGetCount() {
+		Reload
+	}
 	global normalMode := false
 	global mouseManagerMode := true
 	global WasInMouseManagerMode := false
@@ -1592,31 +1600,31 @@ v:: Return
 x:: Return
 z:: Return
 1:: {
-	chCounter(1)
+	chCounter(1, "y")
 }
 2:: {
-	chCounter(2)
+	chCounter(2, "y")
 }
 3:: {
-	chCounter(3)
+	chCounter(3, "y")
 }
 4:: {
-	chCounter(4)
+	chCounter(4, "y")
 }
 5:: {
-	chCounter(5)
+	chCounter(5, "y")
 }
 6:: {
-	chCounter(6)
+	chCounter(6, "y")
 }
 7:: {
-	chCounter(7)
+	chCounter(7, "y")
 }
 8:: {
-	chCounter(8)
+	chCounter(8, "y")
 }
 9:: {
-	chCounter(9)
+	chCounter(9, "y")
 }
 
 f:: {
@@ -1847,31 +1855,31 @@ x:: Return
 y:: Return
 z:: Return
 1:: {
-	chCounter(1)
+	chCounter(1, "c")
 }
 2:: {
-	chCounter(2)
+	chCounter(2, "c")
 }
 3:: {
-	chCounter(3)
+	chCounter(3, "c")
 }
 4:: {
-	chCounter(4)
+	chCounter(4, "c")
 }
 5:: {
-	chCounter(5)
+	chCounter(5, "c")
 }
 6:: {
-	chCounter(6)
+	chCounter(6, "c")
 }
 7:: {
-	chCounter(7)
+	chCounter(7, "c")
 }
 8:: {
-	chCounter(8)
+	chCounter(8, "c")
 }
 9:: {
-	chCounter(9)
+	chCounter(9, "c")
 }
 
 f:: {
@@ -2215,31 +2223,31 @@ x:: Return
 y:: Return
 z:: Return
 1:: {
-	chCounter(1)
+	chCounter(1, "d")
 }
 2:: {
-	chCounter(2)
+	chCounter(2, "d")
 }
 3:: {
-	chCounter(3)
+	chCounter(3, "d")
 }
 4:: {
-	chCounter(4)
+	chCounter(4, "d")
 }
 5:: {
-	chCounter(5)
+	chCounter(5, "d")
 }
 6:: {
-	chCounter(6)
+	chCounter(6, "d")
 }
 7:: {
-	chCounter(7)
+	chCounter(7, "d")
 }
 8:: {
-	chCounter(8)
+	chCounter(8, "d")
 }
 9:: {
-	chCounter(9)
+	chCounter(9, "d")
 }
 
 f:: {
@@ -3133,6 +3141,8 @@ e:: {
 
 d::
 {
+	global counter
+	global infcounter
 	if visualMode == true {
 		Send "^x"
 		gotoNormal()
@@ -3441,6 +3451,8 @@ l:: {
 }
 
 c:: {
+	global counter
+	global infcounter
 	if visualMode == true {
 		Send "^x"
 		gotoInsert()
@@ -3589,6 +3601,7 @@ w:: {
 
 O:: {
 	Send "{End}"
+	Sleep 10
 	Send "+{Enter}"
 	gotoInsert()
 	Exit
@@ -3620,6 +3633,8 @@ u:: {
 }
 
 y:: {
+	global counter
+	global infcounter
 	if visualMode == true {
 		Send "^c"
 		Exit
