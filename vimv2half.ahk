@@ -15,6 +15,7 @@
 
 A_HotkeyInterval := 0
 A_MenuMaskKey := "vkFF"
+ProcessSetPriority "High"
 
 SetWinDelay -1
 SetControlDelay -1
@@ -65,6 +66,7 @@ global gMode := false
 global yMode := false
 global fMode := false
 global cMode := false
+global numlockMode := false
 global visualMode := false
 global visualLineMode := false
 global insertMode := false
@@ -101,6 +103,7 @@ exitVim() {
 	global yMode := false
 	global cMode := false
 	global fMode := false
+	global numlockMode := false
 	global windowMode := false
 	Global visualMode := false
 	global WindowManagerMode := false
@@ -121,6 +124,11 @@ exitVim() {
 	; StateBulb[7].Destroy() ; Window
 	; StateBulb[8].Destroy() ; Fmode
 	Exit
+}
+gotoNumLockMode() {
+	global numlockMode := true
+	global normalMode := false
+	StateBulb[4].Create()
 }
 
 gotoWindowMode() {
@@ -597,6 +605,57 @@ delChanYantMotion() {
 ; 	return
 ; }
 
+;numlock replacer
+#HotIf numlockMode = 1
+HotIf "numlockMode = 1"
+
+Esc:: {
+	if WasInMouseManagerMode == true {
+		gotoNormal()
+		gotoMouseMode()
+	}
+	else {
+		gotoNormal()
+	}
+}
+
+!Esc:: {
+	exitVim()
+	Exit
+}
+
+0:: {
+	chCounter(0)
+}
+1:: {
+	chCounter(1)
+}
+2:: {
+	chCounter(2)
+}
+3:: {
+	chCounter(3)
+}
+4:: {
+	chCounter(4)
+}
+5:: {
+	chCounter(5)
+}
+6:: {
+	chCounter(6)
+}
+7:: {
+	chCounter(7)
+}
+8:: {
+	chCounter(8)
+}
+9:: {
+	chCounter(9)
+}
+
+#HotIf
 ; f mode
 #HotIf fMode = 1
 HotIf "fMode = 1"
@@ -1316,14 +1375,8 @@ Rctrl:: {
 }
 
 Esc:: {
-	if (WasInMouseManagerMode == true) {
-		gotoNormal()
-		gotoMouseMode()
-	}
-	else {
-		gotoNormal()
-	}
-	Exit
+	gotoNormal()
+	gotoMouseMode()
 }
 
 !Esc:: {
@@ -1370,7 +1423,9 @@ v:: Return
 x:: Return
 y:: Return
 z:: Return
-0:: Return
+0:: {
+	chCounter(0)
+}
 1:: {
 	chCounter(1)
 }
@@ -1436,7 +1491,7 @@ Esc:: {
 	global counter
 	if counter != 0 {
 		Loop counter {
-			Send "^w"
+			Send "^{f4}"
 		}
 		counter := 0
 		if WasInMouseManagerMode == true {
@@ -1611,6 +1666,7 @@ u:: Return
 v:: Return
 x:: Return
 z:: Return
+
 1:: {
 	chCounter(1, "y")
 }
@@ -1710,9 +1766,21 @@ i:: {
 
 
 y:: {
-	Send "{Home}+{End}"
+	global infcounter
+	Send "+{Home}"
 	Send "^c"
+	ClipWait 1
+	var1 := A_Clipboard
+	Send "{Right}"
+	Send "+{End}"
+	Send "^c"
+	ClipWait 1
+	var2 := A_Clipboard
+	Send "{Left}"
+	Send "+{Right}"
+	A_Clipboard := var1 var2
 	gotoNormal()
+	infcounter.Destroy()
 	Exit
 }
 
@@ -1795,10 +1863,16 @@ w:: {
 
 0::
 {
-	Send "+{home}"
-	Send "^c"
-	gotoNormal()
-	Exit
+	global counter
+	if counter != 0 {
+		chCounter(0, "y")
+	}
+	else {
+		Send "+{home}"
+		Send "^c"
+		gotoNormal()
+		Exit
+	}
 }
 
 +4::
@@ -1964,9 +2038,11 @@ i:: {
 }
 
 c:: {
+	global infcounter
 	Send "{Home}+{End}"
 	Send "^x"
 	gotoInsert()
+	infcounter.Destroy()
 	Exit
 }
 
@@ -2049,10 +2125,16 @@ w:: {
 
 0::
 {
-	Send "+{home}"
-	Send "^x"
-	gotoInsert()
-	Exit
+	global counter
+	if counter != 0 {
+		chCounter(0, "c")
+	}
+	else {
+		Send "+{home}"
+		Send "^x"
+		gotoInsert()
+		Exit
+	}
 }
 
 +4::
@@ -2172,6 +2254,9 @@ Esc:: {
 	Exit
 }
 
+0:: {
+	chCounter(0)
+}
 1:: {
 	chCounter(1)
 }
@@ -2362,10 +2447,12 @@ Esc:: {
 }
 
 d:: {
+	global infcounter
 	Send "{Home}+{End}"
 	Send "^x"
 	Send "{Delete}"
 	gotoNormal()
+	infcounter.Destroy()
 	Exit
 }
 
@@ -2448,10 +2535,16 @@ w:: {
 
 0::
 {
-	Send "+{home}"
-	Send "^x"
-	gotoNormal()
-	Exit
+	global counter
+	if counter != 0 {
+		chCounter(0, "d")
+	}
+	else {
+		Send "+{home}"
+		Send "^x"
+		gotoNormal()
+		Exit
+	}
 }
 
 +4::
@@ -2652,6 +2745,11 @@ Esc:: {
 ; normal Mode
 #HotIf normalMode = 1
 HotIf "normalMode = 1"
+
+!+a:: {
+	Send "!+a"
+	gotoInsert()
+}
 
 BackSpace:: {
 	global counter
@@ -3877,6 +3975,10 @@ Esc:: {
 #HotIf mouseManagerMode = 1
 HotIf "mouseManagerMode = 1"
 
+~!+a:: {
+	gotoInsert()
+}
+
 r:: Return
 z:: Return
 .:: Return
@@ -3892,21 +3994,51 @@ z:: Return
 
 x:: {
 	Send "{BackSpace}"
+	if !GetKeyState("LButton")
+		Click("L Down")
+	else if !GetKeyState("RButton")
+		Click("R Down")
+	else if !GetKeyState("MButton")
+		Click("M Down")
 }
 d:: {
 	Send "{Delete}"
+	if !GetKeyState("LButton")
+		Click("L Down")
+	else if !GetKeyState("RButton")
+		Click("R Down")
+	else if !GetKeyState("MButton")
+		Click("M Down")
 }
 c:: {
 	Send "{Delete}"
 	global WasInMouseManagerMode := true
+	if !GetKeyState("LButton")
+		Click("L Down")
+	else if !GetKeyState("RButton")
+		Click("R Down")
+	else if !GetKeyState("MButton")
+		Click("M Down")
 	gotoInsert()
 	Exit
 }
 y:: {
 	Send "^c"
+	if !GetKeyState("LButton")
+		Click("L Down")
+	else if !GetKeyState("RButton")
+		Click("R Down")
+	else if !GetKeyState("MButton")
+		Click("M Down")
 }
 p:: {
 	Send "^v"
+	if !GetKeyState("LButton")
+		Click("L Down")
+	else if !GetKeyState("RButton")
+		Click("R Down")
+	else if !GetKeyState("MButton")
+		Click("M Down")
 }
 ^w:: {
 	if visualMode == true {

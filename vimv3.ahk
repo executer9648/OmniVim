@@ -19,11 +19,12 @@
 A_HotkeyInterval := 0
 A_MenuMaskKey := "vkFF"
 
-SetKeyDelay -1, -1
 SetWinDelay -1
 SetControlDelay -1
 SetMouseDelay -1
 ListLines 0
+SetKeyDelay 10000
+SetMouseDelay -1
 
 CoordMode "Mouse", "Screen"
 
