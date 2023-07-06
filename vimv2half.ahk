@@ -77,9 +77,11 @@ global insertMode := false
 global windowMode := false
 global WindowManagerMode := false
 global mouseManagerMode := false
+global wasInNormalMode := false
 global WasInMouseManagerMode := false
 global WasInRegMode := false
 global WasInWindowManagerMode := false
+global wasInInsertMode := false
 global wasinCmdMode := false
 global infcounter := Infos("")
 infcounter.Destroy()
@@ -102,7 +104,9 @@ exitVim() {
 	Global normalMode := false
 	Global insertMode := false
 	global dMode := false
+	global wasInInsertMode := false
 	global regMode := false
+	global wasInNormalMode := false
 	global gMode := false
 	global yMode := false
 	global cMode := false
@@ -618,11 +622,25 @@ Esc:: {
 		gotoNormal()
 		gotoMouseMode()
 	}
+	else if wasInInsertMode {
+		gotoInsert()
+	}
 	else {
 		gotoNormal()
 	}
+	global numlockMode := false
 }
 
+!n:: {
+	if wasInInsertMode {
+		gotoInsert()
+	}
+	else {
+		gotoNormal()
+	}
+	StateBulb[4].Destroy() ; Special
+	global numlockMode := false
+}
 !Esc:: {
 	exitVim()
 	Exit
@@ -2572,6 +2590,11 @@ w:: {
 #HotIf insertMode = 1
 HotIf "insertMode = 1"
 
+!n:: {
+	global wasInInsertMode := true
+	gotoNumLockMode()
+}
+
 ^r:: {
 	global insertMode := false
 	inf := Infos('"', , true)
@@ -2936,6 +2959,7 @@ n:: {
 	Exit
 }
 !n:: {
+	global wasInNormalMode := true
 	gotoNumLockMode()
 }
 q:: Return
