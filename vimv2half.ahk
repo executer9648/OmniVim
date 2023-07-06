@@ -57,6 +57,10 @@ $CapsLock::Control
 !k:: Send "{Up}"
 !l:: Send "{Right}"
 
+!n:: {
+	gotoNumLockMode()
+}
+
 ; Set initial state to normal (disabled)
 global counter := 0
 global monitorCount := 0
@@ -624,35 +628,38 @@ Esc:: {
 	Exit
 }
 
-0:: {
-	chCounter(0)
+l::
+RAlt:: Send "."
+
+space:: {
+	Send "0"
 }
-1:: {
-	chCounter(1)
+n:: {
+	Send "1"
 }
-2:: {
-	chCounter(2)
+m:: {
+	Send "2"
 }
-3:: {
-	chCounter(3)
+,:: {
+	Send "3"
 }
-4:: {
-	chCounter(4)
+h:: {
+	Send "4"
 }
-5:: {
-	chCounter(5)
+j:: {
+	Send "5"
 }
-6:: {
-	chCounter(6)
+k:: {
+	Send "6"
 }
-7:: {
-	chCounter(7)
+y:: {
+	Send "7"
 }
-8:: {
-	chCounter(8)
+u:: {
+	Send "8"
 }
-9:: {
-	chCounter(9)
+i:: {
+	Send "9"
 }
 
 #HotIf
@@ -2762,7 +2769,6 @@ BackSpace:: {
 		infcounter.Destroy()
 		infcounter := Infos(counter, , true)
 	}
-	Send "{BackSpace}"
 }
 
 #Space:: {
@@ -2928,6 +2934,9 @@ n:: {
 	Send "^f"
 	Send "+{Enter}"
 	Exit
+}
+!n:: {
+	gotoNumLockMode()
 }
 q:: Return
 r:: {
@@ -3975,6 +3984,10 @@ Esc:: {
 #HotIf mouseManagerMode = 1
 HotIf "mouseManagerMode = 1"
 
+!n:: {
+	global WasInMouseManagerMode := true
+	gotoNumLockMode()
+}
 ~!+a:: {
 	gotoInsert()
 }
