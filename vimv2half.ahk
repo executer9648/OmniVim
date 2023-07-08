@@ -15,7 +15,6 @@
 
 A_HotkeyInterval := 0
 A_MenuMaskKey := "vkFF"
-ProcessSetPriority "High"
 
 SetWinDelay -1
 SetControlDelay -1
@@ -635,50 +634,60 @@ Esc:: {
 	if wasInInsertMode {
 		gotoInsert()
 	}
-	else {
+	else if wasInNormalMode {
 		gotoNormal()
 	}
 	StateBulb[4].Destroy() ; Special
 	global numlockMode := false
 }
+
 !Esc:: {
 	exitVim()
 	Exit
 }
 
-l::
-RAlt:: Send "."
+u:: Send "4"
+i:: Send "5"
+o:: Send "6"
+j:: Send "1"
+k:: Send "2"
+l:: Send "3"
+m:: Send "0"
+n:: Send "0"
 
-space:: {
-	Send "0"
-}
-n:: {
-	Send "1"
-}
-m:: {
-	Send "2"
-}
-,:: {
-	Send "3"
-}
-h:: {
-	Send "4"
-}
-j:: {
-	Send "5"
-}
-k:: {
-	Send "6"
-}
-y:: {
-	Send "7"
-}
-u:: {
-	Send "8"
-}
-i:: {
-	Send "9"
-}
+; l::
+; RAlt:: Send "."
+
+; space:: {
+; 	Send "0"
+; }
+; n:: {
+; 	Send "1"
+; }
+; m:: {
+; 	Send "2"
+; }
+; ,:: {
+; 	Send "3"
+; }
+; h:: {
+; 	Send "4"
+; }
+; j:: {
+; 	Send "5"
+; }
+; k:: {
+; 	Send "6"
+; }
+; y:: {
+; 	Send "7"
+; }
+; u:: {
+; 	Send "8"
+; }
+; i:: {
+; 	Send "9"
+; }
 
 #HotIf
 ; f mode
