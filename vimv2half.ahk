@@ -16,10 +16,6 @@
 A_HotkeyInterval := 0
 A_MenuMaskKey := "vkFF"
 
-SetWinDelay -1
-SetControlDelay -1
-SetMouseDelay -1
-ListLines 0
 SetKeyDelay 10000
 SetMouseDelay -1
 CoordMode "Mouse", "Screen"
@@ -2067,6 +2063,7 @@ i:: {
 	}
 	sleep 100
 	Send "^x"
+	infcounter.Destroy()
 	gotoInsert()
 	Exit
 }
@@ -2657,26 +2654,33 @@ Esc:: {
 
 ^u:: {
 	Send "{Home}+{End}"
+	Sleep 10
 	Send "{BS}"
 	Exit
 }
 
 ^x:: {
 	Send "+{Home}"
+	Sleep 10
 	Send "{BS}"
 	Exit
 }
 
-^k:: Send "+{end}{bs}"
-
+^k:: {
+	Send "+{end}"
+	Sleep 10
+	Send "{bs}"
+}
 ^w:: {
 	langid := Language.GetKeyboardLanguage()
 	if (LangID = 0x040D) {
 		Send "^+{Right}"
+		Sleep 10
 		Send "{bs}"
 		Exit
 	}
 	Send "^+{Left}"
+	Sleep 10
 	Send "{bs}"
 	Exit
 }
@@ -2743,6 +2747,7 @@ Esc:: {
 
 !d:: {
 	Send "^+{Right}"
+	Sleep 10
 	Send "{Delete}"
 	Exit
 }
