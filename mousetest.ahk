@@ -259,7 +259,7 @@ ButtonLeftClick(*)
 {
 	if GetKeyState("LButton")
 		return
-	Button2 := "Numpad0"
+	Button2 := "t"
 	ButtonClick := "Left"
 	ButtonClickStart Button2, ButtonClick
 }

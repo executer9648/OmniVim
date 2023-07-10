@@ -2629,9 +2629,6 @@ HotIf "insertMode = 1"
 	global insertMode := true
 }
 
-#Space:: {
-	Language.ToggleBulb()
-}
 !Esc:: {
 	exitVim()
 	gotoNormal()
@@ -2667,9 +2664,17 @@ Esc:: {
 }
 
 ^k:: {
-	Send "+{end}"
-	Sleep 10
-	Send "{bs}"
+	langid := Language.GetKeyboardLanguage()
+	if (LangID = 0x040D) {
+		Send "+{Home}"
+		Sleep 10
+		Send "{bs}"
+	}
+	else {
+		Send "+{end}"
+		Sleep 10
+		Send "{bs}"
+	}
 }
 ^w:: {
 	langid := Language.GetKeyboardLanguage()
@@ -2686,18 +2691,33 @@ Esc:: {
 }
 
 ^a:: {
-	Send "{Home}"
-	Exit
+	langid := Language.GetKeyboardLanguage()
+	if (LangID = 0x040D) {
+		Send "{End}"
+	}
+	else {
+		Send "{Home}"
+	}
 }
 
 ^e:: {
-	Send "{End}"
-	Exit
+	langid := Language.GetKeyboardLanguage()
+	if (LangID = 0x040D) {
+		Send "{Home}"
+	}
+	else {
+		Send "{End}"
+	}
 }
 
 ^b:: {
-	Send "{Left}"
-	Exit
+	langid := Language.GetKeyboardLanguage()
+	if (LangID = 0x040D) {
+		Send "{Right}"
+	}
+	else {
+		Send "{Left}"
+	}
 }
 
 !h:: {
@@ -2736,8 +2756,13 @@ Esc:: {
 }
 
 ^f:: {
-	Send "{Right}"
-	Exit
+	langid := Language.GetKeyboardLanguage()
+	if (LangID = 0x040D) {
+		Send "{Left}"
+	}
+	else {
+		Send "{Right}"
+	}
 }
 
 !l:: {
@@ -2746,10 +2771,15 @@ Esc:: {
 }
 
 !d:: {
-	Send "^+{Right}"
+	langid := Language.GetKeyboardLanguage()
+	if (LangID = 0x040D) {
+		Send "^+{Left}"
+	}
+	else {
+		Send "^+{Right}"
+	}
 	Sleep 10
 	Send "{Delete}"
-	Exit
 }
 
 +!b:: {
@@ -2763,13 +2793,23 @@ Esc:: {
 }
 
 !b:: {
-	Send "^{Left}"
-	Exit
+	langid := Language.GetKeyboardLanguage()
+	if (LangID = 0x040D) {
+		Send "^{Right}"
+	}
+	else {
+		Send "^{Left}"
+	}
 }
 
 !f:: {
-	Send "^{Right}"
-	Exit
+	langid := Language.GetKeyboardLanguage()
+	if (LangID = 0x040D) {
+		Send "^{Left}"
+	}
+	else {
+		Send "^{Right}"
+	}
 }
 
 ^!h:: {
@@ -4138,6 +4178,34 @@ m:: {
 	Send "^y"
 }
 
+t:: Click()
+!t:: Click("Right")
++t:: {
+	Send "{Shift Up}"
+	Click()
+	Send "{Shift Down}"
+}
+^t:: {
+	Send "{ctrl Up}"
+	Click()
+	Send "{ctrl Down}"
+}
++!t:: {
+	Send "{Shift Up}"
+	Click("Right")
+	Send "{Shift Down}"
+}
+^!t:: {
+	Send "{ctrl Up}"
+	Click("Right")
+	Send "{ctrl Down}"
+}
+b:: Click("Middle")
+
+v:: Mouse.HoldIfUp("L")
+!v:: Mouse.HoldIfUp("R")
++b:: Mouse.HoldIfUp("M")
+
 Hotkey "u", ButtonAcceleration
 Hotkey "o", ButtonAcceleration
 Hotkey "n", ButtonAcceleration
@@ -4164,13 +4232,6 @@ hotkey "+a", ButtonMaxSpeedDown
 ^j:: Mouse.MoveDown(Mouse.BigMove)
 ^l:: Mouse.MoveRight(Mouse.BigMove)
 
-t:: Click()
-+t:: Click("Right")
-*b:: Click("Middle")
-
-v:: Mouse.HoldIfUp("L")
-+v:: Mouse.HoldIfUp("R")
-#b:: Mouse.HoldIfUp("M")
 
 1:: MouseMove(Mouse.FarLeftX, Mouse.MiddleY)
 2:: MouseMove(Mouse.HighLeftX, Mouse.MiddleY)
