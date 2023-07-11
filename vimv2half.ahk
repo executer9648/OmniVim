@@ -3952,7 +3952,6 @@ HotIf "WindowManagerMode = 1"
 b:: Return
 c:: Return
 i:: Return
-m:: Return
 !f:: {
 	global WasInWindowManagerMode := true
 	gotoFMode()
@@ -4046,6 +4045,7 @@ q:: WindowManager().SetHalfHeight()
 w:: WindowManager().SetHalfWidth()
 e:: WindowManager().SetFullWidth()
 
+m::
 Esc:: {
 	if (WasInMouseManagerMode == true) {
 		gotoNormal()
@@ -4121,21 +4121,21 @@ c:: {
 }
 y:: {
 	Send "^c"
-	if !GetKeyState("LButton")
-		Click("L Down")
-	else if !GetKeyState("RButton")
-		Click("R Down")
-	else if !GetKeyState("MButton")
-		Click("M Down")
+	if GetKeyState("LButton")
+		Click("L Up")
+	else if GetKeyState("RButton")
+		Click("R Up")
+	else if GetKeyState("MButton")
+		Click("M Up")
 }
 p:: {
 	Send "^v"
-	if !GetKeyState("LButton")
-		Click("L Down")
-	else if !GetKeyState("RButton")
-		Click("R Down")
-	else if !GetKeyState("MButton")
-		Click("M Down")
+	if GetKeyState("LButton")
+		Click("L Up")
+	else if GetKeyState("RButton")
+		Click("R Up")
+	else if GetKeyState("MButton")
+		Click("M Up")
 }
 ^w:: {
 	if visualMode == true {
