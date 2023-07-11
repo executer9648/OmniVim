@@ -23,11 +23,19 @@ CoordMode "Mouse", "Screen"
 $CapsLock::Control
 +!#Control::CapsLock
 
+#HotIf WinActive("A")
+; ~Alt:: Send "{Blind}{vkE8}"
+#!h:: Send "#{Left}"
+#!j:: Send "#{Down}"
+#!k:: Send "#{Up}"
+#!l:: Send "#{Right}"
+#HotIf
+
 ~Alt:: Send "{Blind}{vkFF}"
-; #InputLevel 1
-; LAlt:: SendEvent "h"
-; #InputLevel 0
-; h & j:: MsgBox "works"
+; ; #InputLevel 1
+; ; LAlt:: SendEvent "h"
+; ; #InputLevel 0
+; ; h & j:: MsgBox "works"
 
 +^#r:: Reload
 #SuspendExempt
@@ -42,15 +50,11 @@ $CapsLock::Control
 +#k:: Send "+#{Up}"
 +#l:: Send "+#{Right}"
 
-!#h:: Send "#{Left}"
-!#j:: Send "#{Down}"
-!#k:: Send "#{Up}"
-!#l:: Send "#{Right}"
 
-!h:: Send "{Left}"
-!j:: Send "{Down}"
-!k:: Send "{Up}"
-!l:: Send "{Right}"
+^!h:: Send "{Left}"
+^!j:: Send "{Down}"
+^!k:: Send "{Up}"
+^!l:: Send "{Right}"
 
 !n:: {
 	gotoNumLockMode()
@@ -2588,9 +2592,6 @@ w:: {
 
 #HotIf
 
-; #HotIf WinActive("A")
-; ~Alt:: Send "{Blind}{vkE8}"
-; #HotIf
 
 ; insert Mode
 #HotIf insertMode = 1
