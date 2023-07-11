@@ -1,4 +1,5 @@
 #SingleInstance
+#Requires AutoHotkey v2.0
 #MaxThreadsBuffer True
 #MaxThreads 255
 #MaxThreadsPerHotkey 255
