@@ -2830,6 +2830,11 @@ Esc:: {
 #HotIf normalMode = 1
 HotIf "normalMode = 1"
 
+Z & =:: {
+	Send "{Left}"
+	Send "+{f10}"
+}
+
 !+a:: {
 	Send "!+a"
 	gotoInsert()
@@ -4067,6 +4072,7 @@ HotIf "mouseManagerMode = 1"
 	gotoNumLockMode()
 }
 ~!+a:: {
+	global WasInMouseManagerMode := true
 	gotoInsert()
 }
 
@@ -4085,31 +4091,31 @@ z:: Return
 
 x:: {
 	Send "{BackSpace}"
-	if !GetKeyState("LButton")
-		Click("L Down")
-	else if !GetKeyState("RButton")
-		Click("R Down")
-	else if !GetKeyState("MButton")
-		Click("M Down")
+	if GetKeyState("LButton")
+		Click("L Up")
+	else if GetKeyState("RButton")
+		Click("R Up")
+	else if GetKeyState("MButton")
+		Click("M Up")
 }
 d:: {
 	Send "{Delete}"
-	if !GetKeyState("LButton")
-		Click("L Down")
-	else if !GetKeyState("RButton")
-		Click("R Down")
-	else if !GetKeyState("MButton")
-		Click("M Down")
+	if GetKeyState("LButton")
+		Click("L Up")
+	else if GetKeyState("RButton")
+		Click("R Up")
+	else if GetKeyState("MButton")
+		Click("M Up")
 }
 c:: {
 	Send "{Delete}"
 	global WasInMouseManagerMode := true
-	if !GetKeyState("LButton")
-		Click("L Down")
-	else if !GetKeyState("RButton")
-		Click("R Down")
-	else if !GetKeyState("MButton")
-		Click("M Down")
+	if GetKeyState("LButton")
+		Click("L Up")
+	else if GetKeyState("RButton")
+		Click("R Up")
+	else if GetKeyState("MButton")
+		Click("M Up")
 	gotoInsert()
 	Exit
 }
