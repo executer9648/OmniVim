@@ -211,9 +211,9 @@ gotoDMode() {
 	StateBulb[4].Create()
 	langid := Language.GetKeyboardLanguage()
 	if (LangID = 0x040D) {
-		Send "{Right}"
-	} else
 		Send "{Left}"
+	} else
+		Send "{Right}"
 }
 
 gotoRegMode() {
@@ -228,9 +228,9 @@ gotoYMode() {
 	StateBulb[4].Create()
 	langid := Language.GetKeyboardLanguage()
 	if (LangID = 0x040D) {
-		Send "{Right}"
-	} else
 		Send "{Left}"
+	} else
+		Send "{Right}"
 }
 
 gotoCMode() {
@@ -239,9 +239,9 @@ gotoCMode() {
 	StateBulb[4].Create()
 	langid := Language.GetKeyboardLanguage()
 	if (LangID = 0x040D) {
-		Send "{Right}"
-	} else
 		Send "{Left}"
+	} else
+		Send "{Right}"
 }
 
 gotoNormalnoInfo() {
@@ -1848,6 +1848,7 @@ b:: {
 	global infcounter
 	langid := Language.GetKeyboardLanguage()
 	if (LangID = 0x040D) {
+		Send "{Right}"
 		if counter != 0 {
 			Loop counter {
 				Send "^+{Right}"
@@ -1865,12 +1866,14 @@ b:: {
 		Exit
 	}
 	else if counter != 0 {
+		Send "{Left}"
 		Loop counter {
 			Send "^+{Left}"
 		}
 		counter := 0
 	}
 	else {
+		Send "{Left}"
 		Send "^+{Left}"
 	}
 	Send "^c"
@@ -1887,6 +1890,7 @@ w:: {
 	global infcounter
 	langid := Language.GetKeyboardLanguage()
 	if (LangID = 0x040D) {
+		Send "{Right}"
 		if counter != 0 {
 			Loop counter {
 				Send "^+{Left}"
@@ -1904,12 +1908,14 @@ w:: {
 		Exit
 	}
 	else if counter != 0 {
+		Send "{Left}"
 		Loop counter {
 			Send "^+{Right}"
 		}
 		counter := 0
 	}
 	else {
+		Send "{Left}"
 		Send "^+{Right}"
 	}
 	Send "^c"
@@ -2111,6 +2117,7 @@ b:: {
 	global infcounter
 	langid := Language.GetKeyboardLanguage()
 	if (LangID = 0x040D) {
+		Send "{Right}"
 		if counter != 0 {
 			Loop counter {
 				Send "^+{Right}"
@@ -2128,12 +2135,14 @@ b:: {
 		Exit
 	}
 	else if counter != 0 {
+		Send "{Left}"
 		Loop counter {
 			Send "^+{Left}"
 		}
 		counter := 0
 	}
 	else {
+		Send "{Left}"
 		Send "^+{Left}"
 	}
 	Send "^x"
@@ -2150,6 +2159,7 @@ w:: {
 	global infcounter
 	langid := Language.GetKeyboardLanguage()
 	if (LangID = 0x040D) {
+		Send "{Right}"
 		if counter != 0 {
 			Loop counter {
 				Send "^+{Left}"
@@ -2167,12 +2177,14 @@ w:: {
 		Exit
 	}
 	else if counter != 0 {
+		Send "{Left}"
 		Loop counter {
 			Send "^+{Right}"
 		}
 		counter := 0
 	}
 	else {
+		Send "{Left}"
 		Send "^+{Right}"
 	}
 	Send "^x"
@@ -2521,6 +2533,7 @@ b:: {
 	global infcounter
 	langid := Language.GetKeyboardLanguage()
 	if (LangID = 0x040D) {
+		Send "{Right}"
 		if counter != 0 {
 			Loop counter {
 				Send "^+{Right}"
@@ -2538,12 +2551,14 @@ b:: {
 		Exit
 	}
 	else if counter != 0 {
+		Send "{Left}"
 		Loop counter {
 			Send "^+{Left}"
 		}
 		counter := 0
 	}
 	else {
+		Send "{Left}"
 		Send "^+{Left}"
 	}
 	Send "^x"
@@ -2560,6 +2575,7 @@ w:: {
 	global infcounter
 	langid := Language.GetKeyboardLanguage()
 	if (LangID = 0x040D) {
+		Send "{Right}"
 		if counter != 0 {
 			Loop counter {
 				Send "^+{Left}"
@@ -2577,12 +2593,14 @@ w:: {
 		Exit
 	}
 	else if counter != 0 {
+		Send "{Left}"
 		Loop counter {
 			Send "^+{Right}"
 		}
 		counter := 0
 	}
 	else {
+		Send "{Left}"
 		Send "^+{Right}"
 	}
 	Send "^x"
@@ -4105,6 +4123,7 @@ HotIf "mouseManagerMode = 1"
 	global WasInMouseManagerMode := true
 	global infcounter
 	infcounter.Destroy()
+	disableClick()
 	gotoInsert()
 }
 
@@ -4113,6 +4132,7 @@ z:: Return
 .:: Return
 /:: {
 	Send "^f"
+	disableClick()
 	gotoInsert()
 	Exit
 }
@@ -4178,6 +4198,7 @@ p:: {
 	}
 	else {
 		global WasInMouseManagerMode := true
+		disableClick()
 		gotoWindowMode()
 	}
 	Exit
@@ -4188,16 +4209,19 @@ f:: {
 }
 g:: {
 	global WasInMouseManagerMode := true
+	disableClick()
 	gotoGMode()
 	Exit
 }
 i:: {
 	global WasInMouseManagerMode := true
+	disableClick()
 	gotoInsert()
 	Exit
 }
 m:: {
 	global WasInMouseManagerMode := true
+	disableClick()
 	gotoMwMode()
 	Exit
 }
@@ -4343,3 +4367,12 @@ $^y::
 	Send "{WheelUp}"
 }
 #HotIf
+
+disableClick() {
+	if GetKeyState("LButton")
+		Click("L Up")
+	else if GetKeyState("RButton")
+		Click("R Up")
+	else if GetKeyState("MButton")
+		Click("M Up")
+}
