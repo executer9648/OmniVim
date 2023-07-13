@@ -76,9 +76,9 @@ A_MaxHotkeysPerInterval := 500
 ; Hook hotkeys are smart enough to ignore such keystrokes.
 #UseHook
 
-g_MouseSpeed := 1
-g_MouseAccelerationSpeed := 10
-g_MouseMaxSpeed := 20
+g_MouseSpeed := 5
+g_MouseAccelerationSpeed := 20
+g_MouseMaxSpeed := 25
 
 ;Mouse wheel speed is also set on Control Panel. As that
 ;will affect the normal mouse behavior, the real speed of
@@ -440,6 +440,80 @@ ButtonAcceleration(ThisHotkey)
 		}
 	}
 	g_Button := StrReplace(ThisHotkey, "*")
+
+	if g_Button = "+h" {
+		shiftSpeed()
+	}
+	if g_Button = "+j" {
+		shiftSpeed()
+	}
+	if g_Button = "+k" {
+		shiftSpeed()
+	}
+	if g_Button = "+l" {
+		shiftSpeed()
+	}
+	if g_Button = "+u" {
+		shiftSpeed()
+	}
+	if g_Button = "+o" {
+		shiftSpeed()
+	}
+	if g_Button = "+n" {
+		shiftSpeed()
+	}
+	if g_Button = "+," {
+		shiftSpeed()
+	}
+	if g_Button = "^h" {
+		controlSpeed()
+	}
+	if g_Button = "^j" {
+		controlSpeed()
+	}
+	if g_Button = "^k" {
+		controlSpeed()
+	}
+	if g_Button = "^l" {
+		controlSpeed()
+	}
+	if g_Button = "^u" {
+		controlSpeed()
+	}
+	if g_Button = "^o" {
+		controlSpeed()
+	}
+	if g_Button = "^n" {
+		controlSpeed()
+	}
+	if g_Button = "^," {
+		controlSpeed()
+	}
+	if g_Button = "h" {
+		normalSpeed()
+	}
+	if g_Button = "j" {
+		normalSpeed()
+	}
+	if g_Button = "k" {
+		normalSpeed()
+	}
+	if g_Button = "l" {
+		normalSpeed()
+	}
+	if g_Button = "u" {
+		normalSpeed()
+	}
+	if g_Button = "o" {
+		normalSpeed()
+	}
+	if g_Button = "n" {
+		normalSpeed()
+	}
+	if g_Button = "," {
+		normalSpeed()
+	}
+
 	ButtonAccelerationStart
 }
 
@@ -574,7 +648,7 @@ EndMouseCurrentSpeedToSideCalculation()
 	g_Temp := Mod(g_MouseRotationAnglePart, 2)
 
 
-	if g_Button = "k"
+	if g_Button = "k" or g_Button = "+k" or g_Button = "^k"
 	{
 		if g_Temp = 1
 		{
@@ -590,7 +664,7 @@ EndMouseCurrentSpeedToSideCalculation()
 		DllCall("SetCursorPos", "int", x, "int", y)
 		; MouseMove g_MouseCurrentSpeedToSide, g_MouseCurrentSpeedToDirection, 0, "R"
 	}
-	else if g_Button = "j"
+	else if g_Button = "j" or g_Button = "+j" or g_Button = "^j"
 	{
 		if g_Temp = 1
 		{
@@ -606,7 +680,7 @@ EndMouseCurrentSpeedToSideCalculation()
 		DllCall("SetCursorPos", "int", x, "int", y)
 		; MouseMove g_MouseCurrentSpeedToSide, g_MouseCurrentSpeedToDirection, 0, "R"
 	}
-	else if g_Button = "h"
+	else if g_Button = "h" or g_Button = "+h" or g_Button = "^h"
 	{
 		if g_Temp = 1
 		{
@@ -623,7 +697,7 @@ EndMouseCurrentSpeedToSideCalculation()
 		DllCall("SetCursorPos", "int", x, "int", y)
 		; MouseMove g_MouseCurrentSpeedToDirection, g_MouseCurrentSpeedToSide, 0, "R"
 	}
-	else if g_Button = "l"
+	else if g_Button = "l" or g_Button = "+l" or g_Button = "^l"
 	{
 		if g_Temp = 1
 		{
@@ -637,7 +711,7 @@ EndMouseCurrentSpeedToSideCalculation()
 		DllCall("SetCursorPos", "int", x, "int", y)
 		; MouseMove g_MouseCurrentSpeedToDirection, g_MouseCurrentSpeedToSide, 0, "R"
 	}
-	else if g_Button = "u"
+	else if g_Button = "u" or g_Button = "+u" or g_Button = "^u"
 	{
 		g_Temp := g_MouseCurrentSpeedToDirection
 		g_Temp -= g_MouseCurrentSpeedToSide
@@ -652,7 +726,7 @@ EndMouseCurrentSpeedToSideCalculation()
 		DllCall("SetCursorPos", "int", x, "int", y)
 		; MouseMove g_Temp, g_Temp2, 0, "R"
 	}
-	else if g_Button = "o"
+	else if g_Button = "o" or g_Button = "+o" or g_Button = "^o"
 	{
 		g_Temp := g_MouseCurrentSpeedToDirection
 		g_Temp += g_MouseCurrentSpeedToSide
@@ -666,7 +740,7 @@ EndMouseCurrentSpeedToSideCalculation()
 		DllCall("SetCursorPos", "int", x, "int", y)
 		; MouseMove g_Temp, g_Temp2, 0, "R"
 	}
-	else if g_Button = "n"
+	else if g_Button = "n" or g_Button = "+n" or g_Button = "^n"
 	{
 		g_Temp := g_MouseCurrentSpeedToDirection
 		g_Temp += g_MouseCurrentSpeedToSide
@@ -679,7 +753,7 @@ EndMouseCurrentSpeedToSideCalculation()
 		DllCall("SetCursorPos", "int", x, "int", y)
 		; MouseMove g_Temp, g_Temp2, 0, "R"
 	}
-	else if g_Button = ","
+	else if g_Button = "," or g_Button = "+," or g_Button = "^,"
 	{
 		g_Temp := g_MouseCurrentSpeedToDirection
 		g_Temp -= g_MouseCurrentSpeedToSide
@@ -699,8 +773,12 @@ EndMouseCurrentSpeedToSideCalculation()
 ButtonAccelerationEnd()
 {
 	global
+	ng_Button := g_Button
+	if StrLen(g_Button) = 2 {
+		ng_Button := SubStr(g_Button, -1)
+	}
 
-	if GetKeyState(g_Button, "P")
+	if GetKeyState(ng_Button, "P")
 	{
 		ButtonAccelerationStart
 		return
@@ -861,4 +939,29 @@ ButtonWheelAccelerationEnd()
 	g_MouseWheelCurrentAccelerationSpeed := 0
 	g_MouseWheelCurrentSpeed := g_MouseWheelSpeed
 	g_Button := 0
+}
+
+controlSpeed() {
+
+	global
+
+	g_MouseSpeed := 10
+	g_MouseAccelerationSpeed := 50
+	g_MouseMaxSpeed := 90
+}
+shiftSpeed() {
+
+	global
+
+	g_MouseSpeed := 1
+	g_MouseAccelerationSpeed := 10
+	g_MouseMaxSpeed := 20
+}
+normalSpeed() {
+
+	global
+
+	g_MouseSpeed := 5
+	g_MouseAccelerationSpeed := 25
+	g_MouseMaxSpeed := 30
 }

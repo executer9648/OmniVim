@@ -12,6 +12,7 @@
 #Include mousetest.ahk
 #Include GetInput.ahk
 #Include Language.ahk
+InstallKeybdHook
 
 A_HotkeyInterval := 0
 A_MenuMaskKey := "vkFF"
@@ -25,10 +26,30 @@ $CapsLock::Control
 
 #HotIf WinActive("A")
 ; ~Alt:: Send "{Blind}{vkE8}"
-#!h:: Send "#{Left}"
-#!j:: Send "#{Down}"
-#!k:: Send "#{Up}"
-#!l:: Send "#{Right}"
+#!h:: {
+	KeyWait "LWin"
+	KeyWait "Alt"
+	KeyWait "h"
+	Send "#{Left}"
+}
+#!j:: {
+	KeyWait "LWin"
+	KeyWait "Alt"
+	KeyWait "j"
+	Send "#{Down}"
+}
+#!k:: {
+	KeyWait "LWin"
+	KeyWait "Alt"
+	KeyWait "k"
+	Send "#{Up}"
+}
+#!l:: {
+	KeyWait "LWin"
+	KeyWait "Alt"
+	KeyWait "l"
+	Send "#{Right}"
+}
 #HotIf
 
 ~Alt:: Send "{Blind}{vkFF}"
@@ -333,6 +354,10 @@ gotoInsert() {
 	global WindowManagerMode := false
 	global mouseManagerMode := false
 	StateBulb[2].Create()
+	global infcounter
+	infcounter.Destroy()
+	global counter
+	counter := 0
 	; Infos.DestroyAll()
 	; Infos("Insert Mode", 1500)
 }
@@ -3500,7 +3525,6 @@ j:: {
 		Send "{Left}"
 		Send "{Down}"
 		Send "+{Right}"
-		Exit
 	}
 }
 
@@ -3541,7 +3565,6 @@ k:: {
 		Send "{Left}"
 		Send "{Up}"
 		Send "+{Right}"
-		Exit
 	}
 }
 
@@ -3671,6 +3694,12 @@ c:: {
 
 x:: {
 	Send "{Delete}"
+	Send "+{Right}"
+	Exit
+}
++x:: {
+	Send "{bs}"
+	Send "{Left}"
 	Send "+{Right}"
 	Exit
 }
@@ -4074,6 +4103,8 @@ HotIf "mouseManagerMode = 1"
 }
 ~!+a:: {
 	global WasInMouseManagerMode := true
+	global infcounter
+	infcounter.Destroy()
 	gotoInsert()
 }
 
@@ -4224,6 +4255,23 @@ Hotkey "h", ButtonAcceleration
 Hotkey "j", ButtonAcceleration
 Hotkey "k", ButtonAcceleration
 Hotkey "l", ButtonAcceleration
+Hotkey "+u", ButtonAcceleration
+Hotkey "+o", ButtonAcceleration
+Hotkey "+n", ButtonAcceleration
+Hotkey "+,", ButtonAcceleration
+Hotkey "+h", ButtonAcceleration
+Hotkey "+j", ButtonAcceleration
+Hotkey "+k", ButtonAcceleration
+Hotkey "+l", ButtonAcceleration
+Hotkey "^u", ButtonAcceleration
+Hotkey "^o", ButtonAcceleration
+Hotkey "^n", ButtonAcceleration
+Hotkey "^,", ButtonAcceleration
+Hotkey "^h", ButtonAcceleration
+Hotkey "^j", ButtonAcceleration
+Hotkey "^k", ButtonAcceleration
+Hotkey "^l", ButtonAcceleration
+
 
 hotkey "q", ButtonSpeedUp
 hotkey "a", ButtonSpeedDown
