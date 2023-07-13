@@ -2770,6 +2770,8 @@ d::
 		gotoNormal()
 		Exit
 	}
+	if counter != 0
+		cvar := "" counter
 	gotoDMode()
 }
 
