@@ -1,5 +1,4 @@
-#SingleInstance
-#Requires AutoHotkey v2.0
+#SingleInstance force
 #MaxThreadsBuffer True
 #MaxThreads 255
 #MaxThreadsPerHotkey 255
@@ -4090,6 +4089,9 @@ z:: Return
 [:: Return
 ]:: Return
 \:: Return
++G:: {
+	Send "{End}"
+}
 
 x:: {
 	Send "{BackSpace}"
@@ -4274,10 +4276,10 @@ hotkey "+a", ButtonMaxSpeedDown
 +9:: MouseMove(Mouse.HighRightX, Mouse.BottomY)
 +0:: MouseMove(Mouse.FarRightX, Mouse.BottomY)
 
-Esc:: {
-	gotoNormal()
-	Exit
-}
+; Esc:: {
+; 	gotoNormal()
+; 	Exit
+; }
 
 !Esc:: {
 	exitVim()
