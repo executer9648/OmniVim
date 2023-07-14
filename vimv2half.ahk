@@ -84,6 +84,7 @@ $CapsLock::Control
 ; Set initial state to normal (disabled)
 global counter := 0
 global monitorCount := 0
+global p_key := 0
 global normalMode := false
 global dMode := false
 global gMode := false
@@ -3473,151 +3474,28 @@ v:: {
 	}
 }
 
+; hotkey "h", motion
+; hotkey "j", motion
+; hotkey "k", motion
+; hotkey "l", motion
+
 h:: {
-	global counter
-	global infcounter
-	if counter != 0 {
-		Loop counter {
-			if visualMode == true
-			{
-				Send "+{left}"
-			}
-			else
-			{
-				Send "{Left}"
-				Send "{Left}"
-				Send "+{Right}"
-			}
-		}
-		counter := 0
-		infcounter.Destroy()
-		Exit
-	}
-	if visualMode == true
-	{
-		Send "+{left}"
-	}
-	else
-	{
-		Send "{Left}"
-		Send "{Left}"
-		Send "+{Right}"
-		Exit
-	}
+	h_motion()
 }
 
 j:: {
-	global counter
-	if counter != 0 {
-		Loop counter {
-			if visualLineMode == true
-			{
-				Send "+{Down}"
-				Send "+{End}"
-			}
-			else if visualMode == true
-			{
-				Send "+{Down}"
-			}
-			else
-			{
-				Send "{Left}"
-				Send "{Down}"
-				Send "+{Right}"
-			}
-		}
-		counter := 0
-		Exit
-	}
-	if visualLineMode == true
-	{
-		Send "+{Down}"
-		Send "+{End}"
-	}
-	else if visualMode == true
-	{
-		Send "+{Down}"
-	}
-	else
-	{
-		Send "{Left}"
-		Send "{Down}"
-		Send "+{Right}"
-	}
+	j_motion()
 }
 
 k:: {
-	global counter
-	if counter != 0 {
-		Loop counter {
-			if visualLineMode == true
-			{
-				Send "+{Up}"
-				Send "+{Home}"
-			}
-			else if visualMode == true
-			{
-				Send "+{Up}"
-			}
-			else
-			{
-				Send "{Left}"
-				Send "{Up}"
-				Send "+{Right}"
-			}
-		}
-		counter := 0
-		Exit
-	}
-	if visualLineMode == true
-	{
-		Send "+{Up}"
-		Send "+{Home}"
-	}
-	else if visualMode == true
-	{
-		Send "+{Up}"
-	}
-	else
-	{
-		Send "{Left}"
-		Send "{Up}"
-		Send "+{Right}"
-	}
-}
-
-Space:: {
-	if visualMode == true
-	{
-		Send "+{Right}"
-	}
-	else
-	{
-		Send "{Left}"
-		Send "{Right}"
-		Send "+{Right}"
-		Exit
-	}
+	k_motion()
 }
 
 l:: {
-	global counter
-	if counter != 0 {
-		Loop counter {
-			if visualMode == true
-			{
-				Send "+{Right}"
-			}
-			else
-			{
-				Send "{Left}"
-				Send "{Right}"
-				Send "+{Right}"
-			}
-		}
-		counter := 0
-		Exit
-	}
+	l_motion()
+}
+
+Space:: {
 	if visualMode == true
 	{
 		Send "+{Right}"
@@ -3887,6 +3765,8 @@ y:: {
 	global infcounter
 	if visualMode == true {
 		Send "^c"
+		Send "{Left}"
+		gotoNormal()
 		Exit
 	}
 	if counter != 0
@@ -4375,4 +4255,207 @@ disableClick() {
 		Click("R Up")
 	else if GetKeyState("MButton")
 		Click("M Up")
+}
+
+h_motion()
+{
+	global counter
+	global infcounter
+	if counter != 0 {
+		Loop counter {
+			if visualMode == true
+			{
+				Send "+{left}"
+			}
+			else
+			{
+				Send "{Left}"
+				Send "{Left}"
+				Send "+{Right}"
+			}
+		}
+		counter := 0
+		infcounter.Destroy()
+	}
+	if visualMode == true
+	{
+		Send "+{left}"
+	}
+	else
+	{
+		Send "{Left}"
+		Send "{Left}"
+		Send "+{Right}"
+	}
+}
+
+j_motion()
+{
+	global counter
+	global infcounter
+	if counter != 0 {
+		Loop counter {
+			if visualLineMode == true
+			{
+				Send "+{Down}"
+				Send "+{End}"
+			}
+			else if visualMode == true
+			{
+				Send "+{Down}"
+			}
+			else
+			{
+				Send "{Left}"
+				Send "{Down}"
+				Send "+{Right}"
+			}
+		}
+		counter := 0
+		infcounter.Destroy()
+	}
+	if visualLineMode == true
+	{
+		Send "+{Down}"
+		Send "+{End}"
+	}
+	else if visualMode == true
+	{
+		Send "+{Down}"
+	}
+	else
+	{
+		Send "{Left}"
+		Send "{Down}"
+		Send "+{Right}"
+	}
+}
+
+k_motion() {
+	global counter
+	global infcounter
+	if counter != 0 {
+		Loop counter {
+			if visualLineMode == true
+			{
+				Send "+{Up}"
+				Send "+{Home}"
+			}
+			else if visualMode == true
+			{
+				Send "+{Up}"
+			}
+			else
+			{
+				Send "{Left}"
+				Send "{Up}"
+				Send "+{Right}"
+			}
+		}
+		counter := 0
+		infcounter.Destroy()
+	}
+	if visualLineMode == true
+	{
+		Send "+{Up}"
+		Send "+{Home}"
+	}
+	else if visualMode == true
+	{
+		Send "+{Up}"
+	}
+	else
+	{
+		Send "{Left}"
+		Send "{Up}"
+		Send "+{Right}"
+	}
+}
+
+l_motion() {
+	global counter
+	global infcounter
+	if counter != 0 {
+		Loop counter {
+			if visualMode == true
+			{
+				Send "+{Right}"
+			}
+			else
+			{
+				Send "{Left}"
+				Send "{Right}"
+				Send "+{Right}"
+			}
+		}
+		counter := 0
+		infcounter.Destroy()
+	}
+	if visualMode == true
+	{
+		Send "+{Right}"
+	}
+	else
+	{
+		Send "{Left}"
+		Send "{Right}"
+		Send "+{Right}"
+	}
+}
+
+checkj() {
+	if GetKeyState("j")
+	{
+		SetTimer j_motion, 20
+	}
+}
+
+checkk() {
+	if GetKeyState("k")
+	{
+		SetTimer k_motion, 20
+	}
+}
+
+checkl() {
+	if GetKeyState("l")
+	{
+		SetTimer l_motion, 20
+	}
+}
+checkh() {
+	if GetKeyState("h")
+	{
+		SetTimer j_motion, 20
+	}
+}
+
+motion(key) {
+	global p_key
+	p_key := StrReplace(key, "*")
+	motionStart()
+}
+
+motionStart() {
+	global p_key
+	if p_key == "h" {
+		h_motion
+	}
+	if p_key = "j" {
+		j_motion
+	}
+	if p_key == "k" {
+		k_motion
+	}
+	if p_key == "l" {
+		l_motion
+	}
+	SetTimer motionEnd, 100
+}
+
+motionEnd() {
+	global p_key
+	if GetKeyState(p_key, "P") {
+		motionStart()
+	}
 }
