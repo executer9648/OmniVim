@@ -647,7 +647,6 @@ EndMouseCurrentSpeedToSideCalculation()
 
 	g_Temp := Mod(g_MouseRotationAnglePart, 2)
 
-
 	if g_Button = "k" or g_Button = "+k" or g_Button = "^k"
 	{
 		if g_Temp = 1
