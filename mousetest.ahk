@@ -80,6 +80,10 @@ g_MouseSpeed := 5
 g_MouseAccelerationSpeed := 20
 g_MouseMaxSpeed := 25
 
+oldg_MouseSpeed := 0
+oldg_MouseAccelerationSpeed := 0
+oldg_MouseMaxSpeed := 0
+
 ;Mouse wheel speed is also set on Control Panel. As that
 ;will affect the normal mouse behavior, the real speed of
 ;these three below are times the normal mouse wheel speed.
@@ -350,6 +354,7 @@ ButtonSpeedUp(*)
 	g_MouseSpeed++
 	ToolTip "Mouse speed: " g_MouseSpeed " pixels"
 	SetTimer ToolTip, -1000
+	oldg_MouseSpeed := g_MouseSpeed
 }
 
 ButtonSpeedDown(*)
@@ -362,6 +367,7 @@ ButtonSpeedDown(*)
 	else
 		ToolTip "Mouse speed: " g_MouseSpeed " pixels"
 	SetTimer ToolTip, -1000
+	oldg_MouseSpeed := g_MouseSpeed
 }
 
 ButtonAccelerationSpeedUp(*)
@@ -370,6 +376,7 @@ ButtonAccelerationSpeedUp(*)
 	g_MouseAccelerationSpeed++
 	ToolTip "Mouse acceleration speed: " g_MouseAccelerationSpeed " pixels"
 	SetTimer ToolTip, -1000
+	oldg_MouseAccelerationSpeed := g_MouseAccelerationSpeed
 }
 
 ButtonAccelerationSpeedDown(*)
@@ -382,6 +389,7 @@ ButtonAccelerationSpeedDown(*)
 	else
 		ToolTip "Mouse acceleration speed: " g_MouseAccelerationSpeed " pixels"
 	SetTimer ToolTip, -1000
+	oldg_MouseAccelerationSpeed := g_MouseAccelerationSpeed
 }
 
 ButtonMaxSpeedUp(*)
@@ -390,6 +398,7 @@ ButtonMaxSpeedUp(*)
 	g_MouseMaxSpeed++
 	ToolTip "Mouse maximum speed: " g_MouseMaxSpeed " pixels"
 	SetTimer ToolTip, -1000
+	oldg_MouseMaxSpeed := g_MouseMaxSpeed
 }
 
 ButtonMaxSpeedDown(*)
@@ -402,6 +411,7 @@ ButtonMaxSpeedDown(*)
 	else
 		ToolTip "Mouse maximum speed: " g_MouseMaxSpeed " pixels"
 	SetTimer ToolTip, -1000
+	oldg_MouseMaxSpeed := g_MouseMaxSpeed
 }
 
 ButtonRotationAngleUp(*)
@@ -944,13 +954,36 @@ controlSpeed() {
 
 	global
 
+	if g_MouseSpeed != 10 and g_MouseSpeed != 1 {
+		oldg_MouseSpeed := g_MouseSpeed
+	}
+	if g_MouseAccelerationSpeed != 50 and g_MouseAccelerationSpeed != 10 {
+		oldg_MouseAccelerationSpeed := g_MouseAccelerationSpeed
+	}
+	if g_MouseMaxSpeed != 90 and g_MouseMaxSpeed != 20 {
+		oldg_MouseMaxSpeed := g_MouseMaxSpeed
+	}
+
 	g_MouseSpeed := 10
 	g_MouseAccelerationSpeed := 50
 	g_MouseMaxSpeed := 90
+
+
 }
 shiftSpeed() {
 
 	global
+
+	if g_MouseSpeed != 10 and g_MouseSpeed != 1 {
+		oldg_MouseSpeed := g_MouseSpeed
+	}
+	if g_MouseAccelerationSpeed != 50 and g_MouseAccelerationSpeed != 10 {
+		oldg_MouseAccelerationSpeed := g_MouseAccelerationSpeed
+	}
+	if g_MouseMaxSpeed != 90 and g_MouseMaxSpeed != 20 {
+		oldg_MouseMaxSpeed := g_MouseMaxSpeed
+	}
+
 
 	g_MouseSpeed := 1
 	g_MouseAccelerationSpeed := 10
@@ -960,7 +993,13 @@ normalSpeed() {
 
 	global
 
-	g_MouseSpeed := 5
-	g_MouseAccelerationSpeed := 25
-	g_MouseMaxSpeed := 30
+	if oldg_MouseSpeed != 0 {
+		g_MouseSpeed := oldg_MouseSpeed
+	}
+	if oldg_MouseAccelerationSpeed != 0 {
+		g_MouseAccelerationSpeed := oldg_MouseAccelerationSpeed
+	}
+	if oldg_MouseMaxSpeed != 0 {
+		g_MouseMaxSpeed := oldg_MouseMaxSpeed
+	}
 }
