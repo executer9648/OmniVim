@@ -740,6 +740,13 @@ n:: Send "0"
 #HotIf fMode = 1
 HotIf "fMode = 1"
 
+if MonitorGetPrimary() != 1 {
+	secondM := -A_ScreenWidth
+}
+else {
+	secondM := A_ScreenWidth
+}
+
 `:: {
 	if WasInWindowManagerMode == true {
 		WinMove(Mouse.x1, Mouse.tildaCol, , , "A")
@@ -747,7 +754,7 @@ HotIf "fMode = 1"
 		gotoMwMode()
 	}
 	else if shiftfMode {
-		MouseMove(Mouse.x1 + A_ScreenWidth, Mouse.tildaCol)
+		MouseMove(Mouse.x1 + secondM, Mouse.tildaCol)
 		gotoNormal()
 		gotoMouseMode()
 	}
@@ -765,7 +772,7 @@ HotIf "fMode = 1"
 		gotoMwMode()
 	}
 	else if shiftfMode {
-		MouseMove(Mouse.x2 + A_ScreenWidth, Mouse.tildaCol)
+		MouseMove(Mouse.x2 + secondM, Mouse.tildaCol)
 		gotoNormal()
 		gotoMouseMode()
 	}
@@ -782,7 +789,7 @@ HotIf "fMode = 1"
 		gotoMwMode()
 	}
 	else if shiftfMode {
-		MouseMove(Mouse.x3 + A_ScreenWidth, Mouse.tildaCol)
+		MouseMove(Mouse.x3 + secondM, Mouse.tildaCol)
 		gotoNormal()
 		gotoMouseMode()
 	}
@@ -799,7 +806,7 @@ HotIf "fMode = 1"
 		gotoMwMode()
 	}
 	else if shiftfMode {
-		MouseMove(Mouse.x4 + A_ScreenWidth, Mouse.tildaCol)
+		MouseMove(Mouse.x4 + secondM, Mouse.tildaCol)
 		gotoNormal()
 		gotoMouseMode()
 	}
@@ -816,7 +823,7 @@ HotIf "fMode = 1"
 		gotoMwMode()
 	}
 	else if shiftfMode {
-		MouseMove(Mouse.x5 + A_ScreenWidth, Mouse.tildaCol)
+		MouseMove(Mouse.x5 + secondM, Mouse.tildaCol)
 		gotoNormal()
 		gotoMouseMode()
 	}
@@ -833,7 +840,7 @@ HotIf "fMode = 1"
 		gotoMwMode()
 	}
 	else if shiftfMode {
-		MouseMove(Mouse.x6 + A_ScreenWidth, Mouse.tildaCol)
+		MouseMove(Mouse.x6 + secondM, Mouse.tildaCol)
 		gotoNormal()
 		gotoMouseMode()
 	}
@@ -850,7 +857,7 @@ HotIf "fMode = 1"
 		gotoMwMode()
 	}
 	else if shiftfMode {
-		MouseMove(Mouse.x7 + A_ScreenWidth, Mouse.tildaCol)
+		MouseMove(Mouse.x7 + secondM, Mouse.tildaCol)
 		gotoNormal()
 		gotoMouseMode()
 	}
@@ -867,7 +874,7 @@ HotIf "fMode = 1"
 		gotoMwMode()
 	}
 	else if shiftfMode {
-		MouseMove(Mouse.x8 + A_ScreenWidth, Mouse.tildaCol)
+		MouseMove(Mouse.x8 + secondM, Mouse.tildaCol)
 		gotoNormal()
 		gotoMouseMode()
 	}
@@ -884,7 +891,7 @@ HotIf "fMode = 1"
 		gotoMwMode()
 	}
 	else if shiftfMode {
-		MouseMove(Mouse.x9 + A_ScreenWidth, Mouse.tildaCol)
+		MouseMove(Mouse.x9 + secondM, Mouse.tildaCol)
 		gotoNormal()
 		gotoMouseMode()
 	}
@@ -901,7 +908,7 @@ HotIf "fMode = 1"
 		gotoMwMode()
 	}
 	else if shiftfMode {
-		MouseMove(Mouse.x10 + A_ScreenWidth, Mouse.tildaCol)
+		MouseMove(Mouse.x10 + secondM, Mouse.tildaCol)
 		gotoNormal()
 		gotoMouseMode()
 	}
@@ -918,7 +925,7 @@ HotIf "fMode = 1"
 		gotoMwMode()
 	}
 	else if shiftfMode {
-		MouseMove(Mouse.x11 + A_ScreenWidth, Mouse.tildaCol)
+		MouseMove(Mouse.x11 + secondM, Mouse.tildaCol)
 		gotoNormal()
 		gotoMouseMode()
 	}
@@ -935,7 +942,7 @@ HotIf "fMode = 1"
 		gotoMwMode()
 	}
 	else if shiftfMode {
-		MouseMove(Mouse.x12 + A_ScreenWidth, Mouse.tildaCol)
+		MouseMove(Mouse.x12 + secondM, Mouse.tildaCol)
 		gotoNormal()
 		gotoMouseMode()
 	}
@@ -952,7 +959,7 @@ HotIf "fMode = 1"
 		gotoMwMode()
 	}
 	else if shiftfMode {
-		MouseMove(Mouse.x13 + A_ScreenWidth, Mouse.tildaCol)
+		MouseMove(Mouse.x13 + secondM, Mouse.tildaCol)
 		gotoNormal()
 		gotoMouseMode()
 	}
@@ -969,7 +976,7 @@ BackSpace:: {
 		gotoMwMode()
 	}
 	else if shiftfMode {
-		MouseMove(Mouse.x14 + A_ScreenWidth, Mouse.tildaCol)
+		MouseMove(Mouse.x14 + secondM, Mouse.tildaCol)
 		gotoNormal()
 		gotoMouseMode()
 	}
@@ -987,7 +994,7 @@ tab:: {
 		gotoMwMode()
 	}
 	else if shiftfMode {
-		MouseMove(Mouse.x1 + A_ScreenWidth, Mouse.tabCol)
+		MouseMove(Mouse.x1 + secondM, Mouse.tabCol)
 		gotoNormal()
 		gotoMouseMode()
 	}
@@ -1004,7 +1011,7 @@ q:: {
 		gotoMwMode()
 	}
 	else if shiftfMode {
-		MouseMove(Mouse.x2 + A_ScreenWidth, Mouse.tabCol)
+		MouseMove(Mouse.x2 + secondM, Mouse.tabCol)
 		gotoNormal()
 		gotoMouseMode()
 	}
@@ -1021,7 +1028,7 @@ w:: {
 		gotoMwMode()
 	}
 	else if shiftfMode {
-		MouseMove(Mouse.x3 + A_ScreenWidth, Mouse.tabCol)
+		MouseMove(Mouse.x3 + secondM, Mouse.tabCol)
 		gotoNormal()
 		gotoMouseMode()
 	}
@@ -1038,7 +1045,7 @@ e:: {
 		gotoMwMode()
 	}
 	else if shiftfMode {
-		MouseMove(Mouse.x4 + A_ScreenWidth, Mouse.tabCol)
+		MouseMove(Mouse.x4 + secondM, Mouse.tabCol)
 		gotoNormal()
 		gotoMouseMode()
 	}
@@ -1055,7 +1062,7 @@ r:: {
 		gotoMwMode()
 	}
 	else if shiftfMode {
-		MouseMove(Mouse.x5 + A_ScreenWidth, Mouse.tabCol)
+		MouseMove(Mouse.x5 + secondM, Mouse.tabCol)
 		gotoNormal()
 		gotoMouseMode()
 	}
@@ -1072,7 +1079,7 @@ t:: {
 		gotoMwMode()
 	}
 	else if shiftfMode {
-		MouseMove(Mouse.x6 + A_ScreenWidth, Mouse.tabCol)
+		MouseMove(Mouse.x6 + secondM, Mouse.tabCol)
 		gotoNormal()
 		gotoMouseMode()
 	}
@@ -1089,7 +1096,7 @@ y:: {
 		gotoMwMode()
 	}
 	else if shiftfMode {
-		MouseMove(Mouse.x7 + A_ScreenWidth, Mouse.tabCol)
+		MouseMove(Mouse.x7 + secondM, Mouse.tabCol)
 		gotoNormal()
 		gotoMouseMode()
 	}
@@ -1106,7 +1113,7 @@ u:: {
 		gotoMwMode()
 	}
 	else if shiftfMode {
-		MouseMove(Mouse.x8 + A_ScreenWidth, Mouse.tabCol)
+		MouseMove(Mouse.x8 + secondM, Mouse.tabCol)
 		gotoNormal()
 		gotoMouseMode()
 	}
@@ -1123,7 +1130,7 @@ i:: {
 		gotoMwMode()
 	}
 	else if shiftfMode {
-		MouseMove(Mouse.x9 + A_ScreenWidth, Mouse.tabCol)
+		MouseMove(Mouse.x9 + secondM, Mouse.tabCol)
 		gotoNormal()
 		gotoMouseMode()
 	}
@@ -1140,7 +1147,7 @@ o:: {
 		gotoMwMode()
 	}
 	else if shiftfMode {
-		MouseMove(Mouse.x10 + A_ScreenWidth, Mouse.tabCol)
+		MouseMove(Mouse.x10 + secondM, Mouse.tabCol)
 		gotoNormal()
 		gotoMouseMode()
 	}
@@ -1157,7 +1164,7 @@ p:: {
 		gotoMwMode()
 	}
 	else if shiftfMode {
-		MouseMove(Mouse.x11 + A_ScreenWidth, Mouse.tabCol)
+		MouseMove(Mouse.x11 + secondM, Mouse.tabCol)
 		gotoNormal()
 		gotoMouseMode()
 	}
@@ -1174,7 +1181,7 @@ p:: {
 		gotoMwMode()
 	}
 	else if shiftfMode {
-		MouseMove(Mouse.x12 + A_ScreenWidth, Mouse.tabCol)
+		MouseMove(Mouse.x12 + secondM, Mouse.tabCol)
 		gotoNormal()
 		gotoMouseMode()
 	}
@@ -1191,7 +1198,7 @@ p:: {
 		gotoMwMode()
 	}
 	else if shiftfMode {
-		MouseMove(Mouse.x13 + A_ScreenWidth, Mouse.tabCol)
+		MouseMove(Mouse.x13 + secondM, Mouse.tabCol)
 		gotoNormal()
 		gotoMouseMode()
 	}
@@ -1208,7 +1215,7 @@ p:: {
 		gotoMwMode()
 	}
 	else if shiftfMode {
-		MouseMove(Mouse.x14 + A_ScreenWidth, Mouse.tabCol)
+		MouseMove(Mouse.x14 + secondM, Mouse.tabCol)
 		gotoNormal()
 		gotoMouseMode()
 	}
@@ -1225,7 +1232,7 @@ LControl:: {
 		gotoMwMode()
 	}
 	else if shiftfMode {
-		MouseMove(Mouse.ax1 + A_ScreenWidth, Mouse.capsCol)
+		MouseMove(Mouse.ax1 + secondM, Mouse.capsCol)
 		gotoNormal()
 		gotoMouseMode()
 	}
@@ -1242,7 +1249,7 @@ a:: {
 		gotoMwMode()
 	}
 	else if shiftfMode {
-		MouseMove(Mouse.ax2 + A_ScreenWidth, Mouse.capsCol)
+		MouseMove(Mouse.ax2 + secondM, Mouse.capsCol)
 		gotoNormal()
 		gotoMouseMode()
 	}
@@ -1259,7 +1266,7 @@ s:: {
 		gotoMwMode()
 	}
 	else if shiftfMode {
-		MouseMove(Mouse.ax3 + A_ScreenWidth, Mouse.capsCol)
+		MouseMove(Mouse.ax3 + secondM, Mouse.capsCol)
 		gotoNormal()
 		gotoMouseMode()
 	}
@@ -1276,7 +1283,7 @@ d:: {
 		gotoMwMode()
 	}
 	else if shiftfMode {
-		MouseMove(Mouse.ax4 + A_ScreenWidth, Mouse.capsCol)
+		MouseMove(Mouse.ax4 + secondM, Mouse.capsCol)
 		gotoNormal()
 		gotoMouseMode()
 	}
@@ -1293,7 +1300,7 @@ f:: {
 		gotoMwMode()
 	}
 	else if shiftfMode {
-		MouseMove(Mouse.ax5 + A_ScreenWidth, Mouse.capsCol)
+		MouseMove(Mouse.ax5 + secondM, Mouse.capsCol)
 		gotoNormal()
 		gotoMouseMode()
 	}
@@ -1310,7 +1317,7 @@ g:: {
 		gotoMwMode()
 	}
 	else if shiftfMode {
-		MouseMove(Mouse.ax6 + A_ScreenWidth, Mouse.capsCol)
+		MouseMove(Mouse.ax6 + secondM, Mouse.capsCol)
 		gotoNormal()
 		gotoMouseMode()
 	}
@@ -1327,7 +1334,7 @@ h:: {
 		gotoMwMode()
 	}
 	else if shiftfMode {
-		MouseMove(Mouse.ax7 + A_ScreenWidth, Mouse.capsCol)
+		MouseMove(Mouse.ax7 + secondM, Mouse.capsCol)
 		gotoNormal()
 		gotoMouseMode()
 	}
@@ -1344,7 +1351,7 @@ j:: {
 		gotoMwMode()
 	}
 	else if shiftfMode {
-		MouseMove(Mouse.ax8 + A_ScreenWidth, Mouse.capsCol)
+		MouseMove(Mouse.ax8 + secondM, Mouse.capsCol)
 		gotoNormal()
 		gotoMouseMode()
 	}
@@ -1361,7 +1368,7 @@ k:: {
 		gotoMwMode()
 	}
 	else if shiftfMode {
-		MouseMove(Mouse.ax9 + A_ScreenWidth, Mouse.capsCol)
+		MouseMove(Mouse.ax9 + secondM, Mouse.capsCol)
 		gotoNormal()
 		gotoMouseMode()
 	}
@@ -1378,7 +1385,7 @@ l:: {
 		gotoMwMode()
 	}
 	else if shiftfMode {
-		MouseMove(Mouse.ax10 + A_ScreenWidth, Mouse.capsCol)
+		MouseMove(Mouse.ax10 + secondM, Mouse.capsCol)
 		gotoNormal()
 		gotoMouseMode()
 	}
@@ -1395,7 +1402,7 @@ l:: {
 		gotoMwMode()
 	}
 	else if shiftfMode {
-		MouseMove(Mouse.ax11 + A_ScreenWidth, Mouse.capsCol)
+		MouseMove(Mouse.ax11 + secondM, Mouse.capsCol)
 		gotoNormal()
 		gotoMouseMode()
 	}
@@ -1412,7 +1419,7 @@ l:: {
 		gotoMwMode()
 	}
 	else if shiftfMode {
-		MouseMove(Mouse.ax12 + A_ScreenWidth, Mouse.capsCol)
+		MouseMove(Mouse.ax12 + secondM, Mouse.capsCol)
 		gotoNormal()
 		gotoMouseMode()
 	}
@@ -1429,7 +1436,7 @@ Enter:: {
 		gotoMwMode()
 	}
 	else if shiftfMode {
-		MouseMove(Mouse.ax13 + A_ScreenWidth, Mouse.capsCol)
+		MouseMove(Mouse.ax13 + secondM, Mouse.capsCol)
 		gotoNormal()
 		gotoMouseMode()
 	}
@@ -1447,7 +1454,7 @@ LShift:: {
 		gotoMwMode()
 	}
 	else if shiftfMode {
-		MouseMove(Mouse.zx1 + A_ScreenWidth, Mouse.shiftCol)
+		MouseMove(Mouse.zx1 + secondM, Mouse.shiftCol)
 		gotoNormal()
 		gotoMouseMode()
 	}
@@ -1464,7 +1471,7 @@ z:: {
 		gotoMwMode()
 	}
 	else if shiftfMode {
-		MouseMove(Mouse.zx2 + A_ScreenWidth, Mouse.shiftCol)
+		MouseMove(Mouse.zx2 + secondM, Mouse.shiftCol)
 		gotoNormal()
 		gotoMouseMode()
 	}
@@ -1481,7 +1488,7 @@ x:: {
 		gotoMwMode()
 	}
 	else if shiftfMode {
-		MouseMove(Mouse.zx3 + A_ScreenWidth, Mouse.shiftCol)
+		MouseMove(Mouse.zx3 + secondM, Mouse.shiftCol)
 		gotoNormal()
 		gotoMouseMode()
 	}
@@ -1498,7 +1505,7 @@ c:: {
 		gotoMwMode()
 	}
 	else if shiftfMode {
-		MouseMove(Mouse.zx4 + A_ScreenWidth, Mouse.shiftCol)
+		MouseMove(Mouse.zx4 + secondM, Mouse.shiftCol)
 		gotoNormal()
 		gotoMouseMode()
 	}
@@ -1515,7 +1522,7 @@ v:: {
 		gotoMwMode()
 	}
 	else if shiftfMode {
-		MouseMove(Mouse.zx5 + A_ScreenWidth, Mouse.shiftCol)
+		MouseMove(Mouse.zx5 + secondM, Mouse.shiftCol)
 		gotoNormal()
 		gotoMouseMode()
 	}
@@ -1532,7 +1539,7 @@ b:: {
 		gotoMwMode()
 	}
 	else if shiftfMode {
-		MouseMove(Mouse.zx6 + A_ScreenWidth, Mouse.shiftCol)
+		MouseMove(Mouse.zx6 + secondM, Mouse.shiftCol)
 		gotoNormal()
 		gotoMouseMode()
 	}
@@ -1549,7 +1556,7 @@ n:: {
 		gotoMwMode()
 	}
 	else if shiftfMode {
-		MouseMove(Mouse.zx7 + A_ScreenWidth, Mouse.shiftCol)
+		MouseMove(Mouse.zx7 + secondM, Mouse.shiftCol)
 		gotoNormal()
 		gotoMouseMode()
 	}
@@ -1566,7 +1573,7 @@ m:: {
 		gotoMwMode()
 	}
 	else if shiftfMode {
-		MouseMove(Mouse.zx8 + A_ScreenWidth, Mouse.shiftCol)
+		MouseMove(Mouse.zx8 + secondM, Mouse.shiftCol)
 		gotoNormal()
 		gotoMouseMode()
 	}
@@ -1583,7 +1590,7 @@ m:: {
 		gotoMwMode()
 	}
 	else if shiftfMode {
-		MouseMove(Mouse.zx9 + A_ScreenWidth, Mouse.shiftCol)
+		MouseMove(Mouse.zx9 + secondM, Mouse.shiftCol)
 		gotoNormal()
 		gotoMouseMode()
 	}
@@ -1600,7 +1607,7 @@ m:: {
 		gotoMwMode()
 	}
 	else if shiftfMode {
-		MouseMove(Mouse.zx10 + A_ScreenWidth, Mouse.shiftCol)
+		MouseMove(Mouse.zx10 + secondM, Mouse.shiftCol)
 		gotoNormal()
 		gotoMouseMode()
 	}
@@ -1617,7 +1624,7 @@ m:: {
 		gotoMwMode()
 	}
 	else if shiftfMode {
-		MouseMove(Mouse.zx11 + A_ScreenWidth, Mouse.shiftCol)
+		MouseMove(Mouse.zx11 + secondM, Mouse.shiftCol)
 		gotoNormal()
 		gotoMouseMode()
 	}
@@ -1634,7 +1641,7 @@ RShift:: {
 		gotoMwMode()
 	}
 	else if shiftfMode {
-		MouseMove(Mouse.zx12 + A_ScreenWidth, Mouse.shiftCol)
+		MouseMove(Mouse.zx12 + secondM, Mouse.shiftCol)
 		gotoNormal()
 		gotoMouseMode()
 	}
@@ -1652,7 +1659,7 @@ LWin:: {
 		gotoMwMode()
 	}
 	else if shiftfMode {
-		MouseMove(Mouse.sx1 + A_ScreenWidth, Mouse.spaceCol)
+		MouseMove(Mouse.sx1 + secondM, Mouse.spaceCol)
 		gotoNormal()
 		gotoMouseMode()
 	}
@@ -1669,7 +1676,7 @@ LAlt:: {
 		gotoMwMode()
 	}
 	else if shiftfMode {
-		MouseMove(Mouse.sx2 + A_ScreenWidth, Mouse.spaceCol)
+		MouseMove(Mouse.sx2 + secondM, Mouse.spaceCol)
 		gotoNormal()
 		gotoMouseMode()
 	}
@@ -1686,7 +1693,7 @@ Space:: {
 		gotoMwMode()
 	}
 	else if shiftfMode {
-		MouseMove(Mouse.sx3 + A_ScreenWidth, Mouse.spaceCol)
+		MouseMove(Mouse.sx3 + secondM, Mouse.spaceCol)
 		gotoNormal()
 		gotoMouseMode()
 	}
@@ -1703,7 +1710,7 @@ RAlt:: {
 		gotoMwMode()
 	}
 	else if shiftfMode {
-		MouseMove(Mouse.sx4 + A_ScreenWidth, Mouse.spaceCol)
+		MouseMove(Mouse.sx4 + secondM, Mouse.spaceCol)
 		gotoNormal()
 		gotoMouseMode()
 	}
@@ -1721,7 +1728,7 @@ AppsKey:: {
 		gotoMwMode()
 	}
 	else if shiftfMode {
-		MouseMove(Mouse.sx5 + A_ScreenWidth, Mouse.spaceCol)
+		MouseMove(Mouse.sx5 + secondM, Mouse.spaceCol)
 		gotoNormal()
 		gotoMouseMode()
 	}
@@ -1738,7 +1745,7 @@ Rctrl:: {
 		gotoMwMode()
 	}
 	else if shiftfMode {
-		MouseMove(Mouse.sx6 + A_ScreenWidth, Mouse.spaceCol)
+		MouseMove(Mouse.sx6 + secondM, Mouse.spaceCol)
 		gotoNormal()
 		gotoMouseMode()
 	}
@@ -1760,6 +1767,7 @@ Esc:: {
 }
 
 #HotIf
+
 
 ; window mode
 #HotIf windowMode = 1
@@ -1878,7 +1886,7 @@ Esc:: {
 		}
 		Exit
 	}
-	Send "^w"
+	Send "^{f4}"
 	if (WasInMouseManagerMode == true) {
 		gotoNormal()
 		gotoMouseMode()
