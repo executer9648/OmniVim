@@ -2,7 +2,7 @@
 #MaxThreadsBuffer True
 #MaxThreads 255
 #MaxThreadsPerHotkey 255
-#UseHook
+; #UseHook
 #Include StateBulb.ahk
 #Include Info.ahk
 #Include Mouse.ahk
@@ -13,21 +13,36 @@
 #Include GetInput.ahk
 #Include Language.ahk
 #Include TapHoldManager.ahk
+
 #Requires AutoHotkey v2.0
 
-global thm := TapHoldManager()
-thm.Add("Lctrl", MyFunc1)
+thm := TapHoldManager()
+thm.Add("Lctrl", MyFunc1, 50, 100)
+; thm.Add("2", MyFunc2, 250, 500, 2, , "ahk_exe notepad.exe")
+
+
 MyFunc1(isHold, taps, state) {
-	if state == -1 {
-		MsgBox "esc"
-	}
-	else if state {
-		thm.PauseHotkey("Lctrl")
-	}
-	else {
-		thm.ResumeHotkey("Lctrl")
+	if (state == 0)
+		Send "{LCtrl Up}"
+	if (isHold) {
+		; Holds
+		if (taps == 1) {
+			Send "{Lctrl down}"
+			if GetKeyState('Lctrl', 'p') == 0
+				Send "{LCtrl Up}"
+		} else if (taps == 2) {
+			msgbox "taps 2H"
+		}
+	} else {
+		; Taps
+		if (taps == 1) {
+			Send "{esc}"
+		}
 	}
 }
+
+
+^a:: MsgBox "a"
 
 InstallKeybdHook
 
@@ -3764,6 +3779,7 @@ d::
 {
 	Send "{WheelUp}"
 }
+
 
 Esc:: {
 	global infcounter

@@ -1,5 +1,4 @@
 #Include Gui.ahk
-#UseHook
 
 class StateBulb {
 
@@ -11,9 +10,9 @@ class StateBulb {
 	__New(position, color) {
 		this.XPosition := StateBulb.Positions[position]
 		switch Type(color) {
-			case "String":  this.Color := StateBulb.Colors[color]
+			case "String": this.Color := StateBulb.Colors[color]
 			case "Integer": this.Color := StateBulb.ColorOrder[color]
-			default:        throw StateBulb.ConstructorColorTypeError(color)
+			default: throw StateBulb.ConstructorColorTypeError(color)
 		}
 	}
 
@@ -32,11 +31,11 @@ class StateBulb {
 
 	static Colors := Map(
 		"magenta", 0xD3869B,
-		"red",     0xDE4D37,
-		"yellow",  0xD8A657,
-		"green",   0xA9B665,
-		"cyan",    0x89B482,
-		"blue",    0x7DAEA3,
+		"red", 0xDE4D37,
+		"yellow", 0xD8A657,
+		"green", 0xA9B665,
+		"cyan", 0x89B482,
+		"blue", 0x7DAEA3,
 	)
 
 	static ColorOrder := [
@@ -51,8 +50,8 @@ class StateBulb {
 	static Bulbs := StateBulb._GeneratePossibleBulbs()
 
 
-	static _GetXPosition(index) => A_ScreenWidth  - index * StateBulb.Spacing
-	static _GetYPosition()      => A_ScreenHeight - StateBulb.Spacing
+	static _GetXPosition(index) => A_ScreenWidth - index * StateBulb.Spacing
+	static _GetYPosition() => A_ScreenHeight - StateBulb.Spacing
 
 	static _GeneratePositions() {
 		positions := []
@@ -80,9 +79,9 @@ class StateBulb {
 
 
 	XPosition := unset
-	Color     := unset
-	GuiObj    := unset
-	GuiExist  := false
+	Color := unset
+	GuiObj := unset
+	GuiExist := false
 
 
 	Toggle() {
@@ -114,8 +113,7 @@ class StateBulb {
 			"NA w{1} h{1} x{2} y{3}",
 			Round(StateBulb.Side),
 			Round(this.XPosition),
-			Round(StateBulb.YPosition)
-		))
+			Round(StateBulb.YPosition)))
 		this.GuiObj.NeverFocusWindow()
 		this.GuiObj.MakeClickthrough()
 	}
@@ -130,7 +128,7 @@ class StateBulb {
 				2) Integer - the order of the color in the ColorOrder array
 				You passed the value of "{1}" of type {2}
 			)", color, Type(color))
-		}
+	}
 	}
 
 }
