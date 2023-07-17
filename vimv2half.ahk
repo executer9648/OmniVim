@@ -13,13 +13,12 @@
 #Include GetInput.ahk
 #Include Language.ahk
 #Include TapHoldManager.ahk
+; #Include test.ahk
 
 #Requires AutoHotkey v2.0
 
 thm := TapHoldManager()
-thm.Add("Lctrl", MyFunc1, 50, 100)
-; thm.Add("2", MyFunc2, 250, 500, 2, , "ahk_exe notepad.exe")
-
+thm.Add("Lctrl", MyFunc1)
 
 MyFunc1(isHold, taps, state) {
 	if (state == 0)
@@ -27,22 +26,21 @@ MyFunc1(isHold, taps, state) {
 	if (isHold) {
 		; Holds
 		if (taps == 1) {
-			Send "{Lctrl down}"
-			if GetKeyState('Lctrl', 'p') == 0
-				Send "{LCtrl Up}"
-		} else if (taps == 2) {
-			msgbox "taps 2H"
+			SendLevel 1
+			SendEvent "{Lctrl down}"
+			if GetKeyState('Lctrl', 'p') == 0 {
+				SendLevel 1
+				SendEvent "{LCtrl Up}"
+			}
 		}
 	} else {
 		; Taps
 		if (taps == 1) {
-			Send "{esc}"
+			SendLevel 1
+			SendEvent "{Esc}"
 		}
 	}
 }
-
-
-^a:: MsgBox "a"
 
 InstallKeybdHook
 
@@ -4356,6 +4354,7 @@ Esc:: {
 
 #HotIf mouseManagerMode = 1
 HotIf "mouseManagerMode = 1"
+
 
 ^!n:: {
 	global WasInMouseManagerMode := true
