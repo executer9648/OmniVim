@@ -12,6 +12,23 @@
 #Include mousetest.ahk
 #Include GetInput.ahk
 #Include Language.ahk
+#Include TapHoldManager.ahk
+#Requires AutoHotkey v2.0
+
+global thm := TapHoldManager()
+thm.Add("Lctrl", MyFunc1)
+MyFunc1(isHold, taps, state) {
+	if state == -1 {
+		MsgBox "esc"
+	}
+	else if state {
+		thm.PauseHotkey("Lctrl")
+	}
+	else {
+		thm.ResumeHotkey("Lctrl")
+	}
+}
+
 InstallKeybdHook
 
 A_HotkeyInterval := 0
@@ -23,8 +40,9 @@ CoordMode "Mouse", "Screen"
 $CapsLock::Control
 +!#Control::CapsLock
 
+
 #HotIf WinActive("A")
-; ~Alt:: Send "{Blind}{vkE8}"
+~Alt:: Send "{Blind}{vkE8}"
 #!h:: {
 	KeyWait "LWin"
 	KeyWait "Alt"
@@ -51,7 +69,7 @@ $CapsLock::Control
 }
 #HotIf
 
-~Alt:: Send "{Blind}{vkFF}"
+; ~Alt:: Send "{Blind}{vkFF}"
 ; ; #InputLevel 1
 ; ; LAlt:: SendEvent "h"
 ; ; #InputLevel 0
@@ -86,6 +104,7 @@ Info("Script Reloaded-Active", 2000)
 ^!j:: Send "{Down}"
 ^!k:: Send "{Up}"
 ^!l:: Send "{Right}"
+
 
 ^!n:: {
 	gotoNumLockMode()
