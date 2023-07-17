@@ -1,4 +1,5 @@
 #Include Gui.ahk
+#UseHook true
 
 class StateBulb {
 

@@ -2,7 +2,7 @@
 #MaxThreadsBuffer True
 #MaxThreads 255
 #MaxThreadsPerHotkey 255
-; #UseHook
+#UseHook
 #Include StateBulb.ahk
 #Include Info.ahk
 #Include Mouse.ahk
@@ -18,7 +18,7 @@
 #Requires AutoHotkey v2.0
 
 thm := TapHoldManager()
-thm.Add("Lctrl", MyFunc1)
+thm.Add("Lctrl", MyFunc1, , 10, 1, "*")
 
 MyFunc1(isHold, taps, state) {
 	if (state == 0)

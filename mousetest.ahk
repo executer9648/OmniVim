@@ -74,7 +74,7 @@ A_MaxHotkeysPerInterval := 500
 ; as à.  This is because AutoHotkey generates such characters
 ; by holding down ALT and sending a series of Numpad keystrokes.
 ; Hook hotkeys are smart enough to ignore such keystrokes.
-; #UseHook
+#UseHook
 
 g_MouseSpeed := 5
 g_MouseAccelerationSpeed := 20
