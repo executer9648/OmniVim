@@ -2,7 +2,7 @@
 #MaxThreadsBuffer True
 #MaxThreads 255
 #MaxThreadsPerHotkey 255
-; #UseHook
+#UseHook
 #Include StateBulb.ahk
 #Include Info.ahk
 #Include Mouse.ahk
@@ -13,31 +13,19 @@
 #Include GetInput.ahk
 #Include Language.ahk
 #Include TapHoldManager.ahk
-; #Include test.ahk
 #Requires AutoHotkey v2.0
 
+; global thm := TapHoldManager()
 ; thm.Add("Lctrl", MyFunc1)
-; thm := TapHoldManager()
-
 ; MyFunc1(isHold, taps, state) {
-; 	if (state == 0)
-; 		Send "{LCtrl Up}"
-; 	if (isHold) {
-; 		; Holds
-; 		if (taps == 1) {
-; 			SendLevel 1
-; 			SendEvent "{Lctrl down}"
-; 			if GetKeyState('Lctrl', 'p') == 0 {
-; 				SendLevel 1
-; 				SendEvent "{LCtrl Up}"
-; 			}
-; 		}
-; 	} else {
-; 		; Taps
-; 		if (taps == 1) {
-; 			SendLevel 1
-; 			SendEvent "{Esc}"
-; 		}
+; 	if state == -1 {
+; 		MsgBox "esc"
+; 	}
+; 	else if state {
+; 		thm.PauseHotkey("Lctrl")
+; 	}
+; 	else {
+; 		thm.ResumeHotkey("Lctrl")
 ; 	}
 ; }
 
@@ -51,7 +39,6 @@ CoordMode "Mouse", "Screen"
 
 $CapsLock::Control
 +!#Control::CapsLock
-
 
 #HotIf WinActive("A")
 ~Alt:: Send "{Blind}{vkE8}"
@@ -688,16 +675,16 @@ delChanYantMotion() {
 HotIf "numlockMode = 1"
 
 Esc:: {
-	if WasInMouseManagerMode == true {
-		gotoNormal()
-		gotoMouseMode()
-	}
-	else if wasInInsertMode {
+	if wasInInsertMode {
 		gotoInsert()
 	}
-	else {
+	else if wasInNormalMode {
 		gotoNormal()
 	}
+	else if WasInMouseManagerMode {
+		gotoMouseMode()
+	}
+	StateBulb[4].Destroy() ; Special
 	global numlockMode := false
 }
 
@@ -709,6 +696,7 @@ Esc:: {
 		gotoNormal()
 	}
 	else if WasInMouseManagerMode {
+		gotoNormal()
 		gotoMouseMode()
 	}
 	StateBulb[4].Destroy() ; Special
@@ -2181,10 +2169,12 @@ i:: {
 
 y:: {
 	global infcounter
+	A_Clipboard := ""
 	Send "+{Home}"
 	Send "^c"
 	ClipWait 1
 	var1 := A_Clipboard
+	A_Clipboard := ""
 	Send "{Right}"
 	Send "+{End}"
 	Send "^c"
@@ -2192,6 +2182,8 @@ y:: {
 	var2 := A_Clipboard
 	Send "{Left}"
 	Send "+{Right}"
+	MsgBox var1
+	MsgBox var2
 	A_Clipboard := var1 var2
 	gotoNormal()
 	infcounter.Destroy()
@@ -2460,10 +2452,31 @@ i:: {
 
 c:: {
 	global infcounter
+	oldclip := A_Clipboard
+	A_Clipboard := ""
 	Send "{Home}+{End}"
+	Send "^c"
+	Send "{Left}"
+	ClipWait 1
+	Haystack := A_Clipboard
+	A_Clipboard := oldclip
+	FoundPos := 0
+	FoundPos := RegExMatch(Haystack, "[a-z\s\p{P}!]+$", , -1)
+	; MsgBox FoundPos
+	if FoundPos == 0
+	{
+		Send "+{End}"
+	}
+	else {
+		loop FoundPos {
+			Send "+{Right}"
+		}
+		Send "+{Left}"
+	}
+	sleep 100
 	Send "^x"
-	gotoInsert()
 	infcounter.Destroy()
+	gotoInsert()
 	Exit
 }
 
@@ -2875,11 +2888,31 @@ Esc:: {
 
 d:: {
 	global infcounter
+	oldclip := A_Clipboard
+	A_Clipboard := ""
 	Send "{Home}+{End}"
+	Send "^c"
+	Send "{Left}"
+	ClipWait 1
+	Haystack := A_Clipboard
+	A_Clipboard := oldclip
+	FoundPos := 0
+	FoundPos := RegExMatch(Haystack, "[a-z\s\p{P}!\?]", , -1)
+	if FoundPos == 0
+	{
+		Send "+{End}"
+	}
+	else {
+		loop FoundPos {
+			Send "+{Right}"
+		}
+		Send "+{Left}"
+	}
+	sleep 100
 	Send "^x"
-	Send "{Delete}"
-	gotoNormal()
+	Send "{delete}"
 	infcounter.Destroy()
+	gotoNormal()
 	Exit
 }
 
@@ -2995,6 +3028,18 @@ w:: {
 #HotIf insertMode = 1
 HotIf "insertMode = 1"
 
+^s:: {
+	Send "^f"
+	Send "{Enter}"
+}
++^s:: {
+	Send "^f"
+	Send "+{Enter}"
+}
+^x:: {
+	Send "^{f4}"
+}
+
 ^!n:: {
 	global wasInInsertMode := true
 	gotoNumLockMode()
@@ -3055,13 +3100,26 @@ Esc:: {
 	Exit
 }
 
-^x:: {
-	Send "+{Home}"
-	Sleep 10
-	Send "{BS}"
-	Exit
-}
+; ^x:: {
+; 	Send "+{Home}"
+; 	Sleep 10
+; 	Send "{BS}"
+; 	Exit
+; }
 
+!^k:: {
+	langid := Language.GetKeyboardLanguage()
+	if (LangID = 0x040D) {
+		Send "+{end}"
+		Sleep 10
+		Send "{bs}"
+	}
+	else {
+		Send "+{Home}"
+		Sleep 10
+		Send "{bs}"
+	}
+}
 ^k:: {
 	langid := Language.GetKeyboardLanguage()
 	if (LangID = 0x040D) {
@@ -3090,23 +3148,11 @@ Esc:: {
 }
 
 ^a:: {
-	langid := Language.GetKeyboardLanguage()
-	if (LangID = 0x040D) {
-		Send "{End}"
-	}
-	else {
-		Send "{Home}"
-	}
+	Send "{Home}"
 }
 
 ^e:: {
-	langid := Language.GetKeyboardLanguage()
-	if (LangID = 0x040D) {
-		Send "{Home}"
-	}
-	else {
-		Send "{End}"
-	}
+	Send "{End}"
 }
 
 ^b:: {
@@ -3229,6 +3275,9 @@ Esc:: {
 #HotIf normalMode = 1
 HotIf "normalMode = 1"
 
+Z & Q:: {
+	Send "!{f4}"
+}
 z & =:: {
 	Send "{Left}"
 	Send "+{f10}"
@@ -3424,31 +3473,32 @@ q:: Return
 r:: {
 	global normalMode := false
 	StateBulb[4].Create()
-	ih := InputHook("C")
-	ih.KeyOpt("{All}", "ESI") ;End Keys & Suppress
-	ih.KeyOpt("{LCtrl}{RCtrl}{LAlt}{RAlt}{LShift}{RShift}{LWin}{RWin}", "-ES") ;Exclude the modifiers
-	ih.Start()
-	ih.Wait()
-	check := ih.EndMods
-	check .= ih.EndKey
-	check2 := ih.EndKey
-	if check == "<!Escape" {
-		exitVim()
-		Exit
-	} else if check2 == "Escape" {
-		StateBulb[4].Destroy()
-		global normalMode := true
-		Exit
-	} else if check2 == "Backspace" {
-		StateBulb[4].Destroy()
-		global normalMode := true
-		Exit
-	} else if check2 == "Space" {
-		StateBulb[4].Destroy()
-		global normalMode := true
-		Exit
-	}
-	SendText check2
+	; ih := InputHook("C")
+	; ih.KeyOpt("{All}", "ESI") ;End Keys & Suppress
+	; ih.KeyOpt("{LCtrl}{RCtrl}{LAlt}{RAlt}{LShift}{RShift}{LWin}{RWin}", "-ES") ;Exclude the modifiers
+	; ih.Start()
+	; ih.Wait()
+	; check := ih.EndMods
+	; check .= ih.EndKey
+	; check2 := ih.EndKey
+	; if check == "<!Escape" {
+	; 	exitVim()
+	; 	Exit
+	; } else if check2 == "Escape" {
+	; 	StateBulb[4].Destroy()
+	; 	global normalMode := true
+	; 	Exit
+	; } else if check2 == "Backspace" {
+	; 	StateBulb[4].Destroy()
+	; 	global normalMode := true
+	; 	Exit
+	; } else if check2 == "Space" {
+	; 	StateBulb[4].Destroy()
+	; 	global normalMode := true
+	; 	Exit
+	; }
+	secReg := GetInput("L1", "{esc}{space}{Backspace}").Input
+	SendText secReg
 	StateBulb[4].Destroy()
 	Send "{Left}"
 	Send "+{Right}"
@@ -3777,7 +3827,6 @@ d::
 	Send "{WheelUp}"
 }
 
-
 Esc:: {
 	global infcounter
 	global counter
@@ -3862,52 +3911,6 @@ Space:: {
 		Send "+{Right}"
 		Exit
 	}
-}
-
-^!h:: {
-	if visualMode == true
-	{
-		Send "^+{Left}"
-	}
-	else
-	{
-		Send "{Left}"
-		Send "^{Left}"
-		Send "+{Right}"
-		Exit
-	}
-	Exit
-}
-
-^!l:: {
-	if visualMode == true
-	{
-		Send "^+{Right}"
-	}
-	else
-	{
-		Send "^{Right}"
-		Send "+{Right}"
-		Exit
-	}
-	Exit
-}
-
-!h:: {
-	Send "{Left}"
-	Exit
-}
-!l:: {
-	Send "{Right}"
-	Exit
-}
-!j:: {
-	Send "{Down}"
-	Exit
-}
-!k:: {
-	Send "{Up}"
-	Exit
 }
 
 +a:: {
@@ -4092,6 +4095,7 @@ O:: {
 
 +O:: {
 	Send "{Home}"
+	Sleep 10
 	Send "+{Enter}{Up}"
 	gotoInsert()
 	Exit
@@ -4134,13 +4138,14 @@ y:: {
 
 +p:: {
 	Send "{Left}"
+	sleep 10
 	Send "^v"
 	Exit
 }
 
 p:: {
 	if visualMode == true {
-		Send "v"
+		Send "^v"
 		Exit
 	}
 	Send "{Right}"
@@ -4354,6 +4359,98 @@ Esc:: {
 #HotIf mouseManagerMode = 1
 HotIf "mouseManagerMode = 1"
 
+Z & Q:: {
+	Send "!{f4}"
+}
+
++;:: {
+	gotoInsertnoInfo()
+	global wasinCmdMode := true
+	Runner.openRunner()
+	gotoNormalnoInfo()
+	gotoMouseMode()
+}
+
++':: {
+	inf := Infos('"', , true)
+	global mouseManagerMode := false
+	StateBulb[7].Create()
+	rego := InputHook("C")
+	rego.KeyOpt("{All}", "ESI") ;End Keys & Suppress
+	rego.KeyOpt("{LCtrl}{RCtrl}{LAlt}{RAlt}{LShift}{RShift}{LWin}{RWin}", "-ES") ;Exclude the modifiers
+	rego.Start()
+	rego.Wait()
+	var := rego.EndMods
+	var .= rego.EndKey
+	reg := rego.EndKey
+	if var == "<!Escape" {
+		exitVim()
+		inf.Destroy()
+		Exit
+	}
+	else if reg == "Escape" {
+		StateBulb[7].Destroy()
+		global normalMode := true
+		inf.Destroy()
+		Exit
+	}
+	inf.Destroy()
+	infs := '"'
+	infs .= reg
+	inf := Infos(infs, , true)
+	rego := InputHook("C")
+	rego.KeyOpt("{All}", "ESI") ;End Keys & Ruppress
+	rego.KeyOpt("{LCtrl}{RCtrl}{LAlt}{RAlt}{LShift}{RShift}{LWin}{RWin}", "-ES") ;Exclude the modifiers
+	rego.Start()
+	rego.Wait()
+	var := rego.EndMods
+	var .= rego.EndKey
+	operator := rego.EndKey
+	if var == "<!Escape" {
+		exitVim()
+		inf.Destroy()
+		Exit
+	}
+	else if operator == "Escape" {
+		StateBulb[7].Destroy()
+		global normalMode := true
+		inf.Destroy()
+		Exit
+	}
+	else if (operator == "y") {
+		Send "^c"
+		ClipWait 1
+		Sleep 10
+		Registers(reg).WriteOrAppend()
+	}
+	else if (operator == "d") {
+		Send "^x"
+		ClipWait 1
+		Sleep 10
+		Registers(reg).WriteOrAppend()
+	}
+	else if (operator == "p") {
+		Registers(reg).Paste()
+	}
+	else if (operator == "l") {
+		Registers(reg).Look()
+	}
+	else if (operator == "m") {
+		secReg := GetInput("L1", "{Esc}").Input
+		Registers(reg).Move(secReg)
+	}
+	else if (operator == "s") {
+		secReg := GetInput("L1", "{Esc}").Input
+		Registers(reg).SwitchContents(secReg)
+	}
+	else if (operator == "x") {
+		Registers(reg).Truncate()
+	}
+	StateBulb[7].Destroy()
+	global mouseManagerMode := true
+	inf.Destroy()
+}
+
 
 ^!n:: {
 	global WasInMouseManagerMode := true
@@ -4470,17 +4567,7 @@ m:: {
 	Exit
 }
 
-!h:: Send "!{Left}"
-!j:: Send "!{Down}"
-!k:: Send "!{Up}"
-!l:: Send "!{Right}"
-
-+h:: Mouse.MoveLeft(Mouse.MediumMove)
-+k:: Mouse.MoveUp(Mouse.MediumMove)
-+j:: Mouse.MoveDown(Mouse.MediumMove)
-+l:: Mouse.MoveRight(Mouse.MediumMove)
-
-+u:: {
+!u:: {
 	Send "^z"
 }
 ^r:: {
@@ -4519,8 +4606,8 @@ Hotkey "u", ButtonAcceleration
 Hotkey "o", ButtonAcceleration
 Hotkey "n", ButtonAcceleration
 Hotkey ",", ButtonAcceleration
-Hotkey "h", ButtonAcceleration
 Hotkey "j", ButtonAcceleration
+Hotkey "h", ButtonAcceleration
 Hotkey "k", ButtonAcceleration
 Hotkey "l", ButtonAcceleration
 Hotkey "+u", ButtonAcceleration

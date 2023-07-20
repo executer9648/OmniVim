@@ -454,73 +454,73 @@ ButtonAcceleration(ThisHotkey)
 	if g_Button = "+h" {
 		shiftSpeed()
 	}
-	else if g_Button = "+j" {
+	if g_Button = "+j" {
 		shiftSpeed()
 	}
-	else if g_Button = "+k" {
+	if g_Button = "+k" {
 		shiftSpeed()
 	}
-	else if g_Button = "+l" {
+	if g_Button = "+l" {
 		shiftSpeed()
 	}
-	else if g_Button = "+u" {
+	if g_Button = "+u" {
 		shiftSpeed()
 	}
-	else if g_Button = "+o" {
+	if g_Button = "+o" {
 		shiftSpeed()
 	}
-	else if g_Button = "+n" {
+	if g_Button = "+n" {
 		shiftSpeed()
 	}
-	else if g_Button = "+," {
+	if g_Button = "+," {
 		shiftSpeed()
 	}
-	else if g_Button = "^h" {
+	if g_Button = "^h" {
 		controlSpeed()
 	}
-	else if g_Button = "^j" {
+	if g_Button = "^j" {
 		controlSpeed()
 	}
-	else if g_Button = "^k" {
+	if g_Button = "^k" {
 		controlSpeed()
 	}
-	else if g_Button = "^l" {
+	if g_Button = "^l" {
 		controlSpeed()
 	}
-	else if g_Button = "^u" {
+	if g_Button = "^u" {
 		controlSpeed()
 	}
-	else if g_Button = "^o" {
+	if g_Button = "^o" {
 		controlSpeed()
 	}
-	else if g_Button = "^n" {
+	if g_Button = "^n" {
 		controlSpeed()
 	}
-	else if g_Button = "^," {
+	if g_Button = "^," {
 		controlSpeed()
 	}
-	else if g_Button = "h" {
+	if g_Button = "h" {
 		normalSpeed()
 	}
-	else if g_Button = "j" {
+	if g_Button = "j" {
 		normalSpeed()
 	}
-	else if g_Button = "k" {
+	if g_Button = "k" {
 		normalSpeed()
 	}
-	else if g_Button = "l" {
+	if g_Button = "l" {
 		normalSpeed()
 	}
-	else if g_Button = "u" {
+	if g_Button = "u" {
 		normalSpeed()
 	}
-	else if g_Button = "o" {
+	if g_Button = "o" {
 		normalSpeed()
 	}
-	else if g_Button = "n" {
+	if g_Button = "n" {
 		normalSpeed()
 	}
-	else if g_Button = "," {
+	if g_Button = "," {
 		normalSpeed()
 	}
 
