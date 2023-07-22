@@ -15,19 +15,7 @@
 #Include TapHoldManager.ahk
 #Requires AutoHotkey v2.0
 
-; global thm := TapHoldManager()
-; thm.Add("Lctrl", MyFunc1)
-; MyFunc1(isHold, taps, state) {
-; 	if state == -1 {
-; 		MsgBox "esc"
-; 	}
-; 	else if state {
-; 		thm.PauseHotkey("Lctrl")
-; 	}
-; 	else {
-; 		thm.ResumeHotkey("Lctrl")
-; 	}
-; }
+; MsgBox "orignial x1 " Mouse.x1 "my x1 " mouse.getx(2,1, Mouse.numberRow)
 
 InstallKeybdHook
 
@@ -76,6 +64,7 @@ $CapsLock::Control
 
 Info("Script Reloaded-Active", 2000)
 
++^#e:: Edit
 +^#r:: {
 	Reload
 }
@@ -90,7 +79,6 @@ Info("Script Reloaded-Active", 2000)
 	Suspend  ; Ctrl+Alt+S
 }
 #SuspendExempt False
-+#e:: Edit
 ^#h:: Send "^#{Left}"
 ^#l:: Send "^#{Right}"
 
@@ -99,10 +87,10 @@ Info("Script Reloaded-Active", 2000)
 +#k:: Send "+#{Up}"
 +#l:: Send "+#{Right}"
 
-^!h:: Send "{Left}"
-^!j:: Send "{Down}"
-^!k:: Send "{Up}"
-^!l:: Send "{Right}"
+^!h:: SendEvent "{Left}"
+^!j:: SendEvent "{Down}"
+^!k:: SendEvent "{Up}"
+^!l:: SendEvent "{Right}"
 
 
 ^!n:: {
@@ -119,6 +107,7 @@ global gMode := false
 global yMode := false
 global fMode := false
 global shiftfMode := false
+global altfMode := false
 global cMode := false
 global numlockMode := false
 global visualMode := false
@@ -143,10 +132,10 @@ chCounter(number, mode := "") {
 	if counter >= 0 {
 		counter *= 10
 		counter += number
+		text := mode counter
+		infcounter.Destroy()
+		infcounter := Infos(text, , true)
 	}
-	text := mode counter
-	infcounter.Destroy()
-	infcounter := Infos(text, , true)
 }
 
 exitVim() {
@@ -182,6 +171,7 @@ exitVim() {
 	; StateBulb[6].Destroy() ; Yank
 	; StateBulb[7].Destroy() ; Window
 	; StateBulb[8].Destroy() ; Fmode
+	disableClick()
 	Exit
 }
 gotoNumLockMode() {
@@ -333,6 +323,7 @@ gotoNormal() {
 	global cMode := false
 	global fMode := false
 	global shiftfMode := false
+	global altfMode := false
 	global yMode := false
 	global windowMode := false
 	global WindowManagerMode := false
@@ -658,18 +649,6 @@ delChanYantMotion() {
 	exit
 }
 
-; mylang() {
-; 	; SetFormat, Integer, H
-; 	; aac1 := DllCall("GetKeyboardLayout", int, DllCall("GetWindowThreadProcessId", int, WinActive("A"), int, 0))
-; 	; MsgBox AAC1 = %aac1%
-; 	; SetFormat, Integer, D
-
-; 	VarSetStrCapacity(kbd, 9)
-; 	if DllCall("GetKeyboardLayoutNameA", uint, &kbd)
-; 		MsgBox %kbd%
-; 	return
-; }
-
 ;numlock replacer
 #HotIf numlockMode = 1
 HotIf "numlockMode = 1"
@@ -708,15 +687,15 @@ Esc:: {
 	Exit
 }
 
-u:: Send "4"
-i:: Send "5"
-o:: Send "6"
-j:: Send "1"
-k:: Send "2"
-l:: Send "3"
-,:: Send "0"
-m:: Send "0"
-n:: Send "0"
+u::4
+i::5
+o::6
+j::1
+k::2
+l::3
+,::0
+m::0
+n::0
 
 ; l::
 ; RAlt:: Send "."
@@ -759,6 +738,7 @@ n:: Send "0"
 #HotIf fMode = 1
 HotIf "fMode = 1"
 
+
 if MonitorGetPrimary() != 1 {
 	secondM := -A_ScreenWidth
 }
@@ -766,16 +746,28 @@ else {
 	secondM := A_ScreenWidth
 }
 
+
 `:: {
+	global counter
+	global monitorCount
+	global infcounter
 	if WasInWindowManagerMode == true {
 		WinMove(Mouse.x1, Mouse.tildaCol, , , "A")
 		gotoNormal()
 		gotoMwMode()
 	}
-	else if shiftfMode {
-		MouseMove(Mouse.x1 + secondM, Mouse.tildaCol)
-		gotoNormal()
-		gotoMouseMode()
+	else if altfMode {
+		if counter != 0 {
+			if counter > monitorCount {
+				gotoNormal()
+				gotoMouseMode()
+				infcounter.Destroy()
+				Exit
+			}
+			MouseMove(Mouse.getx(counter, 1, Mouse.numberRow), Mouse.tildaCol)
+			Exit
+		}
+		MouseMove(Mouse.x1, Mouse.tildaCol)
 	}
 	else {
 		MouseMove(Mouse.x1, Mouse.tildaCol)
@@ -785,15 +777,26 @@ else {
 	Exit
 }
 1:: {
+	global counter
+	global monitorCount
+	global infcounter
 	if WasInWindowManagerMode == true {
 		WinMove(Mouse.x2, Mouse.tildaCol, , , "A")
 		gotoNormal()
 		gotoMwMode()
 	}
-	else if shiftfMode {
-		MouseMove(Mouse.x2 + secondM, Mouse.tildaCol)
-		gotoNormal()
-		gotoMouseMode()
+	else if altfMode {
+		if counter != 0 {
+			if counter > monitorCount {
+				gotoNormal()
+				gotoMouseMode()
+				infcounter.Destroy()
+				Exit
+			}
+			MouseMove(Mouse.getx(counter, 2, Mouse.numberRow), Mouse.tildaCol)
+			Exit
+		}
+		MouseMove(Mouse.x2, Mouse.tildaCol)
 	}
 	else {
 		MouseMove(Mouse.x2, Mouse.tildaCol)
@@ -802,15 +805,26 @@ else {
 	Exit
 }
 2:: {
+	global counter
+	global monitorCount
+	global infcounter
 	if WasInWindowManagerMode == true {
 		WinMove(Mouse.x3, Mouse.tildaCol, , , "A")
 		gotoNormal()
 		gotoMwMode()
 	}
-	else if shiftfMode {
-		MouseMove(Mouse.x3 + secondM, Mouse.tildaCol)
-		gotoNormal()
-		gotoMouseMode()
+	else if altfMode {
+		if counter != 0 {
+			if counter > monitorCount {
+				gotoNormal()
+				gotoMouseMode()
+				infcounter.Destroy()
+				Exit
+			}
+			MouseMove(Mouse.getx(counter, 3, Mouse.numberRow), Mouse.tildaCol)
+			Exit
+		}
+		MouseMove(Mouse.x3, Mouse.tildaCol)
 	}
 	else {
 		MouseMove(Mouse.x3, Mouse.tildaCol)
@@ -819,15 +833,26 @@ else {
 	}
 }
 3:: {
+	global counter
+	global monitorCount
+	global infcounter
 	if WasInWindowManagerMode == true {
 		WinMove(Mouse.x4, Mouse.tildaCol, , , "A")
 		gotoNormal()
 		gotoMwMode()
 	}
-	else if shiftfMode {
-		MouseMove(Mouse.x4 + secondM, Mouse.tildaCol)
-		gotoNormal()
-		gotoMouseMode()
+	else if altfMode {
+		if counter != 0 {
+			if counter > monitorCount {
+				gotoNormal()
+				gotoMouseMode()
+				infcounter.Destroy()
+				Exit
+			}
+			MouseMove(Mouse.getx(counter, 4, Mouse.numberRow), Mouse.tildaCol)
+			Exit
+		}
+		MouseMove(Mouse.x4, Mouse.tildaCol)
 	}
 	else {
 		MouseMove(Mouse.x4, Mouse.tildaCol)
@@ -836,15 +861,26 @@ else {
 	}
 }
 4:: {
+	global counter
+	global monitorCount
+	global infcounter
 	if WasInWindowManagerMode == true {
 		WinMove(Mouse.x5, Mouse.tildaCol, , , "A")
 		gotoNormal()
 		gotoMwMode()
 	}
-	else if shiftfMode {
-		MouseMove(Mouse.x5 + secondM, Mouse.tildaCol)
-		gotoNormal()
-		gotoMouseMode()
+	else if altfMode {
+		if counter != 0 {
+			if counter > monitorCount {
+				gotoNormal()
+				gotoMouseMode()
+				infcounter.Destroy()
+				Exit
+			}
+			MouseMove(Mouse.getx(counter, 5, Mouse.numberRow), Mouse.tildaCol)
+			Exit
+		}
+		MouseMove(Mouse.x5, Mouse.tildaCol)
 	}
 	else {
 		MouseMove(Mouse.x5, Mouse.tildaCol)
@@ -853,15 +889,26 @@ else {
 	}
 }
 5:: {
+	global counter
+	global monitorCount
+	global infcounter
 	if WasInWindowManagerMode == true {
 		WinMove(Mouse.x6, Mouse.tildaCol, , , "A")
 		gotoNormal()
 		gotoMwMode()
 	}
-	else if shiftfMode {
-		MouseMove(Mouse.x6 + secondM, Mouse.tildaCol)
-		gotoNormal()
-		gotoMouseMode()
+	else if altfMode {
+		if counter != 0 {
+			if counter > monitorCount {
+				gotoNormal()
+				gotoMouseMode()
+				infcounter.Destroy()
+				Exit
+			}
+			MouseMove(Mouse.getx(counter, 6, Mouse.numberRow), Mouse.tildaCol)
+			Exit
+		}
+		MouseMove(Mouse.x6, Mouse.tildaCol)
 	}
 	else {
 		MouseMove(Mouse.x6, Mouse.tildaCol)
@@ -870,15 +917,26 @@ else {
 	}
 }
 6:: {
+	global counter
+	global monitorCount
+	global infcounter
 	if WasInWindowManagerMode == true {
 		WinMove(Mouse.x7, Mouse.tildaCol, , , "A")
 		gotoNormal()
 		gotoMwMode()
 	}
-	else if shiftfMode {
-		MouseMove(Mouse.x7 + secondM, Mouse.tildaCol)
-		gotoNormal()
-		gotoMouseMode()
+	else if altfMode {
+		if counter != 0 {
+			if counter > monitorCount {
+				gotoNormal()
+				gotoMouseMode()
+				infcounter.Destroy()
+				Exit
+			}
+			MouseMove(Mouse.getx(counter, 7, Mouse.numberRow), Mouse.tildaCol)
+			Exit
+		}
+		MouseMove(Mouse.x7, Mouse.tildaCol)
 	}
 	else {
 		MouseMove(Mouse.x7, Mouse.tildaCol)
@@ -887,15 +945,26 @@ else {
 	}
 }
 7:: {
+	global counter
+	global monitorCount
+	global infcounter
 	if WasInWindowManagerMode == true {
 		WinMove(Mouse.x8, Mouse.tildaCol, , , "A")
 		gotoNormal()
 		gotoMwMode()
 	}
-	else if shiftfMode {
-		MouseMove(Mouse.x8 + secondM, Mouse.tildaCol)
-		gotoNormal()
-		gotoMouseMode()
+	else if altfMode {
+		if counter != 0 {
+			if counter > monitorCount {
+				gotoNormal()
+				gotoMouseMode()
+				infcounter.Destroy()
+				Exit
+			}
+			MouseMove(Mouse.getx(counter, 8, Mouse.numberRow), Mouse.tildaCol)
+			Exit
+		}
+		MouseMove(Mouse.x8, Mouse.tildaCol)
 	}
 	else {
 		MouseMove(Mouse.x8, Mouse.tildaCol)
@@ -904,15 +973,26 @@ else {
 	}
 }
 8:: {
+	global counter
+	global monitorCount
+	global infcounter
 	if WasInWindowManagerMode == true {
 		WinMove(Mouse.x9, Mouse.tildaCol, , , "A")
 		gotoNormal()
 		gotoMwMode()
 	}
-	else if shiftfMode {
-		MouseMove(Mouse.x9 + secondM, Mouse.tildaCol)
-		gotoNormal()
-		gotoMouseMode()
+	else if altfMode {
+		if counter != 0 {
+			if counter > monitorCount {
+				gotoNormal()
+				gotoMouseMode()
+				infcounter.Destroy()
+				Exit
+			}
+			MouseMove(Mouse.getx(counter, 9, Mouse.numberRow), Mouse.tildaCol)
+			Exit
+		}
+		MouseMove(Mouse.x9, Mouse.tildaCol)
 	}
 	else {
 		MouseMove(Mouse.x9, Mouse.tildaCol)
@@ -921,15 +1001,26 @@ else {
 	}
 }
 9:: {
+	global counter
+	global monitorCount
+	global infcounter
 	if WasInWindowManagerMode == true {
 		WinMove(Mouse.x10, Mouse.tildaCol, , , "A")
 		gotoNormal()
 		gotoMwMode()
 	}
-	else if shiftfMode {
-		MouseMove(Mouse.x10 + secondM, Mouse.tildaCol)
-		gotoNormal()
-		gotoMouseMode()
+	else if altfMode {
+		if counter != 0 {
+			if counter > monitorCount {
+				gotoNormal()
+				gotoMouseMode()
+				infcounter.Destroy()
+				Exit
+			}
+			MouseMove(Mouse.getx(counter, 10, Mouse.numberRow), Mouse.tildaCol)
+			Exit
+		}
+		MouseMove(Mouse.x10, Mouse.tildaCol)
 	}
 	else {
 		MouseMove(Mouse.x10, Mouse.tildaCol)
@@ -938,15 +1029,26 @@ else {
 	}
 }
 0:: {
+	global counter
+	global monitorCount
+	global infcounter
 	if WasInWindowManagerMode == true {
 		WinMove(Mouse.x11, Mouse.tildaCol, , , "A")
 		gotoNormal()
 		gotoMwMode()
 	}
-	else if shiftfMode {
-		MouseMove(Mouse.x11 + secondM, Mouse.tildaCol)
-		gotoNormal()
-		gotoMouseMode()
+	else if altfMode {
+		if counter != 0 {
+			if counter > monitorCount {
+				gotoNormal()
+				gotoMouseMode()
+				infcounter.Destroy()
+				Exit
+			}
+			MouseMove(Mouse.getx(counter, 11, Mouse.numberRow), Mouse.tildaCol)
+			Exit
+		}
+		MouseMove(Mouse.x11, Mouse.tildaCol)
 	}
 	else {
 		MouseMove(Mouse.x11, Mouse.tildaCol)
@@ -955,15 +1057,26 @@ else {
 	}
 }
 -:: {
+	global counter
+	global monitorCount
+	global infcounter
 	if WasInWindowManagerMode == true {
 		WinMove(Mouse.x12, Mouse.tildaCol, , , "A")
 		gotoNormal()
 		gotoMwMode()
 	}
-	else if shiftfMode {
-		MouseMove(Mouse.x12 + secondM, Mouse.tildaCol)
-		gotoNormal()
-		gotoMouseMode()
+	else if altfMode {
+		if counter != 0 {
+			if counter > monitorCount {
+				gotoNormal()
+				gotoMouseMode()
+				infcounter.Destroy()
+				Exit
+			}
+			MouseMove(Mouse.getx(counter, 12, Mouse.numberRow), Mouse.tildaCol)
+			Exit
+		}
+		MouseMove(Mouse.x12, Mouse.tildaCol)
 	}
 	else {
 		MouseMove(Mouse.x12, Mouse.tildaCol)
@@ -972,15 +1085,26 @@ else {
 	}
 }
 =:: {
+	global counter
+	global monitorCount
+	global infcounter
 	if WasInWindowManagerMode == true {
 		WinMove(Mouse.x13, Mouse.tildaCol, , , "A")
 		gotoNormal()
 		gotoMwMode()
 	}
-	else if shiftfMode {
-		MouseMove(Mouse.x13 + secondM, Mouse.tildaCol)
-		gotoNormal()
-		gotoMouseMode()
+	else if altfMode {
+		if counter != 0 {
+			if counter > monitorCount {
+				gotoNormal()
+				gotoMouseMode()
+				infcounter.Destroy()
+				Exit
+			}
+			MouseMove(Mouse.getx(counter, 13, Mouse.numberRow), Mouse.tildaCol)
+			Exit
+		}
+		MouseMove(Mouse.x13, Mouse.tildaCol)
 	}
 	else {
 		MouseMove(Mouse.x13, Mouse.tildaCol)
@@ -989,15 +1113,26 @@ else {
 	}
 }
 BackSpace:: {
+	global counter
+	global monitorCount
+	global infcounter
 	if WasInWindowManagerMode == true {
 		WinMove(Mouse.x14, Mouse.tildaCol, , , "A")
 		gotoNormal()
 		gotoMwMode()
 	}
-	else if shiftfMode {
-		MouseMove(Mouse.x14 + secondM, Mouse.tildaCol)
-		gotoNormal()
-		gotoMouseMode()
+	else if altfMode {
+		if counter != 0 {
+			if counter > monitorCount {
+				gotoNormal()
+				gotoMouseMode()
+				infcounter.Destroy()
+				Exit
+			}
+			MouseMove(Mouse.getx(counter, 14, Mouse.numberRow), Mouse.tildaCol)
+			Exit
+		}
+		MouseMove(Mouse.x14, Mouse.tildaCol)
 	}
 	else {
 		MouseMove(Mouse.x14, Mouse.tildaCol)
@@ -1007,15 +1142,26 @@ BackSpace:: {
 }
 
 tab:: {
+	global counter
+	global monitorCount
+	global infcounter
 	if WasInWindowManagerMode == true {
 		WinMove(Mouse.x1, 0, , , "A")
 		gotoNormal()
 		gotoMwMode()
 	}
-	else if shiftfMode {
-		MouseMove(Mouse.x1 + secondM, Mouse.tabCol)
-		gotoNormal()
-		gotoMouseMode()
+	else if altfMode {
+		if counter != 0 {
+			if counter > monitorCount {
+				gotoNormal()
+				gotoMouseMode()
+				infcounter.Destroy()
+				Exit
+			}
+			MouseMove(Mouse.getx(counter, 1, Mouse.numberRow), Mouse.tabCol)
+			Exit
+		}
+		MouseMove(Mouse.x1, Mouse.tabCol)
 	}
 	else {
 		MouseMove(Mouse.x1, Mouse.tabCol)
@@ -1024,15 +1170,26 @@ tab:: {
 	}
 }
 q:: {
+	global counter
+	global monitorCount
+	global infcounter
 	if WasInWindowManagerMode == true {
 		WinMove(Mouse.x2, 0, , , "A")
 		gotoNormal()
 		gotoMwMode()
 	}
-	else if shiftfMode {
-		MouseMove(Mouse.x2 + secondM, Mouse.tabCol)
-		gotoNormal()
-		gotoMouseMode()
+	else if altfMode {
+		if counter != 0 {
+			if counter > monitorCount {
+				gotoNormal()
+				gotoMouseMode()
+				infcounter.Destroy()
+				Exit
+			}
+			MouseMove(Mouse.getx(counter, 2, Mouse.numberRow), Mouse.tabCol)
+			Exit
+		}
+		MouseMove(Mouse.x2, Mouse.tabCol)
 	}
 	else {
 		MouseMove(Mouse.x2, Mouse.tabCol)
@@ -1041,15 +1198,26 @@ q:: {
 	}
 }
 w:: {
+	global counter
+	global monitorCount
+	global infcounter
 	if WasInWindowManagerMode == true {
 		WinMove(Mouse.x3, 0, , , "A")
 		gotoNormal()
 		gotoMwMode()
 	}
-	else if shiftfMode {
-		MouseMove(Mouse.x3 + secondM, Mouse.tabCol)
-		gotoNormal()
-		gotoMouseMode()
+	else if altfMode {
+		if counter != 0 {
+			if counter > monitorCount {
+				gotoNormal()
+				gotoMouseMode()
+				infcounter.Destroy()
+				Exit
+			}
+			MouseMove(Mouse.getx(counter, 3, Mouse.numberRow), Mouse.tabCol)
+			Exit
+		}
+		MouseMove(Mouse.x3, Mouse.tabCol)
 	}
 	else {
 		MouseMove(Mouse.x3, Mouse.tabCol)
@@ -1058,15 +1226,26 @@ w:: {
 	}
 }
 e:: {
+	global counter
+	global monitorCount
+	global infcounter
 	if WasInWindowManagerMode == true {
 		WinMove(Mouse.x4, 0, , , "A")
 		gotoNormal()
 		gotoMwMode()
 	}
-	else if shiftfMode {
-		MouseMove(Mouse.x4 + secondM, Mouse.tabCol)
-		gotoNormal()
-		gotoMouseMode()
+	else if altfMode {
+		if counter != 0 {
+			if counter > monitorCount {
+				gotoNormal()
+				gotoMouseMode()
+				infcounter.Destroy()
+				Exit
+			}
+			MouseMove(Mouse.getx(counter, 4, Mouse.numberRow), Mouse.tabCol)
+			Exit
+		}
+		MouseMove(Mouse.x4, Mouse.tabCol)
 	}
 	else {
 		MouseMove(Mouse.x4, Mouse.tabCol)
@@ -1075,15 +1254,26 @@ e:: {
 	}
 }
 r:: {
+	global counter
+	global monitorCount
+	global infcounter
 	if WasInWindowManagerMode == true {
 		WinMove(Mouse.x4, 0, , , "A")
 		gotoNormal()
 		gotoMwMode()
 	}
-	else if shiftfMode {
-		MouseMove(Mouse.x5 + secondM, Mouse.tabCol)
-		gotoNormal()
-		gotoMouseMode()
+	else if altfMode {
+		if counter != 0 {
+			if counter > monitorCount {
+				gotoNormal()
+				gotoMouseMode()
+				infcounter.Destroy()
+				Exit
+			}
+			MouseMove(Mouse.getx(counter, 5, Mouse.numberRow), Mouse.tabCol)
+			Exit
+		}
+		MouseMove(Mouse.x5, Mouse.tabCol)
 	}
 	else {
 		MouseMove(Mouse.x5, Mouse.tabCol)
@@ -1092,15 +1282,26 @@ r:: {
 	}
 }
 t:: {
+	global counter
+	global monitorCount
+	global infcounter
 	if WasInWindowManagerMode == true {
 		WinMove(Mouse.x4, 0, , , "A")
 		gotoNormal()
 		gotoMwMode()
 	}
-	else if shiftfMode {
-		MouseMove(Mouse.x6 + secondM, Mouse.tabCol)
-		gotoNormal()
-		gotoMouseMode()
+	else if altfMode {
+		if counter != 0 {
+			if counter > monitorCount {
+				gotoNormal()
+				gotoMouseMode()
+				infcounter.Destroy()
+				Exit
+			}
+			MouseMove(Mouse.getx(counter, 6, Mouse.numberRow), Mouse.tabCol)
+			Exit
+		}
+		MouseMove(Mouse.x6, Mouse.tabCol)
 	}
 	else {
 		MouseMove(Mouse.x6, Mouse.tabCol)
@@ -1109,15 +1310,26 @@ t:: {
 	}
 }
 y:: {
+	global counter
+	global monitorCount
+	global infcounter
 	if WasInWindowManagerMode == true {
 		WinMove(Mouse.x4, 0, , , "A")
 		gotoNormal()
 		gotoMwMode()
 	}
-	else if shiftfMode {
-		MouseMove(Mouse.x7 + secondM, Mouse.tabCol)
-		gotoNormal()
-		gotoMouseMode()
+	else if altfMode {
+		if counter != 0 {
+			if counter > monitorCount {
+				gotoNormal()
+				gotoMouseMode()
+				infcounter.Destroy()
+				Exit
+			}
+			MouseMove(Mouse.getx(counter, 7, Mouse.numberRow), Mouse.tabCol)
+			Exit
+		}
+		MouseMove(Mouse.x7, Mouse.tabCol)
 	}
 	else {
 		MouseMove(Mouse.x7, Mouse.tabCol)
@@ -1126,15 +1338,26 @@ y:: {
 	}
 }
 u:: {
+	global counter
+	global monitorCount
+	global infcounter
 	if WasInWindowManagerMode == true {
 		WinMove(Mouse.x4, 0, , , "A")
 		gotoNormal()
 		gotoMwMode()
 	}
-	else if shiftfMode {
-		MouseMove(Mouse.x8 + secondM, Mouse.tabCol)
-		gotoNormal()
-		gotoMouseMode()
+	else if altfMode {
+		if counter != 0 {
+			if counter > monitorCount {
+				gotoNormal()
+				gotoMouseMode()
+				infcounter.Destroy()
+				Exit
+			}
+			MouseMove(Mouse.getx(counter, 8, Mouse.numberRow), Mouse.tabCol)
+			Exit
+		}
+		MouseMove(Mouse.x8, Mouse.tabCol)
 	}
 	else {
 		MouseMove(Mouse.x8, Mouse.tabCol)
@@ -1143,15 +1366,26 @@ u:: {
 	}
 }
 i:: {
+	global counter
+	global monitorCount
+	global infcounter
 	if WasInWindowManagerMode == true {
 		WinMove(Mouse.x4, 0, , , "A")
 		gotoNormal()
 		gotoMwMode()
 	}
-	else if shiftfMode {
-		MouseMove(Mouse.x9 + secondM, Mouse.tabCol)
-		gotoNormal()
-		gotoMouseMode()
+	else if altfMode {
+		if counter != 0 {
+			if counter > monitorCount {
+				gotoNormal()
+				gotoMouseMode()
+				infcounter.Destroy()
+				Exit
+			}
+			MouseMove(Mouse.getx(counter, 9, Mouse.numberRow), Mouse.tabCol)
+			Exit
+		}
+		MouseMove(Mouse.x9, Mouse.tabCol)
 	}
 	else {
 		MouseMove(Mouse.x9, Mouse.tabCol)
@@ -1160,15 +1394,26 @@ i:: {
 	}
 }
 o:: {
+	global counter
+	global monitorCount
+	global infcounter
 	if WasInWindowManagerMode == true {
 		WinMove(Mouse.x4, 0, , , "A")
 		gotoNormal()
 		gotoMwMode()
 	}
-	else if shiftfMode {
-		MouseMove(Mouse.x10 + secondM, Mouse.tabCol)
-		gotoNormal()
-		gotoMouseMode()
+	else if altfMode {
+		if counter != 0 {
+			if counter > monitorCount {
+				gotoNormal()
+				gotoMouseMode()
+				infcounter.Destroy()
+				Exit
+			}
+			MouseMove(Mouse.getx(counter, 10, Mouse.numberRow), Mouse.tabCol)
+			Exit
+		}
+		MouseMove(Mouse.x10, Mouse.tabCol)
 	}
 	else {
 		MouseMove(Mouse.x10, Mouse.tabCol)
@@ -1177,15 +1422,26 @@ o:: {
 	}
 }
 p:: {
+	global counter
+	global monitorCount
+	global infcounter
 	if WasInWindowManagerMode == true {
 		WinMove(Mouse.x4, 0, , , "A")
 		gotoNormal()
 		gotoMwMode()
 	}
-	else if shiftfMode {
-		MouseMove(Mouse.x11 + secondM, Mouse.tabCol)
-		gotoNormal()
-		gotoMouseMode()
+	else if altfMode {
+		if counter != 0 {
+			if counter > monitorCount {
+				gotoNormal()
+				gotoMouseMode()
+				infcounter.Destroy()
+				Exit
+			}
+			MouseMove(Mouse.getx(counter, 11, Mouse.numberRow), Mouse.tabCol)
+			Exit
+		}
+		MouseMove(Mouse.x11, Mouse.tabCol)
 	}
 	else {
 		MouseMove(Mouse.x11, Mouse.tabCol)
@@ -1194,15 +1450,26 @@ p:: {
 	}
 }
 [:: {
+	global counter
+	global monitorCount
+	global infcounter
 	if WasInWindowManagerMode == true {
 		WinMove(Mouse.x4, 0, , , "A")
 		gotoNormal()
 		gotoMwMode()
 	}
-	else if shiftfMode {
-		MouseMove(Mouse.x12 + secondM, Mouse.tabCol)
-		gotoNormal()
-		gotoMouseMode()
+	else if altfMode {
+		if counter != 0 {
+			if counter > monitorCount {
+				gotoNormal()
+				gotoMouseMode()
+				infcounter.Destroy()
+				Exit
+			}
+			MouseMove(Mouse.getx(counter, 12, Mouse.numberRow), Mouse.tabCol)
+			Exit
+		}
+		MouseMove(Mouse.x12, Mouse.tabCol)
 	}
 	else {
 		MouseMove(Mouse.x12, Mouse.tabCol)
@@ -1211,15 +1478,26 @@ p:: {
 	}
 }
 ]:: {
+	global counter
+	global monitorCount
+	global infcounter
 	if WasInWindowManagerMode == true {
 		WinMove(Mouse.x4, 0, , , "A")
 		gotoNormal()
 		gotoMwMode()
 	}
-	else if shiftfMode {
-		MouseMove(Mouse.x13 + secondM, Mouse.tabCol)
-		gotoNormal()
-		gotoMouseMode()
+	else if altfMode {
+		if counter != 0 {
+			if counter > monitorCount {
+				gotoNormal()
+				gotoMouseMode()
+				infcounter.Destroy()
+				Exit
+			}
+			MouseMove(Mouse.getx(counter, 13, Mouse.numberRow), Mouse.tabCol)
+			Exit
+		}
+		MouseMove(Mouse.x13, Mouse.tabCol)
 	}
 	else {
 		MouseMove(Mouse.x13, Mouse.tabCol)
@@ -1228,15 +1506,26 @@ p:: {
 	}
 }
 \:: {
+	global counter
+	global monitorCount
+	global infcounter
 	if WasInWindowManagerMode == true {
 		WinMove(Mouse.x4, 0, , , "A")
 		gotoNormal()
 		gotoMwMode()
 	}
-	else if shiftfMode {
-		MouseMove(Mouse.x14 + secondM, Mouse.tabCol)
-		gotoNormal()
-		gotoMouseMode()
+	else if altfMode {
+		if counter != 0 {
+			if counter > monitorCount {
+				gotoNormal()
+				gotoMouseMode()
+				infcounter.Destroy()
+				Exit
+			}
+			MouseMove(Mouse.getx(counter, 14, Mouse.numberRow), Mouse.tabCol)
+			Exit
+		}
+		MouseMove(Mouse.x14, Mouse.tabCol)
 	}
 	else {
 		MouseMove(Mouse.x14, Mouse.tabCol)
@@ -1245,15 +1534,26 @@ p:: {
 	}
 }
 LControl:: {
+	global counter
+	global monitorCount
+	global infcounter
 	if WasInWindowManagerMode == true {
 		WinMove(Mouse.x4, 0, , , "A")
 		gotoNormal()
 		gotoMwMode()
 	}
-	else if shiftfMode {
-		MouseMove(Mouse.ax1 + secondM, Mouse.capsCol)
-		gotoNormal()
-		gotoMouseMode()
+	else if altfMode {
+		if counter != 0 {
+			if counter > monitorCount {
+				gotoNormal()
+				gotoMouseMode()
+				infcounter.Destroy()
+				Exit
+			}
+			MouseMove(Mouse.getx(counter, 1, Mouse.aRow), Mouse.capsCol)
+			Exit
+		}
+		MouseMove(Mouse.ax1, Mouse.capsCol)
 	}
 	else {
 		MouseMove(Mouse.ax1, Mouse.capsCol)
@@ -1262,15 +1562,26 @@ LControl:: {
 	}
 }
 a:: {
+	global counter
+	global monitorCount
+	global infcounter
 	if WasInWindowManagerMode == true {
 		WinMove(Mouse.x4, 0, , , "A")
 		gotoNormal()
 		gotoMwMode()
 	}
-	else if shiftfMode {
-		MouseMove(Mouse.ax2 + secondM, Mouse.capsCol)
-		gotoNormal()
-		gotoMouseMode()
+	else if altfMode {
+		if counter != 0 {
+			if counter > monitorCount {
+				gotoNormal()
+				gotoMouseMode()
+				infcounter.Destroy()
+				Exit
+			}
+			MouseMove(Mouse.getx(counter, 2, Mouse.aRow), Mouse.capsCol)
+			Exit
+		}
+		MouseMove(Mouse.ax2, Mouse.capsCol)
 	}
 	else {
 		MouseMove(Mouse.ax2, Mouse.capsCol)
@@ -1279,15 +1590,26 @@ a:: {
 	}
 }
 s:: {
+	global counter
+	global monitorCount
+	global infcounter
 	if WasInWindowManagerMode == true {
 		WinMove(Mouse.x4, 0, , , "A")
 		gotoNormal()
 		gotoMwMode()
 	}
-	else if shiftfMode {
-		MouseMove(Mouse.ax3 + secondM, Mouse.capsCol)
-		gotoNormal()
-		gotoMouseMode()
+	else if altfMode {
+		if counter != 0 {
+			if counter > monitorCount {
+				gotoNormal()
+				gotoMouseMode()
+				infcounter.Destroy()
+				Exit
+			}
+			MouseMove(Mouse.getx(counter, 3, Mouse.aRow), Mouse.capsCol)
+			Exit
+		}
+		MouseMove(Mouse.ax3, Mouse.capsCol)
 	}
 	else {
 		MouseMove(Mouse.ax3, Mouse.capsCol)
@@ -1296,15 +1618,26 @@ s:: {
 	}
 }
 d:: {
+	global counter
+	global monitorCount
+	global infcounter
 	if WasInWindowManagerMode == true {
 		WinMove(Mouse.x4, 0, , , "A")
 		gotoNormal()
 		gotoMwMode()
 	}
-	else if shiftfMode {
-		MouseMove(Mouse.ax4 + secondM, Mouse.capsCol)
-		gotoNormal()
-		gotoMouseMode()
+	else if altfMode {
+		if counter != 0 {
+			if counter > monitorCount {
+				gotoNormal()
+				gotoMouseMode()
+				infcounter.Destroy()
+				Exit
+			}
+			MouseMove(Mouse.getx(counter, 4, Mouse.aRow), Mouse.capsCol)
+			Exit
+		}
+		MouseMove(Mouse.ax4, Mouse.capsCol)
 	}
 	else {
 		MouseMove(Mouse.ax4, Mouse.capsCol)
@@ -1313,15 +1646,26 @@ d:: {
 	}
 }
 f:: {
+	global counter
+	global monitorCount
+	global infcounter
 	if WasInWindowManagerMode == true {
 		WinMove(Mouse.x4, 0, , , "A")
 		gotoNormal()
 		gotoMwMode()
 	}
-	else if shiftfMode {
-		MouseMove(Mouse.ax5 + secondM, Mouse.capsCol)
-		gotoNormal()
-		gotoMouseMode()
+	else if altfMode {
+		if counter != 0 {
+			if counter > monitorCount {
+				gotoNormal()
+				gotoMouseMode()
+				infcounter.Destroy()
+				Exit
+			}
+			MouseMove(Mouse.getx(counter, 5, Mouse.aRow), Mouse.capsCol)
+			Exit
+		}
+		MouseMove(Mouse.ax5, Mouse.capsCol)
 	}
 	else {
 		MouseMove(Mouse.ax5, Mouse.capsCol)
@@ -1330,15 +1674,26 @@ f:: {
 	}
 }
 g:: {
+	global counter
+	global monitorCount
+	global infcounter
 	if WasInWindowManagerMode == true {
 		WinMove(Mouse.x4, 0, , , "A")
 		gotoNormal()
 		gotoMwMode()
 	}
-	else if shiftfMode {
-		MouseMove(Mouse.ax6 + secondM, Mouse.capsCol)
-		gotoNormal()
-		gotoMouseMode()
+	else if altfMode {
+		if counter != 0 {
+			if counter > monitorCount {
+				gotoNormal()
+				gotoMouseMode()
+				infcounter.Destroy()
+				Exit
+			}
+			MouseMove(Mouse.getx(counter, 6, Mouse.aRow), Mouse.capsCol)
+			Exit
+		}
+		MouseMove(Mouse.ax6, Mouse.capsCol)
 	}
 	else {
 		MouseMove(Mouse.ax6, Mouse.capsCol)
@@ -1347,15 +1702,26 @@ g:: {
 	}
 }
 h:: {
+	global counter
+	global monitorCount
+	global infcounter
 	if WasInWindowManagerMode == true {
 		WinMove(Mouse.x4, 0, , , "A")
 		gotoNormal()
 		gotoMwMode()
 	}
-	else if shiftfMode {
-		MouseMove(Mouse.ax7 + secondM, Mouse.capsCol)
-		gotoNormal()
-		gotoMouseMode()
+	else if altfMode {
+		if counter != 0 {
+			if counter > monitorCount {
+				gotoNormal()
+				gotoMouseMode()
+				infcounter.Destroy()
+				Exit
+			}
+			MouseMove(Mouse.getx(counter, 7, Mouse.aRow), Mouse.capsCol)
+			Exit
+		}
+		MouseMove(Mouse.ax7, Mouse.capsCol)
 	}
 	else {
 		MouseMove(Mouse.ax7, Mouse.capsCol)
@@ -1364,15 +1730,26 @@ h:: {
 	}
 }
 j:: {
+	global counter
+	global monitorCount
+	global infcounter
 	if WasInWindowManagerMode == true {
 		WinMove(Mouse.x4, 0, , , "A")
 		gotoNormal()
 		gotoMwMode()
 	}
-	else if shiftfMode {
-		MouseMove(Mouse.ax8 + secondM, Mouse.capsCol)
-		gotoNormal()
-		gotoMouseMode()
+	else if altfMode {
+		if counter != 0 {
+			if counter > monitorCount {
+				gotoNormal()
+				gotoMouseMode()
+				infcounter.Destroy()
+				Exit
+			}
+			MouseMove(Mouse.getx(counter, 8, Mouse.aRow), Mouse.capsCol)
+			Exit
+		}
+		MouseMove(Mouse.ax8, Mouse.capsCol)
 	}
 	else {
 		MouseMove(Mouse.ax8, Mouse.capsCol)
@@ -1381,15 +1758,26 @@ j:: {
 	}
 }
 k:: {
+	global counter
+	global monitorCount
+	global infcounter
 	if WasInWindowManagerMode == true {
 		WinMove(Mouse.x4, 0, , , "A")
 		gotoNormal()
 		gotoMwMode()
 	}
-	else if shiftfMode {
-		MouseMove(Mouse.ax9 + secondM, Mouse.capsCol)
-		gotoNormal()
-		gotoMouseMode()
+	else if altfMode {
+		if counter != 0 {
+			if counter > monitorCount {
+				gotoNormal()
+				gotoMouseMode()
+				infcounter.Destroy()
+				Exit
+			}
+			MouseMove(Mouse.getx(counter, 9, Mouse.aRow), Mouse.capsCol)
+			Exit
+		}
+		MouseMove(Mouse.ax9, Mouse.capsCol)
 	}
 	else {
 		MouseMove(Mouse.ax9, Mouse.capsCol)
@@ -1398,15 +1786,26 @@ k:: {
 	}
 }
 l:: {
+	global counter
+	global monitorCount
+	global infcounter
 	if WasInWindowManagerMode == true {
 		WinMove(Mouse.x4, 0, , , "A")
 		gotoNormal()
 		gotoMwMode()
 	}
-	else if shiftfMode {
-		MouseMove(Mouse.ax10 + secondM, Mouse.capsCol)
-		gotoNormal()
-		gotoMouseMode()
+	else if altfMode {
+		if counter != 0 {
+			if counter > monitorCount {
+				gotoNormal()
+				gotoMouseMode()
+				infcounter.Destroy()
+				Exit
+			}
+			MouseMove(Mouse.getx(counter, 10, Mouse.aRow), Mouse.capsCol)
+			Exit
+		}
+		MouseMove(Mouse.ax10, Mouse.capsCol)
 	}
 	else {
 		MouseMove(Mouse.ax10, Mouse.capsCol)
@@ -1415,15 +1814,26 @@ l:: {
 	}
 }
 `;:: {
+	global counter
+	global monitorCount
+	global infcounter
 	if WasInWindowManagerMode == true {
 		WinMove(Mouse.x4, 0, , , "A")
 		gotoNormal()
 		gotoMwMode()
 	}
-	else if shiftfMode {
-		MouseMove(Mouse.ax11 + secondM, Mouse.capsCol)
-		gotoNormal()
-		gotoMouseMode()
+	else if altfMode {
+		if counter != 0 {
+			if counter > monitorCount {
+				gotoNormal()
+				gotoMouseMode()
+				infcounter.Destroy()
+				Exit
+			}
+			MouseMove(Mouse.getx(counter, 11, Mouse.aRow), Mouse.capsCol)
+			Exit
+		}
+		MouseMove(Mouse.ax11, Mouse.capsCol)
 	}
 	else {
 		MouseMove(Mouse.ax11, Mouse.capsCol)
@@ -1432,15 +1842,26 @@ l:: {
 	}
 }
 ':: {
+	global counter
+	global monitorCount
+	global infcounter
 	if WasInWindowManagerMode == true {
 		WinMove(Mouse.x4, 0, , , "A")
 		gotoNormal()
 		gotoMwMode()
 	}
-	else if shiftfMode {
-		MouseMove(Mouse.ax12 + secondM, Mouse.capsCol)
-		gotoNormal()
-		gotoMouseMode()
+	else if altfMode {
+		if counter != 0 {
+			if counter > monitorCount {
+				gotoNormal()
+				gotoMouseMode()
+				infcounter.Destroy()
+				Exit
+			}
+			MouseMove(Mouse.getx(counter, 12, Mouse.aRow), Mouse.capsCol)
+			Exit
+		}
+		MouseMove(Mouse.ax12, Mouse.capsCol)
 	}
 	else {
 		MouseMove(Mouse.ax12, Mouse.capsCol)
@@ -1449,15 +1870,26 @@ l:: {
 	}
 }
 Enter:: {
+	global counter
+	global monitorCount
+	global infcounter
 	if WasInWindowManagerMode == true {
 		WinMove(Mouse.x4, 0, , , "A")
 		gotoNormal()
 		gotoMwMode()
 	}
-	else if shiftfMode {
-		MouseMove(Mouse.ax13 + secondM, Mouse.capsCol)
-		gotoNormal()
-		gotoMouseMode()
+	else if altfMode {
+		if counter != 0 {
+			if counter > monitorCount {
+				gotoNormal()
+				gotoMouseMode()
+				infcounter.Destroy()
+				Exit
+			}
+			MouseMove(Mouse.getx(counter, 13, Mouse.aRow), Mouse.capsCol)
+			Exit
+		}
+		MouseMove(Mouse.ax13, Mouse.capsCol)
 	}
 	else {
 		MouseMove(Mouse.ax13, Mouse.capsCol)
@@ -1467,15 +1899,26 @@ Enter:: {
 }
 
 LShift:: {
+	global counter
+	global monitorCount
+	global infcounter
 	if WasInWindowManagerMode == true {
 		WinMove(Mouse.x4, 0, , , "A")
 		gotoNormal()
 		gotoMwMode()
 	}
-	else if shiftfMode {
-		MouseMove(Mouse.zx1 + secondM, Mouse.shiftCol)
-		gotoNormal()
-		gotoMouseMode()
+	else if altfMode {
+		if counter != 0 {
+			if counter > monitorCount {
+				gotoNormal()
+				gotoMouseMode()
+				infcounter.Destroy()
+				Exit
+			}
+			MouseMove(Mouse.getx(counter, 1, Mouse.zRow), Mouse.shiftCol)
+			Exit
+		}
+		MouseMove(Mouse.zx1, Mouse.shiftCol)
 	}
 	else {
 		MouseMove(Mouse.zx1, Mouse.shiftCol)
@@ -1484,15 +1927,26 @@ LShift:: {
 	}
 }
 z:: {
+	global counter
+	global monitorCount
+	global infcounter
 	if WasInWindowManagerMode == true {
 		WinMove(Mouse.x4, 0, , , "A")
 		gotoNormal()
 		gotoMwMode()
 	}
-	else if shiftfMode {
-		MouseMove(Mouse.zx2 + secondM, Mouse.shiftCol)
-		gotoNormal()
-		gotoMouseMode()
+	else if altfMode {
+		if counter != 0 {
+			if counter > monitorCount {
+				gotoNormal()
+				gotoMouseMode()
+				infcounter.Destroy()
+				Exit
+			}
+			MouseMove(Mouse.getx(counter, 2, Mouse.zRow), Mouse.shiftCol)
+			Exit
+		}
+		MouseMove(Mouse.zx2, Mouse.shiftCol)
 	}
 	else {
 		MouseMove(Mouse.zx2, Mouse.shiftCol)
@@ -1501,15 +1955,26 @@ z:: {
 	}
 }
 x:: {
+	global counter
+	global monitorCount
+	global infcounter
 	if WasInWindowManagerMode == true {
 		WinMove(Mouse.x4, 0, , , "A")
 		gotoNormal()
 		gotoMwMode()
 	}
-	else if shiftfMode {
-		MouseMove(Mouse.zx3 + secondM, Mouse.shiftCol)
-		gotoNormal()
-		gotoMouseMode()
+	else if altfMode {
+		if counter != 0 {
+			if counter > monitorCount {
+				gotoNormal()
+				gotoMouseMode()
+				infcounter.Destroy()
+				Exit
+			}
+			MouseMove(Mouse.getx(counter, 3, Mouse.zRow), Mouse.shiftCol)
+			Exit
+		}
+		MouseMove(Mouse.zx3, Mouse.shiftCol)
 	}
 	else {
 		MouseMove(Mouse.zx3, Mouse.shiftCol)
@@ -1518,15 +1983,26 @@ x:: {
 	}
 }
 c:: {
+	global counter
+	global monitorCount
+	global infcounter
 	if WasInWindowManagerMode == true {
 		WinMove(Mouse.x4, 0, , , "A")
 		gotoNormal()
 		gotoMwMode()
 	}
-	else if shiftfMode {
-		MouseMove(Mouse.zx4 + secondM, Mouse.shiftCol)
-		gotoNormal()
-		gotoMouseMode()
+	else if altfMode {
+		if counter != 0 {
+			if counter > monitorCount {
+				gotoNormal()
+				gotoMouseMode()
+				infcounter.Destroy()
+				Exit
+			}
+			MouseMove(Mouse.getx(counter, 4, Mouse.zRow), Mouse.shiftCol)
+			Exit
+		}
+		MouseMove(Mouse.zx4, Mouse.shiftCol)
 	}
 	else {
 		MouseMove(Mouse.zx4, Mouse.shiftCol)
@@ -1535,15 +2011,26 @@ c:: {
 	}
 }
 v:: {
+	global counter
+	global monitorCount
+	global infcounter
 	if WasInWindowManagerMode == true {
 		WinMove(Mouse.x4, 0, , , "A")
 		gotoNormal()
 		gotoMwMode()
 	}
-	else if shiftfMode {
-		MouseMove(Mouse.zx5 + secondM, Mouse.shiftCol)
-		gotoNormal()
-		gotoMouseMode()
+	else if altfMode {
+		if counter != 0 {
+			if counter > monitorCount {
+				gotoNormal()
+				gotoMouseMode()
+				infcounter.Destroy()
+				Exit
+			}
+			MouseMove(Mouse.getx(counter, 5, Mouse.zRow), Mouse.shiftCol)
+			Exit
+		}
+		MouseMove(Mouse.zx5, Mouse.shiftCol)
 	}
 	else {
 		MouseMove(Mouse.zx5, Mouse.shiftCol)
@@ -1552,15 +2039,26 @@ v:: {
 	}
 }
 b:: {
+	global counter
+	global monitorCount
+	global infcounter
 	if WasInWindowManagerMode == true {
 		WinMove(Mouse.x4, 0, , , "A")
 		gotoNormal()
 		gotoMwMode()
 	}
-	else if shiftfMode {
-		MouseMove(Mouse.zx6 + secondM, Mouse.shiftCol)
-		gotoNormal()
-		gotoMouseMode()
+	else if altfMode {
+		if counter != 0 {
+			if counter > monitorCount {
+				gotoNormal()
+				gotoMouseMode()
+				infcounter.Destroy()
+				Exit
+			}
+			MouseMove(Mouse.getx(counter, 6, Mouse.zRow), Mouse.shiftCol)
+			Exit
+		}
+		MouseMove(Mouse.zx6, Mouse.shiftCol)
 	}
 	else {
 		MouseMove(Mouse.zx6, Mouse.shiftCol)
@@ -1569,15 +2067,26 @@ b:: {
 	}
 }
 n:: {
+	global counter
+	global monitorCount
+	global infcounter
 	if WasInWindowManagerMode == true {
 		WinMove(Mouse.x4, 0, , , "A")
 		gotoNormal()
 		gotoMwMode()
 	}
-	else if shiftfMode {
-		MouseMove(Mouse.zx7 + secondM, Mouse.shiftCol)
-		gotoNormal()
-		gotoMouseMode()
+	else if altfMode {
+		if counter != 0 {
+			if counter > monitorCount {
+				gotoNormal()
+				gotoMouseMode()
+				infcounter.Destroy()
+				Exit
+			}
+			MouseMove(Mouse.getx(counter, 7, Mouse.zRow), Mouse.shiftCol)
+			Exit
+		}
+		MouseMove(Mouse.zx7, Mouse.shiftCol)
 	}
 	else {
 		MouseMove(Mouse.zx7, Mouse.shiftCol)
@@ -1586,15 +2095,26 @@ n:: {
 	}
 }
 m:: {
+	global counter
+	global monitorCount
+	global infcounter
 	if WasInWindowManagerMode == true {
 		WinMove(Mouse.x4, 0, , , "A")
 		gotoNormal()
 		gotoMwMode()
 	}
-	else if shiftfMode {
-		MouseMove(Mouse.zx8 + secondM, Mouse.shiftCol)
-		gotoNormal()
-		gotoMouseMode()
+	else if altfMode {
+		if counter != 0 {
+			if counter > monitorCount {
+				gotoNormal()
+				gotoMouseMode()
+				infcounter.Destroy()
+				Exit
+			}
+			MouseMove(Mouse.getx(counter, 8, Mouse.zRow), Mouse.shiftCol)
+			Exit
+		}
+		MouseMove(Mouse.zx8, Mouse.shiftCol)
 	}
 	else {
 		MouseMove(Mouse.zx8, Mouse.shiftCol)
@@ -1603,15 +2123,26 @@ m:: {
 	}
 }
 ,:: {
+	global counter
+	global monitorCount
+	global infcounter
 	if WasInWindowManagerMode == true {
 		WinMove(Mouse.x4, 0, , , "A")
 		gotoNormal()
 		gotoMwMode()
 	}
-	else if shiftfMode {
-		MouseMove(Mouse.zx9 + secondM, Mouse.shiftCol)
-		gotoNormal()
-		gotoMouseMode()
+	else if altfMode {
+		if counter != 0 {
+			if counter > monitorCount {
+				gotoNormal()
+				gotoMouseMode()
+				infcounter.Destroy()
+				Exit
+			}
+			MouseMove(Mouse.getx(counter, 9, Mouse.zRow), Mouse.shiftCol)
+			Exit
+		}
+		MouseMove(Mouse.zx9, Mouse.shiftCol)
 	}
 	else {
 		MouseMove(Mouse.zx9, Mouse.shiftCol)
@@ -1620,15 +2151,26 @@ m:: {
 	}
 }
 .:: {
+	global counter
+	global monitorCount
+	global infcounter
 	if WasInWindowManagerMode == true {
 		WinMove(Mouse.x4, 0, , , "A")
 		gotoNormal()
 		gotoMwMode()
 	}
-	else if shiftfMode {
-		MouseMove(Mouse.zx10 + secondM, Mouse.shiftCol)
-		gotoNormal()
-		gotoMouseMode()
+	else if altfMode {
+		if counter != 0 {
+			if counter > monitorCount {
+				gotoNormal()
+				gotoMouseMode()
+				infcounter.Destroy()
+				Exit
+			}
+			MouseMove(Mouse.getx(counter, 10, Mouse.zRow), Mouse.shiftCol)
+			Exit
+		}
+		MouseMove(Mouse.zx10, Mouse.shiftCol)
 	}
 	else {
 		MouseMove(Mouse.zx10, Mouse.shiftCol)
@@ -1637,15 +2179,26 @@ m:: {
 	}
 }
 /:: {
+	global counter
+	global monitorCount
+	global infcounter
 	if WasInWindowManagerMode == true {
 		WinMove(Mouse.x4, 0, , , "A")
 		gotoNormal()
 		gotoMwMode()
 	}
-	else if shiftfMode {
-		MouseMove(Mouse.zx11 + secondM, Mouse.shiftCol)
-		gotoNormal()
-		gotoMouseMode()
+	else if altfMode {
+		if counter != 0 {
+			if counter > monitorCount {
+				gotoNormal()
+				gotoMouseMode()
+				infcounter.Destroy()
+				Exit
+			}
+			MouseMove(Mouse.getx(counter, 11, Mouse.zRow), Mouse.shiftCol)
+			Exit
+		}
+		MouseMove(Mouse.zx11, Mouse.shiftCol)
 	}
 	else {
 		MouseMove(Mouse.zx11, Mouse.shiftCol)
@@ -1654,15 +2207,26 @@ m:: {
 	}
 }
 RShift:: {
+	global counter
+	global monitorCount
+	global infcounter
 	if WasInWindowManagerMode == true {
 		WinMove(Mouse.x4, 0, , , "A")
 		gotoNormal()
 		gotoMwMode()
 	}
-	else if shiftfMode {
-		MouseMove(Mouse.zx12 + secondM, Mouse.shiftCol)
-		gotoNormal()
-		gotoMouseMode()
+	else if altfMode {
+		if counter != 0 {
+			if counter > monitorCount {
+				gotoNormal()
+				gotoMouseMode()
+				infcounter.Destroy()
+				Exit
+			}
+			MouseMove(Mouse.getx(counter, 12, Mouse.zRow), Mouse.shiftCol)
+			Exit
+		}
+		MouseMove(Mouse.zx12, Mouse.shiftCol)
 	}
 	else {
 		MouseMove(Mouse.zx12, Mouse.shiftCol)
@@ -1672,15 +2236,26 @@ RShift:: {
 }
 
 LWin:: {
+	global counter
+	global monitorCount
+	global infcounter
 	if WasInWindowManagerMode == true {
 		WinMove(Mouse.x4, 0, , , "A")
 		gotoNormal()
 		gotoMwMode()
 	}
-	else if shiftfMode {
-		MouseMove(Mouse.sx1 + secondM, Mouse.spaceCol)
-		gotoNormal()
-		gotoMouseMode()
+	else if altfMode {
+		if counter != 0 {
+			if counter > monitorCount {
+				gotoNormal()
+				gotoMouseMode()
+				infcounter.Destroy()
+				Exit
+			}
+			MouseMove(Mouse.getx(counter, 1, Mouse.spaceRow), Mouse.spaceCol)
+			Exit
+		}
+		MouseMove(Mouse.sx1, Mouse.spaceCol)
 	}
 	else {
 		MouseMove(Mouse.sx1, Mouse.spaceCol)
@@ -1689,15 +2264,26 @@ LWin:: {
 	}
 }
 LAlt:: {
+	global counter
+	global monitorCount
+	global infcounter
 	if WasInWindowManagerMode == true {
 		WinMove(Mouse.x4, 0, , , "A")
 		gotoNormal()
 		gotoMwMode()
 	}
-	else if shiftfMode {
-		MouseMove(Mouse.sx2 + secondM, Mouse.spaceCol)
-		gotoNormal()
-		gotoMouseMode()
+	else if altfMode {
+		if counter != 0 {
+			if counter > monitorCount {
+				gotoNormal()
+				gotoMouseMode()
+				infcounter.Destroy()
+				Exit
+			}
+			MouseMove(Mouse.getx(counter, 2, Mouse.spaceRow), Mouse.spaceCol)
+			Exit
+		}
+		MouseMove(Mouse.sx2, Mouse.spaceCol)
 	}
 	else {
 		MouseMove(Mouse.sx2, Mouse.spaceCol)
@@ -1706,15 +2292,26 @@ LAlt:: {
 	}
 }
 Space:: {
+	global counter
+	global monitorCount
+	global infcounter
 	if WasInWindowManagerMode == true {
 		WinMove(Mouse.x4, 0, , , "A")
 		gotoNormal()
 		gotoMwMode()
 	}
-	else if shiftfMode {
-		MouseMove(Mouse.sx3 + secondM, Mouse.spaceCol)
-		gotoNormal()
-		gotoMouseMode()
+	else if altfMode {
+		if counter != 0 {
+			if counter > monitorCount {
+				gotoNormal()
+				gotoMouseMode()
+				infcounter.Destroy()
+				Exit
+			}
+			MouseMove(Mouse.getx(counter, 3, Mouse.spaceRow), Mouse.spaceCol)
+			Exit
+		}
+		MouseMove(Mouse.sx3, Mouse.spaceCol)
 	}
 	else {
 		MouseMove(Mouse.sx3, Mouse.spaceCol)
@@ -1723,15 +2320,26 @@ Space:: {
 	}
 }
 RAlt:: {
+	global counter
+	global monitorCount
+	global infcounter
 	if WasInWindowManagerMode == true {
 		WinMove(Mouse.x4, 0, , , "A")
 		gotoNormal()
 		gotoMwMode()
 	}
-	else if shiftfMode {
-		MouseMove(Mouse.sx4 + secondM, Mouse.spaceCol)
-		gotoNormal()
-		gotoMouseMode()
+	else if altfMode {
+		if counter != 0 {
+			if counter > monitorCount {
+				gotoNormal()
+				gotoMouseMode()
+				infcounter.Destroy()
+				Exit
+			}
+			MouseMove(Mouse.getx(counter, 4, Mouse.spaceRow), Mouse.spaceCol)
+			Exit
+		}
+		MouseMove(Mouse.sx4, Mouse.spaceCol)
 	}
 	else {
 		MouseMove(Mouse.sx4, Mouse.spaceCol)
@@ -1741,15 +2349,26 @@ RAlt:: {
 }
 ; fn key
 AppsKey:: {
+	global counter
+	global monitorCount
+	global infcounter
 	if WasInWindowManagerMode == true {
 		WinMove(Mouse.x4, 0, , , "A")
 		gotoNormal()
 		gotoMwMode()
 	}
-	else if shiftfMode {
-		MouseMove(Mouse.sx5 + secondM, Mouse.spaceCol)
-		gotoNormal()
-		gotoMouseMode()
+	else if altfMode {
+		if counter != 0 {
+			if counter > monitorCount {
+				gotoNormal()
+				gotoMouseMode()
+				infcounter.Destroy()
+				Exit
+			}
+			MouseMove(Mouse.getx(counter, 5, Mouse.spaceRow), Mouse.spaceCol)
+			Exit
+		}
+		MouseMove(Mouse.sx5, Mouse.spaceCol)
 	}
 	else {
 		MouseMove(Mouse.sx5, Mouse.spaceCol)
@@ -1758,15 +2377,26 @@ AppsKey:: {
 	}
 }
 Rctrl:: {
+	global counter
+	global monitorCount
+	global infcounter
 	if WasInWindowManagerMode == true {
 		WinMove(Mouse.x4, 0, , , "A")
 		gotoNormal()
 		gotoMwMode()
 	}
-	else if shiftfMode {
-		MouseMove(Mouse.sx6 + secondM, Mouse.spaceCol)
-		gotoNormal()
-		gotoMouseMode()
+	else if altfMode {
+		if counter != 0 {
+			if counter > monitorCount {
+				gotoNormal()
+				gotoMouseMode()
+				infcounter.Destroy()
+				Exit
+			}
+			MouseMove(Mouse.getx(counter, 6, Mouse.spaceRow), Mouse.spaceCol)
+			Exit
+		}
+		MouseMove(Mouse.sx6, Mouse.spaceCol)
 	}
 	else {
 		MouseMove(Mouse.sx6, Mouse.spaceCol)
@@ -1776,6 +2406,9 @@ Rctrl:: {
 }
 
 Esc:: {
+	global counter
+	global infcounter
+	infcounter.Destroy()
 	gotoNormal()
 	gotoMouseMode()
 }
@@ -2182,8 +2815,6 @@ y:: {
 	var2 := A_Clipboard
 	Send "{Left}"
 	Send "+{Right}"
-	MsgBox var1
-	MsgBox var2
 	A_Clipboard := var1 var2
 	gotoNormal()
 	infcounter.Destroy()
@@ -2461,7 +3092,8 @@ c:: {
 	Haystack := A_Clipboard
 	A_Clipboard := oldclip
 	FoundPos := 0
-	FoundPos := RegExMatch(Haystack, "[a-z\s\p{P}!]+$", , -1)
+	pattern := "[\p{P}a-zA-Z0-9\.*?+[{|()^$]"
+	FoundPos := RegExMatch(Haystack, pattern, , -1)
 	; MsgBox FoundPos
 	if FoundPos == 0
 	{
@@ -2471,7 +3103,6 @@ c:: {
 		loop FoundPos {
 			Send "+{Right}"
 		}
-		Send "+{Left}"
 	}
 	sleep 100
 	Send "^x"
@@ -2897,16 +3528,17 @@ d:: {
 	Haystack := A_Clipboard
 	A_Clipboard := oldclip
 	FoundPos := 0
-	FoundPos := RegExMatch(Haystack, "[a-z\s\p{P}!\?]", , -1)
+	pattern := "[\p{P}a-zA-Z0-9\.*?+[{|()^$]"
+	FoundPos := RegExMatch(Haystack, pattern, , -1)
 	if FoundPos == 0
 	{
+		MsgBox "didnt find"
 		Send "+{End}"
 	}
 	else {
 		loop FoundPos {
 			Send "+{Right}"
 		}
-		Send "+{Left}"
 	}
 	sleep 100
 	Send "^x"
@@ -3163,10 +3795,6 @@ Esc:: {
 	else {
 		Send "{Left}"
 	}
-}
-
-!h:: {
-	Send "{Left}"
 	Exit
 }
 
@@ -3190,16 +3818,6 @@ Esc:: {
 	Exit
 }
 
-!j:: {
-	Send "{Down}"
-	Exit
-}
-
-!k:: {
-	Send "{Up}"
-	Exit
-}
-
 ^f:: {
 	langid := Language.GetKeyboardLanguage()
 	if (LangID = 0x040D) {
@@ -3210,10 +3828,6 @@ Esc:: {
 	}
 }
 
-!l:: {
-	Send "{Right}"
-	Exit
-}
 
 !d:: {
 	langid := Language.GetKeyboardLanguage()
@@ -3256,24 +3870,15 @@ Esc:: {
 		Send "^{Right}"
 	}
 }
-
-^!h:: {
-	Send "^{Left}"
-	Exit
-}
-
-^!l:: {
-	Send "^{Right}"
-	Exit
-}
-
-
 #HotIf
 
 
 ; normal Mode
 #HotIf normalMode = 1
 HotIf "normalMode = 1"
+
+^WheelDown:: return
+^Wheelup:: return
 
 Z & Q:: {
 	Send "!{f4}"
@@ -3374,53 +3979,28 @@ BackSpace:: {
 	inf := Infos('"', , true)
 	global normalMode := false
 	StateBulb[7].Create()
-	rego := InputHook("C")
-	rego.KeyOpt("{All}", "ESI") ;End Keys & Suppress
-	rego.KeyOpt("{LCtrl}{RCtrl}{LAlt}{RAlt}{LShift}{RShift}{LWin}{RWin}", "-ES") ;Exclude the modifiers
-	rego.Start()
-	rego.Wait()
-	var := rego.EndMods
-	var .= rego.EndKey
-	reg := rego.EndKey
-	if var == "<!Escape" {
-		exitVim()
-		inf.Destroy()
-		Exit
-	}
-	else if reg == "Escape" {
+	reg := GetInput("L1", "{esc}{space}{Backspace}").Input
+	if reg = "" {
 		StateBulb[7].Destroy()
 		global normalMode := true
 		inf.Destroy()
 		Exit
 	}
+
 	inf.Destroy()
 	infs := '"'
 	infs .= reg
 	inf := Infos(infs, , true)
-	rego := InputHook("C")
-	rego.KeyOpt("{All}", "ESI") ;End Keys & Ruppress
-	rego.KeyOpt("{LCtrl}{RCtrl}{LAlt}{RAlt}{LShift}{RShift}{LWin}{RWin}", "-ES") ;Exclude the modifiers
-	rego.Start()
-	rego.Wait()
-	var := rego.EndMods
-	var .= rego.EndKey
-	operator := rego.EndKey
-	if var == "<!Escape" {
-		exitVim()
-		inf.Destroy()
-		Exit
-	}
-	else if operator == "Escape" {
-		StateBulb[7].Destroy()
-		global normalMode := true
-		inf.Destroy()
-		Exit
-	}
-	else if (operator == "y") {
+
+	operator := GetInput("L1", "{esc}{space}{Backspace}").Input
+	if (operator == "y") {
 		Send "^c"
 		ClipWait 1
 		Sleep 10
 		Registers(reg).WriteOrAppend()
+		Sleep 10
+		Send "{Left}"
+		Send "+{Right}"
 	}
 	else if (operator == "d") {
 		Send "^x"
@@ -3430,20 +4010,32 @@ BackSpace:: {
 	}
 	else if (operator == "p") {
 		Registers(reg).Paste()
+		Sleep 10
+		Send "{right}"
+		Send "{left}"
+		Send "+{Right}"
 	}
 	else if (operator == "l") {
 		Registers(reg).Look()
+		Send "{Left}"
+		Send "+{Right}"
 	}
 	else if (operator == "m") {
 		secReg := GetInput("L1", "{Esc}").Input
 		Registers(reg).Move(secReg)
+		Send "{Left}"
+		Send "+{Right}"
 	}
 	else if (operator == "s") {
 		secReg := GetInput("L1", "{Esc}").Input
 		Registers(reg).SwitchContents(secReg)
+		Send "{Left}"
+		Send "+{Right}"
 	}
 	else if (operator == "x") {
 		Registers(reg).Truncate()
+		Send "{Left}"
+		Send "+{Right}"
 	}
 	StateBulb[7].Destroy()
 	global normalMode := true
@@ -3473,30 +4065,6 @@ q:: Return
 r:: {
 	global normalMode := false
 	StateBulb[4].Create()
-	; ih := InputHook("C")
-	; ih.KeyOpt("{All}", "ESI") ;End Keys & Suppress
-	; ih.KeyOpt("{LCtrl}{RCtrl}{LAlt}{RAlt}{LShift}{RShift}{LWin}{RWin}", "-ES") ;Exclude the modifiers
-	; ih.Start()
-	; ih.Wait()
-	; check := ih.EndMods
-	; check .= ih.EndKey
-	; check2 := ih.EndKey
-	; if check == "<!Escape" {
-	; 	exitVim()
-	; 	Exit
-	; } else if check2 == "Escape" {
-	; 	StateBulb[4].Destroy()
-	; 	global normalMode := true
-	; 	Exit
-	; } else if check2 == "Backspace" {
-	; 	StateBulb[4].Destroy()
-	; 	global normalMode := true
-	; 	Exit
-	; } else if check2 == "Space" {
-	; 	StateBulb[4].Destroy()
-	; 	global normalMode := true
-	; 	Exit
-	; }
 	secReg := GetInput("L1", "{esc}{space}{Backspace}").Input
 	SendText secReg
 	StateBulb[4].Destroy()
@@ -4197,44 +4765,6 @@ a:: {
 	Exit
 }
 
-; !j:: {
-; 	if visualLineMode == true
-; 	{
-; 		Send "+{Down}"
-; 		Send "+{End}"
-; 	}
-; 	else if visualMode == true
-; 	{
-; 		Send "+{Down}"
-; 	}
-; 	else
-; 	{
-; 		Send "{Left}"
-; 		Send "{Down}"
-; 		Send "+{Right}"
-; 		Exit
-; 	}
-; }
-
-; !k:: {
-; 	if visualLineMode == true
-; 	{
-; 		Send "+{Up}"
-; 		Send "+{Home}"
-; 	}
-; 	else if visualMode == true
-; 	{
-; 		Send "+{Up}"
-; 	}
-; 	else
-; 	{
-; 		Send "{Left}"
-; 		Send "{Up}"
-; 		Send "+{Right}"
-; 		Exit
-; 	}
-; }
-
 #HotIf
 
 
@@ -4358,6 +4888,20 @@ Esc:: {
 
 #HotIf mouseManagerMode = 1
 HotIf "mouseManagerMode = 1"
+
+1:: chCounter(1)
+2:: chCounter(2)
+3:: chCounter(3)
+4:: chCounter(4)
+5:: chCounter(5)
+6:: chCounter(6)
+7:: chCounter(7)
+8:: chCounter(8)
+9:: chCounter(9)
+0:: chCounter(0)
+
+^WheelDown:: return
+^Wheelup:: return
 
 Z & Q:: {
 	Send "!{f4}"
@@ -4548,6 +5092,10 @@ f:: {
 	global shiftfMode := true
 	gotoFMode()
 }
+!f:: {
+	global altfMode := true
+	gotoFMode()
+}
 g:: {
 	global WasInMouseManagerMode := true
 	disableClick()
@@ -4627,62 +5175,12 @@ Hotkey "^j", ButtonAcceleration
 Hotkey "^k", ButtonAcceleration
 Hotkey "^l", ButtonAcceleration
 
-
-hotkey "q", ButtonSpeedUp
-hotkey "a", ButtonSpeedDown
-hotkey "w", ButtonAccelerationSpeedUp
-hotkey "s", ButtonAccelerationSpeedDown
-hotkey "+q", ButtonMaxSpeedUp
-hotkey "+a", ButtonMaxSpeedDown
-
-; h:: Mouse.MoveLeft(Mouse.SmallMove)
-; k:: Mouse.MoveUp(Mouse.SmallMove)
-; j:: Mouse.MoveDown(Mouse.SmallMove)
-; l:: Mouse.MoveRight(Mouse.SmallMove)
-
-^h:: Mouse.MoveLeft(Mouse.BigMove)
-^k:: Mouse.MoveUp(Mouse.BigMove)
-^j:: Mouse.MoveDown(Mouse.BigMove)
-^l:: Mouse.MoveRight(Mouse.BigMove)
-
-
-1:: MouseMove(Mouse.FarLeftX, Mouse.MiddleY)
-2:: MouseMove(Mouse.HighLeftX, Mouse.MiddleY)
-3:: MouseMove(Mouse.MiddleLeftX, Mouse.MiddleY)
-4:: MouseMove(Mouse.LowLeftX, Mouse.MiddleY)
-5:: MouseMove(Mouse.LessThanMiddleX, Mouse.MiddleY)
-6:: MouseMove(Mouse.MoreThanMiddleX, Mouse.MiddleY)
-7:: MouseMove(Mouse.LowRightX, Mouse.MiddleY)
-8:: MouseMove(Mouse.MiddleRightX, Mouse.MiddleY)
-9:: MouseMove(Mouse.HighRightX, Mouse.MiddleY)
-0:: MouseMove(Mouse.FarRightX, Mouse.MiddleY)
-
-^1:: MouseMove(Mouse.FarLeftX, Mouse.TopY)
-^2:: MouseMove(Mouse.HighLeftX, Mouse.TopY)
-^3:: MouseMove(Mouse.MiddleLeftX, Mouse.TopY)
-^4:: MouseMove(Mouse.LowLeftX, Mouse.TopY)
-^5:: MouseMove(Mouse.LessThanMiddleX, Mouse.TopY)
-^6:: MouseMove(Mouse.MoreThanMiddleX, Mouse.TopY)
-^7:: MouseMove(Mouse.LowRightX, Mouse.TopY)
-^8:: MouseMove(Mouse.MiddleRightX, Mouse.TopY)
-^9:: MouseMove(Mouse.HighRightX, Mouse.TopY)
-^0:: MouseMove(Mouse.FarRightX, Mouse.TopY)
-
-+1:: MouseMove(Mouse.FarLeftX, Mouse.BottomY)
-+2:: MouseMove(Mouse.HighLeftX, Mouse.BottomY)
-+3:: MouseMove(Mouse.MiddleLeftX, Mouse.BottomY)
-+4:: MouseMove(Mouse.LowLeftX, Mouse.BottomY)
-+5:: MouseMove(Mouse.LessThanMiddleX, Mouse.BottomY)
-+6:: MouseMove(Mouse.MoreThanMiddleX, Mouse.BottomY)
-+7:: MouseMove(Mouse.LowRightX, Mouse.BottomY)
-+8:: MouseMove(Mouse.MiddleRightX, Mouse.BottomY)
-+9:: MouseMove(Mouse.HighRightX, Mouse.BottomY)
-+0:: MouseMove(Mouse.FarRightX, Mouse.BottomY)
-
-; Esc:: {
-; 	gotoNormal()
-; 	Exit
-; }
+hotkey "!q", ButtonSpeedUp
+hotkey "!a", ButtonSpeedDown
+hotkey "!w", ButtonAccelerationSpeedUp
+hotkey "!s", ButtonAccelerationSpeedDown
+hotkey "+!q", ButtonMaxSpeedUp
+hotkey "+!a", ButtonMaxSpeedDown
 
 !Esc:: {
 	exitVim()

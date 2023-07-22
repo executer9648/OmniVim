@@ -22,6 +22,20 @@ class Mouse {
 	static zRow := 24 ;12
 	static spaceRow := 12 ;6
 	static keyboardCol := 20 ;5
+
+	static getx(monitorN, Xn, RowButtons) {
+		try
+			MonitorGet monitorN, &Left, &Top, &Right, &Bottom
+		catch
+			return 0
+		nthMonitorWidth := Right + Left
+		section := Xn * 2 - 1
+		nthRow := RowButtons * monitorN
+		part1 := nthMonitorWidth / nthRow
+		part2 := section + nthRow
+		result := part1 * part2
+		return result
+	}
 	; you take the number of total keys devide by the rows in this case its 5
 	; then you find you jumping number starting from 1 onwards
 	static tildaCol := A_ScreenHeight / Mouse.keyboardCol
