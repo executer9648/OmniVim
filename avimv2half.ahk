@@ -1,5 +1,5 @@
 #SingleInstance force
-#MaxThreadsBuffer True
+#MaxThreadsBuffer true
 #MaxThreads 255
 #MaxThreadsPerHotkey 255
 #UseHook
@@ -15,11 +15,10 @@
 #Include TapHoldManager.ahk
 #Requires AutoHotkey v2.0
 
-; MsgBox "orignial x1 " Mouse.x1 "my x1 " mouse.getx(2,1, Mouse.numberRow)
-
 InstallKeybdHook
 
 A_HotkeyInterval := 0
+A_MaxHotkeysPerInterval := 9999
 A_MenuMaskKey := "vkFF"
 
 SetMouseDelay -1
@@ -86,11 +85,15 @@ Info("Script Reloaded-Active", 2000)
 +#j:: Send "+#{Down}"
 +#k:: Send "+#{Up}"
 +#l:: Send "+#{Right}"
-
-^!h:: SendEvent "{Left}"
-^!j:: SendEvent "{Down}"
-^!k:: SendEvent "{Up}"
-^!l:: SendEvent "{Right}"
+tab::Tab
+Tab & h::Left
+Tab & j::Down
+Tab & k::Up
+Tab & l::Right
+; ^!h::Left
+; ^!j::Down
+; ^!k::Up
+; ^!l::Right
 
 
 ^!n:: {
@@ -4889,6 +4892,9 @@ Esc:: {
 #HotIf mouseManagerMode = 1
 HotIf "mouseManagerMode = 1"
 
+!h::!Left
+!l::!Right
+
 1:: chCounter(1)
 2:: chCounter(2)
 3:: chCounter(3)
@@ -5390,21 +5396,23 @@ motionStart() {
 	if p_key == "h" {
 		h_motion
 	}
-	if p_key = "j" {
+	else if p_key = "j" {
 		j_motion
 	}
-	if p_key == "k" {
+	else if p_key == "k" {
 		k_motion
 	}
-	if p_key == "l" {
+	else if p_key == "l" {
 		l_motion
 	}
-	SetTimer motionEnd, 100
+	SetTimer motionEnd, 10
 }
 
 motionEnd() {
 	global p_key
-	if GetKeyState(p_key, "P") {
+	if GetKeyState(p_key) {
 		motionStart()
+		return
 	}
+	SetTimer , 0
 }
