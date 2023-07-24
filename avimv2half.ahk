@@ -1,7 +1,7 @@
 #SingleInstance force
 #MaxThreadsBuffer true
-#MaxThreads 255
-#MaxThreadsPerHotkey 255
+#MaxThreads 250
+; #MaxThreadsPerHotkey 255
 #UseHook
 #Include StateBulb.ahk
 #Include Info.ahk
@@ -2408,6 +2408,7 @@ Rctrl:: {
 	}
 }
 
+Alt & f::
 Esc:: {
 	global counter
 	global infcounter
