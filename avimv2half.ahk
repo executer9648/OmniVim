@@ -5114,6 +5114,19 @@ i:: {
 	gotoInsert()
 	Exit
 }
+a:: {
+	global WasInMouseManagerMode := true
+	disableClick()
+	gotoInsert()
+	Exit
+}
++a:: {
+	global WasInMouseManagerMode := true
+	disableClick()
+	gotoInsert()
+	Send "{End}"
+	Exit
+}
 m:: {
 	global WasInMouseManagerMode := true
 	disableClick()

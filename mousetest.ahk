@@ -84,6 +84,10 @@ oldg_MouseSpeed := 0
 oldg_MouseAccelerationSpeed := 0
 oldg_MouseMaxSpeed := 0
 
+
+shfitToggle := 0
+ctrlToggle := 0
+
 ;Mouse wheel speed is also set on Control Panel. As that
 ;will affect the normal mouse behavior, the real speed of
 ;these three below are times the normal mouse wheel speed.
@@ -954,6 +958,17 @@ controlSpeed() {
 
 	global
 
+	; if shfitToggle == 1
+	; 	shfitToggle := 0
+
+	; if ctrlToggle == 1 {
+	; 	ctrlToggle := 0
+	; 	normalSpeed()
+	; 	return
+	; }
+	; else
+	; 	ctrlToggle := 1
+
 	if g_MouseSpeed != 10 and g_MouseSpeed != 1 {
 		oldg_MouseSpeed := g_MouseSpeed
 	}
@@ -974,6 +989,17 @@ shiftSpeed() {
 
 	global
 
+	; if ctrlToggle == 1
+	; 	ctrlToggle := 0
+
+	; if shfitToggle == 1 {
+	; 	shfitToggle := 0
+	; 	normalSpeed()
+	; 	return
+	; }
+	; else
+	; 	shfitToggle := 1
+
 	if g_MouseSpeed != 10 and g_MouseSpeed != 1 {
 		oldg_MouseSpeed := g_MouseSpeed
 	}
@@ -992,6 +1018,9 @@ shiftSpeed() {
 normalSpeed() {
 
 	global
+
+	; if shfitToggle or ctrlToggle
+	; 	return
 
 	if oldg_MouseSpeed != 0 {
 		g_MouseSpeed := oldg_MouseSpeed
