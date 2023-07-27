@@ -93,6 +93,18 @@ Tab & h::Left
 Tab & j::Down
 Tab & k::Up
 Tab & l::Right
+tab & y:: {
+	; active_id := WinGetID("A")
+	; ControlSend "{WheelUp}", active_id
+	Send "{WheelUp}"
+	Exit
+}
+tab & e:: {
+	; active_id := WinGetID("A")
+	; ControlSend "{WheelDown}", active_id
+	Send "{WheelDown}"
+	Exit
+}
 ; ^!h::Left
 ; ^!j::Down
 ; ^!k::Up
@@ -5273,6 +5285,20 @@ Esc:: {
 	counter := 0
 	Exit
 }
+^esc:: {
+	global mouseManagerMode := false
+	StateBulb[4].Create()
+	key := GetInput("ML1", "").Input
+	MsgBox key
+	; MsgBox A_ThisHotkey
+	if A_ThisHotkey == "~LAlt"
+	{
+		Send "{LAlt Down}%key%{LAlt Up}"
+	}
+	Send key
+	StateBulb[4].Destroy()
+	global mouseManagerMode := true
+}
 BackSpace:: {
 	global counter
 	global infcounter
@@ -5297,14 +5323,12 @@ $+^e::
 	Send "^{WheelUp}"
 	Exit
 }
-
 ^e:: {
 	; active_id := WinGetID("A")
 	; ControlSend "{WheelDown}", active_id
 	Send "{WheelDown}"
 	Exit
 }
-
 ^y:: {
 	; active_id := WinGetID("A")
 	; ControlSend "{WheelUp}", active_id
