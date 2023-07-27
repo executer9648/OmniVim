@@ -1,7 +1,7 @@
 #SingleInstance force
 #MaxThreadsBuffer true
-#MaxThreads 255
-#MaxThreadsPerHotkey 255
+#MaxThreads 250
+; #MaxThreadsPerHotkey 255
 #UseHook
 #Include StateBulb.ahk
 #Include Info.ahk
@@ -16,6 +16,9 @@
 #Requires AutoHotkey v2.0
 
 InstallKeybdHook
+; InstallMouseHook
+
+; XButton1 & LButton::+LButton
 
 A_HotkeyInterval := 0
 A_MaxHotkeysPerInterval := 9999
@@ -2408,6 +2411,7 @@ Rctrl:: {
 	}
 }
 
+Alt & f::
 Esc:: {
 	global counter
 	global infcounter
@@ -3095,17 +3099,19 @@ c:: {
 	Haystack := A_Clipboard
 	A_Clipboard := oldclip
 	FoundPos := 0
-	pattern := "[\p{P}a-zA-Z0-9\.*?+[{|()^$]"
+	pattern := "[\p{P}a-zA-Z0-9\.*?+[{|()^$\s\r\n`r`n`s]"
 	FoundPos := RegExMatch(Haystack, pattern, , -1)
 	; MsgBox FoundPos
 	if FoundPos == 0
 	{
+		MsgBox "didnt find" ; !Todo
 		Send "+{End}"
 	}
 	else {
 		loop FoundPos {
 			Send "+{Right}"
 		}
+		Send "+{Left}"
 	}
 	sleep 100
 	Send "^x"
@@ -3531,17 +3537,18 @@ d:: {
 	Haystack := A_Clipboard
 	A_Clipboard := oldclip
 	FoundPos := 0
-	pattern := "[\p{P}a-zA-Z0-9\.*?+[{|()^$]"
+	pattern := "[\p{P}a-zA-Z0-9\.*?+[{|()^$\s\r\n`r`n`s]"
 	FoundPos := RegExMatch(Haystack, pattern, , -1)
 	if FoundPos == 0
 	{
-		MsgBox "didnt find"
+		MsgBox "didnt find" ; !Todo
 		Send "+{End}"
 	}
 	else {
 		loop FoundPos {
 			Send "+{Right}"
 		}
+		Send "+{Left}"
 	}
 	sleep 100
 	Send "^x"
@@ -3663,16 +3670,22 @@ w:: {
 #HotIf insertMode = 1
 HotIf "insertMode = 1"
 
+
 ^s:: {
 	Send "^f"
 	Send "{Enter}"
+	Exit
 }
 +^s:: {
 	Send "^f"
 	Send "+{Enter}"
+	Exit
 }
 ^x:: {
 	Send "^{f4}"
+}
+^+x:: {
+	Send "^+t"
 }
 
 ^!n:: {
@@ -3880,9 +3893,6 @@ Esc:: {
 #HotIf normalMode = 1
 HotIf "normalMode = 1"
 
-^WheelDown:: return
-^Wheelup:: return
-
 Z & Q:: {
 	Send "!{f4}"
 }
@@ -3996,7 +4006,10 @@ BackSpace:: {
 	inf := Infos(infs, , true)
 
 	operator := GetInput("L1", "{esc}{space}{Backspace}").Input
+
 	if (operator == "y") {
+		oldclip := A_Clipboard
+		A_Clipboard := ""
 		Send "^c"
 		ClipWait 1
 		Sleep 10
@@ -4004,12 +4017,16 @@ BackSpace:: {
 		Sleep 10
 		Send "{Left}"
 		Send "+{Right}"
+		A_Clipboard := oldclip
 	}
 	else if (operator == "d") {
+		oldclip := A_Clipboard
+		A_Clipboard := ""
 		Send "^x"
 		ClipWait 1
 		Sleep 10
 		Registers(reg).WriteOrAppend()
+		A_Clipboard := oldclip
 	}
 	else if (operator == "p") {
 		Registers(reg).Paste()
@@ -4042,6 +4059,8 @@ BackSpace:: {
 	}
 	StateBulb[7].Destroy()
 	global normalMode := true
+	global visualLineMode := false
+	global visualMode := false
 	inf.Destroy()
 }
 [:: Return
@@ -4378,24 +4397,36 @@ d::
 	gotoDMode()
 }
 
-+^y::
+$+^y::
 {
-	Send "+{WheelDown}"
+	Send "^{WheelDown}"
+	Exit
 }
 
-+^e::
+$+^e::
 {
-	Send "+{WheelUp}"
+	Send "^{WheelUp}"
+	Exit
 }
 
-^e::
-{
+^e:: {
 	Send "{WheelDown}"
+	Exit
 }
 
-^y::
-{
+^y:: {
 	Send "{WheelUp}"
+	Exit
+}
+
+^esc:: {
+	global normalMode := false
+	StateBulb[4].Create()
+	key := GetInput("ML1", "").Input
+	; MsgBox key
+	Send key
+	StateBulb[4].Destroy()
+	global normalMode := true
 }
 
 Esc:: {
@@ -4416,11 +4447,15 @@ Esc:: {
 }
 
 v:: {
+	global visualMode
+	Global visualLineMode
+	if visualMode == true {
+		gotoNormal()
+		Exit
+	}
 	Global visualMode := true
 	Send "{Left}"
 	StateBulb[3].Create()
-	; Infos.DestroyAll()
-	; Infos("Visual Mode", 1500)
 	Exit
 }
 
@@ -4430,8 +4465,6 @@ v:: {
 	Global visualMode := true
 	Global visualLineMode := true
 	StateBulb[3].Create()
-	; Infos.DestroyAll()
-	; Infos("Visual Mode", 1500)
 	Exit
 }
 
@@ -4892,6 +4925,22 @@ Esc:: {
 #HotIf mouseManagerMode = 1
 HotIf "mouseManagerMode = 1"
 
+^WheelDown:: return
+^WheelUp:: return
+
+#t:: {
+	global counter
+	if counter != 0 {
+		Loop counter {
+			Send "#t"
+		}
+		counter := 0
+		infcounter.Destroy()
+		Exit
+	}
+	Send "#t"
+}
+
 !h::!Left
 !l::!Right
 
@@ -4906,8 +4955,6 @@ HotIf "mouseManagerMode = 1"
 9:: chCounter(9)
 0:: chCounter(0)
 
-^WheelDown:: return
-^Wheelup:: return
 
 Z & Q:: {
 	Send "!{f4}"
@@ -5018,6 +5065,9 @@ r:: Return
 z:: Return
 .:: Return
 /:: {
+	global WasInMouseManagerMode := true
+	global infcounter
+	infcounter.Destroy()
 	Send "^f"
 	disableClick()
 	gotoInsert()
@@ -5120,11 +5170,18 @@ a:: {
 	gotoInsert()
 	Exit
 }
++i:: {
+	global WasInMouseManagerMode := true
+	disableClick()
+	Send "{Home}"
+	gotoInsert()
+	Exit
+}
 +a:: {
 	global WasInMouseManagerMode := true
 	disableClick()
-	gotoInsert()
 	Send "{End}"
+	gotoInsert()
 	Exit
 }
 m:: {
@@ -5194,6 +5251,9 @@ Hotkey "^j", ButtonAcceleration
 Hotkey "^k", ButtonAcceleration
 Hotkey "^l", ButtonAcceleration
 
+; Hotkey "^e", ButtonWheelAcceleration
+; Hotkey "^y", ButtonWheelAcceleration
+
 hotkey "!q", ButtonSpeedUp
 hotkey "!a", ButtonSpeedDown
 hotkey "!w", ButtonAccelerationSpeedUp
@@ -5204,16 +5264,54 @@ hotkey "+!a", ButtonMaxSpeedDown
 !Esc:: {
 	exitVim()
 }
+Esc:: {
+	global infcounter
+	global counter
+	if counter == 0
+		Send "{Esc}"
+	infcounter.Destroy()
+	counter := 0
+	Exit
+}
+BackSpace:: {
+	global counter
+	global infcounter
+	counter := counter / 10
+	counter := Floor(counter)
+	if counter == 0 {
+		infcounter.Destroy()
+	} else {
+		infcounter.Destroy()
+		infcounter := Infos(counter, , true)
+	}
+}
 
-$^e::
+$+^y::
 {
+	Send "^{WheelDown}"
+	Exit
+}
+
+$+^e::
+{
+	Send "^{WheelUp}"
+	Exit
+}
+
+^e:: {
+	; active_id := WinGetID("A")
+	; ControlSend "{WheelDown}", active_id
 	Send "{WheelDown}"
+	Exit
 }
 
-$^y::
-{
+^y:: {
+	; active_id := WinGetID("A")
+	; ControlSend "{WheelUp}", active_id
 	Send "{WheelUp}"
+	Exit
 }
+
 #HotIf
 
 disableClick() {

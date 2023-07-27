@@ -931,9 +931,9 @@ ButtonWheelAccelerationStart()
 		}
 	}
 
-	if g_Button = "NumpadSub"
+	if g_Button = "^y"
 		MouseClick "WheelUp", , , g_MouseWheelCurrentSpeed, 0, "D"
-	else if g_Button = "NumpadAdd"
+	else if g_Button = "^e"
 		MouseClick "WheelDown", , , g_MouseWheelCurrentSpeed, 0, "D"
 
 	SetTimer ButtonWheelAccelerationEnd, 100
@@ -943,7 +943,9 @@ ButtonWheelAccelerationEnd()
 {
 	global
 
-	if GetKeyState(g_Button, "P")
+	ng2_Button := SubStr(g_Button, -1)
+
+	if GetKeyState(ng2_Button, "P")
 	{
 		ButtonWheelAccelerationStart
 		return
