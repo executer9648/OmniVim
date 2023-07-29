@@ -3908,6 +3908,18 @@ HotIf "normalMode = 1"
 Z & Q:: {
 	Send "!{f4}"
 }
+z & h:: {
+	Send "{WheelLeft}"
+}
+z & l:: {
+	Send "{WheelRight}"
+}
+z & j:: {
+	Send "{WheelDown}"
+}
+z & k:: {
+	Send "{WheelUp}"
+}
 z & =:: {
 	Send "{Left}"
 	Send "+{f10}"
@@ -4937,8 +4949,8 @@ Esc:: {
 #HotIf mouseManagerMode = 1
 HotIf "mouseManagerMode = 1"
 
-^WheelDown:: return
-^WheelUp:: return
+; ^WheelDown:: return
+; ^WheelUp:: return
 
 #t:: {
 	global counter
@@ -4970,6 +4982,22 @@ HotIf "mouseManagerMode = 1"
 
 Z & Q:: {
 	Send "!{f4}"
+}
+z & h:: {
+	Send "{WheelLeft}"
+}
+z & l:: {
+	Send "{WheelRight}"
+}
+z & j:: {
+	Send "{WheelDown}"
+}
+z & k:: {
+	Send "{WheelUp}"
+}
+z & =:: {
+	Send "{Left}"
+	Send "+{f10}"
 }
 
 +;:: {
@@ -5182,18 +5210,25 @@ a:: {
 	gotoInsert()
 	Exit
 }
+^a:: {
+	global WasInMouseManagerMode := true
+	disableClick()
+	gotoInsert()
+	Send "{Home}"
+	Exit
+}
 +i:: {
 	global WasInMouseManagerMode := true
 	disableClick()
-	Send "{Home}"
 	gotoInsert()
+	Send "{Home}"
 	Exit
 }
 +a:: {
 	global WasInMouseManagerMode := true
 	disableClick()
-	Send "{End}"
 	gotoInsert()
+	Send "{End}"
 	Exit
 }
 m:: {
@@ -5270,8 +5305,8 @@ hotkey "!q", ButtonSpeedUp
 hotkey "!a", ButtonSpeedDown
 hotkey "!w", ButtonAccelerationSpeedUp
 hotkey "!s", ButtonAccelerationSpeedDown
-hotkey "+!q", ButtonMaxSpeedUp
-hotkey "+!a", ButtonMaxSpeedDown
+hotkey "!e", ButtonMaxSpeedUp
+hotkey "!d", ButtonMaxSpeedDown
 
 !Esc:: {
 	exitVim()
@@ -5312,15 +5347,26 @@ BackSpace:: {
 	}
 }
 
-$+^y::
+!^y::
 {
 	Send "^{WheelDown}"
 	Exit
 }
 
-$+^e::
+!^e::
 {
 	Send "^{WheelUp}"
+	Exit
+}
++^y::
+{
+	Send "+{WheelDown}"
+	Exit
+}
+
++^e::
+{
+	Send "+{WheelUp}"
 	Exit
 }
 ^e:: {
