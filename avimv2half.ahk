@@ -1,7 +1,7 @@
 #SingleInstance force
 #MaxThreadsBuffer true
 #MaxThreads 250
-; #MaxThreadsPerHotkey 255
+#MaxThreadsPerHotkey 255
 #UseHook
 #Include StateBulb.ahk
 #Include Info.ahk
@@ -58,16 +58,17 @@ $CapsLock::Control
 }
 #HotIf
 
-; ~Alt:: Send "{Blind}{vkFF}"
-; ; #InputLevel 1
-; ; LAlt:: SendEvent "h"
-; ; #InputLevel 0
-; ; h & j:: MsgBox "works"
-
 Info("Script Reloaded-Active", 2000)
 
 +^#e:: Edit
 +^#r:: {
+	langid := Language.GetKeyboardLanguage()
+	if (LangID = 0x040D) {
+		Infos("changing to english")
+		Send "#{space}"
+		Sleep 1000
+		Reload
+	}
 	Reload
 }
 #SuspendExempt
@@ -105,10 +106,6 @@ tab & e:: {
 	Send "{WheelDown}"
 	Exit
 }
-; ^!h::Left
-; ^!j::Down
-; ^!k::Up
-; ^!l::Right
 
 
 ^!n:: {
@@ -219,6 +216,11 @@ gotoMouseMode() {
 		monitorCount := MonitorGetCount()
 	}
 	else if monitorCount != MonitorGetCount() {
+		langid := Language.GetKeyboardLanguage()
+		if (LangID = 0x040D) {
+			Send "{Alt Down}{shift}{Alt Up}"
+			Sleep 100
+		}
 		Reload
 	}
 	global normalMode := false
@@ -249,11 +251,11 @@ gotoDMode() {
 	global normalMode := false
 	global dMode := true
 	StateBulb[4].Create()
-	langid := Language.GetKeyboardLanguage()
-	if (LangID = 0x040D) {
-		Send "{Left}"
-	} else
-		Send "{Right}"
+	; langid := Language.GetKeyboardLanguage()
+	; if (LangID = 0x040D) {
+	; 	Send "{Left}"
+	; } else
+	; 	Send "{Right}"
 }
 
 gotoRegMode() {
@@ -277,11 +279,11 @@ gotoCMode() {
 	global normalMode := false
 	global cMode := true
 	StateBulb[4].Create()
-	langid := Language.GetKeyboardLanguage()
-	if (LangID = 0x040D) {
-		Send "{Left}"
-	} else
-		Send "{Right}"
+	; langid := Language.GetKeyboardLanguage()
+	; if (LangID = 0x040D) {
+	; 	Send "{Left}"
+	; } else
+	; 	Send "{Right}"
 }
 
 gotoNormalnoInfo() {
@@ -320,6 +322,11 @@ gotoNormal() {
 		monitorCount := MonitorGetCount()
 	}
 	else if monitorCount != MonitorGetCount() {
+		langid := Language.GetKeyboardLanguage()
+		if (LangID = 0x040D) {
+			Send "{Alt Down}{shift}{Alt Up}"
+			Sleep 100
+		}
 		Reload
 	}
 	StateBulb[6].Destroy() ; Mouse Movement
@@ -3116,7 +3123,6 @@ c:: {
 	; MsgBox FoundPos
 	if FoundPos == 0
 	{
-		MsgBox "didnt find" ; !Todo
 		Send "+{End}"
 	}
 	else {
@@ -3129,7 +3135,6 @@ c:: {
 	Send "^x"
 	infcounter.Destroy()
 	gotoInsert()
-	Exit
 }
 
 b:: {
@@ -3553,21 +3558,23 @@ d:: {
 	FoundPos := RegExMatch(Haystack, pattern, , -1)
 	if FoundPos == 0
 	{
-		MsgBox "didnt find" ; !Todo
 		Send "+{End}"
+		sleep 100
+		Send "^x"
+		infcounter.Destroy()
+		gotoNormal()
 	}
 	else {
 		loop FoundPos {
 			Send "+{Right}"
 		}
 		Send "+{Left}"
+		sleep 100
+		Send "^x"
+		Send "{delete}"
+		infcounter.Destroy()
+		gotoNormal()
 	}
-	sleep 100
-	Send "^x"
-	Send "{delete}"
-	infcounter.Destroy()
-	gotoNormal()
-	Exit
 }
 
 b:: {
@@ -3682,6 +3689,12 @@ w:: {
 #HotIf insertMode = 1
 HotIf "insertMode = 1"
 
+!^,:: {
+	Send "^{Home}"
+}
+!^.:: {
+	Send "^{End}"
+}
 
 ^s:: {
 	Send "^f"
@@ -3754,44 +3767,15 @@ Esc:: {
 }
 
 ^u:: {
-	Send "{Home}+{End}"
+	Send "+{Home}"
 	Sleep 10
-	Send "{BS}"
-	Exit
+	Send "{bs}"
 }
 
-; ^x:: {
-; 	Send "+{Home}"
-; 	Sleep 10
-; 	Send "{BS}"
-; 	Exit
-; }
-
-!^k:: {
-	langid := Language.GetKeyboardLanguage()
-	if (LangID = 0x040D) {
-		Send "+{end}"
-		Sleep 10
-		Send "{bs}"
-	}
-	else {
-		Send "+{Home}"
-		Sleep 10
-		Send "{bs}"
-	}
-}
 ^k:: {
-	langid := Language.GetKeyboardLanguage()
-	if (LangID = 0x040D) {
-		Send "+{Home}"
-		Sleep 10
-		Send "{bs}"
-	}
-	else {
-		Send "+{end}"
-		Sleep 10
-		Send "{bs}"
-	}
+	Send "+{end}"
+	Sleep 10
+	Send "{bs}"
 }
 ^w:: {
 	langid := Language.GetKeyboardLanguage()
@@ -3816,46 +3800,28 @@ Esc:: {
 }
 
 ^b:: {
-	langid := Language.GetKeyboardLanguage()
-	if (LangID = 0x040D) {
-		Send "{Right}"
-	}
-	else {
-		Send "{Left}"
-	}
-	Exit
+	Send "{Left}"
 }
 
 ^n:: {
 	Send "{Down}"
-	Exit
 }
 
 ^h:: {
 	Send "{BS}"
-	Exit
 }
 
 ^d:: {
 	Send "{Delete}"
-	Exit
 }
 
 ^p:: {
 	Send "{Up}"
-	Exit
 }
 
 ^f:: {
-	langid := Language.GetKeyboardLanguage()
-	if (LangID = 0x040D) {
-		Send "{Left}"
-	}
-	else {
-		Send "{Right}"
-	}
+	Send "{Right}"
 }
-
 
 !d:: {
 	langid := Language.GetKeyboardLanguage()
@@ -5373,13 +5339,11 @@ BackSpace:: {
 	; active_id := WinGetID("A")
 	; ControlSend "{WheelDown}", active_id
 	Send "{WheelDown}"
-	Exit
 }
 ^y:: {
 	; active_id := WinGetID("A")
 	; ControlSend "{WheelUp}", active_id
 	Send "{WheelUp}"
-	Exit
 }
 
 #HotIf
