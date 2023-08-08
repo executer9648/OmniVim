@@ -60,8 +60,7 @@ $CapsLock::Control
 
 Info("Script Reloaded-Active", 2000)
 
-+^#e:: Edit
-+^#r:: {
+reloadfunc() {
 	langid := Language.GetKeyboardLanguage()
 	if (LangID = 0x040D) {
 		Infos("changing to english")
@@ -70,6 +69,11 @@ Info("Script Reloaded-Active", 2000)
 		Reload
 	}
 	Reload
+}
+
++^#e:: Edit
++^#r:: {
+	reloadfunc()
 }
 #SuspendExempt
 +^#s:: {
@@ -216,12 +220,7 @@ gotoMouseMode() {
 		monitorCount := MonitorGetCount()
 	}
 	else if monitorCount != MonitorGetCount() {
-		langid := Language.GetKeyboardLanguage()
-		if (LangID = 0x040D) {
-			Send "{Alt Down}{shift}{Alt Up}"
-			Sleep 100
-		}
-		Reload
+		reloadfunc()
 	}
 	global normalMode := false
 	global mouseManagerMode := true
@@ -322,12 +321,7 @@ gotoNormal() {
 		monitorCount := MonitorGetCount()
 	}
 	else if monitorCount != MonitorGetCount() {
-		langid := Language.GetKeyboardLanguage()
-		if (LangID = 0x040D) {
-			Send "{Alt Down}{shift}{Alt Up}"
-			Sleep 100
-		}
-		Reload
+		reloadfunc()
 	}
 	StateBulb[6].Destroy() ; Mouse Movement
 	StateBulb[5].Destroy() ; Move windows
