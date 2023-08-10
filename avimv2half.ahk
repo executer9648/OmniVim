@@ -105,6 +105,7 @@ Tab & f::Right
 Tab & a::Home
 Tab & x::^f4
 Tab & s::^f
+Tab & =::+f10
 Tab & w:: {
 	langid := Language.GetKeyboardLanguage()
 	if (LangID = 0x040D) {
@@ -2555,14 +2556,24 @@ BackSpace:: {
 
 Esc:: {
 	global infcounter
+	global WasInMouseManagerMode
+	global wasInNormalMode
 	if (WasInMouseManagerMode == true) {
 		gotoNormal()
 		gotoMouseMode()
 		infcounter.Destroy()
 	}
-	else {
+	else if (wasInNormalMode == true) {
 		gotoNormal()
 		infcounter.Destroy()
+	}
+	else {
+		global wasInNormalMode := false
+		global WindowManagerMode := false
+		global counter := 0
+		Infos.DestroyAll()
+		StateBulb[4].Destroy() ; Special
+		disableClick()
 	}
 	Exit
 }
@@ -4327,6 +4338,7 @@ $^w:: {
 		Exit
 	}
 	else {
+		wasInNormalMode := true
 		gotoWindowMode()
 	}
 	Exit
@@ -4409,23 +4421,18 @@ d::
 $+^y::
 {
 	Send "^{WheelDown}"
-	Exit
 }
-
 $+^e::
 {
 	Send "^{WheelUp}"
-	Exit
 }
 
 ^e:: {
 	Send "{WheelDown}"
-	Exit
 }
 
 ^y:: {
 	Send "{WheelUp}"
-	Exit
 }
 
 ^esc:: {
