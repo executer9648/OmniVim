@@ -95,9 +95,33 @@ reloadfunc() {
 +#l:: Send "+#{Right}"
 tab::Tab
 Tab & h::Left
+Tab & b::Left
+Tab & n::Down
 Tab & j::Down
 Tab & k::Up
+Tab & p::Up
 Tab & l::Right
+Tab & f::Right
+Tab & a::Home
+Tab & x::^f4
+Tab & s::^f
+Tab & w:: {
+	langid := Language.GetKeyboardLanguage()
+	if (LangID = 0x040D) {
+		Send "^+{Right}"
+		Sleep 10
+		Send "{bs}"
+		Exit
+	}
+	Send "^+{Left}"
+	Sleep 10
+	Send "{bs}"
+}
+Tab & u:: {
+	Send "+{Home}"
+	Sleep 10
+	Send "{bs}"
+}
 tab & y:: {
 	; active_id := WinGetID("A")
 	; ControlSend "{WheelUp}", active_id
@@ -3690,15 +3714,16 @@ HotIf "insertMode = 1"
 	Send "^{End}"
 }
 
+!s:: {
+	Send "^f"
+}
 ^s:: {
 	Send "^f"
 	Send "{Enter}"
-	Exit
 }
 +^s:: {
 	Send "^f"
 	Send "+{Enter}"
-	Exit
 }
 ^x:: {
 	Send "^{f4}"
