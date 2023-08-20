@@ -94,13 +94,20 @@ reloadfunc() {
 +#k:: Send "+#{Up}"
 +#l:: Send "+#{Right}"
 tab::Tab
-Tab & h::Left
 Tab & b::Left
-Tab & n::Down
+Tab & h::Left
 Tab & j::Down
 Tab & k::Up
-Tab & p::Up
 Tab & l::Right
+Tab & n::Down
+Tab & j::Down
+; Tab & h::BackSpace
+; Tab & k:: {
+; 	Send "+{end}"
+; 	Sleep 10
+; 	Send "{bs}"
+; }
+Tab & p::Up
 Tab & f::Right
 Tab & a::Home
 Tab & x::^f4
@@ -123,18 +130,9 @@ Tab & u:: {
 	Sleep 10
 	Send "{bs}"
 }
-tab & y:: {
-	; active_id := WinGetID("A")
-	; ControlSend "{WheelUp}", active_id
-	Send "{WheelUp}"
-	Exit
-}
-tab & e:: {
-	; active_id := WinGetID("A")
-	; ControlSend "{WheelDown}", active_id
-	Send "{WheelDown}"
-	Exit
-}
+tab & y::WheelUp
+tab & e::WheelDown
+; tab & e::End
 
 
 ^!n:: {
@@ -3718,6 +3716,7 @@ w:: {
 #HotIf insertMode = 1
 HotIf "insertMode = 1"
 
+
 !^,:: {
 	Send "^{Home}"
 }
@@ -3902,6 +3901,9 @@ Esc:: {
 HotIf "normalMode = 1"
 
 Z & Q:: {
+	Send "!{f4}"
+}
+Z & Z:: {
 	Send "!{f4}"
 }
 z & h:: {
@@ -4940,9 +4942,18 @@ Esc:: {
 
 #HotIf mouseManagerMode = 1
 HotIf "mouseManagerMode = 1"
-
-; ^WheelDown:: return
-; ^WheelUp:: return
+tab & y:: {
+	; active_id := WinGetID("A")
+	; ControlSend "{WheelUp}", active_id
+	Send "{WheelUp}"
+	Exit
+}
+tab & e:: {
+	; active_id := WinGetID("A")
+	; ControlSend "{WheelDown}", active_id
+	Send "{WheelDown}"
+	Exit
+}
 
 #t:: {
 	global counter
@@ -4972,6 +4983,9 @@ HotIf "mouseManagerMode = 1"
 0:: chCounter(0)
 
 
+Z & Z:: {
+	Send "!{f4}"
+}
 Z & Q:: {
 	Send "!{f4}"
 }
@@ -5239,6 +5253,7 @@ m:: {
 
 t:: Click()
 !t:: Click("Right")
+tab & t:: Click("Right")
 +t:: {
 	Send "{Shift Up}"
 	Click()
@@ -5341,13 +5356,13 @@ BackSpace:: {
 
 !^y::
 {
-	Send "^{WheelDown}"
+	Send "^{WheelUp}"
 	Exit
 }
 
 !^e::
 {
-	Send "^{WheelUp}"
+	Send "^{WheelDown}"
 	Exit
 }
 +^y::
