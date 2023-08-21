@@ -134,6 +134,19 @@ tab & y::WheelUp
 tab & e::WheelDown
 ; tab & e::End
 
+; ^h:: {
+; 	errorlevel := KeyWait("h", "T0.1")
+; 	if (!errorlevel)
+; 		MsgBox "long"
+; 	else {
+; 		errorlevel := KeyWait("h", "T0.1")
+; 		if (!errorlevel)
+; 			MsgBox "Single"
+; 		else
+; 			MsgBox "Double"
+; 	}
+; }
+
 
 ^!n:: {
 	gotoNumLockMode()
