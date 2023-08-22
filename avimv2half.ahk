@@ -106,6 +106,7 @@ Tab & a::Home
 Tab & x::^f4
 Tab & s::^f
 Tab & =::+f10
+Tab & d::Delete
 Tab & w:: {
 	langid := Language.GetKeyboardLanguage()
 	if (LangID = 0x040D) {
