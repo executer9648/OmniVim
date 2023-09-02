@@ -27,7 +27,7 @@ A_MenuMaskKey := "vkFF"
 SetMouseDelay -1
 CoordMode "Mouse", "Screen"
 
-$CapsLock::Control
+$CapsLock::LCtrl
 +!#Control::CapsLock
 
 #HotIf WinActive("A")
@@ -134,17 +134,30 @@ tab & y::WheelUp
 tab & e::WheelDown
 ; tab & e::End
 
-; ^h:: {
-; 	errorlevel := KeyWait("h", "T0.1")
-; 	if (!errorlevel)
-; 		MsgBox "long"
-; 	else {
-; 		errorlevel := KeyWait("h", "T0.1")
-; 		if (!errorlevel)
-; 			MsgBox "Single"
-; 		else
-; 			MsgBox "Double"
+; Morse(timeout := 400) { ;
+; 	tout := timeout / 1000
+; 	key := RegExReplace(A_ThisHotKey, "[\*\~\$\#\+\!\^]")
+; 	Loop {
+; 		t := A_TickCount
+; 		KeyWait(key)
+; 		Pattern .= A_TickCount - t > timeout
+; 		MsgBox Pattern
+; 		If (!KeyWait(key, "D T1"))
+; 			Return Pattern
 ; 	}
+; }
+
+; ^z:: {
+; 	p := Morse()
+; 	If (p = "0")
+; 		MsgBox "Short press"
+; 	Else If (p = "00")
+; 		MsgBox "Two short presses"
+; 	; Else If (p = "01")
+; 	; 	MsgBox Short + Long press
+; 	; Else
+; 	; 	MsgBox Press pattern %p%
+; 	Return
 ; }
 
 
@@ -4955,6 +4968,7 @@ Esc:: {
 
 #HotIf mouseManagerMode = 1
 HotIf "mouseManagerMode = 1"
+; Space::Space
 tab & y:: {
 	; active_id := WinGetID("A")
 	; ControlSend "{WheelUp}", active_id
@@ -4968,18 +4982,18 @@ tab & e:: {
 	Exit
 }
 
-#t:: {
-	global counter
-	if counter != 0 {
-		Loop counter {
-			Send "#t"
-		}
-		counter := 0
-		infcounter.Destroy()
-		Exit
-	}
-	Send "#t"
-}
+; #t:: {
+; 	global counter
+; 	if counter != 0 {
+; 		Loop counter {
+; 			Send "#t"
+; 		}
+; 		counter := 0
+; 		infcounter.Destroy()
+; 		Exit
+; 	}
+; 	Send "#t"
+; }
 
 !h::!Left
 !l::!Right
