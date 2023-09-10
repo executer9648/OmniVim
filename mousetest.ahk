@@ -503,9 +503,9 @@ ButtonAcceleration(ThisHotkey)
 	else if g_Button = "^," {
 		controlSpeed()
 	}
-	else if g_Button = "h" {
-		normalSpeed()
-	}
+	; else if g_Button = "h" {
+	; 	normalSpeed()
+	; }
 	else if g_Button = "j" {
 		normalSpeed()
 	}

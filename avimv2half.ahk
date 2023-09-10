@@ -110,6 +110,12 @@ Tab & j::Down
 Tab & p::Up
 Tab & f::Right
 Tab & a::Home
+Tab & g:: {
+	if GetKeyState("Shift")
+		Send "{End}"
+	else
+		Send "{Home}"
+}
 Tab & x::^f4
 Tab & s::^f
 Tab & =::+f10
@@ -5138,6 +5144,9 @@ z & =:: {
 r:: Return
 z:: Return
 .:: Return
++.:: Return
+^.:: Return
+space & .:: Return
 /:: {
 	global WasInMouseManagerMode := true
 	global infcounter
@@ -5147,6 +5156,8 @@ z:: Return
 	gotoInsert()
 	Exit
 }
++/:: return
+^/:: return
 ':: Return
 [:: Return
 ]:: Return
@@ -5281,7 +5292,20 @@ m:: {
 
 t:: Click()
 !t:: Click("Right")
-tab & t:: Click("Right")
+tab & t:: {
+	if GetKeyState("Shift") {
+		Send "{Shift Up}"
+		Click("Right")
+		Send "{Shift Down}"
+	}
+	else if GetKeyState("Ctrl") {
+		Send "{ctrl Up}"
+		Click("Right")
+		Send "{ctrl Down}"
+	}
+	else
+		Click("Right")
+}
 +t:: {
 	Send "{Shift Up}"
 	Click()
@@ -5290,16 +5314,6 @@ tab & t:: Click("Right")
 ^t:: {
 	Send "{ctrl Up}"
 	Click()
-	Send "{ctrl Down}"
-}
-+!t:: {
-	Send "{Shift Up}"
-	Click("Right")
-	Send "{Shift Down}"
-}
-^!t:: {
-	Send "{ctrl Up}"
-	Click("Right")
 	Send "{ctrl Down}"
 }
 b:: Click("Middle")
@@ -5324,6 +5338,7 @@ Hotkey "+h", ButtonAcceleration
 Hotkey "+j", ButtonAcceleration
 Hotkey "+k", ButtonAcceleration
 Hotkey "+l", ButtonAcceleration
+
 Hotkey "^u", ButtonAcceleration
 Hotkey "^o", ButtonAcceleration
 Hotkey "^n", ButtonAcceleration
@@ -5332,6 +5347,56 @@ Hotkey "^h", ButtonAcceleration
 Hotkey "^j", ButtonAcceleration
 Hotkey "^k", ButtonAcceleration
 Hotkey "^l", ButtonAcceleration
+; !,::{
+; 	ButtonAcceleration('^,')
+; }
+; !n::{
+; 	ButtonAcceleration('^n')
+; }
+; !o::{
+; 	ButtonAcceleration('^o')
+; }
+; !u::{
+; 	ButtonAcceleration('^u')
+; }
+; !h::{
+; 	ButtonAcceleration('^h')
+; }
+; !j::{
+; 	ButtonAcceleration('^j')
+; }
+; !k::{
+; 	ButtonAcceleration('^k')
+; }
+; !l::{
+; 	ButtonAcceleration('^l')
+; }
+
+
+space & ,:: {
+	ButtonAcceleration('+,')
+}
+space & n:: {
+	ButtonAcceleration('+n')
+}
+space & o:: {
+	ButtonAcceleration('+o')
+}
+space & u:: {
+	ButtonAcceleration('+u')
+}
+space & h:: {
+	ButtonAcceleration('+h')
+}
+space & j:: {
+	ButtonAcceleration('+j')
+}
+space & k:: {
+	ButtonAcceleration('+k')
+}
+space & l:: {
+	ButtonAcceleration('+l')
+}
 
 ; Hotkey "^e", ButtonWheelAcceleration
 ; Hotkey "^y", ButtonWheelAcceleration
