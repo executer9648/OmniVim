@@ -94,7 +94,7 @@ reloadfunc() {
 +#k:: Send "+#{Up}"
 +#l:: Send "+#{Right}"
 tab::Tab
-Tab & b::Left
+Tab & b::^Left
 Tab & h::Left
 Tab & j::Down
 Tab & k::Up
@@ -108,7 +108,7 @@ Tab & j::Down
 ; 	Send "{bs}"
 ; }
 Tab & p::Up
-Tab & f::Right
+Tab & f::^Right
 Tab & a::Home
 Tab & g:: {
 	if GetKeyState("Shift")
