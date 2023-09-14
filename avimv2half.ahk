@@ -93,8 +93,9 @@ reloadfunc() {
 +#j:: Send "+#{Down}"
 +#k:: Send "+#{Up}"
 +#l:: Send "+#{Right}"
-
 ; `(semicolon) SECTION =================
+^`::CapsLock
+`::`
 ` & h::Left
 ` & k::Up
 ` & j::Down
@@ -110,46 +111,80 @@ reloadfunc() {
 
 ; TAB SECTION =================
 tab::Tab
-Tab & b::^Left
-; Tab & h:: {
-; 	if GetKeyState("Shift")
-; 		Send "{Backspace}"
-; 	else
-; 		Send "{Left}"
-; }
-; Tab & k:: {
-; 	if GetKeyState("Shift") {
-; 		Send "+{End}"
-; 		Send "{Backspace}"
-; 	}
-; 	else
-; 		Send "{Up}"
-; }
-Tab & h::Left
-Tab & k::Up
-Tab & j::Down
-Tab & l::Right
+tab & ,:: {
+	Send "^{Home}"
+}
+tab & .:: {
+	Send "^{End}"
+}
+Tab & b:: {
+	if GetKeyState("Shift")
+		Send "^{Left}"
+	else
+		Send "{Left}"
+}
+Tab & h::BackSpace
+Tab & k:: {
+	Send "+{end}"
+	Sleep 10
+	Send "{bs}"
+}
 Tab & n::Down
-Tab & j::Down
-; Tab & h::BackSpace
-; Tab & k:: {
-; 	Send "+{end}"
-; 	Sleep 10
-; 	Send "{bs}"
-; }
 Tab & p::Up
-Tab & f::^Right
+Tab & f:: {
+	if GetKeyState("Shift")
+		Send "^{Right}"
+	else
+		Send "{Right}"
+}
 Tab & a::Home
 Tab & g:: {
 	if GetKeyState("Shift")
-		Send "{End}"
+		Send "^{End}"
 	else
-		Send "{Home}"
+		Send "^{Home}"
 }
-Tab & x::^f4
+Tab & x:: {
+	if GetKeyState("Shift")
+		Send "^+t"
+	else
+		Send "^{f4}"
+}
+Tab & r:: {
+	global insertMode := false
+	inf := Infos('"', , true)
+	StateBulb[7].Create()
+	rego := InputHook("C")
+	rego.KeyOpt("{All}", "ESI") ;End Keys & Suppress
+	rego.KeyOpt("{LCtrl}{RCtrl}{LAlt}{RAlt}{LShift}{RShift}{LWin}{RWin}", "-ES") ;Exclude the modifiers
+	rego.Start()
+	rego.Wait()
+	var := rego.EndMods
+	var .= rego.EndKey
+	reg := rego.EndKey
+	if var == "<!Escape" {
+		exitVim()
+		Exit
+	}
+	else if reg == "Escape" {
+		StateBulb[7].Destroy()
+		inf.Destroy()
+		global insertMode := true
+		Exit
+	}
+	Registers(reg).Paste()
+	StateBulb[7].Destroy()
+	inf.Destroy()
+	global insertMode := true
+}
 Tab & s::^f
 Tab & =::+f10
-Tab & d::Delete
+Tab & d:: {
+	if GetKeyState("Shift")
+		Send "{Delete}"
+	else
+		Send "^{Delete}"
+}
 Tab & w:: {
 	langid := Language.GetKeyboardLanguage()
 	if (LangID = 0x040D) {
@@ -167,36 +202,9 @@ Tab & u:: {
 	Sleep 10
 	Send "{bs}"
 }
-tab & y::WheelUp
-tab & e::WheelDown
-; tab & e::End
-
-; Morse(timeout := 400) { ;
-; 	tout := timeout / 1000
-; 	key := RegExReplace(A_ThisHotKey, "[\*\~\$\#\+\!\^]")
-; 	Loop {
-; 		t := A_TickCount
-; 		KeyWait(key)
-; 		Pattern .= A_TickCount - t > timeout
-; 		MsgBox Pattern
-; 		If (!KeyWait(key, "D T1"))
-; 			Return Pattern
-; 	}
-; }
-
-; ^z:: {
-; 	p := Morse()
-; 	If (p = "0")
-; 		MsgBox "Short press"
-; 	Else If (p = "00")
-; 		MsgBox "Two short presses"
-; 	; Else If (p = "01")
-; 	; 	MsgBox Short + Long press
-; 	; Else
-; 	; 	MsgBox Press pattern %p%
-; 	Return
-; }
-
+; tab & y::WheelUp
+; tab & e::WheelDown
+tab & e::End
 
 ^!n:: {
 	gotoNumLockMode()
@@ -3397,12 +3405,12 @@ t:: {
 g:: {
 	global WasInMouseManagerMode
 	if WasInMouseManagerMode == true {
-		Send "{Home}"
+		Send "^{Home}"
 		gotoNormal()
 		gotoMouseMode()
 	}
 	else {
-		Send "{Home}"
+		Send "^{Home}"
 		gotoNormal()
 	}
 	Exit
@@ -5005,32 +5013,19 @@ Esc:: {
 
 #HotIf mouseManagerMode = 1
 HotIf "mouseManagerMode = 1"
-; Space::Space
-tab & y:: {
-	; active_id := WinGetID("A")
-	; ControlSend "{WheelUp}", active_id
-	Send "{WheelUp}"
-	Exit
-}
-tab & e:: {
-	; active_id := WinGetID("A")
-	; ControlSend "{WheelDown}", active_id
-	Send "{WheelDown}"
-	Exit
-}
 
-; #t:: {
-; 	global counter
-; 	if counter != 0 {
-; 		Loop counter {
-; 			Send "#t"
-; 		}
-; 		counter := 0
-; 		infcounter.Destroy()
-; 		Exit
-; 	}
-; 	Send "#t"
-; }
+#t:: {
+	global counter
+	if counter != 0 {
+		Loop counter {
+			Send "#t"
+		}
+		counter := 0
+		infcounter.Destroy()
+		Exit
+	}
+	Send "#t"
+}
 
 !h::!Left
 !l::!Right
@@ -5350,6 +5345,7 @@ b:: Click("Middle")
 
 v:: Mouse.HoldIfUp("L")
 !v:: Mouse.HoldIfUp("R")
+tab & v:: Mouse.HoldIfUp("R")
 +b:: Mouse.HoldIfUp("M")
 
 Hotkey "u", ButtonAcceleration
@@ -5427,9 +5423,6 @@ space & k:: {
 space & l:: {
 	ButtonAcceleration('+l')
 }
-
-; Hotkey "^e", ButtonWheelAcceleration
-; Hotkey "^y", ButtonWheelAcceleration
 
 hotkey "!q", ButtonSpeedUp
 hotkey "!a", ButtonSpeedDown
