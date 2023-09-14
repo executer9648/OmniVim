@@ -93,9 +93,11 @@ reloadfunc() {
 +#j:: Send "+#{Down}"
 +#k:: Send "+#{Up}"
 +#l:: Send "+#{Right}"
-; `(semicolon) SECTION =================
+; `(tilda) SECTION =================
 ^`::CapsLock
 `::`
+; !`::!`
+~!`:: return
 ` & h::Left
 ` & k::Up
 ` & j::Down
@@ -111,6 +113,7 @@ reloadfunc() {
 
 ; TAB SECTION =================
 tab::Tab
+tab & `:: exitVim()
 tab & ,:: {
 	Send "^{Home}"
 }
@@ -162,7 +165,8 @@ Tab & r:: {
 	var := rego.EndMods
 	var .= rego.EndKey
 	reg := rego.EndKey
-	if var == "<!Escape" {
+	MsgBox var
+	if var == "<!``" {
 		exitVim()
 		Exit
 	}
@@ -569,7 +573,7 @@ delChanYanfMotion() {
 			check := ih.EndMods
 			check .= ih.EndKey
 			check2 := ih.EndKey
-			if check == "<!Escape" {
+			if check == "<!``" {
 				exitVim()
 				infcounter.Destroy()
 				counter := 0
@@ -605,7 +609,7 @@ delChanYanfMotion() {
 		check := ih.EndMods
 		check .= ih.EndKey
 		check2 := ih.EndKey
-		if check == "<!Escape" {
+		if check == "<!``" {
 			exitVim()
 			infcounter.Destroy()
 			Exit
@@ -654,7 +658,7 @@ delChanYanFMotionc() {
 			check := ih.EndMods
 			check .= ih.EndKey
 			check2 := ih.EndKey
-			if check == "<!Escape" {
+			if check == "<!``" {
 				exitVim()
 				infcounter.Destroy()
 				counter := 0
@@ -690,7 +694,7 @@ delChanYanFMotionc() {
 		check := ih.EndMods
 		check .= ih.EndKey
 		check2 := ih.EndKey
-		if check == "<!Escape" {
+		if check == "<!``" {
 			exitVim()
 			infcounter.Destroy()
 			Exit
@@ -795,7 +799,7 @@ Esc:: {
 	global numlockMode := false
 }
 
-!Esc:: {
+!`:: {
 	exitVim()
 	Exit
 }
@@ -2527,7 +2531,7 @@ Esc:: {
 	gotoMouseMode()
 }
 
-!Esc:: {
+!`:: {
 	exitVim()
 	Exit
 }
@@ -2605,7 +2609,7 @@ z:: Return
 ^w:: Return
 ^e:: Return
 
-!Esc:: {
+!`:: {
 	exitVim()
 	Exit
 }
@@ -2771,7 +2775,7 @@ w:: {
 #HotIf yMode = 1
 HotIf "yMode = 1"
 
-!Esc:: {
+!`:: {
 	exitVim()
 	Exit
 }
@@ -3073,7 +3077,7 @@ Esc:: {
 	Exit
 }
 
-!Esc:: {
+!`:: {
 	exitVim()
 	Exit
 }
@@ -3444,7 +3448,7 @@ Esc:: {
 	Exit
 }
 
-!Esc:: {
+!`:: {
 	exitVim()
 	Exit
 }
@@ -3636,7 +3640,7 @@ Esc:: {
 	infcounter.Destroy()
 }
 
-!Esc:: {
+!`:: {
 	exitVim()
 	Exit
 }
@@ -3830,7 +3834,7 @@ HotIf "insertMode = 1"
 	var := rego.EndMods
 	var .= rego.EndKey
 	reg := rego.EndKey
-	if var == "<!Escape" {
+	if var == "<!``" {
 		exitVim()
 		Exit
 	}
@@ -3846,7 +3850,7 @@ HotIf "insertMode = 1"
 	global insertMode := true
 }
 
-!Esc:: {
+!`:: {
 	exitVim()
 	gotoNormal()
 	Exit
@@ -4243,7 +4247,7 @@ z:: Return
 			check := ih.EndMods
 			check .= ih.EndKey
 			check2 := ih.EndKey
-			if check == "<!Escape" {
+			if check == "<!``" {
 				exitVim()
 				infcounter.Destroy()
 				counter := 0
@@ -4279,7 +4283,7 @@ z:: Return
 		check := ih.EndMods
 		check .= ih.EndKey
 		check2 := ih.EndKey
-		if check == "<!Escape" {
+		if check == "<!``" {
 			exitVim()
 			infcounter.Destroy()
 			Exit
@@ -4329,7 +4333,7 @@ f:: {
 			check := ih.EndMods
 			check .= ih.EndKey
 			check2 := ih.EndKey
-			if check == "<!Escape" {
+			if check == "<!``" {
 				exitVim()
 				infcounter.Destroy()
 				counter := 0
@@ -4365,7 +4369,7 @@ f:: {
 		check := ih.EndMods
 		check .= ih.EndKey
 		check2 := ih.EndKey
-		if check == "<!Escape" {
+		if check == "<!``" {
 			exitVim()
 			infcounter.Destroy()
 			Exit
@@ -4457,7 +4461,7 @@ e:: {
 	Send "+{Right}"
 }
 
-!Esc:: {
+!`:: {
 	exitVim()
 }
 
@@ -5004,7 +5008,7 @@ Esc:: {
 	Exit
 }
 
-!Esc:: {
+!`:: {
 	exitVim()
 	Exit
 }
@@ -5085,7 +5089,7 @@ z & =:: {
 	var := rego.EndMods
 	var .= rego.EndKey
 	reg := rego.EndKey
-	if var == "<!Escape" {
+	if var == "<!``" {
 		exitVim()
 		inf.Destroy()
 		Exit
@@ -5108,7 +5112,7 @@ z & =:: {
 	var := rego.EndMods
 	var .= rego.EndKey
 	operator := rego.EndKey
-	if var == "<!Escape" {
+	if var == "<!``" {
 		exitVim()
 		inf.Destroy()
 		Exit
@@ -5431,7 +5435,10 @@ hotkey "!s", ButtonAccelerationSpeedDown
 hotkey "!e", ButtonMaxSpeedUp
 hotkey "!d", ButtonMaxSpeedDown
 
-!Esc:: {
+; !Esc:: {
+; 	exitVim()
+; }
+!`:: {
 	exitVim()
 }
 Esc:: {
@@ -5502,7 +5509,6 @@ BackSpace:: {
 	; ControlSend "{WheelUp}", active_id
 	Send "{WheelUp}"
 }
-
 #HotIf
 
 disableClick() {
