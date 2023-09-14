@@ -185,9 +185,9 @@ Tab & s::^f
 Tab & =::+f10
 Tab & d:: {
 	if GetKeyState("Shift")
-		Send "{Delete}"
-	else
 		Send "^{Delete}"
+	else
+		Send "{Delete}"
 }
 Tab & w:: {
 	langid := Language.GetKeyboardLanguage()
