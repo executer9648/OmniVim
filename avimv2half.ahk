@@ -93,11 +93,41 @@ reloadfunc() {
 +#j:: Send "+#{Down}"
 +#k:: Send "+#{Up}"
 +#l:: Send "+#{Right}"
+
+; `(semicolon) SECTION =================
+` & h::Left
+` & k::Up
+` & j::Down
+` & l::Right
+` & y::WheelUp
+` & e::WheelDown
+` & g:: {
+	if GetKeyState("Shift")
+		Send "{End}"
+	else
+		Send "{Home}"
+}
+
+; TAB SECTION =================
 tab::Tab
 Tab & b::^Left
+; Tab & h:: {
+; 	if GetKeyState("Shift")
+; 		Send "{Backspace}"
+; 	else
+; 		Send "{Left}"
+; }
+; Tab & k:: {
+; 	if GetKeyState("Shift") {
+; 		Send "+{End}"
+; 		Send "{Backspace}"
+; 	}
+; 	else
+; 		Send "{Up}"
+; }
 Tab & h::Left
-Tab & j::Down
 Tab & k::Up
+Tab & j::Down
 Tab & l::Right
 Tab & n::Down
 Tab & j::Down
