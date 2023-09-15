@@ -45,7 +45,8 @@ class HoverScreenshot {
 	 * gHover.Show()
 	 */
 	__New(picturePath?) {
-		this.gHover := Gui("AlwaysOnTop -Caption")
+		; this.gHover := Gui("AlwaysOnTop -Caption")
+		this.gHover := Gui(" -Caption")
 		this.guiHwnd := this.gHover.Hwnd
 		this.picturePath := picturePath ?? ""
 	}
@@ -91,7 +92,7 @@ class HoverScreenshot {
 		}
 		this.gcPicture := this.gHover.AddPicture(, this.picturePath)
 		this.gHover.BackColor := 808080
-		; WinSetTransColor(808080, this.gHover.Hwnd)
+		WinSetTransColor(808080, this.gHover.Hwnd)
 
 		this._SetOnevents()
 
