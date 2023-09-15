@@ -91,7 +91,7 @@ class HoverScreenshot {
 		}
 		this.gcPicture := this.gHover.AddPicture(, this.picturePath)
 		this.gHover.BackColor := 808080
-		WinSetTransColor(808080, this.gHover.Hwnd)
+		; WinSetTransColor(808080, this.gHover.Hwnd)
 
 		this._SetOnevents()
 
