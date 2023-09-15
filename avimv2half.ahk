@@ -13,6 +13,7 @@
 #Include GetInput.ahk
 #Include Language.ahk
 #Include TapHoldManager.ahk
+#Include HoverScreenshot.ahk
 #Requires AutoHotkey v2.0
 
 InstallKeybdHook
@@ -70,6 +71,8 @@ reloadfunc() {
 	}
 	Reload
 }
+
++#a:: HoverScreenshot().UseRecentScreenshot().Show()
 
 +^#e:: Edit
 +^#r:: {
