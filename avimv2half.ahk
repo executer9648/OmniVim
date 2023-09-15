@@ -121,7 +121,7 @@ tab & .:: {
 	Send "^{End}"
 }
 Tab & b:: {
-	if GetKeyState("Shift")
+	if GetKeyState("ctrl")
 		Send "^{Left}"
 	else
 		Send "{Left}"
@@ -135,20 +135,20 @@ Tab & k:: {
 Tab & n::Down
 Tab & p::Up
 Tab & f:: {
-	if GetKeyState("Shift")
+	if GetKeyState("ctrl")
 		Send "^{Right}"
 	else
 		Send "{Right}"
 }
 Tab & a::Home
 Tab & g:: {
-	if GetKeyState("Shift")
+	if GetKeyState("ctrl")
 		Send "^{End}"
 	else
 		Send "^{Home}"
 }
 Tab & x:: {
-	if GetKeyState("Shift")
+	if GetKeyState("ctrl")
 		Send "^+t"
 	else
 		Send "^{f4}"
@@ -184,7 +184,7 @@ Tab & r:: {
 Tab & s::^f
 Tab & =::+f10
 Tab & d:: {
-	if GetKeyState("Shift")
+	if GetKeyState("ctrl")
 		Send "^{Delete}"
 	else
 		Send "{Delete}"
