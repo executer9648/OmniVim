@@ -14,6 +14,7 @@
 #Include Language.ahk
 #Include TapHoldManager.ahk
 #Include HoverScreenshot.ahk
+#Include EasyWindowDragginKde.ahk
 #Requires AutoHotkey v2.0
 
 InstallKeybdHook
@@ -32,7 +33,7 @@ $CapsLock::LCtrl
 +!#Control::CapsLock
 
 #HotIf WinActive("A")
-~Alt:: Send "{Blind}{vkE8}"
+; ~Alt:: Send "{Blind}{vkE8}"
 #!h:: {
 	KeyWait "LWin"
 	KeyWait "Alt"

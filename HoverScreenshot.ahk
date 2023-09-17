@@ -70,7 +70,7 @@ class HoverScreenshot {
 	}
 
 	UseRecentScreenshot() {
-		picturesArr := GetFilesSortedByDate("C:\Users\Benni\AppData\Local\Packages\MicrosoftWindows.Client.CBS_cw5n1h2txyewy\TempState\ScreenClip" "\*.png")
+		picturesArr := GetFilesSortedByDate("C:\Users\" A_UserName "\AppData\Local\Packages\MicrosoftWindows.Client.CBS_cw5n1h2txyewy\TempState\ScreenClip" "\*.png")
 		for , picturePath in picturesArr {
 			size := GetPicSize(picturePath)
 			if size.Width = 364 * HoverScreenshot.ActualScreenDpi && size.Height = 180 * HoverScreenshot.ActualScreenDpi
