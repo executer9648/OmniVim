@@ -109,13 +109,14 @@ reloadfunc() {
 ` & y::WheelUp
 ` & e::WheelDown
 ` & g:: {
-	if GetKeyState("Shift")
+	if GetKeyState("Shift") or GetKeyState("vkE8")
 		Send "{End}"
 	else
 		Send "{Home}"
 }
 
 ; TAB SECTION =================
+tab & Space::vkE8
 tab::Tab
 tab & `:: exitVim()
 tab & ,:: {
@@ -125,7 +126,7 @@ tab & .:: {
 	Send "^{End}"
 }
 Tab & b:: {
-	if GetKeyState("ctrl")
+	if GetKeyState("ctrl") or GetKeyState("vkE8")
 		Send "^{Left}"
 	else
 		Send "{Left}"
@@ -139,20 +140,20 @@ Tab & k:: {
 Tab & n::Down
 Tab & p::Up
 Tab & f:: {
-	if GetKeyState("ctrl")
+	if GetKeyState("ctrl") or GetKeyState("vkE8")
 		Send "^{Right}"
 	else
 		Send "{Right}"
 }
 Tab & a::Home
 Tab & g:: {
-	if GetKeyState("ctrl")
+	if GetKeyState("ctrl") or GetKeyState("vkE8")
 		Send "^{End}"
 	else
 		Send "^{Home}"
 }
 Tab & x:: {
-	if GetKeyState("ctrl")
+	if GetKeyState("ctrl") or GetKeyState("vkE8")
 		Send "^+t"
 	else
 		Send "^{f4}"
@@ -188,7 +189,7 @@ Tab & r:: {
 Tab & s::^f
 Tab & =::+f10
 Tab & d:: {
-	if GetKeyState("ctrl")
+	if GetKeyState("ctrl") or GetKeyState("vkE8")
 		Send "^{Delete}"
 	else
 		Send "{Delete}"
