@@ -100,12 +100,15 @@ reloadfunc() {
 ; `(tilda) SECTION =================
 ^`::CapsLock
 `::`
-; !`::!`
 ~!`:: return
 ` & h::Left
+` & b::Left
 ` & k::Up
+` & p::Up
 ` & j::Down
+` & n::Down
 ` & l::Right
+` & f::Right
 ` & y::WheelUp
 ` & e::WheelDown
 ` & g:: {
@@ -5503,7 +5506,8 @@ Hotkey "^l", ButtonAcceleration
 ; 	ButtonAcceleration('^l')
 ; }
 
-
+space & e::wheeldown
+space & y::WheelUp
 space & ,:: {
 	ButtonAcceleration('+,')
 }
