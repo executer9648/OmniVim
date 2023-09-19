@@ -170,7 +170,6 @@ Tab & r:: {
 	var := rego.EndMods
 	var .= rego.EndKey
 	reg := rego.EndKey
-	MsgBox var
 	if var == "<!``" {
 		exitVim()
 		Exit
@@ -214,6 +213,103 @@ Tab & u:: {
 ; tab & y::WheelUp
 ; tab & e::WheelDown
 tab & e::End
+;============ capslok section==============
+capslock & Space::vkE8
+capslock::Tab
+capslock & `:: exitVim()
+capslock & ,:: {
+	Send "^{Home}"
+}
+capslock & .:: {
+	Send "^{End}"
+}
+capslock & b:: {
+	if GetKeyState("ctrl") or GetKeyState("vkE8")
+		Send "^{Left}"
+	else
+		Send "{Left}"
+}
+capslock & h::BackSpace
+capslock & k:: {
+	Send "+{end}"
+	Sleep 10
+	Send "{bs}"
+}
+capslock & n::Down
+capslock & p::Up
+capslock & f:: {
+	if GetKeyState("ctrl") or GetKeyState("vkE8")
+		Send "^{Right}"
+	else
+		Send "{Right}"
+}
+capslock & a::Home
+capslock & g:: {
+	if GetKeyState("ctrl") or GetKeyState("vkE8")
+		Send "^{End}"
+	else
+		Send "^{Home}"
+}
+capslock & x:: {
+	if GetKeyState("ctrl") or GetKeyState("vkE8")
+		Send "^+t"
+	else
+		Send "^{f4}"
+}
+capslock & r:: {
+	global insertMode := false
+	inf := Infos('"', , true)
+	StateBulb[7].Create()
+	rego := InputHook("C")
+	rego.KeyOpt("{All}", "ESI") ;End Keys & Suppress
+	rego.KeyOpt("{LCtrl}{RCtrl}{LAlt}{RAlt}{LShift}{RShift}{LWin}{RWin}", "-ES") ;Exclude the modifiers
+	rego.Start()
+	rego.Wait()
+	var := rego.EndMods
+	var .= rego.EndKey
+	reg := rego.EndKey
+	if var == "<!``" {
+		exitVim()
+		Exit
+	}
+	else if reg == "Escape" {
+		StateBulb[7].Destroy()
+		inf.Destroy()
+		global insertMode := true
+		Exit
+	}
+	Registers(reg).Paste()
+	StateBulb[7].Destroy()
+	inf.Destroy()
+	global insertMode := true
+}
+capslock & s::^f
+capslock & =::+f10
+capslock & d:: {
+	if GetKeyState("ctrl") or GetKeyState("vkE8")
+		Send "^{Delete}"
+	else
+		Send "{Delete}"
+}
+capslock & w:: {
+	langid := Language.GetKeyboardLanguage()
+	if (LangID = 0x040D) {
+		Send "^+{Right}"
+		Sleep 10
+		Send "{bs}"
+		Exit
+	}
+	Send "^+{Left}"
+	Sleep 10
+	Send "{bs}"
+}
+capslock & u:: {
+	Send "+{Home}"
+	Sleep 10
+	Send "{bs}"
+}
+capslock & e::End
+;===========================================
 
 ^!n:: {
 	gotoNumLockMode()
