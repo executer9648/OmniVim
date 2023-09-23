@@ -3895,6 +3895,7 @@ w:: {
 #HotIf insertMode = 1
 HotIf "insertMode = 1"
 
+^=::+f10
 
 !^,:: {
 	Send "^{Home}"
