@@ -29,10 +29,9 @@ CoordMode "Mouse"
 
 g_DoubleAlt := false
 
-!LButton::
+Tab & LButton::
 {
-	global g_DoubleAlt  ; Declare it since this hotkey function must modify it.
-	if g_DoubleAlt
+	if GetKeyState("vkE8")
 	{
 		; MouseGetPos , , &KDE_id
 		; ; This message is mostly equivalent to WinMinimize,
@@ -62,10 +61,9 @@ g_DoubleAlt := false
 	}
 }
 
-!RButton::
+Tab & RButton::
 {
-	global g_DoubleAlt
-	if g_DoubleAlt
+	if GetKeyState("vkE8")
 	{
 		MouseGetPos , , &KDE_id
 		; Toggle between maximized and restored state.
@@ -115,10 +113,9 @@ g_DoubleAlt := false
 
 ; "Alt + MButton" may be simpler, but I like an extra measure of security for
 ; an operation like this.
-!MButton::
+Tab & MButton::
 {
-	global g_DoubleAlt
-	if g_DoubleAlt
+	if GetKeyState("vkE8")
 	{
 		MouseGetPos , , &KDE_id
 		WinClose KDE_id
@@ -127,10 +124,10 @@ g_DoubleAlt := false
 	}
 }
 
-; This detects "double-clicks" of the alt key.
-~Alt::
-{
-	global g_DoubleAlt := (A_PriorHotkey = "~Alt" and A_TimeSincePriorHotkey < 400)
-	Sleep 0
-	KeyWait "Alt"  ; This prevents the keyboard's auto-repeat feature from interfering.
-}
+; ; This detects "double-clicks" of the alt key.
+; ~Tab::
+; {
+; 	global g_DoubleAlt := (A_PriorHotkey = "~Tab" and A_TimeSincePriorHotkey < 400)
+; 	Sleep 0
+; 	KeyWait "Tab"  ; This prevents the keyboard's auto-repeat feature from interfering.
+; }
