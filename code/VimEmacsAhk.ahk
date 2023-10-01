@@ -95,12 +95,6 @@ $CapsLock::LCtrl
 ` & f::Right
 ` & y::WheelUp
 ` & e::WheelDown
-` & g:: {
-	if GetKeyState("Shift") or GetKeyState("vkE8")
-		Send "{End}"
-	else
-		Send "{Home}"
-}
 
 ; TAB SECTION =================
 tab & Space::vkE8
@@ -203,7 +197,6 @@ tab & e::End
 ; this makes it so the tab shortcuts work on capslock which is a bit more comfortable otherwise redundant with tab section
 
 capslock & Space::vkE8
-capslock::Tab
 capslock & `:: exitVim()
 capslock & ,:: {
 	Send "^{Home}"
@@ -3540,9 +3533,6 @@ HotIf "normalMode = 1"
 Z & Q:: {
 	Send "!{f4}"
 }
-Z & Z:: {
-	Send "!{f4}"
-}
 z & h:: {
 	Send "{WheelLeft}"
 }
@@ -3578,9 +3568,6 @@ BackSpace:: {
 	}
 }
 
-#Space:: {
-	Language.ToggleBulb()
-}
 -:: Return
 `;:: Return
 +;:: {
@@ -4057,11 +4044,11 @@ d::
 	gotoDMode()
 }
 
-$+^y::
+$+^e::
 {
 	Send "^{WheelDown}"
 }
-$+^e::
+$+^y::
 {
 	Send "^{WheelUp}"
 }
@@ -4072,16 +4059,6 @@ $+^e::
 
 ^y:: {
 	Send "{WheelUp}"
-}
-
-^esc:: {
-	global normalMode := false
-	StateBulb[4].Create()
-	key := GetInput("ML1", "").Input
-	; MsgBox key
-	Send key
-	StateBulb[4].Destroy()
-	global normalMode := true
 }
 
 Esc:: {
