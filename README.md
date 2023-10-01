@@ -18,6 +18,7 @@ Links to sources:
 | Ctrl +\[                    | start vim in Normal mode                 |
 | Ctrl +\]                    | start Mouse mode                         |
 | Alt + \`                    | Exit all Modes                           |
+| Tab + \`                    | Exit all Modes                           |
 | Ctrl + Alt + n              | Start/Exit Numlock Mode                  |
 | Capslock                    | Left Ctrl                                |
 | Ctrl + \`                   | Capslock                                 |
@@ -57,6 +58,7 @@ In the following shortcuts Tab is interchangable with capslock space is intercha
 
 | Shortcut        | Functionality                                                    |
 | --------------- |:---------------------------------------------------------------- |
+| Tab + \`        | Exit all Modes                                                   |
 | Tab + n         | Down arrow                                                       |
 | Tab + p         | Up arrow                                                         |
 | Tab + f         | Right arrow                                                      |
@@ -167,7 +169,88 @@ In the following shortcuts Tab is interchangable with capslock space is intercha
 | $                | Go to End of line                                                           |
 
 #### Insert Mode Functions:
+
+| Shortcut         | Functionality                                                    |
+| ---------------- |:---------------------------------------------------------------- |
+| Ctrl + n         | Down arrow                                                       |
+| Ctrl + p         | Up arrow                                                         |
+| Ctrl + f         | Right arrow                                                      |
+| Alt + f          | Move 1 word right                                                |
+| Ctrl + b         | Left arrow                                                       |
+| Alt + b          | Move 1 word left                                                 |
+| Ctrl + Alt + ,   | Go to first line                                                 |
+| Ctrl + Alt + .   | Go to last line                                                  |
+| Ctrl + h         | Backspace                                                        |
+| Ctrl + w         | Delete 1 Word to the Left                                        |
+| Ctrl + d         | Delete                                                           |
+| Ctrl + Alt +d    | Delete 1 Word to the right                                       |
+| Ctrl + k         | Delete to end to line                                            |
+| Ctrl + u         | Delete to start of line                                          |
+| Ctrl + a         | Go to start to line                                              |
+| Ctrl + e         | Go to end to line                                                |
+| Ctrl + r         | Insert contents from register (next key pressed is the register) |
+| Ctrl + x         | Close tab                                                        |
+| Ctrl + Shift + x | Reopen last closed tab                                           |
+| Ctrl + s         | start search(like ctrl + f) and next occurance                   |
+| Ctrl + Shift + s | start search(like ctrl + f) and previous occurance               |
+| Ctrl + =         | open context menu near mouse                                     |
+| Escape           | return to normal mode                                            |
+
 #### Mouse Mode Functions:
+ - Clicks work with ctrl or shift 
+  
+| Shortcut  | Functionality                      |
+| --------- |:---------------------------------- |
+| u         | move mouse up left normal speed    |
+| n         | move mouse down left normal speed  |
+| ,         | move mouse down right normal speed |
+| o         | move mouse up right normal speed   |
+| h         | move mouse left normal speed       |
+| j         | move mouse down normal speed       |
+| k         | move mouse up normal speed         |
+| l         | move mouse right left normal speed |
+| Ctrl + u  | move mouse up left high speed      |
+| Ctrl + n  | move mouse down left high speed    |
+| Ctrl + ,  | move mouse down right high speed   |
+| Ctrl + o  | move mouse up right high speed     |
+| Ctrl + h  | move mouse left high speed         |
+| Ctrl + j  | move mouse down high speed         |
+| Ctrl + k  | move mouse up high speed           |
+| Ctrl + l  | move mouse right left high speed   |
+| Space + u | move mouse up left low speed       |
+| Space + n | move mouse down left low speed     |
+| Space + , | move mouse down right low speed    |
+| Space + o | move mouse up right low speed      |
+| Space + h | move mouse left low speed          |
+| Space + j | move mouse down low speed          |
+| Space + k | move mouse up low speed            |
+| Space + l | move mouse right left low speed    |
+| i         | Go to insert mode                  |
+| m         | Go to Window mover mode            |
+| t         | Left click                         |
+| Tab + t   | Right click                        |
+| b         | Middle click                       |
+
 #### Window Mover Mode Functions:
+- Numbers move the window to related location on screen 
+	- Ctrl moves them in Lower layer
+	- Shift moves them in Middle layer
+	- Default is in Upper layer
+
+| Shortcut | Functionality                      |
+| -------- |:---------------------------------- |
+| h        | move window left normal speed       |
+| j        | move window down normal speed       |
+| k        | move window up normal speed         |
+| l        | move window right left normal speed |
+| Ctrl + h  | move window left high speed         |
+| Ctrl + j  | move window down high speed         |
+| Ctrl + k  | move window up high speed           |
+| Ctrl + l  | move window right left high speed   |
+| shift + h | move window left low speed          |
+| shift + j | move window down low speed          |
+| shift + k | move window up low speed            |
+| shift + l | move window right left low speed    |
+
 #### Command Mode Functions:
 #### Register Mode Functions:
