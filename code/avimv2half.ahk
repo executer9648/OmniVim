@@ -12,7 +12,6 @@
 #Include mousetest.ahk
 #Include GetInput.ahk
 #Include Language.ahk
-#Include TapHoldManager.ahk
 #Include HoverScreenshot.ahk
 #Include EasyWindowDragginKde.ahk
 #Requires AutoHotkey v2.0
