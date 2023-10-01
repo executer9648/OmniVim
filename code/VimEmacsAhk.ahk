@@ -1,8 +1,3 @@
-#SingleInstance force
-#MaxThreadsBuffer true
-#MaxThreads 250
-#MaxThreadsPerHotkey 255
-#UseHook
 #Include StateBulb.ahk
 #Include Info.ahk
 #Include Mouse.ahk
@@ -14,25 +9,27 @@
 #Include Language.ahk
 #Include HoverScreenshot.ahk
 #Include EasyWindowDragginKde.ahk
+#SingleInstance force
+#MaxThreadsBuffer true
+#MaxThreads 250
+#MaxThreadsPerHotkey 255
+#UseHook
 #Requires AutoHotkey v2.0
-
 InstallKeybdHook
-; InstallMouseHook
-
-; XButton1 & LButton::+LButton
-
 A_HotkeyInterval := 0
 A_MaxHotkeysPerInterval := 9999
 A_MenuMaskKey := "vkFF"
-
 SetMouseDelay -1
 CoordMode "Mouse", "Screen"
+
+Info("Script Reloaded-Active", 2000)
+
+;################ Global Key-Bindings ################
 
 $CapsLock::LCtrl
 +!#Control::CapsLock
 
 #HotIf WinActive("A")
-; ~Alt:: Send "{Blind}{vkE8}"
 #!h:: {
 	KeyWait "LWin"
 	KeyWait "Alt"
@@ -59,25 +56,11 @@ $CapsLock::LCtrl
 }
 #HotIf
 
-Info("Script Reloaded-Active", 2000)
-
-reloadfunc() {
-	langid := Language.GetKeyboardLanguage()
-	if (LangID = 0x040D) {
-		Infos("changing to english")
-		Send "#{space}"
-		Sleep 1000
-		Reload
-	}
-	Reload
-}
-
 +#a:: HoverScreenshot().UseRecentScreenshot().Show()
-
-+^#e:: Edit
 +^#r:: {
 	reloadfunc()
 }
+
 #SuspendExempt
 +^#s:: {
 	if A_IsSuspended {
@@ -86,16 +69,18 @@ reloadfunc() {
 	else {
 		Info("Script Suspended", 2000)
 	}
-	Suspend  ; Ctrl+Alt+S
+	Suspend
 }
 #SuspendExempt False
+
 ^#h:: Send "^#{Left}"
 ^#l:: Send "^#{Right}"
-
+;----------------------
 +#h:: Send "+#{Left}"
 +#j:: Send "+#{Down}"
 +#k:: Send "+#{Up}"
 +#l:: Send "+#{Right}"
+
 ; `(tilda) SECTION =================
 ^`::CapsLock
 `::`
@@ -212,10 +197,11 @@ Tab & u:: {
 	Sleep 10
 	Send "{bs}"
 }
-; tab & y::WheelUp
-; tab & e::WheelDown
 tab & e::End
 ;============ capslok section==============
+; this is incase you opt out of changing the caps to control
+; this makes it so the tab shortcuts work on capslock which is a bit more comfortable otherwise redundant with tab section
+
 capslock & Space::vkE8
 capslock::Tab
 capslock & `:: exitVim()
@@ -344,515 +330,6 @@ global wasInInsertMode := false
 global wasinCmdMode := false
 global infcounter := Infos("")
 infcounter.Destroy()
-; Info("Script Active", 2)
-
-chCounter(number, mode := "") {
-	global counter
-	global infcounter
-	if counter >= 0 {
-		counter *= 10
-		counter += number
-		text := mode counter
-		infcounter.Destroy()
-		infcounter := Infos(text, , true)
-	}
-}
-
-exitVim() {
-	Infos.DestroyAll()
-	Infos("Exit Vim", 1500)
-	Global normalMode := false
-	Global insertMode := false
-	global dMode := false
-	global wasInInsertMode := false
-	global regMode := false
-	global wasInNormalMode := false
-	global gMode := false
-	global yMode := false
-	global cMode := false
-	global fMode := false
-	global numlockMode := false
-	global windowMode := false
-	Global visualMode := false
-	global WindowManagerMode := false
-	global mouseManagerMode := false
-	Global visualLineMode := false
-	global counter := 0
-	StateBulb[1].Destroy() ; Vim
-	StateBulb[2].Destroy() ; Insert
-	StateBulb[3].Destroy() ; Visual
-	StateBulb[4].Destroy() ; Special
-	StateBulb[5].Destroy() ; Move windows
-	StateBulb[6].Destroy() ; Mouse Movement
-	StateBulb[7].Destroy() ; reg Mode
-	StateBulb[StateBulb.MaxBulbs - 1].Destroy()
-	; StateBulb[4].Destroy() ; Delete
-	; StateBulb[5].Destroy() ; Change
-	; StateBulb[6].Destroy() ; Yank
-	; StateBulb[7].Destroy() ; Window
-	; StateBulb[8].Destroy() ; Fmode
-	disableClick()
-	Exit
-}
-gotoNumLockMode() {
-	global numlockMode := true
-	global normalMode := false
-	global mouseManagerMode := false
-	StateBulb[4].Create()
-}
-
-gotoWindowMode() {
-	global mouseManagerMode := false
-	global normalMode := false
-	global windowMode := true
-	StateBulb[4].Create()
-}
-
-gotoMwMode() {
-	global mouseManagerMode := false
-	global normalMode := false
-	global WindowManagerMode := true
-	StateBulb[5].Create()
-}
-
-gotoMouseMode() {
-	global monitorCount
-	if monitorCount == 0 {
-		monitorCount := MonitorGetCount()
-	}
-	else if monitorCount != MonitorGetCount() {
-		reloadfunc()
-	}
-	global normalMode := false
-	global mouseManagerMode := true
-	global WasInMouseManagerMode := false
-	global wasinCmdMode := false
-	global WasInRegMode := false
-	global WasInWindowManagerMode := false
-	global fMode := false
-	StateBulb[6].Create()
-	StateBulb[4].Destroy()
-}
-
-gotoFMode() {
-	global normalMode := false
-	global mouseManagerMode := false
-	global fMode := true
-	StateBulb[4].Create()
-}
-
-gotoGMode() {
-	global normalMode := false
-	global gMode := true
-	StateBulb[4].Create()
-}
-
-gotoDMode() {
-	global normalMode := false
-	global dMode := true
-	StateBulb[4].Create()
-	; langid := Language.GetKeyboardLanguage()
-	; if (LangID = 0x040D) {
-	; 	Send "{Left}"
-	; } else
-	; 	Send "{Right}"
-}
-
-gotoRegMode() {
-	global normalMode := false
-	global regMode := true
-	StateBulb[4].Create()
-}
-
-gotoYMode() {
-	global normalMode := false
-	global yMode := true
-	StateBulb[4].Create()
-	langid := Language.GetKeyboardLanguage()
-	if (LangID = 0x040D) {
-		Send "{Left}"
-	} else
-		Send "{Right}"
-}
-
-gotoCMode() {
-	global normalMode := false
-	global cMode := true
-	StateBulb[4].Create()
-	; langid := Language.GetKeyboardLanguage()
-	; if (LangID = 0x040D) {
-	; 	Send "{Left}"
-	; } else
-	; 	Send "{Right}"
-}
-
-gotoNormalnoInfo() {
-	StateBulb[6].Destroy() ; Mouse Movement
-	StateBulb[5].Destroy() ; Move windows
-	StateBulb[4].Destroy()
-	if visualMode == true {
-		StateBulb[3].Destroy()
-	}
-	if insertMode == true {
-		StateBulb[2].Destroy()
-	}
-	global normalMode := true
-	global visualMode := false
-	global insertMode := false
-	global visualLineMode := false
-	global dMode := false
-	global regMode := false
-	global gMode := false
-	global cMode := false
-	global fMode := false
-	global yMode := false
-	global windowMode := false
-	global WindowManagerMode := false
-	global WasInMouseManagerMode := false
-	global wasinCmdMode := false
-	global WasInRegMode := false
-	global WasInWindowManagerMode := false
-	global mouseManagerMode := false
-	StateBulb[1].Create()
-}
-
-gotoNormal() {
-	global monitorCount
-	if monitorCount == 0 {
-		monitorCount := MonitorGetCount()
-	}
-	else if monitorCount != MonitorGetCount() {
-		reloadfunc()
-	}
-	StateBulb[6].Destroy() ; Mouse Movement
-	StateBulb[5].Destroy() ; Move windows
-	StateBulb[4].Destroy()
-	if visualMode == true {
-		StateBulb[3].Destroy()
-	}
-	if insertMode == true {
-		StateBulb[2].Destroy()
-	}
-	global normalMode := true
-	global visualMode := false
-	global insertMode := false
-	global visualLineMode := false
-	global dMode := false
-	global regMode := false
-	global gMode := false
-	global cMode := false
-	global fMode := false
-	global shiftfMode := false
-	global altfMode := false
-	global yMode := false
-	global windowMode := false
-	global WindowManagerMode := false
-	global WasInMouseManagerMode := false
-	global wasinCmdMode := false
-	global WasInRegMode := false
-	global WasInWindowManagerMode := false
-	global mouseManagerMode := false
-	global counter := 0
-	StateBulb[1].Create()
-	; Infos.DestroyAll()
-	; Infos("Normal Mode", 1500)
-}
-
-gotoVisual() {
-	global normalMode := true
-	global visualMode := true
-	global insertMode := false
-	global visualLineMode := false
-	global dMode := false
-	global regMode := false
-	global gMode := false
-	global yMode := false
-	global fMode := false
-	global cMode := false
-	global windowMode := false
-	global WindowManagerMode := false
-	global mouseManagerMode := false
-	StateBulb[3].Create()
-	; Infos.DestroyAll()
-	; Infos("Visual Mode", 1500)
-}
-
-gotoInsert() {
-	StateBulb[6].Destroy() ; Mouse Movement
-	StateBulb[5].Destroy() ; Move windows
-	StateBulb[4].Destroy()
-	if visualMode == true {
-		StateBulb[3].Destroy()
-	}
-	global normalMode := false
-	global visualMode := false
-	global insertMode := true
-	global visualLineMode := false
-	global dMode := false
-	global regMode := false
-	global gMode := false
-	global fMode := false
-	global yMode := false
-	global windowMode := false
-	global cMode := false
-	global WindowManagerMode := false
-	global mouseManagerMode := false
-	StateBulb[2].Create()
-	global infcounter
-	infcounter.Destroy()
-	global counter
-	counter := 0
-	; Infos.DestroyAll()
-	; Infos("Insert Mode", 1500)
-}
-
-gotoInsertnoInfo() {
-	StateBulb[6].Destroy() ; Mouse Movement
-	StateBulb[5].Destroy() ; Move windows
-	StateBulb[4].Destroy()
-	if visualMode == true {
-		StateBulb[3].Destroy()
-	}
-	global normalMode := false
-	global visualMode := false
-	global insertMode := true
-	global visualLineMode := false
-	global dMode := false
-	global regMode := false
-	global gMode := false
-	global fMode := false
-	global yMode := false
-	global windowMode := false
-	global cMode := false
-	global WindowManagerMode := false
-	global mouseManagerMode := false
-	StateBulb[2].Create()
-}
-
-fMotion() {
-	StateBulb[4].Create()
-	global normalMode := false
-	ih := InputHook("C")
-	ih.KeyOpt("{All}", "ESI") ;End Keys & Suppress
-	ih.KeyOpt("{LCtrl}{RCtrl}{LAlt}{RAlt}{LShift}{RShift}{LWin}{RWin}", "-ES") ;Exclude the modifiers
-	ih.Start()
-	ih.Wait()
-	var := ih.EndKey
-	oldclip := A_Clipboard
-	A_Clipboard := ""
-	Send "{Left}"
-	Send "+{Home}"
-	Send "^c"
-	Send "{Right}"
-	ClipWait 1
-	Haystack := A_Clipboard
-	A_Clipboard := oldclip
-	FoundPos := InStr(Haystack, var)
-	Send "{Home}"
-	loop FoundPos {
-		Send "{Right}"
-	}
-	Send "{Left}"
-	Send "+{Right}"
-	global normalMode := true
-}
-
-delChanYanfMotion() {
-	StateBulb[4].Create()
-	global normalMode := false
-	global counter
-	global infcounter
-	cvar := "" counter
-	cvar .= "f"
-	infcounter.Destroy()
-	infcounter := Infos(cvar, , true)
-	if counter != 0 {
-		while counter > 0 {
-			ih := InputHook("C")
-			ih.KeyOpt("{All}", "ESI") ;End Keys & Suppress
-			ih.KeyOpt("{LCtrl}{RCtrl}{LAlt}{RAlt}{LShift}{RShift}{LWin}{RWin}", "-ES") ;Exclude the modifiers
-			ih.Start()
-			ih.Wait()
-			check := ih.EndMods
-			check .= ih.EndKey
-			check2 := ih.EndKey
-			if check == "<!``" {
-				exitVim()
-				infcounter.Destroy()
-				counter := 0
-				Exit
-			} else if check2 == "Escape" {
-				StateBulb[4].Destroy()
-				global normalMode := true
-				infcounter.Destroy()
-				counter := 0
-				Exit
-			} else if check2 == "Backspace" {
-				counter += 2
-				trimed := SubStr(var, 1, StrLen(var) - 1)
-				var := trimed
-			} else if check2 == "Space" {
-				Continue
-			} else {
-				var .= ih.EndKey
-			}
-			infcounter.Destroy()
-			infcounter := Infos(var, , true)
-			counter -= 1
-		}
-		counter := 0
-	}
-	else {
-		ih := InputHook("C")
-		ih.KeyOpt("{All}", "ESI") ;End Keys & Suppress
-		ih.KeyOpt("{LCtrl}{RCtrl}{LAlt}{RAlt}{LShift}{RShift}{LWin}{RWin}", "-ES") ;Exclude the modifiers
-		ih.Start()
-		ih.Wait()
-		var := ih.EndKey
-		check := ih.EndMods
-		check .= ih.EndKey
-		check2 := ih.EndKey
-		if check == "<!``" {
-			exitVim()
-			infcounter.Destroy()
-			Exit
-		} else if check2 == "Escape" {
-			StateBulb[4].Destroy()
-			global normalMode := true
-			infcounter.Destroy()
-			Exit
-		}
-	}
-	oldclip := A_Clipboard
-	A_Clipboard := ""
-	Send "{Right}"
-	Send "+{End}"
-	Send "^c"
-	Send "{Left}"
-	ClipWait 1
-	Haystack := A_Clipboard
-	FoundPos := InStr(Haystack, var)
-	loop FoundPos {
-		Send "{Right}"
-	}
-	Send "{Left}"
-	Send "+{Right}"
-	global normalMode := true
-	infcounter.Destroy()
-	StateBulb[4].Destroy()
-}
-
-delChanYanFMotionc() {
-	StateBulb[4].Create()
-	global normalMode := false
-	global counter
-	global infcounter
-	cvar := "" counter
-	cvar .= "F"
-	infcounter.Destroy()
-	infcounter := Infos(cvar, , true)
-	if counter != 0 {
-		while counter > 0 {
-			ih := InputHook("C")
-			ih.KeyOpt("{All}", "ESI") ;End Keys & Suppress
-			ih.KeyOpt("{LCtrl}{RCtrl}{LAlt}{RAlt}{LShift}{RShift}{LWin}{RWin}", "-ES") ;Exclude the modifiers
-			ih.Start()
-			ih.Wait()
-			check := ih.EndMods
-			check .= ih.EndKey
-			check2 := ih.EndKey
-			if check == "<!``" {
-				exitVim()
-				infcounter.Destroy()
-				counter := 0
-				Exit
-			} else if check2 == "Escape" {
-				counter := 0
-				StateBulb[4].Destroy()
-				global normalMode := true
-				infcounter.Destroy()
-				Exit
-			} else if check2 == "Backspace" {
-				counter += 2
-				trimed := SubStr(var, 1, StrLen(var) - 1)
-				var := trimed
-			} else if check2 == "Space" {
-				Continue
-			} else {
-				var .= ih.EndKey
-			}
-			infcounter.Destroy()
-			infcounter := Infos(var, , true)
-			counter -= 1
-		}
-		counter := 0
-	}
-	else {
-		ih := InputHook("C")
-		ih.KeyOpt("{All}", "ESI") ;End Keys & Suppress
-		ih.KeyOpt("{LCtrl}{RCtrl}{LAlt}{RAlt}{LShift}{RShift}{LWin}{RWin}", "-ES") ;Exclude the modifiers
-		ih.Start()
-		ih.Wait()
-		var := ih.EndKey
-		check := ih.EndMods
-		check .= ih.EndKey
-		check2 := ih.EndKey
-		if check == "<!``" {
-			exitVim()
-			infcounter.Destroy()
-			Exit
-		} else if check2 == "Escape" {
-			StateBulb[4].Destroy()
-			global normalMode := true
-			infcounter.Destroy()
-			Exit
-		}
-	}
-	oldclip := A_Clipboard
-	A_Clipboard := ""
-	Send "{Left}"
-	Send "+{Home}"
-	Send "^c"
-	Send "{Right}"
-	ClipWait 1
-	Haystack := A_Clipboard
-	FoundPos := InStr(Haystack, var, false, -1)
-	Send "{Home}"
-	loop FoundPos {
-		Send "{Right}"
-	}
-	Send "{Left}"
-	Send "+{Right}"
-	global normalMode := true
-	infcounter.Destroy()
-	StateBulb[4].Destroy()
-}
-
-delChanYantMotion() {
-	StateBulb[4].Create()
-	ih := InputHook("C")
-	ih.KeyOpt("{All}", "ESI") ;End Keys & Suppress
-	ih.KeyOpt("{LCtrl}{RCtrl}{LAlt}{RAlt}{LShift}{RShift}{LWin}{RWin}", "-ES") ;Exclude the modifiers
-	ih.Start()
-	ih.Wait()
-	var := ih.EndKey
-	oldclip := A_Clipboard
-	A_Clipboard := ""
-	Send "{Left}"
-	Send "+{Home}"
-	Send "^c"
-	Send "{Right}"
-	ClipWait 1
-	Haystack := A_Clipboard
-	A_Clipboard := oldclip
-	FoundPos := InStr(Haystack, var)
-	Send "{Home}"
-	loop FoundPos {
-		Send "+{Right}"
-	}
-	Send "{Left}"
-}
-
 
 ; Define the hotkey to enable the keybindings
 ^[:: {
@@ -869,7 +346,7 @@ delChanYantMotion() {
 	exit
 }
 
-;numlock replacer
+; Numlock Mode - replaces the keyboard to numlock
 #HotIf numlockMode = 1
 HotIf "numlockMode = 1"
 
@@ -916,48 +393,11 @@ l::3
 ,::0
 m::0
 n::0
-
-; l::
-; RAlt:: Send "."
-; space:: {
-; 	Send "0"
-; }
-; n:: {
-; 	Send "1"
-; }
-; m:: {
-; 	Send "2"
-; }
-; ,:: {
-; 	Send "3"
-; }
-; h:: {
-; 	Send "4"
-; }
-; j:: {
-; 	Send "5"
-; }
-; k:: {
-; 	Send "6"
-; }
-; y:: {
-; 	Send "7"
-; }
-; u:: {
-; 	Send "8"
-; }
-; i:: {
-; 	Send "9"
-; }
-; 7:: Send "/"
-; 8:: Send "*"
-; 9:: Send "-"
-
 #HotIf
-; f mode
+
+; F mode - for mouse positioning according to keyboard layout
 #HotIf fMode = 1
 HotIf "fMode = 1"
-
 
 if MonitorGetPrimary() != 1 {
 	secondM := -A_ScreenWidth
@@ -965,7 +405,6 @@ if MonitorGetPrimary() != 1 {
 else {
 	secondM := A_ScreenWidth
 }
-
 
 `:: {
 	global counter
@@ -2642,7 +2081,7 @@ Esc:: {
 #HotIf
 
 
-; window mode
+; Window Mode - this is after pressing ctrl+w should implement the vim version
 #HotIf windowMode = 1
 HotIf "windowMode = 1"
 
@@ -2874,7 +2313,7 @@ w:: {
 
 #HotIf
 
-; yank mode
+; Yank Mode
 #HotIf yMode = 1
 HotIf "yMode = 1"
 
@@ -2977,7 +2416,6 @@ t:: {
 
 i:: {
 	Send "^{Left}"
-	; Send "^+{Right}"
 	oldclip := A_Clipboard
 	A_Clipboard := ""
 	Send "+{End}"
@@ -3157,7 +2595,7 @@ w:: {
 	Exit
 }
 
-; Change mode
+; Change Mode
 #HotIf cMode = 1
 HotIf "cMode = 1"
 BackSpace:: {
@@ -3325,7 +2763,6 @@ c:: {
 	FoundPos := 0
 	pattern := "[\p{P}a-zA-Z0-9\.*?+[{|()^$\s\r\n`r`n`s]"
 	FoundPos := RegExMatch(Haystack, pattern, , -1)
-	; MsgBox FoundPos
 	if FoundPos == 0
 	{
 		Send "+{End}"
@@ -3450,9 +2887,37 @@ w:: {
 #HotIf
 
 
-; g mode
+; G mode - this is after pressing g should be like g in vim
 #HotIf gMode = 1
 HotIf "gMode = 1"
+-:: Return
+`;:: Return
+=:: Return
+,:: Return
+.:: Return
+/:: Return
+':: Return
+[:: Return
+]:: Return
+\:: Return
+a:: Return
+d:: Return
+h:: Return
+j:: Return
+k:: Return
+l:: Return
+m:: Return
+n:: Return
+o:: Return
+p:: Return
+q:: Return
+r:: Return
+s:: Return
+u:: Return
+v:: Return
+x:: Return
+y:: Return
+z:: Return
 t:: {
 	global counter
 	global WasInMouseManagerMode
@@ -3664,13 +3129,7 @@ t:: {
 }
 
 i:: {
-	; Send "^{Left}"
-	; Send "^+{Right}"
-	; Send "^x"
-	; gotoNormal()
-	; Exit
 	Send "^{Left}"
-	; Send "^+{Right}"
 	oldclip := A_Clipboard
 	A_Clipboard := ""
 	Send "+{End}"
@@ -3886,11 +3345,10 @@ w:: {
 	gotoNormal()
 	Exit
 }
-
 #HotIf
 
 
-; insert Mode
+; Insert Mode
 #HotIf insertMode = 1
 HotIf "insertMode = 1"
 
@@ -4075,7 +3533,7 @@ Esc:: {
 #HotIf
 
 
-; normal Mode
+; Normal Mode
 #HotIf normalMode = 1
 HotIf "normalMode = 1"
 
@@ -4679,11 +4137,6 @@ v:: {
 	}
 }
 
-; hotkey "h", motion
-; hotkey "j", motion
-; hotkey "k", motion
-; hotkey "l", motion
-
 $h:: {
 	h_motion()
 }
@@ -4997,10 +4450,9 @@ a:: {
 	gotoInsert()
 	Exit
 }
-
 #HotIf
 
-
+; Window Manager Mode - for moving the window using keyboard
 #HotIf WindowManagerMode = 1
 HotIf "WindowManagerMode = 1"
 
@@ -5119,6 +4571,7 @@ Esc:: {
 
 #HotIf
 
+; Mouse Manager Mode - for moving the mouse using keyboard
 #HotIf mouseManagerMode = 1
 HotIf "mouseManagerMode = 1"
 
@@ -5481,30 +4934,6 @@ Hotkey "^h", ButtonAcceleration
 Hotkey "^j", ButtonAcceleration
 Hotkey "^k", ButtonAcceleration
 Hotkey "^l", ButtonAcceleration
-; !,::{
-; 	ButtonAcceleration('^,')
-; }
-; !n::{
-; 	ButtonAcceleration('^n')
-; }
-; !o::{
-; 	ButtonAcceleration('^o')
-; }
-; !u::{
-; 	ButtonAcceleration('^u')
-; }
-; !h::{
-; 	ButtonAcceleration('^h')
-; }
-; !j::{
-; 	ButtonAcceleration('^j')
-; }
-; !k::{
-; 	ButtonAcceleration('^k')
-; }
-; !l::{
-; 	ButtonAcceleration('^l')
-; }
 
 space & e::wheeldown
 space & y::WheelUp
@@ -5540,9 +4969,6 @@ hotkey "!s", ButtonAccelerationSpeedDown
 hotkey "!e", ButtonMaxSpeedUp
 hotkey "!d", ButtonMaxSpeedDown
 
-; !Esc:: {
-; 	exitVim()
-; }
 !`:: {
 	exitVim()
 }
@@ -5554,20 +4980,6 @@ Esc:: {
 	infcounter.Destroy()
 	counter := 0
 	Exit
-}
-^esc:: {
-	global mouseManagerMode := false
-	StateBulb[4].Create()
-	key := GetInput("ML1", "").Input
-	MsgBox key
-	; MsgBox A_ThisHotkey
-	if A_ThisHotkey == "~LAlt"
-	{
-		Send "{LAlt Down}%key%{LAlt Up}"
-	}
-	Send key
-	StateBulb[4].Destroy()
-	global mouseManagerMode := true
 }
 BackSpace:: {
 	global counter
@@ -5605,17 +5017,14 @@ BackSpace:: {
 	Exit
 }
 ^e:: {
-	; active_id := WinGetID("A")
-	; ControlSend "{WheelDown}", active_id
 	Send "{WheelDown}"
 }
 ^y:: {
-	; active_id := WinGetID("A")
-	; ControlSend "{WheelUp}", active_id
 	Send "{WheelUp}"
 }
 #HotIf
 
+; Functions
 disableClick() {
 	if GetKeyState("LButton")
 		Click("L Up")
@@ -5828,4 +5237,522 @@ motionEnd() {
 		return
 	}
 	SetTimer , 0
+}
+
+reloadfunc() {
+	langid := Language.GetKeyboardLanguage()
+	if (LangID = 0x040D) {
+		Infos("changing to english")
+		Send "#{space}"
+		Sleep 1000
+		Reload
+	}
+	Reload
+}
+
+chCounter(number, mode := "") {
+	global counter
+	global infcounter
+	if counter >= 0 {
+		counter *= 10
+		counter += number
+		text := mode counter
+		infcounter.Destroy()
+		infcounter := Infos(text, , true)
+	}
+}
+
+exitVim() {
+	Infos.DestroyAll()
+	Infos("Exit Vim", 1500)
+	Global normalMode := false
+	Global insertMode := false
+	global dMode := false
+	global wasInInsertMode := false
+	global regMode := false
+	global wasInNormalMode := false
+	global gMode := false
+	global yMode := false
+	global cMode := false
+	global fMode := false
+	global numlockMode := false
+	global windowMode := false
+	Global visualMode := false
+	global WindowManagerMode := false
+	global mouseManagerMode := false
+	Global visualLineMode := false
+	global counter := 0
+	StateBulb[1].Destroy() ; Vim
+	StateBulb[2].Destroy() ; Insert
+	StateBulb[3].Destroy() ; Visual
+	StateBulb[4].Destroy() ; Special
+	StateBulb[5].Destroy() ; Move windows
+	StateBulb[6].Destroy() ; Mouse Movement
+	StateBulb[7].Destroy() ; reg Mode
+	StateBulb[StateBulb.MaxBulbs - 1].Destroy()
+	; StateBulb[4].Destroy() ; Delete
+	; StateBulb[5].Destroy() ; Change
+	; StateBulb[6].Destroy() ; Yank
+	; StateBulb[7].Destroy() ; Window
+	; StateBulb[8].Destroy() ; Fmode
+	disableClick()
+	Exit
+}
+gotoNumLockMode() {
+	global numlockMode := true
+	global normalMode := false
+	global mouseManagerMode := false
+	StateBulb[4].Create()
+}
+
+gotoWindowMode() {
+	global mouseManagerMode := false
+	global normalMode := false
+	global windowMode := true
+	StateBulb[4].Create()
+}
+
+gotoMwMode() {
+	global mouseManagerMode := false
+	global normalMode := false
+	global WindowManagerMode := true
+	StateBulb[5].Create()
+}
+
+gotoMouseMode() {
+	global monitorCount
+	if monitorCount == 0 {
+		monitorCount := MonitorGetCount()
+	}
+	else if monitorCount != MonitorGetCount() {
+		reloadfunc()
+	}
+	global normalMode := false
+	global mouseManagerMode := true
+	global WasInMouseManagerMode := false
+	global wasinCmdMode := false
+	global WasInRegMode := false
+	global WasInWindowManagerMode := false
+	global fMode := false
+	StateBulb[6].Create()
+	StateBulb[4].Destroy()
+}
+
+gotoFMode() {
+	global normalMode := false
+	global mouseManagerMode := false
+	global fMode := true
+	StateBulb[4].Create()
+}
+
+gotoGMode() {
+	global normalMode := false
+	global gMode := true
+	StateBulb[4].Create()
+}
+
+gotoDMode() {
+	global normalMode := false
+	global dMode := true
+	StateBulb[4].Create()
+	; langid := Language.GetKeyboardLanguage()
+	; if (LangID = 0x040D) {
+	; 	Send "{Left}"
+	; } else
+	; 	Send "{Right}"
+}
+
+gotoRegMode() {
+	global normalMode := false
+	global regMode := true
+	StateBulb[4].Create()
+}
+
+gotoYMode() {
+	global normalMode := false
+	global yMode := true
+	StateBulb[4].Create()
+	langid := Language.GetKeyboardLanguage()
+	if (LangID = 0x040D) {
+		Send "{Left}"
+	} else
+		Send "{Right}"
+}
+
+gotoCMode() {
+	global normalMode := false
+	global cMode := true
+	StateBulb[4].Create()
+	; langid := Language.GetKeyboardLanguage()
+	; if (LangID = 0x040D) {
+	; 	Send "{Left}"
+	; } else
+	; 	Send "{Right}"
+}
+
+gotoNormalnoInfo() {
+	StateBulb[6].Destroy() ; Mouse Movement
+	StateBulb[5].Destroy() ; Move windows
+	StateBulb[4].Destroy()
+	if visualMode == true {
+		StateBulb[3].Destroy()
+	}
+	if insertMode == true {
+		StateBulb[2].Destroy()
+	}
+	global normalMode := true
+	global visualMode := false
+	global insertMode := false
+	global visualLineMode := false
+	global dMode := false
+	global regMode := false
+	global gMode := false
+	global cMode := false
+	global fMode := false
+	global yMode := false
+	global windowMode := false
+	global WindowManagerMode := false
+	global WasInMouseManagerMode := false
+	global wasinCmdMode := false
+	global WasInRegMode := false
+	global WasInWindowManagerMode := false
+	global mouseManagerMode := false
+	StateBulb[1].Create()
+}
+
+gotoNormal() {
+	global monitorCount
+	if monitorCount == 0 {
+		monitorCount := MonitorGetCount()
+	}
+	else if monitorCount != MonitorGetCount() {
+		reloadfunc()
+	}
+	StateBulb[6].Destroy() ; Mouse Movement
+	StateBulb[5].Destroy() ; Move windows
+	StateBulb[4].Destroy()
+	if visualMode == true {
+		StateBulb[3].Destroy()
+	}
+	if insertMode == true {
+		StateBulb[2].Destroy()
+	}
+	global normalMode := true
+	global visualMode := false
+	global insertMode := false
+	global visualLineMode := false
+	global dMode := false
+	global regMode := false
+	global gMode := false
+	global cMode := false
+	global fMode := false
+	global shiftfMode := false
+	global altfMode := false
+	global yMode := false
+	global windowMode := false
+	global WindowManagerMode := false
+	global WasInMouseManagerMode := false
+	global wasinCmdMode := false
+	global WasInRegMode := false
+	global WasInWindowManagerMode := false
+	global mouseManagerMode := false
+	global counter := 0
+	StateBulb[1].Create()
+	; Infos.DestroyAll()
+	; Infos("Normal Mode", 1500)
+}
+
+gotoVisual() {
+	global normalMode := true
+	global visualMode := true
+	global insertMode := false
+	global visualLineMode := false
+	global dMode := false
+	global regMode := false
+	global gMode := false
+	global yMode := false
+	global fMode := false
+	global cMode := false
+	global windowMode := false
+	global WindowManagerMode := false
+	global mouseManagerMode := false
+	StateBulb[3].Create()
+	; Infos.DestroyAll()
+	; Infos("Visual Mode", 1500)
+}
+
+gotoInsert() {
+	StateBulb[6].Destroy() ; Mouse Movement
+	StateBulb[5].Destroy() ; Move windows
+	StateBulb[4].Destroy()
+	if visualMode == true {
+		StateBulb[3].Destroy()
+	}
+	global normalMode := false
+	global visualMode := false
+	global insertMode := true
+	global visualLineMode := false
+	global dMode := false
+	global regMode := false
+	global gMode := false
+	global fMode := false
+	global yMode := false
+	global windowMode := false
+	global cMode := false
+	global WindowManagerMode := false
+	global mouseManagerMode := false
+	StateBulb[2].Create()
+	global infcounter
+	infcounter.Destroy()
+	global counter
+	counter := 0
+	; Infos.DestroyAll()
+	; Infos("Insert Mode", 1500)
+}
+
+gotoInsertnoInfo() {
+	StateBulb[6].Destroy() ; Mouse Movement
+	StateBulb[5].Destroy() ; Move windows
+	StateBulb[4].Destroy()
+	if visualMode == true {
+		StateBulb[3].Destroy()
+	}
+	global normalMode := false
+	global visualMode := false
+	global insertMode := true
+	global visualLineMode := false
+	global dMode := false
+	global regMode := false
+	global gMode := false
+	global fMode := false
+	global yMode := false
+	global windowMode := false
+	global cMode := false
+	global WindowManagerMode := false
+	global mouseManagerMode := false
+	StateBulb[2].Create()
+}
+
+fMotion() {
+	StateBulb[4].Create()
+	global normalMode := false
+	ih := InputHook("C")
+	ih.KeyOpt("{All}", "ESI") ;End Keys & Suppress
+	ih.KeyOpt("{LCtrl}{RCtrl}{LAlt}{RAlt}{LShift}{RShift}{LWin}{RWin}", "-ES") ;Exclude the modifiers
+	ih.Start()
+	ih.Wait()
+	var := ih.EndKey
+	oldclip := A_Clipboard
+	A_Clipboard := ""
+	Send "{Left}"
+	Send "+{Home}"
+	Send "^c"
+	Send "{Right}"
+	ClipWait 1
+	Haystack := A_Clipboard
+	A_Clipboard := oldclip
+	FoundPos := InStr(Haystack, var)
+	Send "{Home}"
+	loop FoundPos {
+		Send "{Right}"
+	}
+	Send "{Left}"
+	Send "+{Right}"
+	global normalMode := true
+}
+
+delChanYanfMotion() {
+	StateBulb[4].Create()
+	global normalMode := false
+	global counter
+	global infcounter
+	cvar := "" counter
+	cvar .= "f"
+	infcounter.Destroy()
+	infcounter := Infos(cvar, , true)
+	if counter != 0 {
+		while counter > 0 {
+			ih := InputHook("C")
+			ih.KeyOpt("{All}", "ESI") ;End Keys & Suppress
+			ih.KeyOpt("{LCtrl}{RCtrl}{LAlt}{RAlt}{LShift}{RShift}{LWin}{RWin}", "-ES") ;Exclude the modifiers
+			ih.Start()
+			ih.Wait()
+			check := ih.EndMods
+			check .= ih.EndKey
+			check2 := ih.EndKey
+			if check == "<!``" {
+				exitVim()
+				infcounter.Destroy()
+				counter := 0
+				Exit
+			} else if check2 == "Escape" {
+				StateBulb[4].Destroy()
+				global normalMode := true
+				infcounter.Destroy()
+				counter := 0
+				Exit
+			} else if check2 == "Backspace" {
+				counter += 2
+				trimed := SubStr(var, 1, StrLen(var) - 1)
+				var := trimed
+			} else if check2 == "Space" {
+				Continue
+			} else {
+				var .= ih.EndKey
+			}
+			infcounter.Destroy()
+			infcounter := Infos(var, , true)
+			counter -= 1
+		}
+		counter := 0
+	}
+	else {
+		ih := InputHook("C")
+		ih.KeyOpt("{All}", "ESI") ;End Keys & Suppress
+		ih.KeyOpt("{LCtrl}{RCtrl}{LAlt}{RAlt}{LShift}{RShift}{LWin}{RWin}", "-ES") ;Exclude the modifiers
+		ih.Start()
+		ih.Wait()
+		var := ih.EndKey
+		check := ih.EndMods
+		check .= ih.EndKey
+		check2 := ih.EndKey
+		if check == "<!``" {
+			exitVim()
+			infcounter.Destroy()
+			Exit
+		} else if check2 == "Escape" {
+			StateBulb[4].Destroy()
+			global normalMode := true
+			infcounter.Destroy()
+			Exit
+		}
+	}
+	oldclip := A_Clipboard
+	A_Clipboard := ""
+	Send "{Right}"
+	Send "+{End}"
+	Send "^c"
+	Send "{Left}"
+	ClipWait 1
+	Haystack := A_Clipboard
+	FoundPos := InStr(Haystack, var)
+	loop FoundPos {
+		Send "{Right}"
+	}
+	Send "{Left}"
+	Send "+{Right}"
+	global normalMode := true
+	infcounter.Destroy()
+	StateBulb[4].Destroy()
+}
+
+delChanYanFMotionc() {
+	StateBulb[4].Create()
+	global normalMode := false
+	global counter
+	global infcounter
+	cvar := "" counter
+	cvar .= "F"
+	infcounter.Destroy()
+	infcounter := Infos(cvar, , true)
+	if counter != 0 {
+		while counter > 0 {
+			ih := InputHook("C")
+			ih.KeyOpt("{All}", "ESI") ;End Keys & Suppress
+			ih.KeyOpt("{LCtrl}{RCtrl}{LAlt}{RAlt}{LShift}{RShift}{LWin}{RWin}", "-ES") ;Exclude the modifiers
+			ih.Start()
+			ih.Wait()
+			check := ih.EndMods
+			check .= ih.EndKey
+			check2 := ih.EndKey
+			if check == "<!``" {
+				exitVim()
+				infcounter.Destroy()
+				counter := 0
+				Exit
+			} else if check2 == "Escape" {
+				counter := 0
+				StateBulb[4].Destroy()
+				global normalMode := true
+				infcounter.Destroy()
+				Exit
+			} else if check2 == "Backspace" {
+				counter += 2
+				trimed := SubStr(var, 1, StrLen(var) - 1)
+				var := trimed
+			} else if check2 == "Space" {
+				Continue
+			} else {
+				var .= ih.EndKey
+			}
+			infcounter.Destroy()
+			infcounter := Infos(var, , true)
+			counter -= 1
+		}
+		counter := 0
+	}
+	else {
+		ih := InputHook("C")
+		ih.KeyOpt("{All}", "ESI") ;End Keys & Suppress
+		ih.KeyOpt("{LCtrl}{RCtrl}{LAlt}{RAlt}{LShift}{RShift}{LWin}{RWin}", "-ES") ;Exclude the modifiers
+		ih.Start()
+		ih.Wait()
+		var := ih.EndKey
+		check := ih.EndMods
+		check .= ih.EndKey
+		check2 := ih.EndKey
+		if check == "<!``" {
+			exitVim()
+			infcounter.Destroy()
+			Exit
+		} else if check2 == "Escape" {
+			StateBulb[4].Destroy()
+			global normalMode := true
+			infcounter.Destroy()
+			Exit
+		}
+	}
+	oldclip := A_Clipboard
+	A_Clipboard := ""
+	Send "{Left}"
+	Send "+{Home}"
+	Send "^c"
+	Send "{Right}"
+	ClipWait 1
+	Haystack := A_Clipboard
+	FoundPos := InStr(Haystack, var, false, -1)
+	Send "{Home}"
+	loop FoundPos {
+		Send "{Right}"
+	}
+	Send "{Left}"
+	Send "+{Right}"
+	global normalMode := true
+	infcounter.Destroy()
+	StateBulb[4].Destroy()
+}
+
+delChanYantMotion() {
+	StateBulb[4].Create()
+	ih := InputHook("C")
+	ih.KeyOpt("{All}", "ESI") ;End Keys & Suppress
+	ih.KeyOpt("{LCtrl}{RCtrl}{LAlt}{RAlt}{LShift}{RShift}{LWin}{RWin}", "-ES") ;Exclude the modifiers
+	ih.Start()
+	ih.Wait()
+	var := ih.EndKey
+	oldclip := A_Clipboard
+	A_Clipboard := ""
+	Send "{Left}"
+	Send "+{Home}"
+	Send "^c"
+	Send "{Right}"
+	ClipWait 1
+	Haystack := A_Clipboard
+	A_Clipboard := oldclip
+	FoundPos := InStr(Haystack, var)
+	Send "{Home}"
+	loop FoundPos {
+		Send "+{Right}"
+	}
+	Send "{Left}"
 }
