@@ -4044,13 +4044,26 @@ d::
 	gotoDMode()
 }
 
-$+^e::
-{
-	Send "^{WheelDown}"
-}
-$+^y::
+!^y::
 {
 	Send "^{WheelUp}"
+	Exit
+}
+
+!^e::
+{
+	Send "^{WheelDown}"
+	Exit
+}
++^y::
+{
+	Send "+{WheelUp}"
+	Exit
+}
++^e::
+{
+	Send "+{WheelDown}"
+	Exit
 }
 
 ^e:: {
@@ -4579,10 +4592,6 @@ HotIf "mouseManagerMode = 1"
 9:: chCounter(9)
 0:: chCounter(0)
 
-
-Z & Z:: {
-	Send "!{f4}"
-}
 Z & Q:: {
 	Send "!{f4}"
 }
@@ -4726,7 +4735,7 @@ space & .:: Return
 ]:: Return
 \:: Return
 +G:: {
-	Send "{End}"
+	Send "^{End}"
 }
 
 x:: {
@@ -4846,6 +4855,7 @@ m:: {
 	Exit
 }
 
+Tab & u::
 !u:: {
 	Send "^z"
 }
@@ -4984,13 +4994,12 @@ BackSpace:: {
 }
 +^y::
 {
-	Send "+{WheelDown}"
+	Send "+{WheelUp}"
 	Exit
 }
-
 +^e::
 {
-	Send "+{WheelUp}"
+	Send "+{WheelDown}"
 	Exit
 }
 ^e:: {
