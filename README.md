@@ -1,15 +1,15 @@
 ### Table of Contents 
 - [Table of Contents](#table-of-contents)
-  * [Global Functions:](#global-functions-)
-    + [Emacs with \`(Tilde) Modifier](#emacs-with----tilde--modifier)
+  * [Global Functions:](#global-functions)
+    + [Emacs with \`(Tilde) Modifier](#emacs-with--\`(tilde)--modifier)
     + [Emacs with Tab or Capslock Modifier](#emacs-with-tab-or-capslock-modifier)
-  * [Numlock Mode Functions:](#numlock-mode-functions-)
-  * [Normal Mode Functions:](#normal-mode-functions-)
-  * [Insert Mode Functions:](#insert-mode-functions-)
-  * [Mouse Mode Functions:](#mouse-mode-functions-)
-  * [Window Mover Mode Functions:](#window-mover-mode-functions-)
-  * [Command Mode Functions:](#command-mode-functions-)
-  * [Register Mode Functions:](#register-mode-functions-)
+  * [Numlock Mode Functions:](#numlock-mode-functions)
+  * [Normal Mode Functions:](#normal-mode-functions)
+  * [Insert Mode Functions:](#insert-mode-functions)
+  * [Mouse Mode Functions:](#mouse-mode-functions)
+  * [Window Mover Mode Functions:](#window-mover-mode-functions)
+  * [Command Mode Functions:](#command-mode-functions)
+  * [Register Mode Functions:](#register-mode-functions)
 
 #### Global Functions:
 
@@ -54,7 +54,7 @@
 
 ##### Emacs with Tab or Capslock Modifier
 
-In the following shortcuts Tab is interchangable with capslock space is interchangable with ctrl
+In the following shortcuts, Tab is interchangeable with capslock space is interchangeable with ctrl
 
 | Shortcut        | Functionality                                                    |
 | --------------- |:---------------------------------------------------------------- |
@@ -65,9 +65,9 @@ In the following shortcuts Tab is interchangable with capslock space is intercha
 | Tab + Space + f | Move 1 word right                                                |
 | Tab + b         | Left arrow                                                       |
 | Tab + Space + b | Move 1 word left                                                 |
-| Tab + ,         | Go to first line                                                 |
-| Tab + g         | Go to first line                                                 |
-| Tab + .         | Go to last line                                                  |
+| Tab + ,         | Go to first-line                                                 |
+| Tab + g         | Go to first-line                                                 |
+| Tab + .         | Go to the last line                                                  |
 | Tab + Space + g | Go to last line                                                  |
 | Tab + h         | Backspace                                                        |
 | Tab + w         | Delete 1 Word to the Left                                        |
@@ -77,7 +77,7 @@ In the following shortcuts Tab is interchangable with capslock space is intercha
 | Tab + u         | Delete to start of line                                          |
 | Tab + a         | Go to start to line                                              |
 | Tab + e         | Go to end to line                                                |
-| Tab + r         | Insert contents from register (next key pressed is the register) |
+| Tab + r         | Insert contents from the register (next key pressed is the register) |
 | Tab + x         | Close tab                                                        |
 | Tab + Space + x | Reopen last closed tab                                           |
 | Tab + s         | start search(like ctrl + f)                                      |
@@ -112,7 +112,7 @@ In the following shortcuts Tab is interchangable with capslock space is intercha
 | “                | Go to Register mode (works like in vim)                                     |
 | /                | Start search (like ctrl + f)                                                |
 | n                | Next search entry                                                           |
-| N                | Previouse search entry                                                      |
+| N                | Previous search entry                                                      |
 | ~                | Change case                                                                 |
 | v                | Go to Visual mode                                                           |
 | V                | Go to Line Visual mode                                                      |
@@ -120,14 +120,14 @@ In the following shortcuts Tab is interchangable with capslock space is intercha
 | r                | Replace char with user input                                                |
 | s                | Delete char and enter insert mode                                           |
 | Ctrl + Alt + n   | Start/Exit Numlock Mode                                                     |
-| 0-9 numbers      | allow counters for normal functions like in vim                             |
-| f                | Put Cursor at next to the right occurance of typed char                     |
-| F                | Put Cursor at next to the left occurance of typed char                      |
-| [number] f       | Put Cursor at next to the right occurance of typed [number] amount of chars |
-| [number] F       | Put Cursor at next to the left occurance of typed [number] amount of chars  |
+| 0-9 numbers      | allow counters for normal functions like in Vim                             |
+| f                | Put Cursor next to the right occurrence of typed char                     |
+| F                | Put Cursor next to the left occurrence of typed char                      |
+| [number] f       | Put Cursor at next to the right occurrence of typed [number] amount of chars |
+| [number] F       | Put Cursor at next to the left occurrence of typed [number] amount of chars  |
 | gg               | Go to start to line                                                         |
 | gt               | Go to next tab                                                              |
-| gT               | Go to previouse  tab                                                        |
+| gT               | Go to previous tab                                                        |
 | G                | Go to end to line                                                           |
 | Ctrl + w,q       | Close tab                                                                   |
 | Ctrl + w,Q       | Close Window (alt + f4)                                                     |
@@ -144,21 +144,21 @@ In the following shortcuts Tab is interchangable with capslock space is intercha
 | Ctrl + Shift + e | Zoom Out                                                                    |
 | Ctrl + Shift + y | Zoom In                                                                     |
 | i                | Go to Insert Mode before cursor                                             |
-| I                | Go to Insert Mode before all line                                           |
+| I                | Go to Insert Mode before all lines                                           |
 | a                | Go to Insert Mode after cursor                                              |
-| A                | Go to Insert Mode after all line                                            |
-| h                | move left with selection                                                    |
-| j                | move down with selection                                                    |
+| A                | Go to Insert Mode after all lines                                            |
+| h                | Move left with selection                                                    |
+| j                | Move down with selection                                                    |
 | k                | move up with selection                                                      |
 | l                | move right with selection                                                   |
 | spacebar         | move right with selection                                                   |
-| j                | join bottom line to current line                                            |
+| j                | Join bottom line to current line                                            |
 | x                | delete                                                                      |
 | X                | Backspace                                                                   |
 | b                | Move 1 word back                                                            |
 | w                | Move 1 word forward                                                         |
-| o                | Create new line bellow and go into insert mode                              |
-| O                | Create new line above and go into insert mode                               |
+| o                | Create a new line below and go into insert mode                              |
+| O                | Create a new line above and go into insert mode                               |
 | u                | Undo                                                                        |
 | cltr + r         | Redo                                                                        |
 | y                | Yank mode like in vim                                                       |
@@ -178,8 +178,8 @@ In the following shortcuts Tab is interchangable with capslock space is intercha
 | Alt + f          | Move 1 word right                                                |
 | Ctrl + b         | Left arrow                                                       |
 | Alt + b          | Move 1 word left                                                 |
-| Ctrl + Alt + ,   | Go to first line                                                 |
-| Ctrl + Alt + .   | Go to last line                                                  |
+| Ctrl + Alt + ,   | Go to first-line                                                 |
+| Ctrl + Alt + .   | Go to the last line                                                  |
 | Ctrl + h         | Backspace                                                        |
 | Ctrl + w         | Delete 1 Word to the Left                                        |
 | Ctrl + d         | Delete                                                           |
@@ -188,11 +188,11 @@ In the following shortcuts Tab is interchangable with capslock space is intercha
 | Ctrl + u         | Delete to start of line                                          |
 | Ctrl + a         | Go to start to line                                              |
 | Ctrl + e         | Go to end to line                                                |
-| Ctrl + r         | Insert contents from register (next key pressed is the register) |
+| Ctrl + r         | Insert contents from the register (next key pressed is the register) |
 | Ctrl + x         | Close tab                                                        |
 | Ctrl + Shift + x | Reopen last closed tab                                           |
-| Ctrl + s         | start search(like ctrl + f) and next occurance                   |
-| Ctrl + Shift + s | start search(like ctrl + f) and previous occurance               |
+| Ctrl + s         | start search(like ctrl + f) and next occurrence                   |
+| Ctrl + Shift + s | start search(like ctrl + f) and previous occurrence               |
 | Ctrl + =         | open context menu near mouse                                     |
 | Escape           | return to normal mode                                            |
 
@@ -232,7 +232,7 @@ In the following shortcuts Tab is interchangable with capslock space is intercha
 | b         | Middle click                       |
 
 #### Window Mover Mode Functions:
-- Numbers move the window to related location on screen 
+- Numbers move the window to related location on the screen 
 	- Ctrl moves them in Lower layer
 	- Shift moves them in Middle layer
 	- Default is in Upper layer
