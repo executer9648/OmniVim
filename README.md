@@ -1,16 +1,16 @@
-# My-Vim-With-Ahk
-This repository contains libraries from several sources 
-I have only combined useful functionality from them to create this vim/emacs script.
+### Table of Contents 
+- [Table of Contents](#table-of-contents)
+  * [Global Functions:](#global-functions-)
+    + [Emacs with \`(Tilde) Modifier](#emacs-with----tilde--modifier)
+    + [Emacs with Tab or Capslock Modifier](#emacs-with-tab-or-capslock-modifier)
+  * [Numlock Mode Functions:](#numlock-mode-functions-)
+  * [Normal Mode Functions:](#normal-mode-functions-)
+  * [Insert Mode Functions:](#insert-mode-functions-)
+  * [Mouse Mode Functions:](#mouse-mode-functions-)
+  * [Window Mover Mode Functions:](#window-mover-mode-functions-)
+  * [Command Mode Functions:](#command-mode-functions-)
+  * [Register Mode Functions:](#register-mode-functions-)
 
-Links to sources:
-
-[AutoHotkey](https://www.autohotkey.com/docs/v2/scripts/index.htm) website
-
-[Axelfublr](https://github.com/Axlefublr/lib-v2) - his repo also contains libraries from other sources:
- -  [@thqby](https://github.com/thqby)
- -  [@Descolada](https://github.com/Descolada)
-
-## How to Guide:
 #### Global Functions:
 
 | Shortcut                    | Functionality                            |
