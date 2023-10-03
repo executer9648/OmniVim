@@ -260,6 +260,8 @@ In the following shortcuts Tab is interchangable with capslock space is intercha
 | Alt + a          | decrease mouse speed                                                                             |
 | Alt + s          | decrease mouse acceleration                                                                      |
 | Alt + d          | decrease mouse maxspeed                                                                          |
+| Space + e        | Scroll down                                                                                      |
+| Space + y        | Scroll up                                                                                        |
 | Ctrl + e         | Scroll down                                                                                      |
 | Ctrl + y         | Scroll up                                                                                        |
 | Ctrl + Shift + e | Scroll right                                                                                     |
