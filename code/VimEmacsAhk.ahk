@@ -99,7 +99,14 @@ $CapsLock::LCtrl
 ; TAB SECTION =================
 tab & Space::vkE8
 tab::Tab
+tab & v:: {
+	if GetKeyState("ctrl") or GetKeyState("vkE8")
+		send "{WheelUp}"
+	else
+		send "{WheelDown}"
+}
 tab & `:: exitVim()
+tab & y::^v
 tab & ,:: {
 	Send "^{Home}"
 }
