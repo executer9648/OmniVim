@@ -1,18 +1,23 @@
 # My-Vim-With-Ahk
+## TLDR
+Enables vim and emacs shortcuts everywhere.
+features include controlling the mouse with Vim, Vim Normal mode, Vim Insert, Vim Command, Vim Reg, and emacs in insert mode.
+There are more features planned, see the bellow how-to for a full guide of the features
+
 ## What is this?
-This script allows for the user to utilize several extra shortcuts.
-This started out as a solution for the biggest drawback of vim, which is that Vim doesn't work outside of the text editor, eventually combining emacs and more to make this an excellent tool for those of you that hate moving your hands from their default keyboard position.
-This script emulates vim hotkeys and functionality globally by replacing the default function of a key with the vim logic that replaces it.
-Let me explain this with an example pressing "X" in vim deletes a single character. With this script when vim normal mode is activated and you press "X" the keyboard emulates the press of the delete button instead and so on for other vim functionality.
-The script implements several features of vim but not all (im working on it).
-In addition to the vim hotkeys i have added some emacs shortcuts as well for insert mode of vim that work with "ctrl" and "alt" just like regular emacs, however, in case you need something quick from an emacs perspective you could also do the same hotkeys but with "tab" = "ctrl" and with "tab+space" = "alt".
+This script allows the user to utilize several extra shortcuts.
+This started out as a solution for the biggest drawback of Vim, which is that Vim doesn't work outside of the text editor, eventually combining emacs and more to make this an excellent tool for those of you who hate moving your hands from their default keyboard position.
+This script emulates Vim hotkeys and functionality globally by replacing the default function of a key with the Vim logic that replaces it.
+Let me explain this with an example pressing "X" in Vim deletes a single character. With this script when Vim normal mode is activated and you press "X" the keyboard emulates the press of the delete button instead and so on for other Vim functionality.
+The script implements several features of Vim but not all (I'm working on it).
+In addition to the vim hotkeys I have added some emacs shortcuts as well for insert mode of vim that work with "ctrl" and "alt" just like regular emacs, however, in case you need something quick from an emacs perspective you could also do the same hotkeys but with "tab" = "ctrl" and with "tab+space" = "alt".
 See the "how to guide" for more information.
 
-This project started out as private and personal but i decided to share it with the hopes of other peaple to enjoy this as i have.
+This project started out as private and personal but I decided to share it with the hopes that other people enjoy this as I am.
 I have already planned more features and bug fixes. 
 If some of you would like to help me improve this project feel free to contact me.
 
-To run this script either run the release exe file, or download the whole code folder and inside the code folder run the file called VimEmacsAHK.Ahk.
+To run this script either run the release exe file or download the whole code folder and inside the code folder run the file called VimEmacsAHK.Ahk.
 ## Disclaimers
 This repository contains libraries from several sources 
 I have combined useful functionality from them to create this vim/emacs script.
