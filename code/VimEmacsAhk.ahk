@@ -2977,12 +2977,18 @@ t:: {
 g:: {
 	global WasInMouseManagerMode
 	if WasInMouseManagerMode == true {
-		Send "^{Home}"
+		if visualMode == true {
+			Send "+^{Home}"
+		} else
+			Send "^{Home}"
 		gotoNormal()
 		gotoMouseMode()
 	}
 	else {
-		Send "^{Home}"
+		if visualMode == true {
+			Send "+^{Home}"
+		} else
+			Send "^{Home}"
 		gotoNormal()
 	}
 	Exit
@@ -3962,7 +3968,12 @@ g:: {
 }
 
 +g:: {
-	Send "^{End}"
+	if visualMode == true {
+		Send "+^{End}"
+	}
+	else {
+		Send "^{End}"
+	}
 	Exit
 }
 
