@@ -11,13 +11,22 @@ class Runner {
 	static runner_commands := Map(
 		"reg new", () => Registers(GetInput("L1", "{Esc}").Input).WriteOrAppend(CleanInputBox().WaitForInput().Replace("``n", "`n")),
 		"reg", () => Registers.PeekNonEmpty(),
+		"r", () => Registers.PeekNonEmpty(),
 		"marks", () => Marks.showMarks(),
+		"m", () => Marks.showMarks(),
+		"delm", () => Marks.clearMarks(),
+		"dm", () => Marks.clearMarks(),
 		"w", () => Send("^s"),
 	)
 
 	static runner_regex := Map(
 		"cp", (input) => (A_Clipboard := input, Info('"' input '" copied')),
 		"reg", (input) => Registers(input).Look(),
+		"r", (input) => Registers(input).Look(),
+		"mark", (input) => Marks.showMark(input),
+		"m", (input) => Marks.showMark(input),
+		"delm", (input) => Marks.clearMark(input),
+		"dm", (input) => Marks.clearMark(input),
 	)
 
 	static openRunner() {
