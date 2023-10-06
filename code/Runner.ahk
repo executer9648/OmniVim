@@ -3,6 +3,7 @@
 #Include CleanInputBox.ahk
 #Include Registers.ahk
 #Include GetInput.ahk
+#Include Marks.ahk
 
 #SingleInstance Force
 
@@ -10,6 +11,7 @@ class Runner {
 	static runner_commands := Map(
 		"reg new", () => Registers(GetInput("L1", "{Esc}").Input).WriteOrAppend(CleanInputBox().WaitForInput().Replace("``n", "`n")),
 		"reg", () => Registers.PeekNonEmpty(),
+		"marks", () => Marks.showMarks(),
 		"w", () => Send("^s"),
 	)
 

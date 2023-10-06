@@ -9,6 +9,7 @@
 #Include Language.ahk
 #Include HoverScreenshot.ahk
 #Include EasyWindowDragginKde.ahk
+#Include Marks.ahk
 #SingleInstance force
 #MaxThreadsBuffer true
 #MaxThreads 250
@@ -150,25 +151,25 @@ Tab & r:: {
 	global insertMode := false
 	inf := Infos('"', , true)
 	StateBulb[7].Create()
-	rego := InputHook("C")
-	rego.KeyOpt("{All}", "ESI") ;End Keys & Suppress
-	rego.KeyOpt("{LCtrl}{RCtrl}{LAlt}{RAlt}{LShift}{RShift}{LWin}{RWin}", "-ES") ;Exclude the modifiers
-	rego.Start()
-	rego.Wait()
-	var := rego.EndMods
-	var .= rego.EndKey
-	reg := rego.EndKey
+	marko := InputHook("C")
+	marko.KeyOpt("{All}", "ESI") ;End Keys & Suppress
+	marko.KeyOpt("{LCtrl}{RCtrl}{LAlt}{RAlt}{LShift}{RShift}{LWin}{RWin}", "-ES") ;Exclude the modifiers
+	marko.Start()
+	marko.Wait()
+	var := marko.EndMods
+	var .= marko.EndKey
+	mark := marko.EndKey
 	if var == "<!``" {
 		exitVim()
 		Exit
 	}
-	else if reg == "Escape" {
+	else if mark == "Escape" {
 		StateBulb[7].Destroy()
 		inf.Destroy()
 		global insertMode := true
 		Exit
 	}
-	Registers(reg).Paste()
+	Registers(mark).Paste()
 	StateBulb[7].Destroy()
 	inf.Destroy()
 	global insertMode := true
@@ -248,25 +249,25 @@ capslock & r:: {
 	global insertMode := false
 	inf := Infos('"', , true)
 	StateBulb[7].Create()
-	rego := InputHook("C")
-	rego.KeyOpt("{All}", "ESI") ;End Keys & Suppress
-	rego.KeyOpt("{LCtrl}{RCtrl}{LAlt}{RAlt}{LShift}{RShift}{LWin}{RWin}", "-ES") ;Exclude the modifiers
-	rego.Start()
-	rego.Wait()
-	var := rego.EndMods
-	var .= rego.EndKey
-	reg := rego.EndKey
+	marko := InputHook("C")
+	marko.KeyOpt("{All}", "ESI") ;End Keys & Suppress
+	marko.KeyOpt("{LCtrl}{RCtrl}{LAlt}{RAlt}{LShift}{RShift}{LWin}{RWin}", "-ES") ;Exclude the modifiers
+	marko.Start()
+	marko.Wait()
+	var := marko.EndMods
+	var .= marko.EndKey
+	mark := marko.EndKey
 	if var == "<!``" {
 		exitVim()
 		Exit
 	}
-	else if reg == "Escape" {
+	else if mark == "Escape" {
 		StateBulb[7].Destroy()
 		inf.Destroy()
 		global insertMode := true
 		Exit
 	}
-	Registers(reg).Paste()
+	Registers(mark).Paste()
 	StateBulb[7].Destroy()
 	inf.Destroy()
 	global insertMode := true
@@ -3394,25 +3395,25 @@ HotIf "insertMode = 1"
 	global insertMode := false
 	inf := Infos('"', , true)
 	StateBulb[7].Create()
-	rego := InputHook("C")
-	rego.KeyOpt("{All}", "ESI") ;End Keys & Suppress
-	rego.KeyOpt("{LCtrl}{RCtrl}{LAlt}{RAlt}{LShift}{RShift}{LWin}{RWin}", "-ES") ;Exclude the modifiers
-	rego.Start()
-	rego.Wait()
-	var := rego.EndMods
-	var .= rego.EndKey
-	reg := rego.EndKey
+	marko := InputHook("C")
+	marko.KeyOpt("{All}", "ESI") ;End Keys & Suppress
+	marko.KeyOpt("{LCtrl}{RCtrl}{LAlt}{RAlt}{LShift}{RShift}{LWin}{RWin}", "-ES") ;Exclude the modifiers
+	marko.Start()
+	marko.Wait()
+	var := marko.EndMods
+	var .= marko.EndKey
+	mark := marko.EndKey
 	if var == "<!``" {
 		exitVim()
 		Exit
 	}
-	else if reg == "Escape" {
+	else if mark == "Escape" {
 		StateBulb[7].Destroy()
 		inf.Destroy()
 		global insertMode := true
 		Exit
 	}
-	Registers(reg).Paste()
+	Registers(mark).Paste()
 	StateBulb[7].Destroy()
 	inf.Destroy()
 	global insertMode := true
@@ -3651,8 +3652,8 @@ BackSpace:: {
 	inf := Infos('"', , true)
 	global normalMode := false
 	StateBulb[7].Create()
-	reg := GetInput("L1", "{esc}{space}{Backspace}").Input
-	if reg = "" {
+	mark := GetInput("L1", "{esc}{space}{Backspace}").Input
+	if mark = "" {
 		StateBulb[7].Destroy()
 		global normalMode := true
 		inf.Destroy()
@@ -3661,7 +3662,7 @@ BackSpace:: {
 
 	inf.Destroy()
 	infs := '"'
-	infs .= reg
+	infs .= mark
 	inf := Infos(infs, , true)
 
 	operator := GetInput("L1", "{esc}{space}{Backspace}").Input
@@ -3672,7 +3673,7 @@ BackSpace:: {
 		Send "^c"
 		ClipWait 1
 		Sleep 10
-		Registers(reg).WriteOrAppend()
+		Registers(mark).WriteOrAppend()
 		Sleep 10
 		Send "{Left}"
 		Send "+{Right}"
@@ -3684,35 +3685,35 @@ BackSpace:: {
 		Send "^x"
 		ClipWait 1
 		Sleep 10
-		Registers(reg).WriteOrAppend()
+		Registers(mark).WriteOrAppend()
 		A_Clipboard := oldclip
 	}
 	else if (operator == "p") {
-		Registers(reg).Paste()
+		Registers(mark).Paste()
 		Sleep 10
 		Send "{right}"
 		Send "{left}"
 		Send "+{Right}"
 	}
 	else if (operator == "l") {
-		Registers(reg).Look()
+		Registers(mark).Look()
 		Send "{Left}"
 		Send "+{Right}"
 	}
 	else if (operator == "m") {
 		secReg := GetInput("L1", "{Esc}").Input
-		Registers(reg).Move(secReg)
+		Registers(mark).Move(secReg)
 		Send "{Left}"
 		Send "+{Right}"
 	}
 	else if (operator == "s") {
 		secReg := GetInput("L1", "{Esc}").Input
-		Registers(reg).SwitchContents(secReg)
+		Registers(mark).SwitchContents(secReg)
 		Send "{Left}"
 		Send "+{Right}"
 	}
 	else if (operator == "x") {
-		Registers(reg).Truncate()
+		Registers(mark).Truncate()
 		Send "{Left}"
 		Send "+{Right}"
 	}
@@ -4583,6 +4584,71 @@ Esc:: {
 #HotIf mouseManagerMode = 1
 HotIf "mouseManagerMode = 1"
 
+m:: {
+	inf := Infos('m', , true)
+	global mouseManagerMode := false
+	StateBulb[7].Create()
+	marko := InputHook("C")
+	marko.KeyOpt("{All}", "ESI") ;End Keys & Suppress
+	marko.KeyOpt("{LCtrl}{RCtrl}{LAlt}{RAlt}{LShift}{RShift}{LWin}{RWin}", "-ES") ;Exclude the modifiers
+	marko.Start()
+	marko.Wait()
+	var := marko.EndMods
+	var .= marko.EndKey
+	mark := marko.EndKey
+	if var == "<!``" {
+		exitVim()
+		inf.Destroy()
+		Exit
+	}
+	else if mark == "Escape" {
+		StateBulb[7].Destroy()
+		global normalMode := true
+		inf.Destroy()
+		Exit
+	}
+	actw := WinExist("A")
+	; test := {}
+	; str := mark
+	; test.%str% := "value"
+	; MarkA.%str% := "value"
+	; MsgBox test.%str%
+	Marks.Pushindex(mark)
+	Marks.MarkA.%mark% := actw
+	StateBulb[7].Destroy()
+	global mouseManagerMode := true
+	inf.Destroy()
+}
+':: {
+	inf := Infos('`'', , true)
+	global mouseManagerMode := false
+	StateBulb[7].Create()
+	marko := InputHook("C")
+	marko.KeyOpt("{All}", "ESI") ;End Keys & Suppress
+	marko.KeyOpt("{LCtrl}{RCtrl}{LAlt}{RAlt}{LShift}{RShift}{LWin}{RWin}", "-ES") ;Exclude the modifiers
+	marko.Start()
+	marko.Wait()
+	var := marko.EndMods
+	var .= marko.EndKey
+	mark := marko.EndKey
+	if var == "<!``" {
+		exitVim()
+		inf.Destroy()
+		Exit
+	}
+	else if mark == "Escape" {
+		StateBulb[7].Destroy()
+		global normalMode := true
+		inf.Destroy()
+		Exit
+	}
+	win_id := Marks.MarkA.%mark%
+	WinActivate(win_id)
+	StateBulb[7].Destroy()
+	global mouseManagerMode := true
+	inf.Destroy()
+}
+
 #t:: {
 	global counter
 	if counter != 0 {
@@ -4642,20 +4708,20 @@ z & =:: {
 	inf := Infos('"', , true)
 	global mouseManagerMode := false
 	StateBulb[7].Create()
-	rego := InputHook("C")
-	rego.KeyOpt("{All}", "ESI") ;End Keys & Suppress
-	rego.KeyOpt("{LCtrl}{RCtrl}{LAlt}{RAlt}{LShift}{RShift}{LWin}{RWin}", "-ES") ;Exclude the modifiers
-	rego.Start()
-	rego.Wait()
-	var := rego.EndMods
-	var .= rego.EndKey
-	reg := rego.EndKey
+	marko := InputHook("C")
+	marko.KeyOpt("{All}", "ESI") ;End Keys & Suppress
+	marko.KeyOpt("{LCtrl}{RCtrl}{LAlt}{RAlt}{LShift}{RShift}{LWin}{RWin}", "-ES") ;Exclude the modifiers
+	marko.Start()
+	marko.Wait()
+	var := marko.EndMods
+	var .= marko.EndKey
+	mark := marko.EndKey
 	if var == "<!``" {
 		exitVim()
 		inf.Destroy()
 		Exit
 	}
-	else if reg == "Escape" {
+	else if mark == "Escape" {
 		StateBulb[7].Destroy()
 		global normalMode := true
 		inf.Destroy()
@@ -4663,16 +4729,16 @@ z & =:: {
 	}
 	inf.Destroy()
 	infs := '"'
-	infs .= reg
+	infs .= mark
 	inf := Infos(infs, , true)
-	rego := InputHook("C")
-	rego.KeyOpt("{All}", "ESI") ;End Keys & Ruppress
-	rego.KeyOpt("{LCtrl}{RCtrl}{LAlt}{RAlt}{LShift}{RShift}{LWin}{RWin}", "-ES") ;Exclude the modifiers
-	rego.Start()
-	rego.Wait()
-	var := rego.EndMods
-	var .= rego.EndKey
-	operator := rego.EndKey
+	marko := InputHook("C")
+	marko.KeyOpt("{All}", "ESI") ;End Keys & Ruppress
+	marko.KeyOpt("{LCtrl}{RCtrl}{LAlt}{RAlt}{LShift}{RShift}{LWin}{RWin}", "-ES") ;Exclude the modifiers
+	marko.Start()
+	marko.Wait()
+	var := marko.EndMods
+	var .= marko.EndKey
+	operator := marko.EndKey
 	if var == "<!``" {
 		exitVim()
 		inf.Destroy()
@@ -4688,30 +4754,30 @@ z & =:: {
 		Send "^c"
 		ClipWait 1
 		Sleep 10
-		Registers(reg).WriteOrAppend()
+		Registers(mark).WriteOrAppend()
 	}
 	else if (operator == "d") {
 		Send "^x"
 		ClipWait 1
 		Sleep 10
-		Registers(reg).WriteOrAppend()
+		Registers(mark).WriteOrAppend()
 	}
 	else if (operator == "p") {
-		Registers(reg).Paste()
+		Registers(mark).Paste()
 	}
 	else if (operator == "l") {
-		Registers(reg).Look()
+		Registers(mark).Look()
 	}
 	else if (operator == "m") {
 		secReg := GetInput("L1", "{Esc}").Input
-		Registers(reg).Move(secReg)
+		Registers(mark).Move(secReg)
 	}
 	else if (operator == "s") {
 		secReg := GetInput("L1", "{Esc}").Input
-		Registers(reg).SwitchContents(secReg)
+		Registers(mark).SwitchContents(secReg)
 	}
 	else if (operator == "x") {
-		Registers(reg).Truncate()
+		Registers(mark).Truncate()
 	}
 	StateBulb[7].Destroy()
 	global mouseManagerMode := true
@@ -4748,7 +4814,6 @@ space & .:: Return
 }
 +/:: return
 ^/:: return
-':: Return
 [:: Return
 ]:: Return
 \:: Return
@@ -4866,7 +4931,7 @@ a:: {
 	Send "{End}"
 	Exit
 }
-m:: {
+^m:: {
 	global WasInMouseManagerMode := true
 	disableClick()
 	gotoMwMode()
@@ -5292,7 +5357,7 @@ exitVim() {
 	StateBulb[4].Destroy() ; Special
 	StateBulb[5].Destroy() ; Move windows
 	StateBulb[6].Destroy() ; Mouse Movement
-	StateBulb[7].Destroy() ; reg Mode
+	StateBulb[7].Destroy() ; mark Mode
 	StateBulb[StateBulb.MaxBulbs - 1].Destroy()
 	; StateBulb[4].Destroy() ; Delete
 	; StateBulb[5].Destroy() ; Change
