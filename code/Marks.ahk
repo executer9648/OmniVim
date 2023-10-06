@@ -4,22 +4,18 @@ class Marks {
 	static showMarks() {
 		Infos.DestroyAll()
 		if this.MarkIndex.Length <= 0 {
-			Infos("No Marks Set")
+			Infos("No Marks Set", 2000)
 			return
 		}
 		for i in this.MarkIndex {
 			arr := StrSplit(WinGetTitle(this.MarkA.%i%), " - ")
-			; for str in arr {
-			; 	Infos(A_Index ": " str)
-			; }
-			; Infos(arr.Length)
 			Infos(i ": " arr[arr.Length])
 		}
 	}
 	static showMark(mark) {
 		Infos.DestroyAll()
 		if this.MarkIndex.Length <= 0 {
-			Infos("No Marks Set")
+			Infos("No Marks Set", 2000)
 			return
 		}
 		try arr := StrSplit(WinGetTitle(this.MarkA.%mark%), " - ")
@@ -32,7 +28,7 @@ class Marks {
 	static clearMarks() {
 		Infos.DestroyAll()
 		if this.MarkIndex.Length <= 0 {
-			Infos("No Marks Set")
+			Infos("No Marks Set", 2000)
 			return
 		}
 		this.MarkA := {}
@@ -42,7 +38,7 @@ class Marks {
 	static clearMark(mark) {
 		Infos.DestroyAll()
 		if this.MarkIndex.Length <= 0 {
-			Infos("No Marks Set")
+			Infos("No Marks Set", 2000)
 			return
 		}
 		this.MarkA.%mark% := ""

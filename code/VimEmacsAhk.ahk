@@ -4608,11 +4608,6 @@ m:: {
 		Exit
 	}
 	actw := WinExist("A")
-	; test := {}
-	; str := mark
-	; test.%str% := "value"
-	; MarkA.%str% := "value"
-	; MsgBox test.%str%
 	Marks.Pushindex(mark)
 	Marks.MarkA.%mark% := actw
 	StateBulb[7].Destroy()
@@ -4642,7 +4637,14 @@ m:: {
 		inf.Destroy()
 		Exit
 	}
-	win_id := Marks.MarkA.%mark%
+	try win_id := Marks.MarkA.%mark%
+	catch {
+		Infos("Mark " mark " was not set", 2000)
+		StateBulb[7].Destroy()
+		global mouseManagerMode := true
+		inf.Destroy()
+		Exit
+	}
 	WinActivate(win_id)
 	StateBulb[7].Destroy()
 	global mouseManagerMode := true
