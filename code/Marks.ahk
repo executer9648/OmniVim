@@ -48,7 +48,7 @@ class Marks {
 		this.MarkA.%mark% := ""
 		for i in this.MarkIndex {
 			if i == mark
-				this.MarkIndex[A_Index] := ""
+				this.MarkIndex.RemoveAt(A_Index)
 		}
 		Infos("Delted Mark " mark)
 	}
