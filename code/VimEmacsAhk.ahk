@@ -2922,10 +2922,12 @@ z:: Return
 t:: {
 	global counter
 	global WasInMouseManagerMode
+	global infcounter
 	if counter != 0 {
 		Loop counter {
 			Send "^{tab}"
 		}
+		infcounter.Destroy()
 		counter := 0
 		if WasInMouseManagerMode == true {
 			gotoNormal()
@@ -2950,11 +2952,13 @@ t:: {
 +t:: {
 	global counter
 	global WasInMouseManagerMode
+	global infcounter
 	if counter != 0 {
 		Loop counter {
 			Send "^+{tab}"
 		}
 		counter := 0
+		infcounter.Destroy()
 		if WasInMouseManagerMode == true {
 			gotoNormal()
 			gotoMouseMode()
