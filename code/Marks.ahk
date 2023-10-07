@@ -98,12 +98,28 @@ class Marks {
 		mwh.setxPos(x)
 		mwh.setyPos(y)
 		mwh.setHandler(mouseWin)
-		WinSetTransparent 200, mwh._handler
+		; if WinGetTransparent(mouseWin) == 240 {
+		for i in this.Sessions.%sessionName%{
+			if (i._handler) == (mwh._handler) {
+				WinSetTransparent "Off", mwh._handler
+				this.Sessions.%sessionName%.RemoveAt(A_Index)
+				Infos("Window removed: " WinGetTitle(mwh._handler) " (from session " sessionName ")", 4000)
+				return
+			}
+		}
+		; }
+		; WinSetTransparent 240, mwh._handler
 		this.Sessions.%sessionName%.Push(mwh)
 		title := StrSplit(WinGetTitle(mwh._handler), " - ")
-		Infos("Window saved: " title[title.Length] " (into session " sessionName ")", 4000)
+		if title.Length == 0 {
+			Infos("Window saved: " WinGetTitle(mwh._handler) " (into session " sessionName ")", 4000)
+		}
+		else {
+			Infos("Window saved: " title[title.Length] " (into session " sessionName ")", 4000)
+		}
 	}
 	static startRecording(sessionName) {
+		StateBulb[7].Create()
 		Infos("Started recording windows from mouse Click", 2000)
 		this.recording := true
 		this._session := sessionName
@@ -111,9 +127,14 @@ class Marks {
 		this.sessionNames.Push(sessionName)
 	}
 	static stopRecording(sessionName) {
+		StateBulb[7].Destroy()
 		Infos("Stopped recording " sessionName, 2000)
 		this.recording := false
 		this._session := sessionName
+		if this.Sessions.%sessionName%.Length == 0 {
+			this.sessionNames.Pop()
+			return
+		}
 		for i in this.Sessions.%sessionName%{
 			WinSetTransparent "Off", i._handler
 		}
