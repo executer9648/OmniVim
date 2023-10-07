@@ -346,7 +346,17 @@ infcounter.Destroy()
 	Mouse.BigMove := 200
 	exit
 }
-
+#HotIf Marks.recording = 1
+HotIf "Marks.recording = 1"
+~LButton:: {
+	Marks.saveSessionByMouse(Marks._session)
+}
+!`::
+tab & `::
+Esc:: {
+	Marks.stopRecording(Marks._session)
+}
+#HotIf
 ; Numlock Mode - replaces the keyboard to numlock
 #HotIf numlockMode = 1
 HotIf "numlockMode = 1"
@@ -4587,6 +4597,7 @@ Esc:: {
 ; Mouse Manager Mode - for moving the mouse using keyboard
 #HotIf mouseManagerMode = 1
 HotIf "mouseManagerMode = 1"
+
 
 m:: {
 	inf := Infos('m', , true)

@@ -17,6 +17,7 @@ class Runner {
 		"delm", () => Marks.clearMarks(),
 		"dm", () => Marks.clearMarks(),
 		"w", () => Send("^s"),
+		"sh", () => Marks.showSessionRecored(),
 	)
 
 	static runner_regex := Map(
@@ -27,6 +28,13 @@ class Runner {
 		"m", (input) => Marks.showMark(input),
 		"delm", (input) => Marks.clearMark(input),
 		"dm", (input) => Marks.clearMark(input),
+		"k", (input) => Marks.killMark(input),
+		"kill", (input) => Marks.killMark(input),
+		"ss", (input) => Marks.saveSession(input),
+		"os", (input) => Marks.openSession(input),
+		"mks", (input) => Marks.startRecording(input),
+		"so", (input) => Marks.openRecoredSession(input),
+		"source", (input) => Marks.openRecoredSession(input),
 	)
 
 	static openRunner() {
