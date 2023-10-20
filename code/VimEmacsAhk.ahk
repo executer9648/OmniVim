@@ -5822,6 +5822,7 @@ openMark() {
 		inf.Destroy()
 		Exit
 	}
+	Registers.ValidateKey(mark)
 	try win_id := Marks.MarkA.%mark%
 	catch {
 		Infos("Mark " mark " was not set", 2000)
@@ -5857,6 +5858,7 @@ saveMark() {
 		inf.Destroy()
 		Exit
 	}
+	Registers.ValidateKey(mark)
 	actw := WinExist("A")
 	Marks.Pushindex(mark)
 	Marks.MarkA.%mark% := actw
