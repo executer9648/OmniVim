@@ -34,9 +34,11 @@ Class CleanInputBox extends Gui {
 	 * @returns {String}
 	 */
 	WaitForInput() {
+		Suspend
 		this.Show()
 		while this.isWaiting {
 		}
+		Suspend
 		return this.Input
 	}
 
