@@ -13,6 +13,7 @@ class Runner {
 		"reg", () => Registers.PeekNonEmpty(),
 		"r", () => Registers.PeekNonEmpty(),
 		"marks", () => Marks.showMarks(),
+		"ms", () => Marks.showMarks(),
 		"m", () => Marks.showMarks(),
 		"delm", () => Marks.clearMarks(),
 		"dm", () => Marks.clearMarks(),
