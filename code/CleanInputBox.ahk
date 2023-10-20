@@ -34,28 +34,32 @@ Class CleanInputBox extends Gui {
 	 * @returns {String}
 	 */
 	WaitForInput() {
-		Suspend
 		this.Show()
+		if !A_IsSuspended
+			Suspend
 		while this.isWaiting {
 		}
-		Suspend
 		return this.Input
 	}
 
 	SetInput() {
+		if A_IsSuspended
+			Suspend
 		this.Input := this.InputField.Text
 		this.isWaiting := false
 		this.Finish()
 	}
 
 	SetCancel() {
+		if A_IsSuspended
+			Suspend
 		this.isWaiting := false
 		this.Finish()
 	}
 
 	RegisterHotkeys() {
 		HotIfWinactive("ahk_id " this.Hwnd)
-		Hotkey("Enter", (*) => this.SetInput(), "On")
+		Hotkey("Enter", (*) => this.SetInput(), "On S")
 		this.OnEvent("Escape", (*) => this.SetCancel())
 	}
 

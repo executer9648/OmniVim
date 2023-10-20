@@ -10,6 +10,7 @@
 #Include HoverScreenshot.ahk
 #Include EasyWindowDragginKde.ahk
 #Include Marks.ahk
+
 #SingleInstance force
 #MaxThreadsBuffer true
 #MaxThreads 250
@@ -2614,6 +2615,7 @@ w:: {
 	gotoNormal()
 	Exit
 }
+#HotIf
 
 ; Change Mode
 #HotIf cMode = 1
