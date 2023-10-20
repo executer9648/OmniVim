@@ -27,7 +27,7 @@ Info("Script Reloaded-Active", 2000)
 
 ;################ Global Key-Bindings ################
 
-$CapsLock::LCtrl
+$*CapsLock::LCtrl
 +!#Control::CapsLock
 
 #HotIf WinActive("A")
