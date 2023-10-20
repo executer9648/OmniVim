@@ -107,6 +107,15 @@ tab & v:: {
 		send "{WheelDown}"
 }
 tab & `:: exitVim()
+tab & ':: {
+	openMark()
+}
+tab & `;:: {
+	Runner.openRunner()
+}
+tab & m:: {
+	saveMark()
+}
 tab & y::^v
 tab & ,:: {
 	Send "^{Home}"
@@ -3661,7 +3670,11 @@ BackSpace:: {
 	gotoInsert()
 	Exit
 }
-':: Return
+':: {
+	global normalMode := false
+	openMark()
+	global normalMode := true
+}
 +':: {
 	inf := Infos('"', , true)
 	global normalMode := false
@@ -4600,70 +4613,14 @@ HotIf "mouseManagerMode = 1"
 
 
 m:: {
-	inf := Infos('m', , true)
 	global mouseManagerMode := false
-	StateBulb[7].Create()
-	marko := InputHook("C")
-	marko.KeyOpt("{All}", "ESI") ;End Keys & Suppress
-	marko.KeyOpt("{LCtrl}{RCtrl}{LAlt}{RAlt}{LShift}{RShift}{LWin}{RWin}", "-ES") ;Exclude the modifiers
-	marko.Start()
-	marko.Wait()
-	var := marko.EndMods
-	var .= marko.EndKey
-	mark := marko.EndKey
-	if var == "<!``" {
-		exitVim()
-		inf.Destroy()
-		Exit
-	}
-	else if mark == "Escape" {
-		StateBulb[7].Destroy()
-		global normalMode := true
-		inf.Destroy()
-		Exit
-	}
-	actw := WinExist("A")
-	Marks.Pushindex(mark)
-	Marks.MarkA.%mark% := actw
-	StateBulb[7].Destroy()
+	saveMark()
 	global mouseManagerMode := true
-	inf.Destroy()
 }
 ':: {
-	inf := Infos('`'', , true)
 	global mouseManagerMode := false
-	StateBulb[7].Create()
-	marko := InputHook("C")
-	marko.KeyOpt("{All}", "ESI") ;End Keys & Suppress
-	marko.KeyOpt("{LCtrl}{RCtrl}{LAlt}{RAlt}{LShift}{RShift}{LWin}{RWin}", "-ES") ;Exclude the modifiers
-	marko.Start()
-	marko.Wait()
-	var := marko.EndMods
-	var .= marko.EndKey
-	mark := marko.EndKey
-	if var == "<!``" {
-		exitVim()
-		inf.Destroy()
-		Exit
-	}
-	else if mark == "Escape" {
-		StateBulb[7].Destroy()
-		global normalMode := true
-		inf.Destroy()
-		Exit
-	}
-	try win_id := Marks.MarkA.%mark%
-	catch {
-		Infos("Mark " mark " was not set", 2000)
-		StateBulb[7].Destroy()
-		global mouseManagerMode := true
-		inf.Destroy()
-		Exit
-	}
-	WinActivate(win_id)
-	StateBulb[7].Destroy()
+	openMark()
 	global mouseManagerMode := true
-	inf.Destroy()
 }
 
 #t:: {
@@ -5841,4 +5798,68 @@ delChanYantMotion() {
 		Send "+{Right}"
 	}
 	Send "{Left}"
+}
+
+openMark() {
+	inf := Infos('`'', , true)
+	StateBulb[7].Create()
+	marko := InputHook("C")
+	marko.KeyOpt("{All}", "ESI") ;End Keys & Suppress
+	marko.KeyOpt("{LCtrl}{RCtrl}{LAlt}{RAlt}{LShift}{RShift}{LWin}{RWin}", "-ES") ;Exclude the modifiers
+	marko.Start()
+	marko.Wait()
+	var := marko.EndMods
+	var .= marko.EndKey
+	mark := marko.EndKey
+	if var == "<!``" {
+		exitVim()
+		inf.Destroy()
+		Exit
+	}
+	else if mark == "Escape" {
+		StateBulb[7].Destroy()
+		global normalMode := true
+		inf.Destroy()
+		Exit
+	}
+	try win_id := Marks.MarkA.%mark%
+	catch {
+		Infos("Mark " mark " was not set", 2000)
+		StateBulb[7].Destroy()
+		global mouseManagerMode := true
+		inf.Destroy()
+		Exit
+	}
+	WinActivate(win_id)
+	StateBulb[7].Destroy()
+	inf.Destroy()
+}
+
+saveMark() {
+	inf := Infos('m', , true)
+	StateBulb[7].Create()
+	marko := InputHook("C")
+	marko.KeyOpt("{All}", "ESI") ;End Keys & Suppress
+	marko.KeyOpt("{LCtrl}{RCtrl}{LAlt}{RAlt}{LShift}{RShift}{LWin}{RWin}", "-ES") ;Exclude the modifiers
+	marko.Start()
+	marko.Wait()
+	var := marko.EndMods
+	var .= marko.EndKey
+	mark := marko.EndKey
+	if var == "<!``" {
+		exitVim()
+		inf.Destroy()
+		Exit
+	}
+	else if mark == "Escape" {
+		StateBulb[7].Destroy()
+		global normalMode := true
+		inf.Destroy()
+		Exit
+	}
+	actw := WinExist("A")
+	Marks.Pushindex(mark)
+	Marks.MarkA.%mark% := actw
+	StateBulb[7].Destroy()
+	inf.Destroy()
 }

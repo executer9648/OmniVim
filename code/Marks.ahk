@@ -24,6 +24,7 @@ class Marks {
 		Infos.DestroyAll()
 		if this.MarkIndex.Length <= 0 {
 			Infos("No Marks Set", 2000)
+			Infos("Mark " mark " not Set", 2000)
 			return
 		}
 		try arr := StrSplit(WinGetTitle(this.MarkA.%mark%), " - ")
