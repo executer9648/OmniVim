@@ -23,6 +23,7 @@ A_MaxHotkeysPerInterval := 9999
 A_MenuMaskKey := "vkFF"
 SetMouseDelay -1
 CoordMode "Mouse", "Screen"
+CoordMode "Pixel", "Screen"
 
 Info("Script Reloaded-Active", 2000)
 

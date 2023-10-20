@@ -23,17 +23,22 @@ class Mouse {
 	static spaceRow := 12 ;6
 	static keyboardCol := 20 ;5
 
-	static getx(monitorN, Xn, RowButtons) {
+	static getx(monitorN, n, RowButtons) {
 		try
-			MonitorGet monitorN, &Left, &Top, &Right, &Bottom
+			MonitorGet 2, &Left, &Top, &Right, &Bottom
+		; MonitorGet monitorN, &Left, &Top, &Right, &Bottom
 		catch
 			return 0
-		nthMonitorWidth := Right + Left
-		section := Xn * 2 - 1
-		nthRow := RowButtons * monitorN
-		part1 := nthMonitorWidth / nthRow
-		part2 := section + nthRow
-		result := part1 * part2
+		; Infos("left " Left)
+		; Infos("top " Top)
+		; Infos("right " Right)
+		; Infos("bottom " Bottom)
+		dpi := 1
+		dX := (Right / dpi) - (Left / dpi)
+		an := 2 * n - 1
+		y := dX / RowButtons
+		Xn := an * y
+		result := Xn + Left
 		return result
 	}
 	; you take the number of total keys devide by the rows in this case its 5
