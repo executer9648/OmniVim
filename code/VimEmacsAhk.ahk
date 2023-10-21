@@ -10,6 +10,7 @@
 #Include HoverScreenshot.ahk
 #Include EasyWindowDragginKde.ahk
 #Include Marks.ahk
+#Include ctrl_test.ahk
 
 #SingleInstance force
 #MaxThreadsBuffer true
@@ -101,7 +102,7 @@ $*CapsLock::LCtrl
 
 ; TAB SECTION =================
 tab & Space::vkE8
-tab::Tab
+tab::tab
 tab & v:: {
 	if GetKeyState("ctrl") or GetKeyState("vkE8")
 		send "{WheelUp}"
@@ -160,29 +161,7 @@ Tab & x:: {
 }
 Tab & r:: {
 	global insertMode := false
-	inf := Infos('"', , true)
-	StateBulb[7].Create()
-	marko := InputHook("C")
-	marko.KeyOpt("{All}", "ESI") ;End Keys & Suppress
-	marko.KeyOpt("{LCtrl}{RCtrl}{LAlt}{RAlt}{LShift}{RShift}{LWin}{RWin}", "-ES") ;Exclude the modifiers
-	marko.Start()
-	marko.Wait()
-	var := marko.EndMods
-	var .= marko.EndKey
-	mark := marko.EndKey
-	if var == "<!``" {
-		exitVim()
-		Exit
-	}
-	else if mark == "Escape" {
-		StateBulb[7].Destroy()
-		inf.Destroy()
-		global insertMode := true
-		Exit
-	}
-	Registers(mark).Paste()
-	StateBulb[7].Destroy()
-	inf.Destroy()
+	insertReg()
 	global insertMode := true
 }
 Tab & s::^f
@@ -258,29 +237,7 @@ capslock & x:: {
 }
 capslock & r:: {
 	global insertMode := false
-	inf := Infos('"', , true)
-	StateBulb[7].Create()
-	marko := InputHook("C")
-	marko.KeyOpt("{All}", "ESI") ;End Keys & Suppress
-	marko.KeyOpt("{LCtrl}{RCtrl}{LAlt}{RAlt}{LShift}{RShift}{LWin}{RWin}", "-ES") ;Exclude the modifiers
-	marko.Start()
-	marko.Wait()
-	var := marko.EndMods
-	var .= marko.EndKey
-	mark := marko.EndKey
-	if var == "<!``" {
-		exitVim()
-		Exit
-	}
-	else if mark == "Escape" {
-		StateBulb[7].Destroy()
-		inf.Destroy()
-		global insertMode := true
-		Exit
-	}
-	Registers(mark).Paste()
-	StateBulb[7].Destroy()
-	inf.Destroy()
+	insertReg()
 	global insertMode := true
 }
 capslock & s::^f
@@ -3419,29 +3376,7 @@ HotIf "insertMode = 1"
 
 ^r:: {
 	global insertMode := false
-	inf := Infos('"', , true)
-	StateBulb[7].Create()
-	marko := InputHook("C")
-	marko.KeyOpt("{All}", "ESI") ;End Keys & Suppress
-	marko.KeyOpt("{LCtrl}{RCtrl}{LAlt}{RAlt}{LShift}{RShift}{LWin}{RWin}", "-ES") ;Exclude the modifiers
-	marko.Start()
-	marko.Wait()
-	var := marko.EndMods
-	var .= marko.EndKey
-	mark := marko.EndKey
-	if var == "<!``" {
-		exitVim()
-		Exit
-	}
-	else if mark == "Escape" {
-		StateBulb[7].Destroy()
-		inf.Destroy()
-		global insertMode := true
-		Exit
-	}
-	Registers(mark).Paste()
-	StateBulb[7].Destroy()
-	inf.Destroy()
+	insertReg()
 	global insertMode := true
 }
 
@@ -5865,6 +5800,31 @@ saveMark() {
 	actw := WinExist("A")
 	Marks.Pushindex(mark)
 	Marks.MarkA.%mark% := actw
+	StateBulb[7].Destroy()
+	inf.Destroy()
+}
+insertReg() {
+	inf := Infos('"', , true)
+	StateBulb[7].Create()
+	marko := InputHook("C")
+	marko.KeyOpt("{All}", "ESI") ;End Keys & Suppress
+	marko.KeyOpt("{LCtrl}{RCtrl}{LAlt}{RAlt}{LShift}{RShift}{LWin}{RWin}", "-ES") ;Exclude the modifiers
+	marko.Start()
+	marko.Wait()
+	var := marko.EndMods
+	var .= marko.EndKey
+	mark := marko.EndKey
+	if var == "<!``" {
+		exitVim()
+		Exit
+	}
+	else if mark == "Escape" {
+		StateBulb[7].Destroy()
+		inf.Destroy()
+		global insertMode := true
+		Exit
+	}
+	Registers(mark).Paste()
 	StateBulb[7].Destroy()
 	inf.Destroy()
 }
