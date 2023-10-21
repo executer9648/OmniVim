@@ -10,7 +10,7 @@
 #Include HoverScreenshot.ahk
 #Include EasyWindowDragginKde.ahk
 #Include Marks.ahk
-#Include ctrl_test.ahk
+#Include DoubleCtrlAlt.ahk
 
 #SingleInstance force
 #MaxThreadsBuffer true
@@ -90,12 +90,12 @@ $*CapsLock::LCtrl
 `::`
 ~!`:: return
 ` & h::Left
-` & b::Left
-` & k::Up
-` & p::Up
 ` & j::Down
-` & n::Down
+` & k::Up
 ` & l::Right
+` & b::Left
+` & p::Up
+` & n::Down
 ` & f::Right
 ` & y::WheelUp
 ` & e::WheelDown
