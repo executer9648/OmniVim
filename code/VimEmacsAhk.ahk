@@ -4483,6 +4483,12 @@ g:: WindowManager().IncreaseWidth(Mouse.MediumMove)
 +f:: WindowManager().DecreaseHeight(Mouse.SmallMove)
 +g:: WindowManager().IncreaseWidth(Mouse.SmallMove)
 
+space & s:: WindowManager().DecreaseWidth(Mouse.SmallMove)
+space & d:: WindowManager().IncreaseHeight(Mouse.SmallMove)
+space & f:: WindowManager().DecreaseHeight(Mouse.SmallMove)
+space & g:: WindowManager().IncreaseWidth(Mouse.SmallMove)
+
+
 ^s:: WindowManager().DecreaseWidth(Mouse.BigMove)
 ^d:: WindowManager().IncreaseHeight(Mouse.BigMove)
 ^f:: WindowManager().DecreaseHeight(Mouse.BigMove)
@@ -4527,6 +4533,8 @@ w:: WindowManager().SetHalfWidth()
 e:: WindowManager().SetFullWidth()
 
 m::
+^m::
+!m::
 Esc:: {
 	if (WasInMouseManagerMode == true) {
 		gotoNormal()
@@ -4851,6 +4859,7 @@ a:: {
 	Send "{End}"
 	Exit
 }
+!m::
 ^m:: {
 	global WasInMouseManagerMode := true
 	disableClick()
