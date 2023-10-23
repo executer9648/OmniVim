@@ -106,3 +106,17 @@ g_DoubleAlt := 0
 !g::^End
 !x::^+t
 #HotIf
+g_DoubleShift := 0
+; This detects "double-clicks" of the ctrl key.
+~Shift::
+{
+	global g_DoubleShift := (A_PriorHotkey = "~Shift" and A_TimeSincePriorHotkey < 400)
+	Sleep 0
+	KeyWait "Shift"  ; This prevents the keyboard's auto-repeat feature from interfering.
+}
+#HotIf g_DoubleShift
++h::Left
++j::Down
++k::Up
++l::Right
+#HotIf
