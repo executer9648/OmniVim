@@ -7,6 +7,9 @@ g_DoubleCtrl := 0
 	KeyWait "Ctrl"  ; This prevents the keyboard's auto-repeat feature from interfering.
 }
 #HotIf g_DoubleCtrl
+
+^+LButton::+#Left
+^+RButton::+#Right
 ^LButton:: {
 	; Get the initial mouse position and window id, and
 	; abort if the window is maximized.
@@ -170,6 +173,9 @@ g_DoubleShift := 0
 	KeyWait "Shift"  ; This prevents the keyboard's auto-repeat feature from interfering.
 }
 #HotIf g_DoubleShift
+
+^+LButton::+#Left
+^+RButton::+#Right
 +h::Left
 +j::Down
 +k::Up
