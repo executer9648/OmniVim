@@ -4,7 +4,7 @@
 #Include WindowManager.ahk
 #Include Runner.ahk
 #Include Registers.ahk
-#Include mousetest.ahk
+#Include mouseMove.ahk
 #Include GetInput.ahk
 #Include Language.ahk
 #Include HoverScreenshot.ahk
