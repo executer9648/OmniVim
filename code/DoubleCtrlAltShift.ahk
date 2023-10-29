@@ -178,7 +178,7 @@ g_DoubleAlt := 0
 !+0::-
 !+Space::0
 !+RAlt::.
-!+Escape::Escape
+!+BackSpace::BackSpace
 !+Enter::Enter
 #HotIf
 g_DoubleShift := 0
