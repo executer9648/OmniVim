@@ -163,6 +163,23 @@ g_DoubleAlt := 0
 }
 !g::^End
 !x::^+t
+
+!+m::1
+!+,::2
+!+.::3
+!+j::4
+!+k::5
+!+l::6
+!+u::7
+!+i::8
+!+o::9
+!+8::/
+!+9::*
+!+0::-
+!+Space::0
+!+RAlt::.
+!+Escape::Escape
+!+Enter::Enter
 #HotIf
 g_DoubleShift := 0
 ; This detects "double-clicks" of the ctrl key.

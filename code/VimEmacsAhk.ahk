@@ -29,9 +29,6 @@ Info("Script Reloaded-Active", 2000)
 
 ;################ Global Key-Bindings ################
 
-$*CapsLock::LCtrl
-+!#Control::CapsLock
-
 #HotIf WinActive("A")
 #!h:: {
 	KeyWait "LWin"
@@ -356,7 +353,6 @@ Esc:: {
 	StateBulb[4].Destroy() ; Special
 	global numlockMode := false
 }
-
 !`:: {
 	exitVim()
 	Exit
@@ -371,6 +367,24 @@ l::3
 ,::0
 m::0
 n::0
+
+; m::1
+; ,::2
+; .::3
+; j::4
+; k::5
+; l::6
+; u::7
+; i::8
+; o::9
+; 8::/
+; 9::*
+; 0::-
+; Space::0
+; /::.
+; RAlt:: {
+; 	Send "."
+; }
 #HotIf
 
 ; F mode - for mouse positioning according to keyboard layout
@@ -3504,8 +3518,9 @@ Esc:: {
 #HotIf normalMode = 1
 HotIf "normalMode = 1"
 
-Z & Q:: {
-	Send "!{f4}"
+z & q:: {
+	if GetKeyState("shift")
+		Send "!{f4}"
 }
 z & h:: {
 	Send "{WheelLeft}"
@@ -4595,8 +4610,9 @@ m:: {
 9:: chCounter(9)
 0:: chCounter(0)
 
-Z & Q:: {
-	Send "!{f4}"
+z & q:: {
+	if GetKeyState("shift")
+		Send "!{f4}"
 }
 z & h:: {
 	Send "{WheelLeft}"
