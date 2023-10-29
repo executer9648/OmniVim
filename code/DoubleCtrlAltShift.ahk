@@ -254,4 +254,6 @@ g_DoubleShift := 0
 		KDE_Y1 := (KDE_Y2 + KDE_Y1)
 	}
 }
++#LButton::+#Left
++#RButton::+#Right
 #HotIf
