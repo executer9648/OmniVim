@@ -11,7 +11,6 @@
 #Include EasyWindowDragginKde.ahk
 #Include Marks.ahk
 #Include DoubleCtrlAltShift.ahk
-
 #SingleInstance force
 #MaxThreadsBuffer true
 #MaxThreads 250
