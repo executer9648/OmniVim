@@ -115,7 +115,7 @@ tab & `;:: {
 tab & m:: {
 	saveMark()
 }
-tab & y::^v
+tab & y::+insert
 tab & ,:: {
 	Send "^{Home}"
 }
@@ -2394,14 +2394,14 @@ z:: Return
 
 f:: {
 	delChanYanfMotion()
-	Send "^c"
+	Send "^{Insert}"
 	gotoNormal()
 	Exit
 }
 
 t:: {
 	delChanYantMotion()
-	Send "^c"
+	Send "^{Insert}"
 	gotoNormal()
 	Exit
 }
@@ -2411,7 +2411,7 @@ i:: {
 	oldclip := A_Clipboard
 	A_Clipboard := ""
 	Send "+{End}"
-	Send "^c"
+	Send "^{insert}"
 	Send "{Left}"
 	ClipWait 1
 	Haystack := A_Clipboard
@@ -2456,7 +2456,7 @@ i:: {
 		Send "+{Left}"
 	}
 	sleep 100
-	Send "^c"
+	Send "^{insert}"
 	Exit
 }
 
@@ -2465,13 +2465,13 @@ y:: {
 	global infcounter
 	A_Clipboard := ""
 	Send "+{Home}"
-	Send "^c"
+	Send "^{insert}"
 	ClipWait 1
 	var1 := A_Clipboard
 	A_Clipboard := ""
 	Send "{Right}"
 	Send "+{End}"
-	Send "^c"
+	Send "^{insert}"
 	ClipWait 1
 	var2 := A_Clipboard
 	Send "{Left}"
@@ -2497,7 +2497,7 @@ b:: {
 		else {
 			Send "^+{Right}"
 		}
-		Send "^c"
+		Send "^{insert}"
 		Send "{Left}"
 		Send "+{right}"
 		gotoNormal()
@@ -2515,7 +2515,7 @@ b:: {
 		Send "{Left}"
 		Send "^+{Left}"
 	}
-	Send "^c"
+	Send "^{insert}"
 	Send "{right}"
 	Send "{Left}"
 	Send "+{right}"
@@ -2538,7 +2538,7 @@ w:: {
 		} else {
 			Send "^+{Left}"
 		}
-		Send "^c"
+		Send "^{insert}"
 		Send "{right}"
 		Send "{Left}"
 		Send "+{right}"
@@ -2557,7 +2557,7 @@ w:: {
 		Send "{Left}"
 		Send "^+{Right}"
 	}
-	Send "^c"
+	Send "^{insert}"
 	Send "{Left}"
 	Send "+{right}"
 	gotoNormal()
@@ -2573,7 +2573,7 @@ w:: {
 	}
 	else {
 		Send "+{home}"
-		Send "^c"
+		Send "^{insert}"
 		gotoNormal()
 		Exit
 	}
@@ -2582,7 +2582,7 @@ w:: {
 +4::
 {
 	Send "+{End}"
-	Send "^c"
+	Send "^{insert}"
 	gotoNormal()
 	Exit
 }
@@ -2692,7 +2692,7 @@ i:: {
 	oldclip := A_Clipboard
 	A_Clipboard := ""
 	Send "+{End}"
-	Send "^c"
+	Send "^{insert}"
 	Send "{Left}"
 	ClipWait 1
 	Haystack := A_Clipboard
@@ -2748,7 +2748,7 @@ c:: {
 	oldclip := A_Clipboard
 	A_Clipboard := ""
 	Send "{Home}+{End}"
-	Send "^c"
+	Send "^{insert}"
 	Send "{Left}"
 	ClipWait 1
 	Haystack := A_Clipboard
@@ -3136,7 +3136,7 @@ i:: {
 	oldclip := A_Clipboard
 	A_Clipboard := ""
 	Send "+{End}"
-	Send "^c"
+	Send "^{insert}"
 	Send "{Left}"
 	ClipWait 1
 	Haystack := A_Clipboard
@@ -3215,7 +3215,7 @@ d:: {
 	oldclip := A_Clipboard
 	A_Clipboard := ""
 	Send "{Home}+{End}"
-	Send "^c"
+	Send "^{insert}"
 	Send "{Left}"
 	ClipWait 1
 	Haystack := A_Clipboard
@@ -3570,7 +3570,7 @@ BackSpace:: {
 	if visualMode == true {
 		oldclip := A_Clipboard
 		A_Clipboard := ""
-		Send "^c"
+		Send "^{insert}"
 		ClipWait
 		formatstr := A_Clipboard
 		if RegExMatch(formatstr, "^[A-Z\s\p{P}!]+$") {
@@ -3593,7 +3593,7 @@ BackSpace:: {
 	else {
 		oldclip := A_Clipboard
 		A_Clipboard := ""
-		Send "^c"
+		Send "^{insert}"
 		ClipWait
 		formatstr := A_Clipboard
 		if RegExMatch(formatstr, "^[A-Z\s\p{P}]+$") {
@@ -3649,7 +3649,7 @@ BackSpace:: {
 	if (operator == "y") {
 		oldclip := A_Clipboard
 		A_Clipboard := ""
-		Send "^c"
+		Send "^{insert}"
 		ClipWait 1
 		Sleep 10
 		Registers(mark).WriteOrAppend()
@@ -3840,7 +3840,7 @@ z:: Return
 	A_Clipboard := ""
 	Send "{Left}"
 	Send "+{Home}"
-	Send "^c"
+	Send "^{insert}"
 	Send "{Right}"
 	ClipWait 1
 	Haystack := A_Clipboard
@@ -3926,7 +3926,7 @@ f:: {
 	A_Clipboard := ""
 	Send "{Right}"
 	Send "+{End}"
-	Send "^c"
+	Send "^{insert}"
 	Send "{Left}"
 	ClipWait 1
 	Haystack := A_Clipboard
@@ -4355,7 +4355,7 @@ u:: {
 
 +y:: {
 	Send "+{End}"
-	Send "^c"
+	Send "^{insert}"
 	Send "{Left}"
 	Send "+{Right}"
 	Exit
@@ -4365,7 +4365,7 @@ y:: {
 	global counter
 	global infcounter
 	if visualMode == true {
-		Send "^c"
+		Send "^{insert}"
 		Send "{Left}"
 		gotoNormal()
 		Exit
@@ -4381,17 +4381,17 @@ y:: {
 +p:: {
 	Send "{Left}"
 	sleep 10
-	Send "^v"
+	Send "+{insert}"
 	Exit
 }
 
 p:: {
 	if visualMode == true {
-		Send "^v"
+		Send "+{insert}"
 		Exit
 	}
 	Send "{Right}"
-	Send "^v"
+	Send "+{insert}"
 	Exit
 }
 
@@ -4686,7 +4686,7 @@ z & =:: {
 		Exit
 	}
 	else if (operator == "y") {
-		Send "^c"
+		Send "^{insert}"
 		ClipWait 1
 		Sleep 10
 		Registers(mark).WriteOrAppend()
@@ -4795,7 +4795,7 @@ c:: {
 	Exit
 }
 y:: {
-	Send "^c"
+	Send "^{insert}"
 	if GetKeyState("LButton")
 		Click("L Up")
 	else if GetKeyState("RButton")
@@ -4804,7 +4804,7 @@ y:: {
 		Click("M Up")
 }
 p:: {
-	Send "^v"
+	Send "+{insert}"
 	if GetKeyState("LButton")
 		Click("L Up")
 	else if GetKeyState("RButton")
@@ -5559,7 +5559,7 @@ fMotion() {
 	A_Clipboard := ""
 	Send "{Left}"
 	Send "+{Home}"
-	Send "^c"
+	Send "^{insert}"
 	Send "{Right}"
 	ClipWait 1
 	Haystack := A_Clipboard
@@ -5644,7 +5644,7 @@ delChanYanfMotion() {
 	A_Clipboard := ""
 	Send "{Right}"
 	Send "+{End}"
-	Send "^c"
+	Send "^{insert}"
 	Send "{Left}"
 	ClipWait 1
 	Haystack := A_Clipboard
@@ -5729,7 +5729,7 @@ delChanYanFMotionc() {
 	A_Clipboard := ""
 	Send "{Left}"
 	Send "+{Home}"
-	Send "^c"
+	Send "^{insert}"
 	Send "{Right}"
 	ClipWait 1
 	Haystack := A_Clipboard
@@ -5757,7 +5757,7 @@ delChanYantMotion() {
 	A_Clipboard := ""
 	Send "{Left}"
 	Send "+{Home}"
-	Send "^c"
+	Send "^{insert}"
 	Send "{Right}"
 	ClipWait 1
 	Haystack := A_Clipboard
