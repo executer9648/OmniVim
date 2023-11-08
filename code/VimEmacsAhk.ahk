@@ -4610,6 +4610,23 @@ m:: {
 9:: chCounter(9)
 0:: chCounter(0)
 
+~+z::
+{
+	global zKey := (A_PriorHotkey = "~+z" and A_TimeSincePriorHotkey < 400)
+	if zKey {
+		Sleep 0
+		KeyWait "Alt"  ; This prevents the keyboard's auto-repeat feature from interfering.
+		Send "!{f4}"
+	}
+}
+~+q::
+{
+	global qKey := (A_PriorHotkey = "~+q" and A_TimeSincePriorHotkey < 400)
+	if qKey {
+		Sleep 0
+		Send "!{f4}"
+	}
+}
 z & q:: {
 	if GetKeyState("shift")
 		Send "!{f4}"
