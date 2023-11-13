@@ -173,6 +173,7 @@ g_DoubleAlt := 0
 !+u::7
 !+i::8
 !+o::9
+!+7::/
 !+8::/
 !+9::*
 !+0::-
@@ -191,6 +192,23 @@ g_DoubleShift := 0
 }
 #HotIf g_DoubleShift
 
+~+z::
+{
+	global zKey := (A_PriorHotkey = "~+z" and A_TimeSincePriorHotkey < 400)
+	if zKey {
+		Sleep 0
+		KeyWait "Alt"  ; This prevents the keyboard's auto-repeat feature from interfering.
+		Send "!{f4}"
+	}
+}
+~+q::
+{
+	global qKey := (A_PriorHotkey = "~+q" and A_TimeSincePriorHotkey < 400)
+	if qKey {
+		Sleep 0
+		Send "!{f4}"
+	}
+}
 ^+LButton::+#Left
 ^+RButton::+#Right
 +h::Left
@@ -256,4 +274,22 @@ g_DoubleShift := 0
 }
 +#LButton::+#Left
 +#RButton::+#Right
+
+!+m::1
+!+,::2
+!+.::3
+!+j::4
+!+k::5
+!+l::6
+!+u::7
+!+i::8
+!+o::9
+!+7::/
+!+8::/
+!+9::*
+!+0::-
+!+Space::0
+!+RAlt::.
+!+BackSpace::BackSpace
+!+Enter::Enter
 #HotIf

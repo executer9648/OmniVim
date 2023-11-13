@@ -73,6 +73,8 @@ Info("Script Reloaded-Active", 2000)
 }
 #SuspendExempt False
 
+*CapsLock::LCtrl
+
 ^#h:: Send "^#{Left}"
 ^#l:: Send "^#{Right}"
 ;----------------------
@@ -186,82 +188,6 @@ Tab & u:: {
 	Send "{bs}"
 }
 tab & e::End
-;============ capslok section==============
-; this is incase you opt out of changing the caps to control
-; this makes it so the tab shortcuts work on capslock which is a bit more comfortable otherwise redundant with tab section
-
-capslock & Space::vkE8
-capslock & `:: exitVim()
-capslock & ,:: {
-	Send "^{Home}"
-}
-capslock & .:: {
-	Send "^{End}"
-}
-capslock & b:: {
-	if GetKeyState("ctrl") or GetKeyState("vkE8")
-		Send "^{Left}"
-	else
-		Send "{Left}"
-}
-capslock & h::BackSpace
-capslock & k:: {
-	Send "+{end}"
-	Sleep 10
-	Send "{bs}"
-}
-capslock & n::Down
-capslock & p::Up
-capslock & f:: {
-	if GetKeyState("ctrl") or GetKeyState("vkE8")
-		Send "^{Right}"
-	else
-		Send "{Right}"
-}
-capslock & a::Home
-capslock & g:: {
-	if GetKeyState("ctrl") or GetKeyState("vkE8")
-		Send "^{End}"
-	else
-		Send "^{Home}"
-}
-capslock & x:: {
-	if GetKeyState("ctrl") or GetKeyState("vkE8")
-		Send "^+t"
-	else
-		Send "^{f4}"
-}
-capslock & r:: {
-	global insertMode := false
-	insertReg()
-	global insertMode := true
-}
-capslock & s::^f
-capslock & =::+f10
-capslock & d:: {
-	if GetKeyState("ctrl") or GetKeyState("vkE8")
-		Send "^{Delete}"
-	else
-		Send "{Delete}"
-}
-capslock & w:: {
-	langid := Language.GetKeyboardLanguage()
-	if (LangID = 0x040D) {
-		Send "^+{Right}"
-		Sleep 10
-		Send "{bs}"
-		Exit
-	}
-	Send "^+{Left}"
-	Sleep 10
-	Send "{bs}"
-}
-capslock & u:: {
-	Send "+{Home}"
-	Sleep 10
-	Send "{bs}"
-}
-capslock & e::End
 ;===========================================
 
 ^!n:: {
@@ -3518,6 +3444,23 @@ Esc:: {
 #HotIf normalMode = 1
 HotIf "normalMode = 1"
 
+~+z::
+{
+	global zKey := (A_PriorHotkey = "~+z" and A_TimeSincePriorHotkey < 400)
+	if zKey {
+		Sleep 0
+		KeyWait "Alt"  ; This prevents the keyboard's auto-repeat feature from interfering.
+		Send "!{f4}"
+	}
+}
+~+q::
+{
+	global qKey := (A_PriorHotkey = "~+q" and A_TimeSincePriorHotkey < 400)
+	if qKey {
+		Sleep 0
+		Send "!{f4}"
+	}
+}
 z & q:: {
 	if GetKeyState("shift")
 		Send "!{f4}"
@@ -5295,8 +5238,8 @@ chCounter(number, mode := "") {
 exitVim() {
 	Infos.DestroyAll()
 	Infos("Exit Vim", 1500)
-	Global normalMode := false
-	Global insertMode := false
+	global normalMode := false
+	global insertMode := false
 	global dMode := false
 	global wasInInsertMode := false
 	global regMode := false
@@ -5307,10 +5250,10 @@ exitVim() {
 	global fMode := false
 	global numlockMode := false
 	global windowMode := false
-	Global visualMode := false
+	global visualMode := false
 	global WindowManagerMode := false
 	global mouseManagerMode := false
-	Global visualLineMode := false
+	global visualLineMode := false
 	global counter := 0
 	StateBulb[1].Destroy() ; Vim
 	StateBulb[2].Destroy() ; Insert
