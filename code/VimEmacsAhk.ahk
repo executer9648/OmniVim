@@ -75,6 +75,18 @@ Info("Script Reloaded-Active", 2000)
 
 *CapsLock::LCtrl
 
+#WheelDown:: Send "#{down}"
+#Wheelup:: {
+	MouseGetPos , , &KDE_id
+	; Toggle between maximized and restored state.
+	if WinGetMinMax(KDE_id)
+		WinRestore KDE_id
+	Else
+		WinMaximize KDE_id
+	g_DoubleAlt := false
+	return
+}
+
 ^#h:: Send "^#{Left}"
 ^#l:: Send "^#{Right}"
 ;----------------------
@@ -333,6 +345,11 @@ else {
 		gotoNormal()
 		gotoMwMode()
 	}
+	else if shiftfMode {
+		MouseMove(Mouse.getx(counter, 1, Mouse.numberRow), Mouse.tildaCol)
+		gotoNormal()
+		gotoMouseMode()
+	}
 	else if altfMode {
 		if counter != 0 {
 			if counter > monitorCount {
@@ -362,6 +379,11 @@ else {
 		gotoNormal()
 		gotoMwMode()
 	}
+	else if shiftfMode {
+		MouseMove(Mouse.getx(counter, 2, Mouse.numberRow), Mouse.tildaCol)
+		gotoNormal()
+		gotoMouseMode()
+	}
 	else if altfMode {
 		if counter != 0 {
 			if counter > monitorCount {
@@ -389,6 +411,11 @@ else {
 		WinMove(Mouse.x3, Mouse.tildaCol, , , "A")
 		gotoNormal()
 		gotoMwMode()
+	}
+	else if shiftfMode {
+		MouseMove(Mouse.getx(counter, 3, Mouse.numberRow), Mouse.tildaCol)
+		gotoNormal()
+		gotoMouseMode()
 	}
 	else if altfMode {
 		if counter != 0 {
@@ -418,6 +445,11 @@ else {
 		gotoNormal()
 		gotoMwMode()
 	}
+	else if shiftfMode {
+		MouseMove(Mouse.getx(counter, 4, Mouse.numberRow), Mouse.tildaCol)
+		gotoNormal()
+		gotoMouseMode()
+	}
 	else if altfMode {
 		if counter != 0 {
 			if counter > monitorCount {
@@ -445,6 +477,11 @@ else {
 		WinMove(Mouse.x5, Mouse.tildaCol, , , "A")
 		gotoNormal()
 		gotoMwMode()
+	}
+	else if shiftfMode {
+		MouseMove(Mouse.getx(counter, 5, Mouse.numberRow), Mouse.tildaCol)
+		gotoNormal()
+		gotoMouseMode()
 	}
 	else if altfMode {
 		if counter != 0 {
@@ -474,6 +511,11 @@ else {
 		gotoNormal()
 		gotoMwMode()
 	}
+	else if shiftfMode {
+		MouseMove(Mouse.getx(counter, 6, Mouse.numberRow), Mouse.tildaCol)
+		gotoNormal()
+		gotoMouseMode()
+	}
 	else if altfMode {
 		if counter != 0 {
 			if counter > monitorCount {
@@ -501,6 +543,11 @@ else {
 		WinMove(Mouse.x7, Mouse.tildaCol, , , "A")
 		gotoNormal()
 		gotoMwMode()
+	}
+	else if shiftfMode {
+		MouseMove(Mouse.getx(counter, 7, Mouse.numberRow), Mouse.tildaCol)
+		gotoNormal()
+		gotoMouseMode()
 	}
 	else if altfMode {
 		if counter != 0 {
@@ -530,6 +577,11 @@ else {
 		gotoNormal()
 		gotoMwMode()
 	}
+	else if shiftfMode {
+		MouseMove(Mouse.getx(counter, 8, Mouse.numberRow), Mouse.tildaCol)
+		gotoNormal()
+		gotoMouseMode()
+	}
 	else if altfMode {
 		if counter != 0 {
 			if counter > monitorCount {
@@ -557,6 +609,11 @@ else {
 		WinMove(Mouse.x9, Mouse.tildaCol, , , "A")
 		gotoNormal()
 		gotoMwMode()
+	}
+	else if shiftfMode {
+		MouseMove(Mouse.getx(counter, 9, Mouse.numberRow), Mouse.tildaCol)
+		gotoNormal()
+		gotoMouseMode()
 	}
 	else if altfMode {
 		if counter != 0 {
@@ -586,6 +643,11 @@ else {
 		gotoNormal()
 		gotoMwMode()
 	}
+	else if shiftfMode {
+		MouseMove(Mouse.getx(counter, 10, Mouse.numberRow), Mouse.tildaCol)
+		gotoNormal()
+		gotoMouseMode()
+	}
 	else if altfMode {
 		if counter != 0 {
 			if counter > monitorCount {
@@ -613,6 +675,11 @@ else {
 		WinMove(Mouse.x11, Mouse.tildaCol, , , "A")
 		gotoNormal()
 		gotoMwMode()
+	}
+	else if shiftfMode {
+		MouseMove(Mouse.getx(counter, 11, Mouse.numberRow), Mouse.tildaCol)
+		gotoNormal()
+		gotoMouseMode()
 	}
 	else if altfMode {
 		if counter != 0 {
@@ -642,6 +709,11 @@ else {
 		gotoNormal()
 		gotoMwMode()
 	}
+	else if shiftfMode {
+		MouseMove(Mouse.getx(counter, 12, Mouse.numberRow), Mouse.tildaCol)
+		gotoNormal()
+		gotoMouseMode()
+	}
 	else if altfMode {
 		if counter != 0 {
 			if counter > monitorCount {
@@ -670,6 +742,11 @@ else {
 		gotoNormal()
 		gotoMwMode()
 	}
+	else if shiftfMode {
+		MouseMove(Mouse.getx(counter, 13, Mouse.numberRow), Mouse.tildaCol)
+		gotoNormal()
+		gotoMouseMode()
+	}
 	else if altfMode {
 		if counter != 0 {
 			if counter > monitorCount {
@@ -697,6 +774,11 @@ BackSpace:: {
 		WinMove(Mouse.x14, Mouse.tildaCol, , , "A")
 		gotoNormal()
 		gotoMwMode()
+	}
+	else if shiftfMode {
+		MouseMove(Mouse.getx(counter, 14, Mouse.numberRow), Mouse.tildaCol)
+		gotoNormal()
+		gotoMouseMode()
 	}
 	else if altfMode {
 		if counter != 0 {
@@ -727,6 +809,11 @@ tab:: {
 		gotoNormal()
 		gotoMwMode()
 	}
+	else if shiftfMode {
+		MouseMove(Mouse.getx(counter, 1, Mouse.numberRow), Mouse.tabCol)
+		gotoNormal()
+		gotoMouseMode()
+	}
 	else if altfMode {
 		if counter != 0 {
 			if counter > monitorCount {
@@ -754,6 +841,11 @@ q:: {
 		WinMove(Mouse.x2, 0, , , "A")
 		gotoNormal()
 		gotoMwMode()
+	}
+	else if shiftfMode {
+		MouseMove(Mouse.getx(counter, 2, Mouse.numberRow), Mouse.tabCol)
+		gotoNormal()
+		gotoMouseMode()
 	}
 	else if altfMode {
 		if counter != 0 {
@@ -783,6 +875,11 @@ w:: {
 		gotoNormal()
 		gotoMwMode()
 	}
+	else if shiftfMode {
+		MouseMove(Mouse.getx(counter, 3, Mouse.numberRow), Mouse.tabCol)
+		gotoNormal()
+		gotoMouseMode()
+	}
 	else if altfMode {
 		if counter != 0 {
 			if counter > monitorCount {
@@ -810,6 +907,11 @@ e:: {
 		WinMove(Mouse.x4, 0, , , "A")
 		gotoNormal()
 		gotoMwMode()
+	}
+	else if shiftfMode {
+		MouseMove(Mouse.getx(counter, 4, Mouse.numberRow), Mouse.tabCol)
+		gotoNormal()
+		gotoMouseMode()
 	}
 	else if altfMode {
 		if counter != 0 {
@@ -839,6 +941,11 @@ r:: {
 		gotoNormal()
 		gotoMwMode()
 	}
+	else if shiftfMode {
+		MouseMove(Mouse.getx(counter, 5, Mouse.numberRow), Mouse.tabCol)
+		gotoNormal()
+		gotoMouseMode()
+	}
 	else if altfMode {
 		if counter != 0 {
 			if counter > monitorCount {
@@ -866,6 +973,11 @@ t:: {
 		WinMove(Mouse.x4, 0, , , "A")
 		gotoNormal()
 		gotoMwMode()
+	}
+	else if shiftfMode {
+		MouseMove(Mouse.getx(counter, 6, Mouse.numberRow), Mouse.tabCol)
+		gotoNormal()
+		gotoMouseMode()
 	}
 	else if altfMode {
 		if counter != 0 {
@@ -895,6 +1007,11 @@ y:: {
 		gotoNormal()
 		gotoMwMode()
 	}
+	else if shiftfMode {
+		MouseMove(Mouse.getx(counter, 7, Mouse.numberRow), Mouse.tabCol)
+		gotoNormal()
+		gotoMouseMode()
+	}
 	else if altfMode {
 		if counter != 0 {
 			if counter > monitorCount {
@@ -922,6 +1039,11 @@ u:: {
 		WinMove(Mouse.x4, 0, , , "A")
 		gotoNormal()
 		gotoMwMode()
+	}
+	else if shiftfMode {
+		MouseMove(Mouse.getx(counter, 8, Mouse.numberRow), Mouse.tabCol)
+		gotoNormal()
+		gotoMouseMode()
 	}
 	else if altfMode {
 		if counter != 0 {
@@ -951,6 +1073,11 @@ i:: {
 		gotoNormal()
 		gotoMwMode()
 	}
+	else if shiftfMode {
+		MouseMove(Mouse.getx(counter, 9, Mouse.numberRow), Mouse.tabCol)
+		gotoNormal()
+		gotoMouseMode()
+	}
 	else if altfMode {
 		if counter != 0 {
 			if counter > monitorCount {
@@ -978,6 +1105,11 @@ o:: {
 		WinMove(Mouse.x4, 0, , , "A")
 		gotoNormal()
 		gotoMwMode()
+	}
+	else if shiftfMode {
+		MouseMove(Mouse.getx(counter, 10, Mouse.numberRow), Mouse.tabCol)
+		gotoNormal()
+		gotoMouseMode()
 	}
 	else if altfMode {
 		if counter != 0 {
@@ -1007,6 +1139,11 @@ p:: {
 		gotoNormal()
 		gotoMwMode()
 	}
+	else if shiftfMode {
+		MouseMove(Mouse.getx(counter, 11, Mouse.numberRow), Mouse.tabCol)
+		gotoNormal()
+		gotoMouseMode()
+	}
 	else if altfMode {
 		if counter != 0 {
 			if counter > monitorCount {
@@ -1034,6 +1171,11 @@ p:: {
 		WinMove(Mouse.x4, 0, , , "A")
 		gotoNormal()
 		gotoMwMode()
+	}
+	else if shiftfMode {
+		MouseMove(Mouse.getx(counter, 12, Mouse.numberRow), Mouse.tabCol)
+		gotoNormal()
+		gotoMouseMode()
 	}
 	else if altfMode {
 		if counter != 0 {
@@ -1063,6 +1205,11 @@ p:: {
 		gotoNormal()
 		gotoMwMode()
 	}
+	else if shiftfMode {
+		MouseMove(Mouse.getx(counter, 13, Mouse.numberRow), Mouse.tabCol)
+		gotoNormal()
+		gotoMouseMode()
+	}
 	else if altfMode {
 		if counter != 0 {
 			if counter > monitorCount {
@@ -1090,6 +1237,11 @@ p:: {
 		WinMove(Mouse.x4, 0, , , "A")
 		gotoNormal()
 		gotoMwMode()
+	}
+	else if shiftfMode {
+		MouseMove(Mouse.getx(counter, 14, Mouse.numberRow), Mouse.tabCol)
+		gotoNormal()
+		gotoMouseMode()
 	}
 	else if altfMode {
 		if counter != 0 {
@@ -1119,6 +1271,11 @@ LControl:: {
 		gotoNormal()
 		gotoMwMode()
 	}
+	else if shiftfMode {
+		MouseMove(Mouse.getx(counter, 1, Mouse.aRow), Mouse.capsCol)
+		gotoNormal()
+		gotoMouseMode()
+	}
 	else if altfMode {
 		if counter != 0 {
 			if counter > monitorCount {
@@ -1146,6 +1303,11 @@ a:: {
 		WinMove(Mouse.x4, 0, , , "A")
 		gotoNormal()
 		gotoMwMode()
+	}
+	else if shiftfMode {
+		MouseMove(Mouse.getx(counter, 2, Mouse.aRow), Mouse.capsCol)
+		gotoNormal()
+		gotoMouseMode()
 	}
 	else if altfMode {
 		if counter != 0 {
@@ -1175,6 +1337,11 @@ s:: {
 		gotoNormal()
 		gotoMwMode()
 	}
+	else if shiftfMode {
+		MouseMove(Mouse.getx(counter, 3, Mouse.aRow), Mouse.capsCol)
+		gotoNormal()
+		gotoMouseMode()
+	}
 	else if altfMode {
 		if counter != 0 {
 			if counter > monitorCount {
@@ -1202,6 +1369,11 @@ d:: {
 		WinMove(Mouse.x4, 0, , , "A")
 		gotoNormal()
 		gotoMwMode()
+	}
+	else if shiftfMode {
+		MouseMove(Mouse.getx(counter, 4, Mouse.aRow), Mouse.capsCol)
+		gotoNormal()
+		gotoMouseMode()
 	}
 	else if altfMode {
 		if counter != 0 {
@@ -1231,6 +1403,11 @@ f:: {
 		gotoNormal()
 		gotoMwMode()
 	}
+	else if shiftfMode {
+		MouseMove(Mouse.getx(counter, 5, Mouse.aRow), Mouse.capsCol)
+		gotoNormal()
+		gotoMouseMode()
+	}
 	else if altfMode {
 		if counter != 0 {
 			if counter > monitorCount {
@@ -1258,6 +1435,11 @@ g:: {
 		WinMove(Mouse.x4, 0, , , "A")
 		gotoNormal()
 		gotoMwMode()
+	}
+	else if shiftfMode {
+		MouseMove(Mouse.getx(counter, 6, Mouse.aRow), Mouse.capsCol)
+		gotoNormal()
+		gotoMouseMode()
 	}
 	else if altfMode {
 		if counter != 0 {
@@ -1287,6 +1469,11 @@ h:: {
 		gotoNormal()
 		gotoMwMode()
 	}
+	else if shiftfMode {
+		MouseMove(Mouse.getx(counter, 7, Mouse.aRow), Mouse.capsCol)
+		gotoNormal()
+		gotoMouseMode()
+	}
 	else if altfMode {
 		if counter != 0 {
 			if counter > monitorCount {
@@ -1314,6 +1501,11 @@ j:: {
 		WinMove(Mouse.x4, 0, , , "A")
 		gotoNormal()
 		gotoMwMode()
+	}
+	else if shiftfMode {
+		MouseMove(Mouse.getx(counter, 8, Mouse.aRow), Mouse.capsCol)
+		gotoNormal()
+		gotoMouseMode()
 	}
 	else if altfMode {
 		if counter != 0 {
@@ -1343,6 +1535,11 @@ k:: {
 		gotoNormal()
 		gotoMwMode()
 	}
+	else if shiftfMode {
+		MouseMove(Mouse.getx(counter, 9, Mouse.aRow), Mouse.capsCol)
+		gotoNormal()
+		gotoMouseMode()
+	}
 	else if altfMode {
 		if counter != 0 {
 			if counter > monitorCount {
@@ -1370,6 +1567,11 @@ l:: {
 		WinMove(Mouse.x4, 0, , , "A")
 		gotoNormal()
 		gotoMwMode()
+	}
+	else if shiftfMode {
+		MouseMove(Mouse.getx(counter, 10, Mouse.aRow), Mouse.capsCol)
+		gotoNormal()
+		gotoMouseMode()
 	}
 	else if altfMode {
 		if counter != 0 {
@@ -1399,6 +1601,11 @@ l:: {
 		gotoNormal()
 		gotoMwMode()
 	}
+	else if shiftfMode {
+		MouseMove(Mouse.getx(counter, 11, Mouse.aRow), Mouse.capsCol)
+		gotoNormal()
+		gotoMouseMode()
+	}
 	else if altfMode {
 		if counter != 0 {
 			if counter > monitorCount {
@@ -1427,6 +1634,11 @@ l:: {
 		gotoNormal()
 		gotoMwMode()
 	}
+	else if shiftfMode {
+		MouseMove(Mouse.getx(counter, 12, Mouse.aRow), Mouse.capsCol)
+		gotoNormal()
+		gotoMouseMode()
+	}
 	else if altfMode {
 		if counter != 0 {
 			if counter > monitorCount {
@@ -1454,6 +1666,11 @@ Enter:: {
 		WinMove(Mouse.x4, 0, , , "A")
 		gotoNormal()
 		gotoMwMode()
+	}
+	else if shiftfMode {
+		MouseMove(Mouse.getx(counter, 13, Mouse.aRow), Mouse.capsCol)
+		gotoNormal()
+		gotoMouseMode()
 	}
 	else if altfMode {
 		if counter != 0 {
@@ -1484,6 +1701,11 @@ LShift:: {
 		gotoNormal()
 		gotoMwMode()
 	}
+	else if shiftfMode {
+		MouseMove(Mouse.getx(counter, 1, Mouse.zRow), Mouse.shiftCol)
+		gotoNormal()
+		gotoMouseMode()
+	}
 	else if altfMode {
 		if counter != 0 {
 			if counter > monitorCount {
@@ -1511,6 +1733,11 @@ z:: {
 		WinMove(Mouse.x4, 0, , , "A")
 		gotoNormal()
 		gotoMwMode()
+	}
+	else if shiftfMode {
+		MouseMove(Mouse.getx(counter, 2, Mouse.zRow), Mouse.shiftCol)
+		gotoNormal()
+		gotoMouseMode()
 	}
 	else if altfMode {
 		if counter != 0 {
@@ -1540,6 +1767,11 @@ x:: {
 		gotoNormal()
 		gotoMwMode()
 	}
+	else if shiftfMode {
+		MouseMove(Mouse.getx(counter, 3, Mouse.zRow), Mouse.shiftCol)
+		gotoNormal()
+		gotoMouseMode()
+	}
 	else if altfMode {
 		if counter != 0 {
 			if counter > monitorCount {
@@ -1567,6 +1799,11 @@ c:: {
 		WinMove(Mouse.x4, 0, , , "A")
 		gotoNormal()
 		gotoMwMode()
+	}
+	else if shiftfMode {
+		MouseMove(Mouse.getx(counter, 4, Mouse.zRow), Mouse.shiftCol)
+		gotoNormal()
+		gotoMouseMode()
 	}
 	else if altfMode {
 		if counter != 0 {
@@ -1596,6 +1833,11 @@ v:: {
 		gotoNormal()
 		gotoMwMode()
 	}
+	else if shiftfMode {
+		MouseMove(Mouse.getx(counter, 5, Mouse.zRow), Mouse.shiftCol)
+		gotoNormal()
+		gotoMouseMode()
+	}
 	else if altfMode {
 		if counter != 0 {
 			if counter > monitorCount {
@@ -1623,6 +1865,11 @@ b:: {
 		WinMove(Mouse.x4, 0, , , "A")
 		gotoNormal()
 		gotoMwMode()
+	}
+	else if shiftfMode {
+		MouseMove(Mouse.getx(counter, 6, Mouse.zRow), Mouse.shiftCol)
+		gotoNormal()
+		gotoMouseMode()
 	}
 	else if altfMode {
 		if counter != 0 {
@@ -1652,6 +1899,11 @@ n:: {
 		gotoNormal()
 		gotoMwMode()
 	}
+	else if shiftfMode {
+		MouseMove(Mouse.getx(counter, 7, Mouse.zRow), Mouse.shiftCol)
+		gotoNormal()
+		gotoMouseMode()
+	}
 	else if altfMode {
 		if counter != 0 {
 			if counter > monitorCount {
@@ -1679,6 +1931,11 @@ m:: {
 		WinMove(Mouse.x4, 0, , , "A")
 		gotoNormal()
 		gotoMwMode()
+	}
+	else if shiftfMode {
+		MouseMove(Mouse.getx(counter, 8, Mouse.zRow), Mouse.shiftCol)
+		gotoNormal()
+		gotoMouseMode()
 	}
 	else if altfMode {
 		if counter != 0 {
@@ -1708,6 +1965,11 @@ m:: {
 		gotoNormal()
 		gotoMwMode()
 	}
+	else if shiftfMode {
+		MouseMove(Mouse.getx(counter, 9, Mouse.zRow), Mouse.shiftCol)
+		gotoNormal()
+		gotoMouseMode()
+	}
 	else if altfMode {
 		if counter != 0 {
 			if counter > monitorCount {
@@ -1735,6 +1997,11 @@ m:: {
 		WinMove(Mouse.x4, 0, , , "A")
 		gotoNormal()
 		gotoMwMode()
+	}
+	else if shiftfMode {
+		MouseMove(Mouse.getx(counter, 10, Mouse.zRow), Mouse.shiftCol)
+		gotoNormal()
+		gotoMouseMode()
 	}
 	else if altfMode {
 		if counter != 0 {
@@ -1764,6 +2031,11 @@ m:: {
 		gotoNormal()
 		gotoMwMode()
 	}
+	else if shiftfMode {
+		MouseMove(Mouse.getx(counter, 11, Mouse.zRow), Mouse.shiftCol)
+		gotoNormal()
+		gotoMouseMode()
+	}
 	else if altfMode {
 		if counter != 0 {
 			if counter > monitorCount {
@@ -1791,6 +2063,11 @@ RShift:: {
 		WinMove(Mouse.x4, 0, , , "A")
 		gotoNormal()
 		gotoMwMode()
+	}
+	else if shiftfMode {
+		MouseMove(Mouse.getx(counter, 12, Mouse.zRow), Mouse.shiftCol)
+		gotoNormal()
+		gotoMouseMode()
 	}
 	else if altfMode {
 		if counter != 0 {
@@ -1821,6 +2098,11 @@ LWin:: {
 		gotoNormal()
 		gotoMwMode()
 	}
+	else if shiftfMode {
+		MouseMove(Mouse.getx(counter, 1, Mouse.spaceRow), Mouse.spaceCol)
+		gotoNormal()
+		gotoMouseMode()
+	}
 	else if altfMode {
 		if counter != 0 {
 			if counter > monitorCount {
@@ -1848,6 +2130,11 @@ LAlt:: {
 		WinMove(Mouse.x4, 0, , , "A")
 		gotoNormal()
 		gotoMwMode()
+	}
+	else if shiftfMode {
+		MouseMove(Mouse.getx(counter, 2, Mouse.spaceRow), Mouse.spaceCol)
+		gotoNormal()
+		gotoMouseMode()
 	}
 	else if altfMode {
 		if counter != 0 {
@@ -1877,6 +2164,11 @@ Space:: {
 		gotoNormal()
 		gotoMwMode()
 	}
+	else if shiftfMode {
+		MouseMove(Mouse.getx(counter, 3, Mouse.spaceRow), Mouse.spaceCol)
+		gotoNormal()
+		gotoMouseMode()
+	}
 	else if altfMode {
 		if counter != 0 {
 			if counter > monitorCount {
@@ -1904,6 +2196,11 @@ RAlt:: {
 		WinMove(Mouse.x4, 0, , , "A")
 		gotoNormal()
 		gotoMwMode()
+	}
+	else if shiftfMode {
+		MouseMove(Mouse.getx(counter, 4, Mouse.spaceRow), Mouse.spaceCol)
+		gotoNormal()
+		gotoMouseMode()
 	}
 	else if altfMode {
 		if counter != 0 {
@@ -1934,6 +2231,11 @@ AppsKey:: {
 		gotoNormal()
 		gotoMwMode()
 	}
+	else if shiftfMode {
+		MouseMove(Mouse.getx(counter, 5, Mouse.spaceRow), Mouse.spaceCol)
+		gotoNormal()
+		gotoMouseMode()
+	}
 	else if altfMode {
 		if counter != 0 {
 			if counter > monitorCount {
@@ -1961,6 +2263,11 @@ Rctrl:: {
 		WinMove(Mouse.x4, 0, , , "A")
 		gotoNormal()
 		gotoMwMode()
+	}
+	else if shiftfMode {
+		MouseMove(Mouse.getx(counter, 6, Mouse.spaceRow), Mouse.spaceCol)
+		gotoNormal()
+		gotoMouseMode()
 	}
 	else if altfMode {
 		if counter != 0 {
@@ -4395,17 +4702,12 @@ i:: Return
 	gotoFMode()
 	Exit
 }
-n:: Return
-o:: Return
 p:: Return
 r:: Return
 t:: Return
-u:: Return
-v:: Return
 x:: Return
 y:: Return
 z:: Return
-,:: Return
 .:: Return
 /:: Return
 ':: Return
@@ -4418,38 +4720,92 @@ h:: WindowManager().MoveLeft(Mouse.MediumMove)
 k:: WindowManager().MoveUp(Mouse.MediumMove)
 j:: WindowManager().MoveDown(Mouse.MediumMove)
 l:: WindowManager().MoveRight(Mouse.MediumMove)
+u:: WindowManager().MoveUpLeft(Mouse.MediumMove)
+o:: WindowManager().MoveUpRight(Mouse.MediumMove)
+n:: WindowManager().MoveDownLeft(Mouse.MediumMove)
+,:: WindowManager().MoveDownRight(Mouse.MediumMove)
 
 +h:: WindowManager().MoveLeft(Mouse.SmallMove)
 +k:: WindowManager().MoveUp(Mouse.SmallMove)
 +j:: WindowManager().MoveDown(Mouse.SmallMove)
 +l:: WindowManager().MoveRight(Mouse.SmallMove)
++u:: WindowManager().MoveUpLeft(Mouse.SmallMove)
++o:: WindowManager().MoveUpRight(Mouse.SmallMove)
++n:: WindowManager().MoveDownLeft(Mouse.SmallMove)
++,:: WindowManager().MoveDownRight(Mouse.SmallMove)
+
+space & h:: WindowManager().MoveLeft(Mouse.SmallMove)
+space & k:: WindowManager().MoveUp(Mouse.SmallMove)
+space & j:: WindowManager().MoveDown(Mouse.SmallMove)
+space & l:: WindowManager().MoveRight(Mouse.SmallMove)
+space & u:: WindowManager().MoveUpLeft(Mouse.SmallMove)
+space & o:: WindowManager().MoveUpRight(Mouse.SmallMove)
+space & n:: WindowManager().MoveDownLeft(Mouse.SmallMove)
+space & ,:: WindowManager().MoveDownRight(Mouse.SmallMove)
 
 ^h:: WindowManager().MoveLeft(Mouse.BigMove)
 ^k:: WindowManager().MoveUp(Mouse.BigMove)
 ^j:: WindowManager().MoveDown(Mouse.BigMove)
 ^l:: WindowManager().MoveRight(Mouse.BigMove)
+^u:: WindowManager().MoveUpLeft(Mouse.BigMove)
+^o:: WindowManager().MoveUpRight(Mouse.BigMove)
+^n:: WindowManager().MoveDownLeft(Mouse.BigMove)
+^,:: WindowManager().MoveDownRight(Mouse.BigMove)
 
 
 s:: WindowManager().DecreaseWidth(Mouse.MediumMove)
 d:: WindowManager().IncreaseHeight(Mouse.MediumMove)
 f:: WindowManager().DecreaseHeight(Mouse.MediumMove)
 g:: WindowManager().IncreaseWidth(Mouse.MediumMove)
+e:: {
+	WindowManager().DecreaseWidth(Mouse.MediumMove)
+	WindowManager().DecreaseHeight(Mouse.MediumMove)
+}
+v:: {
+	WindowManager().IncreaseHeight(Mouse.MediumMove)
+	WindowManager().IncreaseWidth(Mouse.MediumMove)
+}
 
 +s:: WindowManager().DecreaseWidth(Mouse.SmallMove)
 +d:: WindowManager().IncreaseHeight(Mouse.SmallMove)
 +f:: WindowManager().DecreaseHeight(Mouse.SmallMove)
 +g:: WindowManager().IncreaseWidth(Mouse.SmallMove)
++e:: {
+	WindowManager().DecreaseWidth(Mouse.SmallMove)
+	WindowManager().DecreaseHeight(Mouse.SmallMove)
+}
++v:: {
+	WindowManager().IncreaseHeight(Mouse.SmallMove)
+	WindowManager().IncreaseWidth(Mouse.SmallMove)
+}
 
 space & s:: WindowManager().DecreaseWidth(Mouse.SmallMove)
 space & d:: WindowManager().IncreaseHeight(Mouse.SmallMove)
 space & f:: WindowManager().DecreaseHeight(Mouse.SmallMove)
 space & g:: WindowManager().IncreaseWidth(Mouse.SmallMove)
+space & e:: {
+	WindowManager().DecreaseWidth(Mouse.SmallMove)
+	WindowManager().DecreaseHeight(Mouse.SmallMove)
+}
+space & v:: {
+	WindowManager().IncreaseHeight(Mouse.SmallMove)
+	WindowManager().IncreaseWidth(Mouse.SmallMove)
+}
 
 
 ^s:: WindowManager().DecreaseWidth(Mouse.BigMove)
 ^d:: WindowManager().IncreaseHeight(Mouse.BigMove)
 ^f:: WindowManager().DecreaseHeight(Mouse.BigMove)
 ^g:: WindowManager().IncreaseWidth(Mouse.BigMove)
+^e:: {
+	WindowManager().DecreaseWidth(Mouse.BigMove)
+	WindowManager().DecreaseHeight(Mouse.BigMove)
+}
+^v:: {
+	WindowManager().IncreaseHeight(Mouse.BigMove)
+	WindowManager().IncreaseWidth(Mouse.BigMove)
+}
+
 
 1:: WinMove(0, 0, , , "A")
 2:: WinMove(Mouse.FarLeftX, 0, , , "A")
@@ -4484,10 +4840,10 @@ space & g:: WindowManager().IncreaseWidth(Mouse.SmallMove)
 ^9:: WinMove(Mouse.LowRightX, Mouse.LowY, , , "A")
 ^0:: WinMove(Mouse.MiddleRightX, Mouse.LowY, , , "A")
 
-a:: WindowManager().SetFullHeight()
-q:: WindowManager().SetHalfHeight()
-w:: WindowManager().SetHalfWidth()
-e:: WindowManager().SetFullWidth()
+!a:: WindowManager().SetFullHeight()
+!q:: WindowManager().SetHalfHeight()
+!w:: WindowManager().SetHalfWidth()
+!e:: WindowManager().SetFullWidth()
 
 m::
 ^m::
@@ -4882,6 +5238,18 @@ v:: Mouse.HoldIfUp("L")
 !v:: Mouse.HoldIfUp("R")
 tab & v:: Mouse.HoldIfUp("R")
 +b:: Mouse.HoldIfUp("M")
+!b:: Mouse.HoldIfUp("M")
+tab & b:: Mouse.HoldIfUp("M")
+
+!1:: {
+	shiftSpeed()
+}
+!2:: {
+	normalSpeed()
+}
+!3:: {
+	controlSpeed()
+}
 
 Hotkey "u", ButtonAcceleration
 Hotkey "o", ButtonAcceleration

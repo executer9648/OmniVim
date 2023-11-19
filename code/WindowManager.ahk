@@ -18,10 +18,16 @@ class WindowManager {
 	MoveUp(howMuch) => (WinMove(, this.Y - howMuch, , , this.winTitle), this)
 	MoveDown(howMuch) => (WinMove(, this.Y + howMuch, , , this.winTitle), this)
 
+	MoveDownRight(howMuch) => (WinMove(this.X + howMuch, this.Y + howMuch, , , this.winTitle), this)
+	MoveUpRight(howMuch) => (WinMove(this.X + howMuch, this.Y - howMuch, , , this.winTitle), this)
+	MoveUpLeft(howMuch) => (WinMove(this.X - howMuch, this.Y - howMuch, , , this.winTitle), this)
+	MoveDownLeft(howMuch) => (WinMove(this.X - howMuch, this.Y + howMuch, , , this.winTitle), this)
+
 	DecreaseWidth(howMuch) => (WinMove(, , this.Width - howMuch, , this.winTitle), this)
 	IncreaseWidth(howMuch) => (WinMove(, , this.Width + howMuch, , this.winTitle), this)
 	DecreaseHeight(howMuch) => (WinMove(, , , this.Height - howMuch, this.winTitle), this)
 	IncreaseHeight(howMuch) => (WinMove(, , , this.Height + howMuch, this.winTitle), this)
+
 
 	SetHalfWidth() => (WinMove(, , A_ScreenWidth // 2, , this.winTitle), this)
 	SetHalfHeight() => (WinMove(, , , A_ScreenHeight // 2, this.winTitle), this)

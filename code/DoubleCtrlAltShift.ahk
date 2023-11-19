@@ -211,10 +211,29 @@ g_DoubleShift := 0
 }
 ^+LButton::+#Left
 ^+RButton::+#Right
-+h::Left
-+j::Down
-+k::Up
-+l::Right
+
++m::1
++,::2
++.::3
++j::4
++k::5
++l::6
++u::7
++i::8
++o::9
++7::/
++8::/
++0::/
++9::*
++Space::0
++RAlt::.
++BackSpace::BackSpace
++Enter::Enter
+
+; +h::Left
+; +j::Down
+; +k::Up
+; +l::Right
 +LButton:: {
 	; Get the initial mouse position and window id, and
 	; abort if the window is maximized.

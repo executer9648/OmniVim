@@ -416,30 +416,30 @@ ButtonAcceleration(ThisHotkey)
 	else if g_Button = "^," {
 		controlSpeed()
 	}
-	else if g_Button = "h" {
-		normalSpeed()
-	}
-	else if g_Button = "j" {
-		normalSpeed()
-	}
-	else if g_Button = "k" {
-		normalSpeed()
-	}
-	else if g_Button = "l" {
-		normalSpeed()
-	}
-	else if g_Button = "u" {
-		normalSpeed()
-	}
-	else if g_Button = "o" {
-		normalSpeed()
-	}
-	else if g_Button = "n" {
-		normalSpeed()
-	}
-	else if g_Button = "," {
-		normalSpeed()
-	}
+	; else if g_Button = "h" {
+	; 	normalSpeed()
+	; }
+	; else if g_Button = "j" {
+	; 	normalSpeed()
+	; }
+	; else if g_Button = "k" {
+	; 	normalSpeed()
+	; }
+	; else if g_Button = "l" {
+	; 	normalSpeed()
+	; }
+	; else if g_Button = "u" {
+	; 	normalSpeed()
+	; }
+	; else if g_Button = "o" {
+	; 	normalSpeed()
+	; }
+	; else if g_Button = "n" {
+	; 	normalSpeed()
+	; }
+	; else if g_Button = "," {
+	; 	normalSpeed()
+	; }
 
 	ButtonAccelerationStart
 }
