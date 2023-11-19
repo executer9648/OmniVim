@@ -1,12 +1,365 @@
 g_DoubleCtrl := 0
+g_ctrl_count := 0
+g_ctrl_count2 := 0
+g_ctrl_count3 := 0
 ; This detects "double-clicks" of the ctrl key.
 ~Ctrl::
 {
+	global g_ctrl_count
+	global g_ctrl_count2
+	global g_ctrl_count3
 	global g_DoubleCtrl := (A_PriorHotkey = "~Ctrl" and A_TimeSincePriorHotkey < 400)
+	if g_DoubleCtrl {
+		g_ctrl_count := g_ctrl_count + 1
+	}
+	else {
+		g_ctrl_count := 0
+	}
+	if g_ctrl_count == 1 and g_DoubleCtrl {
+		g_ctrl_count2 := true
+	}
+	else {
+		g_ctrl_count2 := false
+	}
+	if g_ctrl_count == 2 and g_DoubleCtrl {
+		g_ctrl_count3 := true
+	}
+	else {
+		g_ctrl_count3 := false
+	}
 	Sleep 0
 	KeyWait "Ctrl"  ; This prevents the keyboard's auto-repeat feature from interfering.
+	; g_ctrl_count2 := (g_ctrl_count == 2 and g_DoubleCtrl)
+	; g_ctrl_count3 := (g_ctrl_count == 3 and g_DoubleCtrl)
 }
-#HotIf g_DoubleCtrl
+
+#HotIf g_ctrl_count3
+^h::left
+^j::Down
+^k::up
+^l::Right
+
+^!f::
+^+f:: {
+	StateBulb[4].Create()
+	global counter
+	global infcounter
+	cvar := "" counter
+	cvar .= "F"
+	infcounter.Destroy()
+	infcounter := Infos(cvar, , true)
+	if counter != 0 {
+		while counter > 0 {
+			ih := InputHook("C")
+			ih.KeyOpt("{All}", "ESI") ;End Keys & Suppress
+			ih.KeyOpt("{LCtrl}{RCtrl}{LAlt}{RAlt}{LShift}{RShift}{LWin}{RWin}", "-ES") ;Exclude the modifiers
+			ih.Start()
+			ih.Wait()
+			check := ih.EndMods
+			check .= ih.EndKey
+			check2 := ih.EndKey
+			if check == "<!``" {
+				exitVim()
+				infcounter.Destroy()
+				counter := 0
+				Exit
+			} else if check2 == "Escape" {
+				counter := 0
+				StateBulb[4].Destroy()
+				infcounter.Destroy()
+				Exit
+			} else if check2 == "Backspace" {
+				counter += 2
+				trimed := SubStr(var, 1, StrLen(var) - 1)
+				var := trimed
+			} else if check2 == "Space" {
+				Continue
+			} else {
+				var .= ih.EndKey
+			}
+			infcounter.Destroy()
+			infcounter := Infos(var, , true)
+			counter -= 1
+		}
+		counter := 0
+	}
+	else {
+		ih := InputHook("C")
+		ih.KeyOpt("{All}", "ESI") ;End Keys & Suppress
+		ih.KeyOpt("{LCtrl}{RCtrl}{LAlt}{RAlt}{LShift}{RShift}{LWin}{RWin}", "-ES") ;Exclude the modifiers
+		ih.Start()
+		ih.Wait()
+		var := ih.EndKey
+		check := ih.EndMods
+		check .= ih.EndKey
+		check2 := ih.EndKey
+		if check == "<!``" {
+			exitVim()
+			infcounter.Destroy()
+			Exit
+		} else if check2 == "Escape" {
+			StateBulb[4].Destroy()
+			infcounter.Destroy()
+			Exit
+		}
+	}
+	oldclip := A_Clipboard
+	A_Clipboard := ""
+	Send "{Left}"
+	Send "+{Home}"
+	Send "^{insert}"
+	Send "{Right}"
+	ClipWait 1
+	Haystack := A_Clipboard
+	FoundPos := InStr(Haystack, var, false, -1)
+	Send "{Home}"
+	loop FoundPos {
+		Send "{Right}"
+	}
+	Send "{Left}"
+	Send "+{Right}"
+	infcounter.Destroy()
+	StateBulb[4].Destroy()
+}
+
+^f:: {
+	StateBulb[4].Create()
+	global normalMode := false
+	global counter
+	global infcounter
+	cvar := "" counter
+	cvar .= "f"
+	infcounter.Destroy()
+	infcounter := Infos(cvar, , true)
+	if counter != 0 {
+		while counter > 0 {
+			ih := InputHook("C")
+			ih.KeyOpt("{All}", "ESI") ;End Keys & Suppress
+			ih.KeyOpt("{LCtrl}{RCtrl}{LAlt}{RAlt}{LShift}{RShift}{LWin}{RWin}", "-ES") ;Exclude the modifiers
+			ih.Start()
+			ih.Wait()
+			check := ih.EndMods
+			check .= ih.EndKey
+			check2 := ih.EndKey
+			if check == "<!``" {
+				exitVim()
+				infcounter.Destroy()
+				counter := 0
+				Exit
+			} else if check2 == "Escape" {
+				StateBulb[4].Destroy()
+				infcounter.Destroy()
+				counter := 0
+				Exit
+			} else if check2 == "Backspace" {
+				counter += 2
+				trimed := SubStr(var, 1, StrLen(var) - 1)
+				var := trimed
+			} else if check2 == "Space" {
+				Continue
+			} else {
+				var .= ih.EndKey
+			}
+			infcounter.Destroy()
+			infcounter := Infos(var, , true)
+			counter -= 1
+		}
+		counter := 0
+	}
+	else {
+		ih := InputHook("C")
+		ih.KeyOpt("{All}", "ESI") ;End Keys & Suppress
+		ih.KeyOpt("{LCtrl}{RCtrl}{LAlt}{RAlt}{LShift}{RShift}{LWin}{RWin}", "-ES") ;Exclude the modifiers
+		ih.Start()
+		ih.Wait()
+		var := ih.EndKey
+		check := ih.EndMods
+		check .= ih.EndKey
+		check2 := ih.EndKey
+		if check == "<!``" {
+			exitVim()
+			infcounter.Destroy()
+			Exit
+		} else if check2 == "Escape" {
+			StateBulb[4].Destroy()
+			infcounter.Destroy()
+			Exit
+		}
+	}
+	oldclip := A_Clipboard
+	A_Clipboard := ""
+	Send "{Right}"
+	Send "+{End}"
+	Send "^{insert}"
+	Send "{Left}"
+	ClipWait 1
+	Haystack := A_Clipboard
+	FoundPos := InStr(Haystack, var)
+	loop FoundPos {
+		Send "{Right}"
+	}
+	Send "{Left}"
+	Send "+{Right}"
+	infcounter.Destroy()
+	StateBulb[4].Destroy()
+}
+
+^w:: {
+	global counter
+	global infcounter
+	langid := Language.GetKeyboardLanguage()
+	if (LangID = 0x040D) {
+		if counter != 0 {
+			Loop counter {
+				if visualMode == true
+				{
+					Send "^+{Left}"
+				}
+				else
+				{
+					Send "^{Left}"
+					Send "+{Left}"
+				}
+			}
+			counter := 0
+			infcounter.Destroy()
+			Exit
+		}
+		if visualMode == true
+		{
+			Send "^+{Left}"
+			Exit
+		}
+		else
+		{
+			Send "^{Left}"
+			Send "+{Left}"
+			Exit
+		}
+		Exit
+	}
+	if counter != 0 {
+		Loop counter {
+			if visualMode == true
+			{
+				Send "^+{Right}"
+			}
+			else
+			{
+				Send "^{Right}"
+				Send "+{Right}"
+			}
+		}
+		counter := 0
+		Exit
+	}
+	if visualMode == true
+	{
+		Send "^+{Right}"
+	}
+	else
+	{
+		Send "^{Right}"
+		Send "+{Right}"
+		Exit
+	}
+	Exit
+}
+
+^e:: {
+	global counter
+	if counter != 0 {
+		Loop counter {
+			if visualMode == true
+			{
+				Send "^+{Right}"
+				Send "+{Left}"
+			}
+			else
+			{
+				Send "+{Right}"
+				Send "^{Right}"
+				Send "{Left 2}"
+				Send "+{Right}"
+			}
+		}
+		counter := 0
+		infcounter.Destroy()
+		Exit
+	}
+	Send "+{Right}"
+	Send "^{Right}"
+	Send "{Left 2}"
+	Send "+{Right}"
+}
+
+^b:: {
+	global counter
+	global infcounter
+	langid := Language.GetKeyboardLanguage()
+	if (LangID = 0x040D) {
+		if counter != 0 {
+			Loop counter {
+				if visualMode == true
+				{
+					Send "^+{Right}"
+				}
+				else
+				{
+					Send "{Right}"
+					Send "^{Right}"
+					Send "+{Left}"
+				}
+			}
+			counter := 0
+			infcounter.Destroy()
+			Exit
+		}
+		if visualMode == true
+		{
+			Send "^+{Right}"
+		}
+		else
+		{
+			Send "{Right}"
+			Send "^{Right}"
+			Send "+{Left}"
+			Exit
+		}
+		Exit
+	}
+	if counter != 0 {
+		Loop counter {
+			if visualMode == true
+			{
+				Send "^+{Left}"
+			}
+			else
+			{
+				Send "{Left}"
+				Send "^{Left}"
+				Send "+{Right}"
+			}
+		}
+		counter := 0
+		Exit
+	}
+	if visualMode == true
+	{
+		Send "^+{Left}"
+	}
+	else
+	{
+		Send "{Left}"
+		Send "^{Left}"
+		Send "+{Right}"
+		Exit
+	}
+	Exit
+}
+#HotIf
+
+#HotIf g_ctrl_count2
 
 ^+LButton::+#Left
 ^+RButton::+#Right
@@ -192,18 +545,18 @@ g_DoubleShift := 0
 }
 #HotIf g_DoubleShift
 
-~+z::
++z::
 {
-	global zKey := (A_PriorHotkey = "~+z" and A_TimeSincePriorHotkey < 400)
+	global zKey := (A_PriorHotkey = "+z" and A_TimeSincePriorHotkey < 400)
+	KeyWait "z"  ; This prevents the keyboard's auto-repeat feature from interfering.
 	if zKey {
 		Sleep 0
-		KeyWait "Alt"  ; This prevents the keyboard's auto-repeat feature from interfering.
 		Send "!{f4}"
 	}
 }
-~+q::
++q::
 {
-	global qKey := (A_PriorHotkey = "~+q" and A_TimeSincePriorHotkey < 400)
+	global qKey := (A_PriorHotkey = "+z" and A_TimeSincePriorHotkey < 400)
 	if qKey {
 		Sleep 0
 		Send "!{f4}"

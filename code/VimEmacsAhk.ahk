@@ -3751,19 +3751,34 @@ Esc:: {
 #HotIf normalMode = 1
 HotIf "normalMode = 1"
 
-~+z::
+zkeyCount := 0
++z::
 {
-	global zKey := (A_PriorHotkey = "~+z" and A_TimeSincePriorHotkey < 400)
+	global zkeyCount
+	global zKey := (A_PriorHotkey = "+z" and A_TimeSincePriorHotkey < 400)
 	if zKey {
+		zkeyCount := zkeyCount + 1
+	}
+	else {
+		zkeyCount := 0
+	}
+	if zKey and zkeyCount == 1 {
 		Sleep 0
-		KeyWait "Alt"  ; This prevents the keyboard's auto-repeat feature from interfering.
 		Send "!{f4}"
 	}
 }
-~+q::
+qkeyCount := 0
++q::
 {
-	global qKey := (A_PriorHotkey = "~+q" and A_TimeSincePriorHotkey < 400)
+	global qkeyCount
+	global qKey := (A_PriorHotkey = "~+z" and A_TimeSincePriorHotkey < 400)
 	if qKey {
+		qkeyCount := qkeyCount + 1
+	}
+	else {
+		qkeyCount := 0
+	}
+	if qKey and qkeyCount == 1 {
 		Sleep 0
 		Send "!{f4}"
 	}
@@ -4896,6 +4911,8 @@ m:: {
 }
 
 !h::!Left
+!j::!Down
+!k::!up
 !l::!Right
 
 1:: chCounter(1)
@@ -4909,19 +4926,34 @@ m:: {
 9:: chCounter(9)
 0:: chCounter(0)
 
-~+z::
+zkeyCount := 0
++z::
 {
-	global zKey := (A_PriorHotkey = "~+z" and A_TimeSincePriorHotkey < 400)
+	global zkeyCount
+	global zKey := (A_PriorHotkey = "+z" and A_TimeSincePriorHotkey < 400)
 	if zKey {
+		zkeyCount := zkeyCount + 1
+	}
+	else {
+		zkeyCount := 0
+	}
+	if zKey and zkeyCount == 1 {
 		Sleep 0
-		KeyWait "Alt"  ; This prevents the keyboard's auto-repeat feature from interfering.
 		Send "!{f4}"
 	}
 }
-~+q::
+qkeyCount := 0
++q::
 {
-	global qKey := (A_PriorHotkey = "~+q" and A_TimeSincePriorHotkey < 400)
+	global qkeyCount
+	global qKey := (A_PriorHotkey = "~+z" and A_TimeSincePriorHotkey < 400)
 	if qKey {
+		qkeyCount := qkeyCount + 1
+	}
+	else {
+		qkeyCount := 0
+	}
+	if qKey and qkeyCount == 1 {
 		Sleep 0
 		Send "!{f4}"
 	}
