@@ -424,8 +424,8 @@ g_ctrl_count3 := 0
 ^h::Backspace
 ^b::Left
 ^f::right
-^n::Down
-^p::up
+^n:: send "{Down}"
+^p:: send "{Up}"
 ^a::Home
 ^e::End
 ^y::^v
