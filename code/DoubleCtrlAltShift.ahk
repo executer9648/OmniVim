@@ -444,7 +444,7 @@ g_ctrl_count3 := 0
 }
 ^x::
 {
-	if GetKeyState("ctrl") or GetKeyState("vkE8")
+	if GetKeyState("vkE8")
 		Send "^+t"
 	else
 		Send "^{f4}"
