@@ -11,6 +11,7 @@
 #Include EasyWindowDragginKde.ahk
 #Include Marks.ahk
 #Include DoubleCtrlAltShift.ahk
+#Include Functions.ahk
 #SingleInstance force
 #MaxThreadsBuffer true
 #MaxThreads 250
@@ -121,7 +122,10 @@ tab & v:: {
 }
 tab & `:: exitVim()
 tab & ':: {
-	openMark()
+	if GetKeyState("ctrl") or GetKeyState("vkE8")
+		saveReg()
+	else
+		openMark()
 }
 tab & `;:: {
 	Runner.openRunner()
@@ -6217,6 +6221,78 @@ insertReg() {
 		Exit
 	}
 	Registers(mark).Paste()
+	StateBulb[7].Destroy()
+	inf.Destroy()
+}
+
+saveReg() {
+	inf := Infos('"', , true)
+	StateBulb[7].Create()
+	mark := GetInput("L1", "{esc}{space}{Backspace}").Input
+	if mark = "" {
+		StateBulb[7].Destroy()
+		global normalMode := true
+		inf.Destroy()
+		Exit
+	}
+
+	inf.Destroy()
+	infs := '"'
+	infs .= mark
+	inf := Infos(infs, , true)
+
+	operator := GetInput("L1", "{esc}{space}{Backspace}").Input
+
+	if (operator == "y") {
+		oldclip := A_Clipboard
+		A_Clipboard := ""
+		Send "^{insert}"
+		ClipWait 1
+		Sleep 10
+		Registers(mark).WriteOrAppend()
+		Sleep 10
+		Send "{Left}"
+		Send "+{Right}"
+		A_Clipboard := oldclip
+	}
+	else if (operator == "d") {
+		oldclip := A_Clipboard
+		A_Clipboard := ""
+		Send "^x"
+		ClipWait 1
+		Sleep 10
+		Registers(mark).WriteOrAppend()
+		A_Clipboard := oldclip
+	}
+	else if (operator == "p") {
+		Registers(mark).Paste()
+		Sleep 10
+		Send "{right}"
+		Send "{left}"
+		Send "+{Right}"
+	}
+	else if (operator == "l") {
+		Registers(mark).Look()
+		Send "{Left}"
+		Send "+{Right}"
+	}
+	else if (operator == "m") {
+		secReg := GetInput("L1", "{Esc}").Input
+		Registers(mark).Move(secReg)
+		Send "{Left}"
+		Send "+{Right}"
+	}
+	else if (operator == "s") {
+		secReg := GetInput("L1", "{Esc}").Input
+		Registers(mark).SwitchContents(secReg)
+		Send "{Left}"
+		Send "+{Right}"
+	}
+	else if (operator == "x") {
+		Registers(mark).Truncate()
+		Send "{Left}"
+		Send "+{Right}"
+	}
 	StateBulb[7].Destroy()
 	inf.Destroy()
 }
