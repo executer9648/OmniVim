@@ -2624,6 +2624,7 @@ i:: {
 	innerword()
 	Send "^{insert}"
 	Send "{Left}"
+	gotoNormal()
 }
 
 y:: {
@@ -3640,12 +3641,6 @@ g:: {
 	clearCounter()
 }
 
-e:: {
-	emotion()
-	Send "{Left}"
-	Send "+{Right}"
-	clearCounter()
-}
 
 !`:: {
 	exitVim()
@@ -3822,12 +3817,26 @@ x:: {
 	Send "+{Right}"
 }
 
+$e:: {
+	emotion()
+	Send "{Right}"
+	Send "{Left}"
+	Send "+{Right}"
+	clearCounter()
+}
+
 $b:: {
 	bmotion()
 	if !visualMode {
-		Send "{right}"
-		Send "{Left}"
-		Send "+{right}"
+		langid := Language.GetKeyboardLanguage()
+		if (LangID = 0x040D) {
+			Send "{Right}"
+			Send "+{Left}"
+		}
+		else {
+			Send "{Left}"
+			Send "+{right}"
+		}
 	}
 	clearCounter()
 }
@@ -3835,9 +3844,15 @@ $b:: {
 $w:: {
 	wmotion()
 	if !visualMode {
-		Send "{right}"
-		Send "{Left}"
-		Send "+{right}"
+		langid := Language.GetKeyboardLanguage()
+		if (LangID = 0x040D) {
+			Send "{Left}"
+			Send "+{Right}"
+		}
+		else {
+			Send "{Right}"
+			Send "+{Right}"
+		}
 	}
 	clearCounter()
 }
@@ -5531,7 +5546,6 @@ bmotion() {
 		else {
 			Send "^+{Right}"
 		}
-		gotoNormal()
 	}
 	else if counter != 0 {
 		Send "{Left}"
@@ -5557,9 +5571,6 @@ wmotion() {
 		} else {
 			Send "^+{Left}"
 		}
-		gotoNormal()
-		infcounter.Destroy()
-		Exit
 	}
 	else if counter != 0 {
 		Send "{Left}"
@@ -5578,14 +5589,14 @@ emotion() {
 	global counter
 	if counter != 0 {
 		Loop counter {
-			if visualMode == true
-			{
-				Send "^+{Right}"
-				Send "+{Left}"
-			}
+			Send "^+{Right}"
 		}
+		Send "+{Left}"
 	}
 	else {
+		if A_PriorHotkey == "e" {
+			Send "^+{Right}"
+		}
 		Send "^+{Right}"
 		Send "+{Left}"
 	}
