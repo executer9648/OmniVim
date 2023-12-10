@@ -247,10 +247,7 @@ infcounter.Destroy()
 ^]:: {
 	gotoNormal()
 	gotoMouseMode()
-	Mouse.SmallMove := 20
-	Mouse.MediumMove := 70
-	Mouse.BigMove := 200
-	exit
+	setMouseDefSpeed()
 }
 #HotIf Marks.recording = 1
 HotIf "Marks.recording = 1"
@@ -310,23 +307,6 @@ l::3
 m::0
 n::0
 $0::/
-; m::1
-; ,::2
-; .::3
-; j::4
-; k::5
-; l::6
-; u::7
-; i::8
-; o::9
-; 8::/
-; 9::*
-; 0::-
-; Space::0
-; /::.
-; RAlt:: {
-; 	Send "."
-; }
 #HotIf
 
 ; F mode - for mouse positioning according to keyboard layout
@@ -2314,39 +2294,39 @@ Esc:: {
 #HotIf windowMode = 1
 HotIf "windowMode = 1"
 
--:: Return
-`;:: Return
-=:: Return
-,:: Return
-.:: Return
-/:: Return
-':: Return
+*-:: Return
+*`;:: Return
+*=:: Return
+*,:: Return
+*.:: Return
+*/:: Return
+*':: Return
 [:: Return
 ]:: Return
-\:: Return
-a:: Return
-b:: Return
-c:: Return
-d:: Return
-e:: Return
-f:: Return
-g:: Return
-h:: Return
-i:: Return
-j:: Return
-k:: Return
-l:: Return
-m:: Return
-n:: Return
-o:: Return
-p:: Return
-r:: Return
-s:: Return
-u:: Return
-v:: Return
-x:: Return
-y:: Return
-z:: Return
+*\:: Return
+*a:: Return
+*b:: Return
+*c:: Return
+*d:: Return
+*e:: Return
+*f:: Return
+*g:: Return
+*h:: Return
+*i:: Return
+*j:: Return
+*k:: Return
+*l:: Return
+*m:: Return
+*n:: Return
+*o:: Return
+*p:: Return
+*r:: Return
+*s:: Return
+*u:: Return
+*v:: Return
+*x:: Return
+*y:: Return
+*z:: Return
 0:: {
 	chCounter(0)
 }
@@ -2377,49 +2357,31 @@ z:: Return
 9:: {
 	chCounter(9)
 }
-^w:: Return
-^e:: Return
 
 !`:: {
 	exitVim()
-	Exit
 }
 BackSpace:: {
-	global counter
-	global infcounter
-	counter := counter / 10
-	counter := Floor(counter)
-	if counter == 0 {
-		infcounter.Destroy()
-		Send "{BackSpace}"
-	} else {
-		infcounter.Destroy()
-		infcounter := Infos(counter, , true)
-	}
+	backspaceCounter()
 }
 
 Esc:: {
-	global infcounter
 	global WasInMouseManagerMode
 	global wasInNormalMode
 	if (WasInMouseManagerMode == true) {
 		gotoNormal()
 		gotoMouseMode()
-		infcounter.Destroy()
 	}
 	else if (wasInNormalMode == true) {
 		gotoNormal()
-		infcounter.Destroy()
 	}
 	else {
 		global wasInNormalMode := false
 		global WindowManagerMode := false
-		global counter := 0
-		Infos.DestroyAll()
 		StateBulb[4].Destroy() ; Special
 		disableClick()
 	}
-	Exit
+	clearCounter()
 }
 *q:: {
 	global counter
@@ -2427,7 +2389,6 @@ Esc:: {
 		Loop counter {
 			Send "^{f4}"
 		}
-		counter := 0
 		if WasInMouseManagerMode == true {
 			gotoNormal()
 			gotoMouseMode()
@@ -2435,7 +2396,6 @@ Esc:: {
 		else {
 			gotoNormal()
 		}
-		Exit
 	}
 	Send "^{f4}"
 	if (WasInMouseManagerMode == true) {
@@ -2445,7 +2405,7 @@ Esc:: {
 	else {
 		gotoNormal()
 	}
-	Exit
+	clearCounter()
 }
 +q:: {
 	global counter
@@ -2453,7 +2413,6 @@ Esc:: {
 		Loop counter {
 			Send "!{f4}"
 		}
-		counter := 0
 		if WasInMouseManagerMode == true {
 			gotoNormal()
 			gotoMouseMode()
@@ -2461,7 +2420,6 @@ Esc:: {
 		else {
 			gotoNormal()
 		}
-		Exit
 	}
 	Send "!{f4}"
 	if (WasInMouseManagerMode == true) {
@@ -2471,7 +2429,7 @@ Esc:: {
 	else {
 		gotoNormal()
 	}
-	Exit
+	clearCounter()
 }
 
 t:: {
@@ -2480,7 +2438,6 @@ t:: {
 		Loop counter {
 			Send "^t"
 		}
-		counter := 0
 		if WasInMouseManagerMode == true {
 			gotoNormal()
 			gotoMouseMode()
@@ -2498,7 +2455,7 @@ t:: {
 	else {
 		gotoNormal()
 	}
-	Exit
+	clearCounter()
 }
 
 +t:: {
@@ -2507,7 +2464,6 @@ t:: {
 		Loop counter {
 			Send "^+t"
 		}
-		counter := 0
 		if WasInMouseManagerMode == true {
 			gotoNormal()
 			gotoMouseMode()
@@ -2525,7 +2481,7 @@ t:: {
 	else {
 		gotoNormal()
 	}
-	Exit
+	clearCounter()
 }
 
 w:: {
@@ -2537,7 +2493,7 @@ w:: {
 	else {
 		gotoNormal()
 	}
-	Exit
+	clearCounter()
 }
 
 #HotIf
@@ -2548,58 +2504,52 @@ HotIf "yMode = 1"
 
 !`:: {
 	exitVim()
-	Exit
 }
 
 BackSpace:: {
-	global counter
-	global infcounter
-	counter := counter / 10
-	counter := Floor(counter)
-	if counter == 0 {
-		infcounter.Destroy()
-		Send "{BackSpace}"
-	} else {
-		infcounter.Destroy()
-		infcounter := Infos(counter, , true)
-	}
+	backspaceCounter()
 }
 Esc:: {
-	global infcounter
 	gotoNormal()
-	infcounter.Destroy()
-	Exit
+	clearCounter()
 }
 
--:: Return
-`;:: Return
-=:: Return
-,:: Return
-.:: Return
-/:: Return
-':: Return
+*a:: return
+*b:: return
+*c:: return
+*d:: return
+*e:: return
+*f:: return
+*g:: return
+*h:: return
+*i:: return
+*j:: return
+*k:: return
+*l:: return
+*m:: return
+*n:: return
+*o:: return
+*p:: return
+*q:: return
+*r:: return
+*s:: return
+*t:: return
+*u:: return
+*v:: return
+*w:: return
+*x:: return
+*y:: return
+*z:: return
+*-:: Return
+*`;:: Return
+*=:: Return
+*,:: Return
+*.:: Return
+*/:: Return
+*':: Return
 [:: Return
 ]:: Return
-\:: Return
-a:: Return
-c:: Return
-d:: Return
-g:: Return
-h:: Return
-j:: Return
-k:: Return
-l:: Return
-m:: Return
-n:: Return
-o:: Return
-p:: Return
-q:: Return
-r:: Return
-s:: Return
-u:: Return
-v:: Return
-x:: Return
-z:: Return
+*\:: Return
 
 1:: {
 	chCounter(1, "y")
@@ -2630,76 +2580,53 @@ z:: Return
 }
 
 f:: {
+	clearCounter()
 	delChanYanfMotion()
 	Send "^{Insert}"
+	Send "{Left}"
+	Send "+{Right}"
 	gotoNormal()
 	Exit
 }
 
 t:: {
+	clearCounter()
 	delChanYantMotion()
 	Send "^{Insert}"
+	Send "{Left}"
+	Send "+{Right}"
+	gotoNormal()
+	Exit
+}
+
++f:: {
+	clearCounter()
+	capdelChanYanFmotion()
+	Send "^{Insert}"
+	Send "{Left}"
+	Send "+{Right}"
+	gotoNormal()
+	Exit
+}
+
++t:: {
+	clearCounter()
+	capdelChanYanTMotion()
+	Send "^{Insert}"
+	Send "{Left}"
+	Send "+{Right}"
 	gotoNormal()
 	Exit
 }
 
 i:: {
-	Send "^{Left}"
-	oldclip := A_Clipboard
-	A_Clipboard := ""
-	Send "+{End}"
+	clearCounter
+	innerword()
 	Send "^{insert}"
 	Send "{Left}"
-	ClipWait 1
-	Haystack := A_Clipboard
-	A_Clipboard := oldclip
-	FoundPos := 0
-	if FoundPos == 0
-		FoundPos := InStr(Haystack, " ")
-	if FoundPos == 0
-		FoundPos := InStr(Haystack, ".")
-	if FoundPos == 0
-		FoundPos := InStr(Haystack, ",")
-	if FoundPos == 0
-		FoundPos := InStr(Haystack, "/")
-	if FoundPos == 0
-		FoundPos := InStr(Haystack, ";")
-	if FoundPos == 0
-		FoundPos := InStr(Haystack, "'")
-	if FoundPos == 0
-		FoundPos := InStr(Haystack, "[")
-	if FoundPos == 0
-		FoundPos := InStr(Haystack, "]")
-	if FoundPos == 0
-		FoundPos := InStr(Haystack, "\")
-	if FoundPos == 0
-		FoundPos := InStr(Haystack, "\s")
-	if FoundPos == 0
-		FoundPos := InStr(Haystack, "\r")
-	if FoundPos == 0
-		FoundPos := InStr(Haystack, "\n")
-	if FoundPos == 0
-		FoundPos := InStr(Haystack, "\t")
-	if FoundPos == 0
-		FoundPos := InStr(Haystack, "-")
-	if FoundPos == 0
-		FoundPos := InStr(Haystack, "=")
-	if FoundPos == 0
-		Send "^+{Right}"
-	else {
-		loop FoundPos {
-			Send "+{Right}"
-		}
-		Send "+{Left}"
-	}
-	sleep 100
-	Send "^{insert}"
-	Exit
 }
 
-
 y:: {
-	global infcounter
 	A_Clipboard := ""
 	Send "+{Home}"
 	Send "^{insert}"
@@ -2715,91 +2642,39 @@ y:: {
 	Send "+{Right}"
 	A_Clipboard := var1 var2
 	gotoNormal()
-	infcounter.Destroy()
-	Exit
+	clearCounter()
 }
 
 b:: {
-	global counter
-	global infcounter
+	bmotion()
+	Send "^{insert}"
 	langid := Language.GetKeyboardLanguage()
 	if (LangID = 0x040D) {
-		Send "{Right}"
-		if counter != 0 {
-			Loop counter {
-				Send "^+{Right}"
-			}
-			counter := 0
-		}
-		else {
-			Send "^+{Right}"
-		}
-		Send "^{insert}"
 		Send "{Left}"
 		Send "+{right}"
-		gotoNormal()
-		infcounter.Destroy()
-		Exit
-	}
-	else if counter != 0 {
-		Send "{Left}"
-		Loop counter {
-			Send "^+{Left}"
-		}
-		counter := 0
 	}
 	else {
-		Send "{Left}"
-		Send "^+{Left}"
-	}
-	Send "^{insert}"
-	Send "{right}"
-	Send "{Left}"
-	Send "+{right}"
-	gotoNormal()
-	infcounter.Destroy()
-	Exit
-}
-
-w:: {
-	global counter
-	global infcounter
-	langid := Language.GetKeyboardLanguage()
-	if (LangID = 0x040D) {
-		Send "{Right}"
-		if counter != 0 {
-			Loop counter {
-				Send "^+{Left}"
-			}
-			counter := 0
-		} else {
-			Send "^+{Left}"
-		}
-		Send "^{insert}"
 		Send "{right}"
 		Send "{Left}"
 		Send "+{right}"
-		gotoNormal()
-		infcounter.Destroy()
-		Exit
 	}
-	else if counter != 0 {
+	clearCounter()
+}
+
+w:: {
+	wmotion()
+	Send "^{insert}"
+	langid := Language.GetKeyboardLanguage()
+	if (LangID = 0x040D) {
+		Send "{right}"
 		Send "{Left}"
-		Loop counter {
-			Send "^+{Right}"
-		}
-		counter := 0
+		Send "+{right}"
 	}
 	else {
 		Send "{Left}"
-		Send "^+{Right}"
+		Send "+{right}"
 	}
-	Send "^{insert}"
-	Send "{Left}"
-	Send "+{right}"
-	gotoNormal()
-	infcounter.Destroy()
-	Exit
+	clearCounter()
 }
 
 0::
@@ -2812,7 +2687,6 @@ w:: {
 		Send "+{home}"
 		Send "^{insert}"
 		gotoNormal()
-		Exit
 	}
 }
 
@@ -2821,7 +2695,6 @@ w:: {
 	Send "+{End}"
 	Send "^{insert}"
 	gotoNormal()
-	Exit
 }
 #HotIf
 
@@ -2829,28 +2702,15 @@ w:: {
 #HotIf cMode = 1
 HotIf "cMode = 1"
 BackSpace:: {
-	global counter
-	global infcounter
-	counter := counter / 10
-	counter := Floor(counter)
-	if counter == 0 {
-		infcounter.Destroy()
-		Send "{BackSpace}"
-	} else {
-		infcounter.Destroy()
-		infcounter := Infos(counter, , true)
-	}
+	backspaceCounter
 }
 Esc:: {
-	global infcounter
 	gotoNormal()
-	infcounter.Destroy()
-	Exit
+	clearCounter()
 }
 
 !`:: {
 	exitVim()
-	Exit
 }
 
 -:: Return
@@ -2863,25 +2723,33 @@ Esc:: {
 [:: Return
 ]:: Return
 \:: Return
-a:: Return
-d:: Return
-g:: Return
-h:: Return
-j:: Return
-k:: Return
-l:: Return
-m:: Return
-n:: Return
-o:: Return
-p:: Return
-q:: Return
-r:: Return
-s:: Return
-u:: Return
-v:: Return
-x:: Return
-y:: Return
-z:: Return
+*a:: return
+*b:: return
+*c:: return
+*d:: return
+*e:: return
+*f:: return
+*g:: return
+*h:: return
+*i:: return
+*j:: return
+*k:: return
+*l:: return
+*m:: return
+*n:: return
+*o:: return
+*p:: return
+*q:: return
+*r:: return
+*s:: return
+*t:: return
+*u:: return
+*v:: return
+*w:: return
+*x:: return
+*y:: return
+*z:: return
+
 1:: {
 	chCounter(1, "c")
 }
@@ -2914,182 +2782,73 @@ f:: {
 	delChanYanfMotion()
 	Send "^x"
 	gotoInsert()
-	Exit
+	clearCounter()
 }
 t:: {
 	delChanYantMotion()
 	Send "^x"
 	gotoInsert()
-	Exit
+	clearCounter()
+}
++f:: {
+	capdelChanYanFmotion()
+	Send "^x"
+	gotoInsert()
+	clearCounter()
+}
++t:: {
+	capdelChanYanTMotion()
+	Send "^x"
+	gotoInsert()
+	clearCounter()
 }
 
 i:: {
-	Send "^{Left}"
-	; Send "^+{Right}"
-	oldclip := A_Clipboard
-	A_Clipboard := ""
-	Send "+{End}"
-	Send "^{insert}"
-	Send "{Left}"
-	ClipWait 1
-	Haystack := A_Clipboard
-	A_Clipboard := oldclip
-	FoundPos := 0
-	if FoundPos == 0
-		FoundPos := InStr(Haystack, " ")
-	if FoundPos == 0
-		FoundPos := InStr(Haystack, ".")
-	if FoundPos == 0
-		FoundPos := InStr(Haystack, ",")
-	if FoundPos == 0
-		FoundPos := InStr(Haystack, "/")
-	if FoundPos == 0
-		FoundPos := InStr(Haystack, ";")
-	if FoundPos == 0
-		FoundPos := InStr(Haystack, "'")
-	if FoundPos == 0
-		FoundPos := InStr(Haystack, "[")
-	if FoundPos == 0
-		FoundPos := InStr(Haystack, "]")
-	if FoundPos == 0
-		FoundPos := InStr(Haystack, "\")
-	if FoundPos == 0
-		FoundPos := InStr(Haystack, "\s")
-	if FoundPos == 0
-		FoundPos := InStr(Haystack, "\r")
-	if FoundPos == 0
-		FoundPos := InStr(Haystack, "\n")
-	if FoundPos == 0
-		FoundPos := InStr(Haystack, "\t")
-	if FoundPos == 0
-		FoundPos := InStr(Haystack, "-")
-	if FoundPos == 0
-		FoundPos := InStr(Haystack, "=")
-	if FoundPos == 0
-		Send "^+{Right}"
-	else {
-		loop FoundPos {
-			Send "+{Right}"
-		}
-		Send "+{Left}"
-	}
-	sleep 100
+	innerword()
 	Send "^x"
-	infcounter.Destroy()
 	gotoInsert()
-	Exit
+	clearCounter()
 }
 
 c:: {
-	global infcounter
-	oldclip := A_Clipboard
-	A_Clipboard := ""
-	Send "{Home}+{End}"
-	Send "^{insert}"
-	Send "{Left}"
-	ClipWait 1
-	Haystack := A_Clipboard
-	A_Clipboard := oldclip
-	FoundPos := 0
-	pattern := "[\p{P}a-zA-Z0-9\.*?+[{|()^$\s\r\n`r`n`s]"
-	FoundPos := RegExMatch(Haystack, pattern, , -1)
-	if FoundPos == 0
-	{
-		Send "+{End}"
-	}
-	else {
-		loop FoundPos {
-			Send "+{Right}"
-		}
-		Send "+{Left}"
-	}
-	sleep 100
+	findEndLine()
 	Send "^x"
-	infcounter.Destroy()
 	gotoInsert()
+	clearCounter()
 }
 
 b:: {
-	global counter
-	global infcounter
+	bmotion()
+	Send "^x"
 	langid := Language.GetKeyboardLanguage()
 	if (LangID = 0x040D) {
-		Send "{Right}"
-		if counter != 0 {
-			Loop counter {
-				Send "^+{Right}"
-			}
-			counter := 0
-		}
-		else {
-			Send "^+{Right}"
-		}
-		Send "^x"
 		Send "{Left}"
 		Send "+{right}"
-		gotoInsert()
-		infcounter.Destroy()
-		Exit
-	}
-	else if counter != 0 {
-		Send "{Left}"
-		Loop counter {
-			Send "^+{Left}"
-		}
-		counter := 0
 	}
 	else {
-		Send "{Left}"
-		Send "^+{Left}"
-	}
-	Send "^x"
-	Send "{right}"
-	Send "{Left}"
-	Send "+{right}"
-	gotoInsert()
-	infcounter.Destroy()
-	Exit
-}
-
-w:: {
-	global counter
-	global infcounter
-	langid := Language.GetKeyboardLanguage()
-	if (LangID = 0x040D) {
-		Send "{Right}"
-		if counter != 0 {
-			Loop counter {
-				Send "^+{Left}"
-			}
-			counter := 0
-		} else {
-			Send "^+{Left}"
-		}
-		Send "^x"
 		Send "{right}"
 		Send "{Left}"
 		Send "+{right}"
-		gotoInsert()
-		infcounter.Destroy()
-		Exit
 	}
-	else if counter != 0 {
+	gotoInsert()
+	clearCounter()
+}
+
+w:: {
+	wmotion()
+	Send "^x"
+	langid := Language.GetKeyboardLanguage()
+	if (LangID = 0x040D) {
+		Send "{right}"
 		Send "{Left}"
-		Loop counter {
-			Send "^+{Right}"
-		}
-		counter := 0
+		Send "+{right}"
 	}
 	else {
 		Send "{Left}"
-		Send "^+{Right}"
+		Send "+{right}"
 	}
-	Send "^x"
-	Send "{Left}"
-	Send "+{right}"
 	gotoInsert()
-	infcounter.Destroy()
-	Exit
+	clearCounter()
 }
 
 0::
@@ -3102,7 +2861,6 @@ w:: {
 		Send "+{home}"
 		Send "^x"
 		gotoInsert()
-		Exit
 	}
 }
 
@@ -3111,7 +2869,6 @@ w:: {
 	Send "+{End}"
 	Send "^x"
 	gotoInsert()
-	Exit
 }
 
 #HotIf
@@ -3130,34 +2887,38 @@ HotIf "gMode = 1"
 [:: Return
 ]:: Return
 \:: Return
-a:: Return
-d:: Return
-h:: Return
-j:: Return
-k:: Return
-l:: Return
-m:: Return
-n:: Return
-o:: Return
-p:: Return
-q:: Return
-r:: Return
-s:: Return
-u:: Return
-v:: Return
-x:: Return
-y:: Return
-z:: Return
+*a:: return
+*b:: return
+*c:: return
+*d:: return
+*e:: return
+*f:: return
+*g:: return
+*h:: return
+*i:: return
+*j:: return
+*k:: return
+*l:: return
+*m:: return
+*n:: return
+*o:: return
+*p:: return
+*q:: return
+*r:: return
+*s:: return
+*t:: return
+*u:: return
+*v:: return
+*w:: return
+*x:: return
+*y:: return
+*z:: return
 t:: {
-	global counter
 	global WasInMouseManagerMode
-	global infcounter
 	if counter != 0 {
 		Loop counter {
 			Send "^{tab}"
 		}
-		infcounter.Destroy()
-		counter := 0
 		if WasInMouseManagerMode == true {
 			gotoNormal()
 			gotoMouseMode()
@@ -3165,7 +2926,6 @@ t:: {
 		else {
 			gotoNormal()
 		}
-		Exit
 	}
 	if WasInMouseManagerMode == true {
 		Send "^{tab}"
@@ -3176,18 +2936,14 @@ t:: {
 		Send "^{tab}"
 		gotoNormal()
 	}
-	Exit
+	clearCounter()
 }
 +t:: {
-	global counter
 	global WasInMouseManagerMode
-	global infcounter
 	if counter != 0 {
 		Loop counter {
 			Send "^+{tab}"
 		}
-		counter := 0
-		infcounter.Destroy()
 		if WasInMouseManagerMode == true {
 			gotoNormal()
 			gotoMouseMode()
@@ -3195,7 +2951,6 @@ t:: {
 		else {
 			gotoNormal()
 		}
-		Exit
 	}
 	if WasInMouseManagerMode == true {
 		Send "^+{tab}"
@@ -3206,7 +2961,7 @@ t:: {
 		Send "^+{tab}"
 		gotoNormal()
 	}
-	Exit
+	clearCounter()
 }
 g:: {
 	global WasInMouseManagerMode
@@ -3225,40 +2980,26 @@ g:: {
 			Send "^{Home}"
 		gotoNormal()
 	}
-	Exit
+	clearCounter()
 }
 
 BackSpace:: {
-	global counter
-	global infcounter
-	counter := counter / 10
-	counter := Floor(counter)
-	if counter == 0 {
-		infcounter.Destroy()
-		Send "{BackSpace}"
-	} else {
-		infcounter.Destroy()
-		infcounter := Infos(counter, , true)
-	}
+	backspaceCounter()
 }
 Esc:: {
 	global WasInMouseManagerMode
-	global infcounter
 	if (WasInMouseManagerMode == true) {
 		gotoNormal()
 		gotoMouseMode()
-		infcounter.Destroy()
 	}
 	else {
 		gotoNormal()
-		infcounter.Destroy()
 	}
-	Exit
+	clearCounter()
 }
 
 !`:: {
 	exitVim()
-	Exit
 }
 
 0:: {
@@ -3307,25 +3048,32 @@ HotIf "dMode = 1"
 [:: Return
 ]:: Return
 \:: Return
-a:: Return
-c:: Return
-g:: Return
-h:: Return
-j:: Return
-k:: Return
-l:: Return
-m:: Return
-n:: Return
-o:: Return
-p:: Return
-q:: Return
-r:: Return
-s:: Return
-u:: Return
-v:: Return
-x:: Return
-y:: Return
-z:: Return
+*a:: return
+*b:: return
+*c:: return
+*d:: return
+*e:: return
+*f:: return
+*g:: return
+*h:: return
+*i:: return
+*j:: return
+*k:: return
+*l:: return
+*m:: return
+*n:: return
+*o:: return
+*p:: return
+*q:: return
+*r:: return
+*s:: return
+*t:: return
+*u:: return
+*v:: return
+*w:: return
+*x:: return
+*y:: return
+*z:: return
 1:: {
 	chCounter(1, "d")
 }
@@ -3358,210 +3106,90 @@ f:: {
 	delChanYanfMotion()
 	Send "^x"
 	gotoNormal()
-	Exit
+	clearCounter()
 }
 
 t:: {
 	delChanYantMotion()
 	Send "^x"
 	gotoNormal()
-	Exit
+	clearCounter()
+}
++f:: {
+	capdelChanYanFmotion()
+	Send "^x"
+	gotoNormal()
+	clearCounter()
+}
+
++t:: {
+	capdelChanYanTMotion()
+	Send "^x"
+	gotoNormal()
+	clearCounter()
 }
 
 i:: {
-	Send "^{Left}"
-	oldclip := A_Clipboard
-	A_Clipboard := ""
-	Send "+{End}"
-	Send "^{insert}"
-	Send "{Left}"
-	ClipWait 1
-	Haystack := A_Clipboard
-	A_Clipboard := oldclip
-	FoundPos := 0
-	if FoundPos == 0
-		FoundPos := InStr(Haystack, " ")
-	if FoundPos == 0
-		FoundPos := InStr(Haystack, ".")
-	if FoundPos == 0
-		FoundPos := InStr(Haystack, ",")
-	if FoundPos == 0
-		FoundPos := InStr(Haystack, "/")
-	if FoundPos == 0
-		FoundPos := InStr(Haystack, ";")
-	if FoundPos == 0
-		FoundPos := InStr(Haystack, "'")
-	if FoundPos == 0
-		FoundPos := InStr(Haystack, "[")
-	if FoundPos == 0
-		FoundPos := InStr(Haystack, "]")
-	if FoundPos == 0
-		FoundPos := InStr(Haystack, "\")
-	if FoundPos == 0
-		FoundPos := InStr(Haystack, "\s")
-	if FoundPos == 0
-		FoundPos := InStr(Haystack, "\r")
-	if FoundPos == 0
-		FoundPos := InStr(Haystack, "\n")
-	if FoundPos == 0
-		FoundPos := InStr(Haystack, "\t")
-	if FoundPos == 0
-		FoundPos := InStr(Haystack, "-")
-	if FoundPos == 0
-		FoundPos := InStr(Haystack, "=")
-	if FoundPos == 0 {
-		Send "^+{Right}"
-	}
-	else {
-		loop FoundPos {
-			Send "+{Right}"
-		}
-	}
-	sleep 100
+	innerword()
 	Send "^x"
 	gotoNormal()
-	Exit
+	clearCounter()
 }
 
 BackSpace:: {
-	global counter
-	global infcounter
-	counter := counter / 10
-	counter := Floor(counter)
-	if counter == 0 {
-		infcounter.Destroy()
-		Send "{BackSpace}"
-	} else {
-		infcounter.Destroy()
-		infcounter := Infos(counter, , true)
-	}
+	backspaceCounter()
 }
 Esc:: {
-	global infcounter
 	gotoNormal()
-	infcounter.Destroy()
+	clearCounter()
 }
 
 !`:: {
 	exitVim()
-	Exit
 }
 
 d:: {
-	global infcounter
-	oldclip := A_Clipboard
-	A_Clipboard := ""
-	Send "{Home}+{End}"
-	Send "^{insert}"
-	Send "{Left}"
-	ClipWait 1
-	Haystack := A_Clipboard
-	A_Clipboard := oldclip
-	FoundPos := 0
-	pattern := "[\p{P}a-zA-Z0-9\.*?+[{|()^$\s\r\n`r`n`s]"
-	FoundPos := RegExMatch(Haystack, pattern, , -1)
-	if FoundPos == 0
-	{
-		Send "+{End}"
-		sleep 100
-		Send "^x"
-		infcounter.Destroy()
-		gotoNormal()
-	}
-	else {
-		loop FoundPos {
-			Send "+{Right}"
-		}
-		Send "+{Left}"
-		sleep 100
-		Send "^x"
+	t := findEndLine()
+	Send "^x"
+	if t {
 		Send "{delete}"
-		infcounter.Destroy()
-		gotoNormal()
 	}
+	gotoNormal()
+	clearCounter()
 }
 
 b:: {
-	global counter
-	global infcounter
+	bmotion()
+	Send "^x"
 	langid := Language.GetKeyboardLanguage()
 	if (LangID = 0x040D) {
-		Send "{Right}"
-		if counter != 0 {
-			Loop counter {
-				Send "^+{Right}"
-			}
-			counter := 0
-		}
-		else {
-			Send "^+{Right}"
-		}
-		Send "^x"
 		Send "{Left}"
 		Send "+{right}"
-		gotoNormal()
-		infcounter.Destroy()
-		Exit
-	}
-	else if counter != 0 {
-		Send "{Left}"
-		Loop counter {
-			Send "^+{Left}"
-		}
-		counter := 0
 	}
 	else {
-		Send "{Left}"
-		Send "^+{Left}"
-	}
-	Send "^x"
-	Send "{right}"
-	Send "{Left}"
-	Send "+{right}"
-	gotoNormal()
-	infcounter.Destroy()
-	Exit
-}
-
-w:: {
-	global counter
-	global infcounter
-	langid := Language.GetKeyboardLanguage()
-	if (LangID = 0x040D) {
-		Send "{Right}"
-		if counter != 0 {
-			Loop counter {
-				Send "^+{Left}"
-			}
-			counter := 0
-		} else {
-			Send "^+{Left}"
-		}
-		Send "^x"
 		Send "{right}"
 		Send "{Left}"
 		Send "+{right}"
-		gotoNormal()
-		infcounter.Destroy()
-		Exit
 	}
-	else if counter != 0 {
+	gotoNormal()
+	clearCounter()
+}
+
+w:: {
+	wmotion()
+	Send "^x"
+	langid := Language.GetKeyboardLanguage()
+	if (LangID = 0x040D) {
 		Send "{Left}"
-		Loop counter {
-			Send "^+{Right}"
-		}
-		counter := 0
+		Send "+{right}"
 	}
 	else {
+		Send "{right}"
 		Send "{Left}"
-		Send "^+{Right}"
+		Send "+{right}"
 	}
-	Send "^x"
-	Send "{Left}"
-	Send "+{right}"
 	gotoNormal()
-	infcounter.Destroy()
-	Exit
+	clearCounter()
 }
 
 0::
@@ -3574,7 +3202,6 @@ w:: {
 		Send "+{home}"
 		Send "^x"
 		gotoNormal()
-		Exit
 	}
 }
 
@@ -3583,7 +3210,6 @@ w:: {
 	Send "+{End}"
 	Send "^x"
 	gotoNormal()
-	Exit
 }
 #HotIf
 
@@ -3633,7 +3259,6 @@ HotIf "insertMode = 1"
 !`:: {
 	exitVim()
 	gotoNormal()
-	Exit
 }
 
 Esc:: {
@@ -3647,7 +3272,6 @@ Esc:: {
 	else {
 		gotoNormal()
 	}
-	Exit
 }
 
 ^u:: {
@@ -3667,12 +3291,12 @@ Esc:: {
 		Send "^+{Right}"
 		Sleep 10
 		Send "{bs}"
-		Exit
 	}
-	Send "^+{Left}"
-	Sleep 10
-	Send "{bs}"
-	Exit
+	else {
+		Send "^+{Left}"
+		Sleep 10
+		Send "{bs}"
+	}
 }
 
 ^a:: {
@@ -3721,12 +3345,10 @@ Esc:: {
 
 +!b:: {
 	Send "^+{Left}"
-	Exit
 }
 
 +!f:: {
 	Send "^+{Right}"
-	Exit
 }
 
 !b:: {
@@ -3791,8 +3413,21 @@ z & q:: {
 	if GetKeyState("shift")
 		Send "!{f4}"
 }
-z & h:: {
+z & u:: {
+	Send "{WheelUp}"
 	Send "{WheelLeft}"
+}
+z & o:: {
+	Send "{WheelUp}"
+	Send "{WheelRight}"
+}
+z & n:: {
+	Send "{WheelLeft}"
+	Send "{WheelDown}"
+}
+z & ,:: {
+	Send "{WheelDown}"
+	Send "{WheelRight}"
 }
 z & l:: {
 	Send "{WheelRight}"
@@ -3814,28 +3449,21 @@ z & =:: {
 }
 
 BackSpace:: {
-	global counter
-	global infcounter
-	counter := counter / 10
-	counter := Floor(counter)
-	if counter == 0 {
-		infcounter.Destroy()
-	} else {
-		infcounter.Destroy()
-		infcounter := Infos(counter, , true)
-	}
+	backspaceCounter()
 }
 
 -:: Return
 `;:: Return
 +;:: {
 	gotoInsertnoInfo()
+	clearCounter()
 	global wasinCmdMode := true
 	Runner.openRunner()
 	gotoNormalnoInfo()
 }
 `:: Return
 +`:: {
+	clearCounter()
 	if visualMode == true {
 		oldclip := A_Clipboard
 		A_Clipboard := ""
@@ -3881,111 +3509,41 @@ BackSpace:: {
 		Send "+{Right}"
 		A_Clipboard := oldclip
 	}
-	Exit
 }
 =:: Return
 ,:: Return
 .:: Return
 /:: {
+	clearCounter()
 	Send "^f"
 	gotoInsert()
-	Exit
 }
 ':: {
 	global normalMode := false
+	clearCounter()
 	openMark()
 	global normalMode := true
 }
 +':: {
-	inf := Infos('"', , true)
 	global normalMode := false
-	StateBulb[7].Create()
-	mark := GetInput("L1", "{esc}{space}{Backspace}").Input
-	if mark = "" {
-		StateBulb[7].Destroy()
-		global normalMode := true
-		inf.Destroy()
-		Exit
-	}
-
-	inf.Destroy()
-	infs := '"'
-	infs .= mark
-	inf := Infos(infs, , true)
-
-	operator := GetInput("L1", "{esc}{space}{Backspace}").Input
-
-	if (operator == "y") {
-		oldclip := A_Clipboard
-		A_Clipboard := ""
-		Send "^{insert}"
-		ClipWait 1
-		Sleep 10
-		Registers(mark).WriteOrAppend()
-		Sleep 10
-		Send "{Left}"
-		Send "+{Right}"
-		A_Clipboard := oldclip
-	}
-	else if (operator == "d") {
-		oldclip := A_Clipboard
-		A_Clipboard := ""
-		Send "^x"
-		ClipWait 1
-		Sleep 10
-		Registers(mark).WriteOrAppend()
-		A_Clipboard := oldclip
-	}
-	else if (operator == "p") {
-		Registers(mark).Paste()
-		Sleep 10
-		Send "{right}"
-		Send "{left}"
-		Send "+{Right}"
-	}
-	else if (operator == "l") {
-		Registers(mark).Look()
-		Send "{Left}"
-		Send "+{Right}"
-	}
-	else if (operator == "m") {
-		secReg := GetInput("L1", "{Esc}").Input
-		Registers(mark).Move(secReg)
-		Send "{Left}"
-		Send "+{Right}"
-	}
-	else if (operator == "s") {
-		secReg := GetInput("L1", "{Esc}").Input
-		Registers(mark).SwitchContents(secReg)
-		Send "{Left}"
-		Send "+{Right}"
-	}
-	else if (operator == "x") {
-		Registers(mark).Truncate()
-		Send "{Left}"
-		Send "+{Right}"
-	}
-	StateBulb[7].Destroy()
+	saveReg()
 	global normalMode := true
 	global visualLineMode := false
 	global visualMode := false
-	inf.Destroy()
+	clearCounter()
 }
 [:: Return
 \:: Return
 m:: {
 	gotoMwMode()
-	Exit
 }
 n:: {
 	Send "^f"
 	Send "{Enter}"
-	Exit
 }
 +n:: {
 	Send "^f"
 	Send "+{Enter}"
-	Exit
 }
 ^!n:: {
 	global wasInNormalMode := true
@@ -4005,7 +3563,6 @@ r:: {
 s:: {
 	Send "{BS}"
 	gotoInsert()
-	Exit
 }
 t:: Return
 z:: Return
@@ -4040,180 +3597,16 @@ z:: Return
 
 
 +f:: {
-	StateBulb[4].Create()
-	global normalMode := false
-	global counter
-	global infcounter
-	cvar := "" counter
-	cvar .= "F"
-	infcounter.Destroy()
-	infcounter := Infos(cvar, , true)
-	if counter != 0 {
-		while counter > 0 {
-			ih := InputHook("C")
-			ih.KeyOpt("{All}", "ESI") ;End Keys & Suppress
-			ih.KeyOpt("{LCtrl}{RCtrl}{LAlt}{RAlt}{LShift}{RShift}{LWin}{RWin}", "-ES") ;Exclude the modifiers
-			ih.Start()
-			ih.Wait()
-			check := ih.EndMods
-			check .= ih.EndKey
-			check2 := ih.EndKey
-			if check == "<!``" {
-				exitVim()
-				infcounter.Destroy()
-				counter := 0
-				Exit
-			} else if check2 == "Escape" {
-				counter := 0
-				StateBulb[4].Destroy()
-				global normalMode := true
-				infcounter.Destroy()
-				Exit
-			} else if check2 == "Backspace" {
-				counter += 2
-				trimed := SubStr(var, 1, StrLen(var) - 1)
-				var := trimed
-			} else if check2 == "Space" {
-				Continue
-			} else {
-				var .= ih.EndKey
-			}
-			infcounter.Destroy()
-			infcounter := Infos(var, , true)
-			counter -= 1
-		}
-		counter := 0
-	}
-	else {
-		ih := InputHook("C")
-		ih.KeyOpt("{All}", "ESI") ;End Keys & Suppress
-		ih.KeyOpt("{LCtrl}{RCtrl}{LAlt}{RAlt}{LShift}{RShift}{LWin}{RWin}", "-ES") ;Exclude the modifiers
-		ih.Start()
-		ih.Wait()
-		var := ih.EndKey
-		check := ih.EndMods
-		check .= ih.EndKey
-		check2 := ih.EndKey
-		if check == "<!``" {
-			exitVim()
-			infcounter.Destroy()
-			Exit
-		} else if check2 == "Escape" {
-			StateBulb[4].Destroy()
-			global normalMode := true
-			infcounter.Destroy()
-			Exit
-		}
-	}
-	oldclip := A_Clipboard
-	A_Clipboard := ""
-	Send "{Left}"
-	Send "+{Home}"
-	Send "^{insert}"
-	Send "{Right}"
-	ClipWait 1
-	Haystack := A_Clipboard
-	FoundPos := InStr(Haystack, var, false, -1)
-	Send "{Home}"
-	loop FoundPos {
-		Send "{Right}"
-	}
-	Send "{Left}"
-	Send "+{Right}"
-	global normalMode := true
-	infcounter.Destroy()
-	StateBulb[4].Destroy()
+	capdelChanYanFmotion()
 }
 
 f:: {
-	StateBulb[4].Create()
-	global normalMode := false
-	global counter
-	global infcounter
-	cvar := "" counter
-	cvar .= "f"
-	infcounter.Destroy()
-	infcounter := Infos(cvar, , true)
-	if counter != 0 {
-		while counter > 0 {
-			ih := InputHook("C")
-			ih.KeyOpt("{All}", "ESI") ;End Keys & Suppress
-			ih.KeyOpt("{LCtrl}{RCtrl}{LAlt}{RAlt}{LShift}{RShift}{LWin}{RWin}", "-ES") ;Exclude the modifiers
-			ih.Start()
-			ih.Wait()
-			check := ih.EndMods
-			check .= ih.EndKey
-			check2 := ih.EndKey
-			if check == "<!``" {
-				exitVim()
-				infcounter.Destroy()
-				counter := 0
-				Exit
-			} else if check2 == "Escape" {
-				StateBulb[4].Destroy()
-				global normalMode := true
-				infcounter.Destroy()
-				counter := 0
-				Exit
-			} else if check2 == "Backspace" {
-				counter += 2
-				trimed := SubStr(var, 1, StrLen(var) - 1)
-				var := trimed
-			} else if check2 == "Space" {
-				Continue
-			} else {
-				var .= ih.EndKey
-			}
-			infcounter.Destroy()
-			infcounter := Infos(var, , true)
-			counter -= 1
-		}
-		counter := 0
-	}
-	else {
-		ih := InputHook("C")
-		ih.KeyOpt("{All}", "ESI") ;End Keys & Suppress
-		ih.KeyOpt("{LCtrl}{RCtrl}{LAlt}{RAlt}{LShift}{RShift}{LWin}{RWin}", "-ES") ;Exclude the modifiers
-		ih.Start()
-		ih.Wait()
-		var := ih.EndKey
-		check := ih.EndMods
-		check .= ih.EndKey
-		check2 := ih.EndKey
-		if check == "<!``" {
-			exitVim()
-			infcounter.Destroy()
-			Exit
-		} else if check2 == "Escape" {
-			StateBulb[4].Destroy()
-			global normalMode := true
-			infcounter.Destroy()
-			Exit
-		}
-	}
-	oldclip := A_Clipboard
-	A_Clipboard := ""
-	Send "{Right}"
-	Send "+{End}"
-	Send "^{insert}"
-	Send "{Left}"
-	ClipWait 1
-	Haystack := A_Clipboard
-	FoundPos := InStr(Haystack, var)
-	loop FoundPos {
-		Send "{Right}"
-	}
-	Send "{Left}"
-	Send "+{Right}"
-	global normalMode := true
-	infcounter.Destroy()
-	StateBulb[4].Destroy()
+	delChanYanfMotion()
 }
 
 
 g:: {
 	gotoGMode()
-	Exit
 }
 
 +g:: {
@@ -4223,10 +3616,9 @@ g:: {
 	else {
 		Send "^{End}"
 	}
-	Exit
 }
 
-$^w:: {
+^w:: {
 	if visualMode == true {
 		Exit
 	}
@@ -4234,7 +3626,6 @@ $^w:: {
 		wasInNormalMode := true
 		gotoWindowMode()
 	}
-	Exit
 }
 
 #t:: {
@@ -4243,38 +3634,17 @@ $^w:: {
 		Loop counter {
 			Send "#t"
 		}
-		counter := 0
-		infcounter.Destroy()
-		Exit
 	}
-	Send "#t"
+	else
+		Send "#t"
+	clearCounter()
 }
 
 e:: {
-	global counter
-	if counter != 0 {
-		Loop counter {
-			if visualMode == true
-			{
-				Send "^+{Right}"
-				Send "+{Left}"
-			}
-			else
-			{
-				Send "+{Right}"
-				Send "^{Right}"
-				Send "{Left 2}"
-				Send "+{Right}"
-			}
-		}
-		counter := 0
-		infcounter.Destroy()
-		Exit
-	}
+	emotion()
+	Send "{Left}"
 	Send "+{Right}"
-	Send "^{Right}"
-	Send "{Left 2}"
-	Send "+{Right}"
+	clearCounter()
 }
 
 !`:: {
@@ -4285,13 +3655,11 @@ e:: {
 	Send "+{End}"
 	Send "^x"
 	gotoInsert()
-	Exit
 }
 
 +d:: {
 	Send "+{End}"
 	Send "^x"
-	Exit
 }
 
 d::
@@ -4314,23 +3682,19 @@ d::
 !^y::
 {
 	Send "^{WheelUp}"
-	Exit
 }
 
 !^e::
 {
 	Send "^{WheelDown}"
-	Exit
 }
 +^y::
 {
 	Send "+{WheelUp}"
-	Exit
 }
 +^e::
 {
 	Send "+{WheelDown}"
-	Exit
 }
 
 ^e:: {
@@ -4352,9 +3716,7 @@ Esc:: {
 	{
 		if counter == 0
 			Send "{Esc}"
-		infcounter.Destroy()
-		counter := 0
-		Exit
+		clearCounter()
 	}
 }
 
@@ -4368,7 +3730,6 @@ v:: {
 	Global visualMode := true
 	Send "{Left}"
 	StateBulb[3].Create()
-	Exit
 }
 
 +v:: {
@@ -4377,7 +3738,6 @@ v:: {
 	Global visualMode := true
 	Global visualLineMode := true
 	StateBulb[3].Create()
-	Exit
 }
 
 *i:: {
@@ -4390,7 +3750,6 @@ v:: {
 	{
 		Send "{Left}"
 		gotoInsert()
-		Exit
 	}
 }
 
@@ -4420,25 +3779,21 @@ Space:: {
 		Send "{Left}"
 		Send "{Right}"
 		Send "+{Right}"
-		Exit
 	}
 }
 
 +a:: {
 	Send "{end}"
 	gotoInsert()
-	Exit
 }
 
 +i:: {
 	Send "{home}"
 	gotoInsert()
-	Exit
 }
 
 +j:: {
 	Send "{end}{Delete}"
-	Exit
 }
 
 c:: {
@@ -4460,140 +3815,31 @@ c:: {
 x:: {
 	Send "{Delete}"
 	Send "+{Right}"
-	Exit
 }
 +x:: {
 	Send "{bs}"
 	Send "{Left}"
 	Send "+{Right}"
-	Exit
 }
 
 $b:: {
-	global counter
-	global infcounter
-	langid := Language.GetKeyboardLanguage()
-	if (LangID = 0x040D) {
-		if counter != 0 {
-			Loop counter {
-				if visualMode == true
-				{
-					Send "^+{Right}"
-				}
-				else
-				{
-					Send "{Right}"
-					Send "^{Right}"
-					Send "+{Left}"
-				}
-			}
-			counter := 0
-			infcounter.Destroy()
-			Exit
-		}
-		if visualMode == true
-		{
-			Send "^+{Right}"
-		}
-		else
-		{
-			Send "{Right}"
-			Send "^{Right}"
-			Send "+{Left}"
-			Exit
-		}
-		Exit
-	}
-	if counter != 0 {
-		Loop counter {
-			if visualMode == true
-			{
-				Send "^+{Left}"
-			}
-			else
-			{
-				Send "{Left}"
-				Send "^{Left}"
-				Send "+{Right}"
-			}
-		}
-		counter := 0
-		Exit
-	}
-	if visualMode == true
-	{
-		Send "^+{Left}"
-	}
-	else
-	{
+	bmotion()
+	if !visualMode {
+		Send "{right}"
 		Send "{Left}"
-		Send "^{Left}"
-		Send "+{Right}"
-		Exit
+		Send "+{right}"
 	}
-	Exit
+	clearCounter()
 }
 
 $w:: {
-	global counter
-	global infcounter
-	langid := Language.GetKeyboardLanguage()
-	if (LangID = 0x040D) {
-		if counter != 0 {
-			Loop counter {
-				if visualMode == true
-				{
-					Send "^+{Left}"
-				}
-				else
-				{
-					Send "^{Left}"
-					Send "+{Left}"
-				}
-			}
-			counter := 0
-			infcounter.Destroy()
-			Exit
-		}
-		if visualMode == true
-		{
-			Send "^+{Left}"
-			Exit
-		}
-		else
-		{
-			Send "^{Left}"
-			Send "+{Left}"
-			Exit
-		}
-		Exit
+	wmotion()
+	if !visualMode {
+		Send "{right}"
+		Send "{Left}"
+		Send "+{right}"
 	}
-	if counter != 0 {
-		Loop counter {
-			if visualMode == true
-			{
-				Send "^+{Right}"
-			}
-			else
-			{
-				Send "^{Right}"
-				Send "+{Right}"
-			}
-		}
-		counter := 0
-		Exit
-	}
-	if visualMode == true
-	{
-		Send "^+{Right}"
-	}
-	else
-	{
-		Send "^{Right}"
-		Send "+{Right}"
-		Exit
-	}
-	Exit
+	clearCounter()
 }
 
 O:: {
@@ -4601,7 +3847,6 @@ O:: {
 	Sleep 10
 	Send "+{Enter}"
 	gotoInsert()
-	Exit
 }
 
 +O:: {
@@ -4609,17 +3854,14 @@ O:: {
 	Sleep 10
 	Send "+{Enter}{Up}"
 	gotoInsert()
-	Exit
 }
 
 u:: {
 	Send "^z"
-	Exit
 }
 
 ^r:: {
 	Send "^y"
-	Exit
 }
 
 +y:: {
@@ -4627,7 +3869,6 @@ u:: {
 	Send "^{insert}"
 	Send "{Left}"
 	Send "+{Right}"
-	Exit
 }
 
 y:: {
@@ -4651,7 +3892,6 @@ y:: {
 	Send "{Left}"
 	sleep 10
 	Send "+{insert}"
-	Exit
 }
 
 p:: {
@@ -4661,7 +3901,6 @@ p:: {
 	}
 	Send "{Right}"
 	Send "+{insert}"
-	Exit
 }
 
 0::
@@ -4707,26 +3946,69 @@ a:: {
 	gotoInsert()
 	Exit
 }
+
+*a:: return
+*b:: return
+*c:: return
+*d:: return
+*e:: return
+*f:: return
+*g:: return
+*h:: return
+*j:: return
+*k:: return
+*l:: return
+*m:: return
+*n:: return
+*o:: return
+*p:: return
+*q:: return
+*r:: return
+*s:: return
+*t:: return
+*u:: return
+*v:: return
+*w:: return
+*x:: return
+*y:: return
+*z:: return
+
 #HotIf
 
 ; Window Manager Mode - for moving the window using keyboard
 #HotIf WindowManagerMode = 1
 HotIf "WindowManagerMode = 1"
 
-b:: Return
-c:: Return
-i:: Return
 !f:: {
 	global WasInWindowManagerMode := true
 	gotoFMode()
-	Exit
 }
-p:: Return
-r:: Return
-t:: Return
-x:: Return
-y:: Return
-z:: Return
+*a:: return
+*b:: return
+*c:: return
+*d:: return
+*e:: return
+*f:: return
+*g:: return
+*h:: return
+*i:: return
+*j:: return
+*k:: return
+*l:: return
+*m:: return
+*n:: return
+*o:: return
+*p:: return
+*q:: return
+*r:: return
+*s:: return
+*t:: return
+*u:: return
+*v:: return
+*w:: return
+*x:: return
+*y:: return
+*z:: return
 .:: Return
 /:: Return
 ':: Return
@@ -4875,12 +4157,10 @@ Esc:: {
 	else {
 		gotoNormal()
 	}
-	Exit
 }
 
 !`:: {
 	exitVim()
-	Exit
 }
 
 #HotIf
@@ -4907,8 +4187,7 @@ m:: {
 		Loop counter {
 			Send "#t"
 		}
-		counter := 0
-		infcounter.Destroy()
+		clearCounter()
 		Exit
 	}
 	Send "#t"
@@ -4966,6 +4245,22 @@ z & q:: {
 	if GetKeyState("shift")
 		Send "!{f4}"
 }
+z & u:: {
+	Send "{WheelUp}"
+	Send "{WheelLeft}"
+}
+z & o:: {
+	Send "{WheelUp}"
+	Send "{WheelRight}"
+}
+z & n:: {
+	Send "{WheelLeft}"
+	Send "{WheelDown}"
+}
+z & ,:: {
+	Send "{WheelDown}"
+	Send "{WheelRight}"
+}
 z & h:: {
 	Send "{WheelLeft}"
 }
@@ -4992,83 +4287,10 @@ z & =:: {
 }
 
 +':: {
-	inf := Infos('"', , true)
 	global mouseManagerMode := false
-	StateBulb[7].Create()
-	marko := InputHook("C")
-	marko.KeyOpt("{All}", "ESI") ;End Keys & Suppress
-	marko.KeyOpt("{LCtrl}{RCtrl}{LAlt}{RAlt}{LShift}{RShift}{LWin}{RWin}", "-ES") ;Exclude the modifiers
-	marko.Start()
-	marko.Wait()
-	var := marko.EndMods
-	var .= marko.EndKey
-	mark := marko.EndKey
-	if var == "<!``" {
-		exitVim()
-		inf.Destroy()
-		Exit
-	}
-	else if mark == "Escape" {
-		StateBulb[7].Destroy()
-		global normalMode := true
-		inf.Destroy()
-		Exit
-	}
-	inf.Destroy()
-	infs := '"'
-	infs .= mark
-	inf := Infos(infs, , true)
-	marko := InputHook("C")
-	marko.KeyOpt("{All}", "ESI") ;End Keys & Ruppress
-	marko.KeyOpt("{LCtrl}{RCtrl}{LAlt}{RAlt}{LShift}{RShift}{LWin}{RWin}", "-ES") ;Exclude the modifiers
-	marko.Start()
-	marko.Wait()
-	var := marko.EndMods
-	var .= marko.EndKey
-	operator := marko.EndKey
-	if var == "<!``" {
-		exitVim()
-		inf.Destroy()
-		Exit
-	}
-	else if operator == "Escape" {
-		StateBulb[7].Destroy()
-		global normalMode := true
-		inf.Destroy()
-		Exit
-	}
-	else if (operator == "y") {
-		Send "^{insert}"
-		ClipWait 1
-		Sleep 10
-		Registers(mark).WriteOrAppend()
-	}
-	else if (operator == "d") {
-		Send "^x"
-		ClipWait 1
-		Sleep 10
-		Registers(mark).WriteOrAppend()
-	}
-	else if (operator == "p") {
-		Registers(mark).Paste()
-	}
-	else if (operator == "l") {
-		Registers(mark).Look()
-	}
-	else if (operator == "m") {
-		secReg := GetInput("L1", "{Esc}").Input
-		Registers(mark).Move(secReg)
-	}
-	else if (operator == "s") {
-		secReg := GetInput("L1", "{Esc}").Input
-		Registers(mark).SwitchContents(secReg)
-	}
-	else if (operator == "x") {
-		Registers(mark).Truncate()
-	}
-	StateBulb[7].Destroy()
+	saveReg()
 	global mouseManagerMode := true
-	inf.Destroy()
+	clearCounter()
 }
 
 
@@ -5078,8 +4300,7 @@ z & =:: {
 }
 ~!+a:: {
 	global WasInMouseManagerMode := true
-	global infcounter
-	infcounter.Destroy()
+	clearCounter()
 	disableClick()
 	gotoInsert()
 }
@@ -5097,7 +4318,6 @@ space & .:: Return
 	Send "^f"
 	disableClick()
 	gotoInsert()
-	Exit
 }
 +/:: return
 ^/:: return
@@ -5165,17 +4385,10 @@ p:: {
 		Click("M Up")
 }
 ^w:: {
-	if visualMode == true {
-		Exit
-	}
-	else {
-		global WasInMouseManagerMode := true
-		disableClick()
-		gotoWindowMode()
-	}
-	Exit
+	global WasInMouseManagerMode := true
+	disableClick()
+	gotoWindowMode()
 }
-
 f:: {
 	gotoFMode()
 }
@@ -5191,47 +4404,41 @@ g:: {
 	global WasInMouseManagerMode := true
 	disableClick()
 	gotoGMode()
-	Exit
 }
 i:: {
 	global WasInMouseManagerMode := true
 	disableClick()
 	gotoInsert()
-	Exit
 }
 a:: {
 	global WasInMouseManagerMode := true
 	disableClick()
 	gotoInsert()
-	Exit
 }
 ^a:: {
 	global WasInMouseManagerMode := true
 	disableClick()
 	gotoInsert()
 	Send "{Home}"
-	Exit
 }
 +i:: {
 	global WasInMouseManagerMode := true
 	disableClick()
 	gotoInsert()
 	Send "{Home}"
-	Exit
 }
 +a:: {
 	global WasInMouseManagerMode := true
 	disableClick()
 	gotoInsert()
 	Send "{End}"
-	Exit
 }
 !m::
 ^m:: {
 	global WasInMouseManagerMode := true
 	disableClick()
 	gotoMwMode()
-	Exit
+	clearCounter()
 }
 
 Tab & u::
@@ -5351,47 +4558,31 @@ hotkey "!d", ButtonMaxSpeedDown
 	exitVim()
 }
 Esc:: {
-	global infcounter
 	global counter
 	if counter == 0
 		Send "{Esc}"
-	infcounter.Destroy()
-	counter := 0
-	Exit
+	clearCounter()
 }
 BackSpace:: {
-	global counter
-	global infcounter
-	counter := counter / 10
-	counter := Floor(counter)
-	if counter == 0 {
-		infcounter.Destroy()
-	} else {
-		infcounter.Destroy()
-		infcounter := Infos(counter, , true)
-	}
+	backspaceCounter()
 }
 
 !^y::
 {
 	Send "^{WheelUp}"
-	Exit
 }
 
 !^e::
 {
 	Send "^{WheelDown}"
-	Exit
 }
 +^y::
 {
 	Send "+{WheelUp}"
-	Exit
 }
 +^e::
 {
 	Send "+{WheelDown}"
-	Exit
 }
 ^e:: {
 	Send "{WheelDown}"
@@ -5835,8 +5026,6 @@ gotoNormal() {
 	global mouseManagerMode := false
 	global counter := 0
 	StateBulb[1].Create()
-	; Infos.DestroyAll()
-	; Infos("Normal Mode", 1500)
 }
 
 gotoVisual() {
@@ -5910,122 +5099,12 @@ gotoInsertnoInfo() {
 	StateBulb[2].Create()
 }
 
-fMotion() {
+capdelChanYanFmotion() {
 	StateBulb[4].Create()
 	global normalMode := false
-	ih := InputHook("C")
-	ih.KeyOpt("{All}", "ESI") ;End Keys & Suppress
-	ih.KeyOpt("{LCtrl}{RCtrl}{LAlt}{RAlt}{LShift}{RShift}{LWin}{RWin}", "-ES") ;Exclude the modifiers
-	ih.Start()
-	ih.Wait()
-	var := ih.EndKey
-	oldclip := A_Clipboard
-	A_Clipboard := ""
-	Send "{Left}"
-	Send "+{Home}"
-	Send "^{insert}"
-	Send "{Right}"
-	ClipWait 1
-	Haystack := A_Clipboard
-	A_Clipboard := oldclip
-	FoundPos := InStr(Haystack, var)
-	Send "{Home}"
-	loop FoundPos {
-		Send "{Right}"
-	}
-	Send "{Left}"
-	Send "+{Right}"
-	global normalMode := true
-}
-
-delChanYanfMotion() {
-	StateBulb[4].Create()
-	global normalMode := false
-	global counter
-	global infcounter
-	cvar := "" counter
-	cvar .= "f"
-	infcounter.Destroy()
-	infcounter := Infos(cvar, , true)
-	if counter != 0 {
-		while counter > 0 {
-			ih := InputHook("C")
-			ih.KeyOpt("{All}", "ESI") ;End Keys & Suppress
-			ih.KeyOpt("{LCtrl}{RCtrl}{LAlt}{RAlt}{LShift}{RShift}{LWin}{RWin}", "-ES") ;Exclude the modifiers
-			ih.Start()
-			ih.Wait()
-			check := ih.EndMods
-			check .= ih.EndKey
-			check2 := ih.EndKey
-			if check == "<!``" {
-				exitVim()
-				infcounter.Destroy()
-				counter := 0
-				Exit
-			} else if check2 == "Escape" {
-				StateBulb[4].Destroy()
-				global normalMode := true
-				infcounter.Destroy()
-				counter := 0
-				Exit
-			} else if check2 == "Backspace" {
-				counter += 2
-				trimed := SubStr(var, 1, StrLen(var) - 1)
-				var := trimed
-			} else if check2 == "Space" {
-				Continue
-			} else {
-				var .= ih.EndKey
-			}
-			infcounter.Destroy()
-			infcounter := Infos(var, , true)
-			counter -= 1
-		}
-		counter := 0
-	}
-	else {
-		ih := InputHook("C")
-		ih.KeyOpt("{All}", "ESI") ;End Keys & Suppress
-		ih.KeyOpt("{LCtrl}{RCtrl}{LAlt}{RAlt}{LShift}{RShift}{LWin}{RWin}", "-ES") ;Exclude the modifiers
-		ih.Start()
-		ih.Wait()
-		var := ih.EndKey
-		check := ih.EndMods
-		check .= ih.EndKey
-		check2 := ih.EndKey
-		if check == "<!``" {
-			exitVim()
-			infcounter.Destroy()
-			Exit
-		} else if check2 == "Escape" {
-			StateBulb[4].Destroy()
-			global normalMode := true
-			infcounter.Destroy()
-			Exit
-		}
-	}
-	oldclip := A_Clipboard
-	A_Clipboard := ""
-	Send "{Right}"
-	Send "+{End}"
-	Send "^{insert}"
-	Send "{Left}"
-	ClipWait 1
-	Haystack := A_Clipboard
-	FoundPos := InStr(Haystack, var)
-	loop FoundPos {
-		Send "{Right}"
-	}
-	Send "{Left}"
-	Send "+{Right}"
-	global normalMode := true
-	infcounter.Destroy()
-	StateBulb[4].Destroy()
-}
-
-delChanYanFMotionc() {
-	StateBulb[4].Create()
-	global normalMode := false
+	global yMode := false
+	global cMode := false
+	global dMode := false
 	global counter
 	global infcounter
 	cvar := "" counter
@@ -6109,29 +5188,102 @@ delChanYanFMotionc() {
 	StateBulb[4].Destroy()
 }
 
-delChanYantMotion() {
+delChanYanfMotion() {
 	StateBulb[4].Create()
-	ih := InputHook("C")
-	ih.KeyOpt("{All}", "ESI") ;End Keys & Suppress
-	ih.KeyOpt("{LCtrl}{RCtrl}{LAlt}{RAlt}{LShift}{RShift}{LWin}{RWin}", "-ES") ;Exclude the modifiers
-	ih.Start()
-	ih.Wait()
-	var := ih.EndKey
+	global normalMode := false
+	global yMode := false
+	global cMode := false
+	global dMode := false
+	global counter
+	global infcounter
+	cvar := "" counter
+	cvar .= "f"
+	infcounter.Destroy()
+	infcounter := Infos(cvar, , true)
+	if counter != 0 {
+		while counter > 0 {
+			ih := InputHook("C")
+			ih.KeyOpt("{All}", "ESI") ;End Keys & Suppress
+			ih.KeyOpt("{LCtrl}{RCtrl}{LAlt}{RAlt}{LShift}{RShift}{LWin}{RWin}", "-ES") ;Exclude the modifiers
+			ih.Start()
+			ih.Wait()
+			check := ih.EndMods
+			check .= ih.EndKey
+			check2 := ih.EndKey
+			if check == "<!``" {
+				exitVim()
+				infcounter.Destroy()
+				counter := 0
+				Exit
+			} else if check2 == "Escape" {
+				StateBulb[4].Destroy()
+				global normalMode := true
+				infcounter.Destroy()
+				counter := 0
+				Exit
+			} else if check2 == "Backspace" {
+				counter += 2
+				trimed := SubStr(var, 1, StrLen(var) - 1)
+				var := trimed
+			} else if check2 == "Space" {
+				Continue
+			} else {
+				var .= ih.EndKey
+			}
+			infcounter.Destroy()
+			infcounter := Infos(var, , true)
+			counter -= 1
+		}
+		counter := 0
+	}
+	else {
+		ih := InputHook("C")
+		ih.KeyOpt("{All}", "ESI") ;End Keys & Suppress
+		ih.KeyOpt("{LCtrl}{RCtrl}{LAlt}{RAlt}{LShift}{RShift}{LWin}{RWin}", "-ES") ;Exclude the modifiers
+		ih.Start()
+		ih.Wait()
+		var := ih.EndKey
+		check := ih.EndMods
+		check .= ih.EndKey
+		check2 := ih.EndKey
+		if check == "<!``" {
+			exitVim()
+			infcounter.Destroy()
+			Exit
+		} else if check2 == "Escape" {
+			StateBulb[4].Destroy()
+			global normalMode := true
+			infcounter.Destroy()
+			Exit
+		}
+	}
 	oldclip := A_Clipboard
 	A_Clipboard := ""
-	Send "{Left}"
-	Send "+{Home}"
-	Send "^{insert}"
 	Send "{Right}"
+	Send "+{End}"
+	Send "^{insert}"
+	Send "{Left}"
 	ClipWait 1
 	Haystack := A_Clipboard
-	A_Clipboard := oldclip
 	FoundPos := InStr(Haystack, var)
-	Send "{Home}"
 	loop FoundPos {
-		Send "+{Right}"
+		Send "{Right}"
 	}
-	Send "{Left}"
+	; Send "{Left}"
+	; Send "+{Right}"
+	global normalMode := true
+	infcounter.Destroy()
+	StateBulb[4].Destroy()
+}
+
+
+capdelChanYanTMotion() {
+	capdelChanYanFmotion()
+	Send "+{Left}"
+}
+delChanYantMotion() {
+	delChanYanfMotion()
+	Send "+{Left}"
 }
 
 openMark() {
@@ -6152,7 +5304,6 @@ openMark() {
 	}
 	else if mark == "Escape" {
 		StateBulb[7].Destroy()
-		global normalMode := true
 		inf.Destroy()
 		Exit
 	}
@@ -6161,7 +5312,6 @@ openMark() {
 	catch {
 		Infos("Mark " mark " was not set", 2000)
 		StateBulb[7].Destroy()
-		global mouseManagerMode := true
 		inf.Destroy()
 		Exit
 	}
@@ -6184,11 +5334,9 @@ saveMark() {
 	if var == "<!``" {
 		exitVim()
 		inf.Destroy()
-		Exit
 	}
 	else if mark == "Escape" {
 		StateBulb[7].Destroy()
-		global normalMode := true
 		inf.Destroy()
 		Exit
 	}
@@ -6217,7 +5365,6 @@ insertReg() {
 	else if mark == "Escape" {
 		StateBulb[7].Destroy()
 		inf.Destroy()
-		global insertMode := true
 		Exit
 	}
 	Registers(mark).Paste()
@@ -6231,18 +5378,14 @@ saveReg() {
 	mark := GetInput("L1", "{esc}{space}{Backspace}").Input
 	if mark = "" {
 		StateBulb[7].Destroy()
-		global normalMode := true
 		inf.Destroy()
 		Exit
 	}
-
 	inf.Destroy()
 	infs := '"'
 	infs .= mark
 	inf := Infos(infs, , true)
-
 	operator := GetInput("L1", "{esc}{space}{Backspace}").Input
-
 	if (operator == "y") {
 		oldclip := A_Clipboard
 		A_Clipboard := ""
@@ -6295,4 +5438,184 @@ saveReg() {
 	}
 	StateBulb[7].Destroy()
 	inf.Destroy()
+}
+setMouseDefSpeed() {
+	Mouse.SmallMove := 20
+	Mouse.MediumMove := 70
+	Mouse.BigMove := 200
+}
+
+backspaceCounter() {
+	global counter
+	global infcounter
+	counter := counter / 10
+	counter := Floor(counter)
+	if counter == 0 {
+		infcounter.Destroy()
+		Send "{BackSpace}"
+	} else {
+		infcounter.Destroy()
+		infcounter := Infos(counter, , true)
+	}
+}
+
+innerword() {
+	Send "^{Left}"
+	oldclip := A_Clipboard
+	A_Clipboard := ""
+	Send "+{End}"
+	Send "^{insert}"
+	Send "{Left}"
+	ClipWait 1
+	Haystack := A_Clipboard
+	A_Clipboard := oldclip
+	FoundPos := 0
+	if FoundPos == 0
+		FoundPos := InStr(Haystack, " ")
+	if FoundPos == 0
+		FoundPos := InStr(Haystack, ".")
+	if FoundPos == 0
+		FoundPos := InStr(Haystack, ",")
+	if FoundPos == 0
+		FoundPos := InStr(Haystack, "/")
+	if FoundPos == 0
+		FoundPos := InStr(Haystack, ";")
+	if FoundPos == 0
+		FoundPos := InStr(Haystack, "'")
+	if FoundPos == 0
+		FoundPos := InStr(Haystack, "[")
+	if FoundPos == 0
+		FoundPos := InStr(Haystack, "]")
+	if FoundPos == 0
+		FoundPos := InStr(Haystack, "\")
+	if FoundPos == 0
+		FoundPos := InStr(Haystack, "\s")
+	if FoundPos == 0
+		FoundPos := InStr(Haystack, "\r")
+	if FoundPos == 0
+		FoundPos := InStr(Haystack, "\n")
+	if FoundPos == 0
+		FoundPos := InStr(Haystack, "\t")
+	if FoundPos == 0
+		FoundPos := InStr(Haystack, "-")
+	if FoundPos == 0
+		FoundPos := InStr(Haystack, "=")
+	if FoundPos == 0
+		Send "^+{Right}"
+	else {
+		loop FoundPos {
+			Send "+{Right}"
+		}
+		Send "+{Left}"
+	}
+	sleep 100
+}
+
+clearCounter() {
+	global counter := 0
+	global infcounter
+	infcounter.Destroy()
+}
+
+bmotion() {
+	global counter
+	global infcounter
+	langid := Language.GetKeyboardLanguage()
+	if (LangID = 0x040D) {
+		Send "{Right}"
+		if counter != 0 {
+			Loop counter {
+				Send "^+{Right}"
+			}
+		}
+		else {
+			Send "^+{Right}"
+		}
+		gotoNormal()
+	}
+	else if counter != 0 {
+		Send "{Left}"
+		Loop counter {
+			Send "^+{Left}"
+		}
+	}
+	else {
+		Send "{Left}"
+		Send "^+{Left}"
+	}
+	gotoNormal()
+}
+
+wmotion() {
+	langid := Language.GetKeyboardLanguage()
+	if (LangID = 0x040D) {
+		Send "{Right}"
+		if counter != 0 {
+			Loop counter {
+				Send "^+{Left}"
+			}
+		} else {
+			Send "^+{Left}"
+		}
+		gotoNormal()
+		infcounter.Destroy()
+		Exit
+	}
+	else if counter != 0 {
+		Send "{Left}"
+		Loop counter {
+			Send "^+{Right}"
+		}
+	}
+	else {
+		Send "{Left}"
+		Send "^+{Right}"
+	}
+	gotoNormal()
+}
+
+emotion() {
+	global counter
+	if counter != 0 {
+		Loop counter {
+			if visualMode == true
+			{
+				Send "^+{Right}"
+				Send "+{Left}"
+			}
+		}
+	}
+	else {
+		Send "^+{Right}"
+		Send "+{Left}"
+	}
+}
+
+
+findEndLine() {
+	oldclip := A_Clipboard
+	A_Clipboard := ""
+	Send "{Home}+{End}"
+	Send "^{insert}"
+	Send "{Left}"
+	ClipWait 1
+	Haystack := A_Clipboard
+	A_Clipboard := oldclip
+	FoundPos := 0
+	pattern := "[\p{P}a-zA-Z0-9\.*?+[{|()^$\s\r\n`r`n`s]"
+	FoundPos := RegExMatch(Haystack, pattern, , -1)
+	if FoundPos == 0
+	{
+		Send "+{End}"
+	}
+	else {
+		loop FoundPos {
+			Send "+{Right}"
+		}
+		Send "+{Left}"
+		sleep 100
+		return 1
+	}
+	sleep 100
+	return 0
 }
