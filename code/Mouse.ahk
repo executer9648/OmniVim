@@ -24,15 +24,18 @@ class Mouse {
 	static keyboardCol := 20 ;5
 
 	static getx(monitorN, n, RowButtons) {
-		try
-			MonitorGet 2, &Left, &Top, &Right, &Bottom
-		; MonitorGet monitorN, &Left, &Top, &Right, &Bottom
-		catch
-			return 0
-		; Infos("left " Left)
-		; Infos("top " Top)
-		; Infos("right " Right)
-		; Infos("bottom " Bottom)
+		if MonitorGetPrimary() != 1 {
+			try
+				MonitorGet 1, &Left, &Top, &Right, &Bottom
+			catch
+				return 0
+		}
+		else {
+			try
+				MonitorGet 2, &Left, &Top, &Right, &Bottom
+			catch
+				return 0
+		}
 		dpi := 1
 		dX := (Right / dpi) - (Left / dpi)
 		an := 2 * n - 1

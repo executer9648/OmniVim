@@ -77,16 +77,7 @@ Info("Script Reloaded-Active", 2000)
 *CapsLock::LCtrl
 
 #WheelDown:: Send "#{down}"
-#Wheelup:: {
-	MouseGetPos , , &KDE_id
-	; Toggle between maximized and restored state.
-	if WinGetMinMax(KDE_id)
-		WinRestore KDE_id
-	Else
-		WinMaximize KDE_id
-	g_DoubleAlt := false
-	return
-}
+#Wheelup:: Send "#{up}"
 
 ^#h:: Send "^#{Left}"
 ^#l:: Send "^#{Right}"
@@ -5390,8 +5381,21 @@ insertReg() {
 saveReg() {
 	inf := Infos('"', , true)
 	StateBulb[7].Create()
-	mark := GetInput("L1", "{esc}{space}{Backspace}").Input
+	markgi := GetInput("L1", "{esc}{space}{Backspace}")
+	mark := markgi.Input
 	if mark = "" {
+		StateBulb[7].Destroy()
+		inf.Destroy()
+		Exit
+	}
+	mark := markgi.EndKey
+	var := markgi.EndMods
+	var .= markgi.EndMods
+	if var == "<!``" {
+		exitVim()
+		inf.Destroy()
+	}
+	else if mark == "Escape" {
 		StateBulb[7].Destroy()
 		inf.Destroy()
 		Exit
