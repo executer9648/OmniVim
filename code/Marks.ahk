@@ -7,7 +7,33 @@ class Marks {
 	static sessionNames := []
 	static mouseWindows := []
 	static recording := false
+	static MarksDirectory := "C:\Marks"
 	static _session := ""
+
+	static GetPath(key) => Marks.MarksDirectory "\mark_" key ".txt"
+
+	static __TryGetMarkText(path) {
+		if FileExist(path)
+			text := ReadFile(path)
+		else
+			text := ""
+		return text
+	}
+
+	static Read(key) {
+		path := Marks.GetPath(key)
+		return this.__TryGetMarkText(path)
+	}
+
+	/**
+	 * Write the contents of your clipboard to a register
+	 */
+	static Write(text, key) {
+		path := Marks.GetPath(key)
+		WriteFile(path, text)
+		Info(key " clipboard written", Registers.InfoTimeout)
+	}
+
 
 	static showMarks() {
 		Infos.DestroyAll()

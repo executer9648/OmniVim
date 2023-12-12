@@ -205,6 +205,7 @@ tab & e::End
 global counter := 0
 global monitorCount := 0
 global p_key := 0
+global visual_y := 0
 global normalMode := false
 global dMode := false
 global gMode := false
@@ -2634,7 +2635,6 @@ y:: {
 	Send "+{Right}"
 	A_Clipboard := var1 var2
 	gotoNormal()
-	clearCounter()
 }
 
 b:: {
@@ -2650,7 +2650,7 @@ b:: {
 		Send "{Left}"
 		Send "+{right}"
 	}
-	clearCounter()
+	gotoNormal()
 }
 
 w:: {
@@ -2666,7 +2666,7 @@ w:: {
 		Send "{Left}"
 		Send "+{right}"
 	}
-	clearCounter()
+	gotoNormal()
 }
 
 0::
@@ -2823,7 +2823,6 @@ b:: {
 		Send "+{right}"
 	}
 	gotoInsert()
-	clearCounter()
 }
 
 w:: {
@@ -2840,7 +2839,6 @@ w:: {
 		Send "+{right}"
 	}
 	gotoInsert()
-	clearCounter()
 }
 
 0::
@@ -3164,7 +3162,6 @@ b:: {
 		Send "+{right}"
 	}
 	gotoNormal()
-	clearCounter()
 }
 
 w:: {
@@ -3181,7 +3178,6 @@ w:: {
 		Send "+{right}"
 	}
 	gotoNormal()
-	clearCounter()
 }
 
 0::
@@ -3362,6 +3358,15 @@ Esc:: {
 		Send "^{Right}"
 	}
 }
+
+^v:: {
+	Send "{wheeldown}"
+}
+
+!v:: {
+	Send "{Wheelup}"
+}
+
 #HotIf
 
 
@@ -3455,6 +3460,7 @@ BackSpace:: {
 }
 `:: Return
 +`:: {
+	exitVisualMode()
 	clearCounter()
 	if visualMode == true {
 		oldclip := A_Clipboard
@@ -3512,6 +3518,7 @@ BackSpace:: {
 }
 ':: {
 	global normalMode := false
+	exitVisualMode()
 	clearCounter()
 	openMark()
 	global normalMode := true
@@ -3520,8 +3527,7 @@ BackSpace:: {
 	global normalMode := false
 	saveReg()
 	global normalMode := true
-	global visualLineMode := false
-	global visualMode := false
+	exitVisualMode()
 	clearCounter()
 }
 [:: Return
@@ -3532,10 +3538,12 @@ m:: {
 n:: {
 	Send "^f"
 	Send "{Enter}"
+	exitVisualMode()
 }
 +n:: {
 	Send "^f"
 	Send "+{Enter}"
+	exitVisualMode()
 }
 ^!n:: {
 	global wasInNormalMode := true
@@ -3544,6 +3552,7 @@ n:: {
 q:: Return
 r:: {
 	global normalMode := false
+	exitVisualMode()
 	StateBulb[4].Create()
 	secReg := GetInput("L1", "{esc}{space}{Backspace}").Input
 	SendText secReg
@@ -3554,6 +3563,7 @@ r:: {
 }
 s:: {
 	Send "{BS}"
+	exitVisualMode()
 	gotoInsert()
 }
 t:: Return
@@ -3598,6 +3608,7 @@ f:: {
 
 
 g:: {
+	exitVisualMode()
 	gotoGMode()
 }
 
@@ -3630,6 +3641,7 @@ g:: {
 	else
 		Send "#t"
 	clearCounter()
+	exitVisualMode()
 }
 
 
@@ -3646,6 +3658,7 @@ g:: {
 +d:: {
 	Send "+{End}"
 	Send "^x"
+	exitVisualMode()
 }
 
 d::
@@ -3714,7 +3727,7 @@ v:: {
 		Exit
 	}
 	Global visualMode := true
-	Send "{Left}"
+	global visual_x := 0
 	StateBulb[3].Create()
 }
 
@@ -3723,6 +3736,7 @@ v:: {
 	Send "+{End}"
 	Global visualMode := true
 	Global visualLineMode := true
+	global visual_y := 0
 	StateBulb[3].Create()
 }
 
@@ -3780,6 +3794,7 @@ Space:: {
 
 +j:: {
 	Send "{end}{Delete}"
+	exitVisualMode()
 }
 
 c:: {
@@ -3801,18 +3816,22 @@ c:: {
 x:: {
 	Send "{Delete}"
 	Send "+{Right}"
+	exitVisualMode()
 }
 +x:: {
 	Send "{bs}"
 	Send "{Left}"
 	Send "+{Right}"
+	exitVisualMode()
 }
 
 $e:: {
 	emotion()
-	Send "{Right}"
-	Send "{Left}"
-	Send "+{Right}"
+	if !visualMode {
+		Send "{Right}"
+		Send "{Left}"
+		Send "+{Right}"
+	}
 	clearCounter()
 }
 
@@ -3864,10 +3883,12 @@ O:: {
 
 u:: {
 	Send "^z"
+	exitVisualMode()
 }
 
 ^r:: {
 	Send "^y"
+	exitVisualMode()
 }
 
 +y:: {
@@ -3875,6 +3896,7 @@ u:: {
 	Send "^{insert}"
 	Send "{Left}"
 	Send "+{Right}"
+	exitVisualMode()
 }
 
 y:: {
@@ -3898,6 +3920,7 @@ y:: {
 	Send "{Left}"
 	sleep 10
 	Send "+{insert}"
+	exitVisualMode()
 }
 
 p:: {
@@ -3907,6 +3930,7 @@ p:: {
 	}
 	Send "{Right}"
 	Send "+{insert}"
+	exitVisualMode()
 }
 
 0::
@@ -4612,11 +4636,23 @@ h_motion()
 {
 	global counter
 	global infcounter
+	global visual_x
 	if counter != 0 {
 		Loop counter {
+			if visualLineMode {
+				return
+			}
 			if visualMode == true
 			{
-				Send "+{left}"
+				if visual_x == 0 {
+					Send "{right}"
+					Send "+{Left}"
+					Send "+{Left}"
+				}
+				else {
+					Send "+{left}"
+				}
+				visual_x := visual_x - 1
 			}
 			else
 			{
@@ -4628,9 +4664,17 @@ h_motion()
 		counter := 0
 		infcounter.Destroy()
 	}
-	if visualMode == true
+	else if visualMode == true
 	{
-		Send "+{left}"
+		if visual_x == 0 {
+			Send "{right}"
+			Send "+{Left}"
+			Send "+{Left}"
+		}
+		else {
+			Send "+{left}"
+		}
+		visual_x := visual_x - 1
 	}
 	else
 	{
@@ -4644,12 +4688,26 @@ j_motion()
 {
 	global counter
 	global infcounter
+	global visual_y
 	if counter != 0 {
 		Loop counter {
 			if visualLineMode == true
 			{
-				Send "+{Down}"
-				Send "+{End}"
+				if visual_y == 0 {
+					Send "{Home}"
+					Send "+{End}"
+					Send "+{Down}"
+					Send "+{End}"
+				}
+				else if visual_y < 0 {
+					Send "+{Down}"
+					Send "+{End}"
+				}
+				else if visual_y > 0 {
+					Send "+{Down}"
+					Send "+{Home}"
+				}
+				visual_y := visual_y - 1
 			}
 			else if visualMode == true
 			{
@@ -4665,10 +4723,23 @@ j_motion()
 		counter := 0
 		infcounter.Destroy()
 	}
-	if visualLineMode == true
+	else if visualLineMode == true
 	{
-		Send "+{Down}"
-		Send "+{End}"
+		if visual_y == 0 {
+			Send "{Home}"
+			Send "+{End}"
+			Send "+{Down}"
+			Send "+{End}"
+		}
+		else if visual_y < 0 {
+			Send "+{Down}"
+			Send "+{End}"
+		}
+		else if visual_y > 0 {
+			Send "+{Down}"
+			Send "+{Home}"
+		}
+		visual_y := visual_y - 1
 	}
 	else if visualMode == true
 	{
@@ -4685,12 +4756,26 @@ j_motion()
 k_motion() {
 	global counter
 	global infcounter
+	global visual_y
 	if counter != 0 {
 		Loop counter {
 			if visualLineMode == true
 			{
-				Send "+{Up}"
-				Send "+{Home}"
+				if visual_y == 0 {
+					Send "{End}"
+					Send "+{Home}"
+					Send "+{Up}"
+					Send "+{Home}"
+				}
+				else if visual_y < 0 {
+					Send "+{Up}"
+					Send "+{End}"
+				}
+				else if visual_y > 0 {
+					Send "+{Up}"
+					Send "+{Home}"
+				}
+				visual_y := visual_y + 1
 			}
 			else if visualMode == true
 			{
@@ -4706,10 +4791,23 @@ k_motion() {
 		counter := 0
 		infcounter.Destroy()
 	}
-	if visualLineMode == true
+	else if visualLineMode == true
 	{
-		Send "+{Up}"
-		Send "+{Home}"
+		if visual_y == 0 {
+			Send "{End}"
+			Send "+{Home}"
+			Send "+{Up}"
+			Send "+{Home}"
+		}
+		else if visual_y < 0 {
+			Send "+{Up}"
+			Send "+{End}"
+		}
+		else if visual_y > 0 {
+			Send "+{Up}"
+			Send "+{Home}"
+		}
+		visual_y := visual_y + 1
 	}
 	else if visualMode == true
 	{
@@ -4726,10 +4824,23 @@ k_motion() {
 l_motion() {
 	global counter
 	global infcounter
+	global visual_x
 	if counter != 0 {
 		Loop counter {
+			if visualLineMode {
+				return
+			}
 			if visualMode == true
 			{
+				if visual_x == 0 {
+					Send "{Left}"
+					Send "+{Right}"
+					Send "+{Right}"
+				}
+				else {
+					Send "+{Right}"
+				}
+				visual_x := visual_x + 1
 				Send "+{Right}"
 			}
 			else
@@ -4742,8 +4853,17 @@ l_motion() {
 		counter := 0
 		infcounter.Destroy()
 	}
-	if visualMode == true
+	else if visualMode == true
 	{
+		if visual_x == 0 {
+			Send "{Left}"
+			Send "+{Right}"
+			Send "+{Right}"
+		}
+		else {
+			Send "+{Right}"
+		}
+		visual_x := visual_x + 1
 		Send "+{Right}"
 	}
 	else
@@ -4851,11 +4971,8 @@ exitVim() {
 	global fMode := false
 	global numlockMode := false
 	global windowMode := false
-	global visualMode := false
 	global WindowManagerMode := false
 	global mouseManagerMode := false
-	global visualLineMode := false
-	global counter := 0
 	StateBulb[1].Destroy() ; Vim
 	StateBulb[2].Destroy() ; Insert
 	StateBulb[3].Destroy() ; Visual
@@ -4870,6 +4987,8 @@ exitVim() {
 	; StateBulb[7].Destroy() ; Window
 	; StateBulb[8].Destroy() ; Fmode
 	disableClick()
+	clearCounter()
+	exitVisualMode
 	Exit
 }
 gotoNumLockMode() {
@@ -5012,9 +5131,7 @@ gotoNormal() {
 		StateBulb[2].Destroy()
 	}
 	global normalMode := true
-	global visualMode := false
 	global insertMode := false
-	global visualLineMode := false
 	global dMode := false
 	global regMode := false
 	global gMode := false
@@ -5030,7 +5147,8 @@ gotoNormal() {
 	global WasInRegMode := false
 	global WasInWindowManagerMode := false
 	global mouseManagerMode := false
-	global counter := 0
+	clearCounter()
+	exitVisualMode()
 	StateBulb[1].Create()
 }
 
@@ -5061,9 +5179,7 @@ gotoInsert() {
 		StateBulb[3].Destroy()
 	}
 	global normalMode := false
-	global visualMode := false
 	global insertMode := true
-	global visualLineMode := false
 	global dMode := false
 	global regMode := false
 	global gMode := false
@@ -5077,9 +5193,8 @@ gotoInsert() {
 	global infcounter
 	infcounter.Destroy()
 	global counter
-	counter := 0
-	; Infos.DestroyAll()
-	; Infos("Insert Mode", 1500)
+	clearCounter()
+	exitVisualMode()
 }
 
 gotoInsertnoInfo() {
@@ -5185,7 +5300,7 @@ capdelChanYanFmotion() {
 	FoundPos := InStr(Haystack, var, false, -1)
 	Send "{Home}"
 	loop FoundPos {
-		Send "{Right}"
+		Send "+{Right}"
 	}
 	Send "{Left}"
 	Send "+{Right}"
@@ -5273,7 +5388,7 @@ delChanYanfMotion() {
 	Haystack := A_Clipboard
 	FoundPos := InStr(Haystack, var)
 	loop FoundPos {
-		Send "{Right}"
+		Send "+{Right}"
 	}
 	; Send "{Left}"
 	; Send "+{Right}"
@@ -5314,14 +5429,17 @@ openMark() {
 		Exit
 	}
 	Registers.ValidateKey(mark)
-	try win_id := Marks.MarkA.%mark%
+	; try win_id := Marks.MarkA.%mark%
+	try {
+		win_id := Marks.Read(mark)
+	}
 	catch {
 		Infos("Mark " mark " was not set", 2000)
 		StateBulb[7].Destroy()
 		inf.Destroy()
 		Exit
 	}
-	WinActivate(win_id)
+	WinActivate(Integer(win_id))
 	StateBulb[7].Destroy()
 	inf.Destroy()
 }
@@ -5350,6 +5468,8 @@ saveMark() {
 	actw := WinExist("A")
 	Marks.Pushindex(mark)
 	Marks.MarkA.%mark% := actw
+	; Infos(Type(actw))
+	Marks.Write(actw, mark)
 	StateBulb[7].Destroy()
 	inf.Destroy()
 }
@@ -5541,7 +5661,6 @@ bmotion() {
 	global infcounter
 	langid := Language.GetKeyboardLanguage()
 	if (LangID = 0x040D) {
-		Send "{Right}"
 		if counter != 0 {
 			Loop counter {
 				Send "^+{Right}"
@@ -5552,22 +5671,18 @@ bmotion() {
 		}
 	}
 	else if counter != 0 {
-		Send "{Left}"
 		Loop counter {
 			Send "^+{Left}"
 		}
 	}
 	else {
-		Send "{Left}"
 		Send "^+{Left}"
 	}
-	gotoNormal()
 }
 
 wmotion() {
 	langid := Language.GetKeyboardLanguage()
 	if (LangID = 0x040D) {
-		Send "{Right}"
 		if counter != 0 {
 			Loop counter {
 				Send "^+{Left}"
@@ -5577,16 +5692,16 @@ wmotion() {
 		}
 	}
 	else if counter != 0 {
-		Send "{Left}"
+		if visualLineMode {
+			Exit
+		}
 		Loop counter {
 			Send "^+{Right}"
 		}
 	}
 	else {
-		Send "{Left}"
 		Send "^+{Right}"
 	}
-	gotoNormal()
 }
 
 emotion() {
@@ -5633,4 +5748,11 @@ findEndLine() {
 	}
 	sleep 100
 	return 0
+}
+
+exitVisualMode() {
+	global visualLineMode := false
+	global visualMode := false
+	global visual_y := 0
+	global visual_x := 0
 }
