@@ -231,11 +231,13 @@ global infcounter := Infos("")
 infcounter.Destroy()
 
 ; Define the hotkey to enable the keybindings
+tab & [::
 ^[:: {
 	gotoNormal()
 	Exit
 }
 
+tab & ]::
 ^]:: {
 	gotoNormal()
 	gotoMouseMode()
@@ -3554,7 +3556,7 @@ r:: {
 	global normalMode := false
 	exitVisualMode()
 	StateBulb[4].Create()
-	secReg := GetInput("L1", "{esc}{space}{Backspace}").Input
+	secReg := GetInput("L1", "{esc}{Backspace}").Input
 	SendText secReg
 	StateBulb[4].Destroy()
 	Send "{Left}"
@@ -5036,6 +5038,7 @@ gotoFMode() {
 	global mouseManagerMode := false
 	global fMode := true
 	StateBulb[4].Create()
+	clearCounter()
 }
 
 gotoGMode() {

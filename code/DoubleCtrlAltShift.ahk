@@ -2,6 +2,7 @@ g_DoubleCtrl := 0
 g_ctrl_count := 0
 g_ctrl_count2 := 0
 g_ctrl_count3 := 0
+
 ; This detects "double-clicks" of the ctrl key.
 ~Ctrl::
 {
