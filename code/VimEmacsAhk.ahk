@@ -12,6 +12,7 @@
 #Include Marks.ahk
 #Include DoubleCtrlAltShift.ahk
 #Include Functions.ahk
+#Include RecordQ.ahk
 #SingleInstance force
 #MaxThreadsBuffer true
 #MaxThreads 250
@@ -211,6 +212,7 @@ global dMode := false
 global gMode := false
 global yMode := false
 global fMode := false
+global qMode := false
 global shiftfMode := false
 global altfMode := false
 global cMode := false
@@ -227,6 +229,8 @@ global WasInRegMode := false
 global WasInWindowManagerMode := false
 global wasInInsertMode := false
 global wasinCmdMode := false
+global recordedKeys := ""
+global recordReg := ""
 global infcounter := Infos("")
 infcounter.Destroy()
 
@@ -4971,6 +4975,7 @@ exitVim() {
 	global yMode := false
 	global cMode := false
 	global fMode := false
+	global qMode := false
 	global numlockMode := false
 	global windowMode := false
 	global WindowManagerMode := false
@@ -5758,4 +5763,14 @@ exitVisualMode() {
 	global visualMode := false
 	global visual_y := 0
 	global visual_x := 0
+}
+
+
+StartRecordingKey(key) {
+	global recordedKeys .= key
+}
+StopRecordingKey() {
+	global recordedKeys
+	global recordReg
+	RecordQ.Write(recordedKeys, recordReg)
 }
