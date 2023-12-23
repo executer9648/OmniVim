@@ -12,6 +12,7 @@
 #Include Marks.ahk
 #Include DoubleCtrlAltShift.ahk
 #Include Functions.ahk
+#Include myGlobal.ahk
 #Include RecordQ.ahk
 #SingleInstance force
 #MaxThreadsBuffer true
@@ -58,7 +59,7 @@ Info("Script Reloaded-Active", 2000)
 }
 #HotIf
 
-+#a:: HoverScreenshot().UseRecentScreenshot().Show()
++#a:: myGlobal.lastPhoto := HoverScreenshot().UseRecentScreenshot().Show()
 +^#r:: {
 	reloadfunc()
 }

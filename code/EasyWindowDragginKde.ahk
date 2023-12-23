@@ -27,7 +27,6 @@
 SetWinDelay 2
 CoordMode "Mouse"
 
-g_DoubleAlt := false
 
 Tab & LButton::
 {
@@ -60,7 +59,15 @@ Tab & LButton::
 		WinMove KDE_WinX2, KDE_WinY2, , , KDE_id ; Move the window to the new position.
 	}
 }
-
+#+RButton:: {
+	MouseGetPos &KDE_X1, &KDE_Y1, &gui_id, &guictrl_id, 2
+	ghover := GuiFromHwnd(gui_id)
+	Info(ghover)
+	Info(Type(ghover))
+	if (ghover == "") {
+		Info("gui!")
+	}
+}
 Tab & RButton::
 {
 	if GetKeyState("vkE8")
@@ -71,12 +78,11 @@ Tab & RButton::
 			WinRestore KDE_id
 		Else
 			WinMaximize KDE_id
-		g_DoubleAlt := false
 		return
 	}
 	; Get the initial mouse position and window id, and
 	; abort if the window is maximized.
-	MouseGetPos &KDE_X1, &KDE_Y1, &KDE_id
+	MouseGetPos &KDE_X1, &KDE_Y1, &KDE_id, &guictrl_id, 2
 	if WinGetMinMax(KDE_id)
 		return
 	; Get the initial window position and size.
@@ -84,17 +90,81 @@ Tab & RButton::
 	; Define the window region the mouse is currently in.
 	; The four regions are Up and Left, Up and Right, Down and Left, Down and Right.
 	if (KDE_X1 < KDE_WinX1 + KDE_WinW / 2)
+		; left regioun
 		KDE_WinLeft := 1
 	else
+	; right regioun
 		KDE_WinLeft := -1
 	if (KDE_Y1 < KDE_WinY1 + KDE_WinH / 2)
+		; down region
 		KDE_WinUp := 1
 	else
+	; up region
 		KDE_WinUp := -1
+	try {
+		ghover := GuiFromHwnd(KDE_id)
+		WinSetTransColor("off", gHover.Hwnd)
+	}
+	aspectRatio := KDE_WinH / KDE_WinW
 	Loop
 	{
 		if !GetKeyState("RButton", "P") ; Break if button has been released.
+		{
+			if (ghover != "") {
+				ghoverctrl := GuiCtrlFromHwnd(guictrl_id)
+				ghover.getpos(, , &h, &w)
+				try {
+					ghoverctrl.Move(, , h, w)
+					ghoverctrl.Redraw()
+				}
+				catch {
+					ghoverctrl.gcPicture.Move(, , h, w)
+					ghoverctrl.gcPicture.Redraw()
+				}
+				ghover.show("AutoSize")
+				WinSetTransColor(808080, gHover.Hwnd)
+			}
 			break
+		}
+		; if (ghover != "") {
+		; 	MouseGetPos &KDE_X2, &KDE_Y2 ; Get the current mouse position.
+		; 	; Get the current window position and size.
+		; 	WinGetPos &KDE_WinX1, &KDE_WinY1, &KDE_WinW, &KDE_WinH, KDE_id
+		; 	deltaX := Abs(KDE_X2 -= KDE_X1) ; Obtain an offset from the initial mouse position.
+		; 	deltaY := Abs(deltaX) * aspectRatio
+
+		; 	if (KDE_WinUp == 1 and KDE_WinLeft == -1) { ;down right corner
+		; 		WinMove ; X of resized window
+		; 			, ; Y of resized window - same y
+		; 			, KDE_WinW + deltaX  ; W of resized window
+		; 			, KDE_WinH + deltaY ; H of resized window
+		; 			, KDE_id
+		; 	}
+		; 	else if (KDE_WinUp == 1 and KDE_WinLeft == 1) { ;down left corner
+		; 		WinMove KDE_WinX1 - deltaX  ; X of resized window
+		; 			, ; Y of resized window
+		; 			, KDE_WinW + deltaX  ; W of resized window
+		; 			, KDE_WinH + deltaY ; H of resized window
+		; 			, KDE_id
+		; 	}
+		; 	else if (KDE_WinUp == -1 and KDE_WinLeft == 1) { ;up left corner
+		; 		WinMove KDE_WinX1 - deltaX  ; X of resized window
+		; 			, KDE_WinY1 - deltaY ; Y of resized window
+		; 			, KDE_WinW + deltaX  ; W of resized window
+		; 			, KDE_WinH + deltaY ; H of resized window
+		; 			, KDE_id
+		; 	}
+		; 	else if (KDE_WinUp == -1 and KDE_WinLeft == -1) { ;up right corner
+		; 		WinMove ; X of resized window
+		; 			, KDE_WinY1 - deltaY ; Y of resized window
+		; 			, KDE_WinW + deltaX  ; W of resized window
+		; 			, KDE_WinH + deltaY ; H of resized window
+		; 			, KDE_id
+		; 	}
+		; 	KDE_X1 := (KDE_X2 + KDE_X1) ; Reset the initial position for the next iteration.
+		; 	KDE_Y1 := (KDE_Y2 + KDE_Y1)
+		; }
+		; else {
 		MouseGetPos &KDE_X2, &KDE_Y2 ; Get the current mouse position.
 		; Get the current window position and size.
 		WinGetPos &KDE_WinX1, &KDE_WinY1, &KDE_WinW, &KDE_WinH, KDE_id
@@ -108,6 +178,7 @@ Tab & RButton::
 			, KDE_id
 		KDE_X1 := (KDE_X2 + KDE_X1) ; Reset the initial position for the next iteration.
 		KDE_Y1 := (KDE_Y2 + KDE_Y1)
+		; }
 	}
 }
 
@@ -119,7 +190,6 @@ Tab & MButton::
 	{
 		MouseGetPos , , &KDE_id
 		WinClose KDE_id
-		g_DoubleAlt := false
 		return
 	}
 }

@@ -15,6 +15,7 @@
 #Include RecordQ.ahk
 #Include Info.ahk
 class myGlobal {
+	static lastPhoto := ""
 	static counter := 0
 	static monitorCount := 0
 	static p_key := 0
@@ -43,7 +44,8 @@ class myGlobal {
 	static wasinCmdMode := false
 	static recordedKeys := ""
 	static recordReg := ""
-	static infcounter := Infos("")
+	; static infcounter := Infos("")
+	static infcounter := ""
 
 	static gotoEnd() {
 		Send "^{End}"
@@ -1200,5 +1202,19 @@ class myGlobal {
 		this.recordedKeys
 		this.recordReg
 		RecordQ.Write(this.recordedKeys, this.recordReg)
+	}
+
+	static alwaysOnTop() {
+		WinSetAlwaysOnTop -1, "A"
+		Title_When_On_Top := "! "       ; change title "! " as required
+		t := WinGetTitle("A")
+		ExStyle := WinGetExStyle(t)
+		if (ExStyle & 0x8) {            ; 0x8 is WS_EX_TOPMOST
+			WinSetAlwaysOnTop 0, t      ; Turn OFF and remove Title_When_On_Top
+			WinSetTitle (RegexReplace(t, Title_When_On_Top)), "A"
+		} else {
+			WinSetAlwaysOnTop 1, t      ; Turn ON and add Title_When_On_Top
+			WinSetTitle Title_When_On_Top . t, t
+		}
 	}
 }

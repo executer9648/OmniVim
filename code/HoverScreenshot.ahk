@@ -107,6 +107,9 @@ class HoverScreenshot {
 		this.gHover.Destroy()
 	}
 
+	getpic() {
+		myGlobal.lastPhoto := this.gcPicture
+	}
 
 	_foDestroy := (*) => this.Destroy()
 
