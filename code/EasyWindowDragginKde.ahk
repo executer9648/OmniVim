@@ -59,15 +59,6 @@ Tab & LButton::
 		WinMove KDE_WinX2, KDE_WinY2, , , KDE_id ; Move the window to the new position.
 	}
 }
-#+RButton:: {
-	MouseGetPos &KDE_X1, &KDE_Y1, &gui_id, &guictrl_id, 2
-	ghover := GuiFromHwnd(gui_id)
-	Info(ghover)
-	Info(Type(ghover))
-	if (ghover == "") {
-		Info("gui!")
-	}
-}
 Tab & RButton::
 {
 	if GetKeyState("vkE8")
