@@ -15,6 +15,7 @@
 #Include RecordQ.ahk
 #Include Info.ahk
 class myGlobal {
+	static zkeyCount := 0
 	static lastPhoto := ""
 	static counter := 0
 	static monitorCount := 0
@@ -1187,6 +1188,18 @@ class myGlobal {
 		return 0
 	}
 
+	static search() {
+		Send "^f"
+	}
+	static nextSearch() {
+		Send "^f"
+		Send "{Enter}"
+	}
+	static prevSearch() {
+		Send "^f"
+		Send "+{Enter}"
+	}
+
 	static exitVisualMode() {
 		this.visualLineMode := false
 		this.visualMode := false
@@ -1217,4 +1230,5 @@ class myGlobal {
 			WinSetTitle Title_When_On_Top . t, t
 		}
 	}
+
 }

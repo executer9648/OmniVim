@@ -3253,7 +3253,6 @@ HotIf "insertMode = 1"
 
 !`:: {
 	exitVim()
-	gotoNormal()
 }
 
 Esc:: {
