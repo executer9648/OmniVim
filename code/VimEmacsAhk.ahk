@@ -2580,6 +2580,7 @@ Esc:: {
 
 f:: {
 	clearCounter()
+	global yMode := false
 	delChanYanfMotion()
 	Send "^{Insert}"
 	Send "{Left}"
@@ -2590,6 +2591,7 @@ f:: {
 
 t:: {
 	clearCounter()
+	global yMode := false
 	delChanYantMotion()
 	Send "^{Insert}"
 	Send "{Left}"
@@ -2600,6 +2602,7 @@ t:: {
 
 +f:: {
 	clearCounter()
+	global yMode := false
 	capdelChanYanFmotion()
 	Send "^{Insert}"
 	Send "{Left}"
@@ -2610,6 +2613,7 @@ t:: {
 
 +t:: {
 	clearCounter()
+	global yMode := false
 	capdelChanYanTMotion()
 	Send "^{Insert}"
 	Send "{Left}"
@@ -2778,24 +2782,28 @@ Esc:: {
 }
 
 f:: {
+	global cMode := false
 	delChanYanfMotion()
 	Send "^x"
 	gotoInsert()
 	clearCounter()
 }
 t:: {
+	global cMode := false
 	delChanYantMotion()
 	Send "^x"
 	gotoInsert()
 	clearCounter()
 }
 +f:: {
+	global cMode := false
 	capdelChanYanFmotion()
 	Send "^x"
 	gotoInsert()
 	clearCounter()
 }
 +t:: {
+	global cMode := false
 	capdelChanYanTMotion()
 	Send "^x"
 	gotoInsert()
@@ -3100,6 +3108,7 @@ HotIf "dMode = 1"
 }
 
 f:: {
+	global dMode := false
 	delChanYanfMotion()
 	Send "^x"
 	gotoNormal()
@@ -3107,12 +3116,14 @@ f:: {
 }
 
 t:: {
+	global dMode := false
 	delChanYantMotion()
 	Send "^x"
 	gotoNormal()
 	clearCounter()
 }
 +f:: {
+	global dMode := false
 	capdelChanYanFmotion()
 	Send "^x"
 	gotoNormal()
@@ -3120,6 +3131,7 @@ t:: {
 }
 
 +t:: {
+	global dMode := false
 	capdelChanYanTMotion()
 	Send "^x"
 	gotoNormal()
@@ -3573,7 +3585,6 @@ s:: {
 	exitVisualMode()
 	gotoInsert()
 }
-t:: Return
 z:: Return
 
 1:: {
@@ -3604,13 +3615,44 @@ z:: Return
 	chCounter(9)
 }
 
+t:: {
+	clearCounter()
+	global normalMode := false
+	delChanYantMotion()
+	send "{Right}"
+	send "{left}"
+	send "+{right}"
+	global normalMode := true
+	Exit
+}
+
++t:: {
+	clearCounter()
+	global normalMode := false
+	capdelChanYanFmotion()
+	send "{Right}"
+	send "{left}"
+	send "+{right}"
+	global normalMode := true
+	Exit
+}
 
 +f:: {
+	global normalMode := false
 	capdelChanYanFmotion()
+	send "{Right}"
+	send "{left}"
+	send "+{right}"
+	global normalMode := true
 }
 
 f:: {
+	global normalMode := false
 	delChanYanfMotion()
+	send "{Right}"
+	send "{left}"
+	send "+{right}"
+	global normalMode := true
 }
 
 
@@ -4881,65 +4923,6 @@ l_motion() {
 	}
 }
 
-checkj() {
-	if GetKeyState("j")
-	{
-		SetTimer j_motion, 20
-	}
-}
-
-checkk() {
-	if GetKeyState("k")
-	{
-		SetTimer k_motion, 20
-	}
-}
-
-checkl() {
-	if GetKeyState("l")
-	{
-		SetTimer l_motion, 20
-	}
-}
-checkh() {
-	if GetKeyState("h")
-	{
-		SetTimer j_motion, 20
-	}
-}
-
-motion(key) {
-	global p_key
-	p_key := StrReplace(key, "*")
-	motionStart()
-}
-
-motionStart() {
-	global p_key
-	if p_key == "h" {
-		h_motion
-	}
-	else if p_key = "j" {
-		j_motion
-	}
-	else if p_key == "k" {
-		k_motion
-	}
-	else if p_key == "l" {
-		l_motion
-	}
-	SetTimer motionEnd, 10
-}
-
-motionEnd() {
-	global p_key
-	if GetKeyState(p_key) {
-		motionStart()
-		return
-	}
-	SetTimer , 0
-}
-
 reloadfunc() {
 	langid := Language.GetKeyboardLanguage()
 	if (LangID = 0x040D) {
@@ -5230,11 +5213,9 @@ gotoInsertnoInfo() {
 }
 
 capdelChanYanFmotion() {
+	global visual_x := 0
+	global visual_y := 0
 	StateBulb[4].Create()
-	global normalMode := false
-	global yMode := false
-	global cMode := false
-	global dMode := false
 	global counter
 	global infcounter
 	cvar := "" counter
@@ -5308,22 +5289,19 @@ capdelChanYanFmotion() {
 	Haystack := A_Clipboard
 	FoundPos := InStr(Haystack, var, false, -1)
 	Send "{Home}"
+	infos (FoundPos)
 	loop FoundPos {
 		Send "+{Right}"
 	}
-	Send "{Left}"
-	Send "+{Right}"
-	global normalMode := true
 	infcounter.Destroy()
 	StateBulb[4].Destroy()
+	return FoundPos
 }
 
 delChanYanfMotion() {
+	global visual_x := 0
+	global visual_y := 0
 	StateBulb[4].Create()
-	global normalMode := false
-	global yMode := false
-	global cMode := false
-	global dMode := false
 	global counter
 	global infcounter
 	cvar := "" counter
@@ -5399,21 +5377,21 @@ delChanYanfMotion() {
 	loop FoundPos {
 		Send "+{Right}"
 	}
-	; Send "{Left}"
-	; Send "+{Right}"
-	global normalMode := true
 	infcounter.Destroy()
 	StateBulb[4].Destroy()
+	return FoundPos
 }
 
 
 capdelChanYanTMotion() {
-	capdelChanYanFmotion()
+	val := capdelChanYanFmotion()
 	Send "+{Left}"
+	return val
 }
 delChanYantMotion() {
-	delChanYanfMotion()
+	val := delChanYanfMotion()
 	Send "+{Left}"
+	return val
 }
 
 openMark() {
@@ -5666,6 +5644,8 @@ clearCounter() {
 }
 
 bmotion() {
+	global visual_x := 0
+	global visual_y := 0
 	global counter
 	global infcounter
 	langid := Language.GetKeyboardLanguage()
@@ -5690,6 +5670,8 @@ bmotion() {
 }
 
 wmotion() {
+	global visual_x := 0
+	global visual_y := 0
 	langid := Language.GetKeyboardLanguage()
 	if (LangID = 0x040D) {
 		if counter != 0 {
@@ -5714,6 +5696,8 @@ wmotion() {
 }
 
 emotion() {
+	global visual_x := 0
+	global visual_y := 0
 	global counter
 	if counter != 0 {
 		Loop counter {
