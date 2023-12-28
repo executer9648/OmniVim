@@ -3223,6 +3223,10 @@ w:: {
 #HotIf insertMode = 1
 HotIf "insertMode = 1"
 
+!w::^c
+
+^y::^v
+
 ^=::+f10
 
 !^,:: {
@@ -4569,6 +4573,9 @@ tab & b:: Mouse.HoldIfUp("M")
 !3:: {
 	controlSpeed()
 }
+!4:: {
+	mouseslowfastSpeed()
+}
 
 Hotkey "u", ButtonAcceleration
 Hotkey "o", ButtonAcceleration
@@ -4596,6 +4603,8 @@ Hotkey "^j", ButtonAcceleration
 Hotkey "^k", ButtonAcceleration
 Hotkey "^l", ButtonAcceleration
 
+space & f:: Click "WD 20"
+space & b:: Click "WU 20"
 space & e::wheeldown
 space & y::WheelUp
 space & ,:: {
@@ -4968,6 +4977,7 @@ exitVim() {
 	StateBulb[6].Destroy() ; Mouse Movement
 	StateBulb[7].Destroy() ; mark Mode
 	StateBulb[StateBulb.MaxBulbs - 1].Destroy()
+	StateBulb[StateBulb.MaxBulbs].Destroy()
 	; StateBulb[4].Destroy() ; Delete
 	; StateBulb[5].Destroy() ; Change
 	; StateBulb[6].Destroy() ; Yank

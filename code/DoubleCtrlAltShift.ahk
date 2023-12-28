@@ -18,23 +18,28 @@ g_ctrl_count3 := 0
 	}
 	if g_ctrl_count == 1 and g_DoubleCtrl {
 		g_ctrl_count2 := true
+		StateBulb[StateBulb.MaxBulbs].Create()
 	}
 	else {
 		g_ctrl_count2 := false
 	}
 	if g_ctrl_count == 2 and g_DoubleCtrl {
 		g_ctrl_count3 := true
+		StateBulb[StateBulb.MaxBulbs - 1].Create()
 	}
 	else {
 		g_ctrl_count3 := false
 	}
 	Sleep 0
 	KeyWait "Ctrl"  ; This prevents the keyboard's auto-repeat feature from interfering.
+	StateBulb[StateBulb.MaxBulbs].Destroy()
+	StateBulb[StateBulb.MaxBulbs - 1].Destroy()
 	; g_ctrl_count2 := (g_ctrl_count == 2 and g_DoubleCtrl)
 	; g_ctrl_count3 := (g_ctrl_count == 3 and g_DoubleCtrl)
 }
 
 #HotIf g_ctrl_count3
+
 
 ^h::left
 ^j::Down
@@ -484,7 +489,11 @@ g_DoubleAlt := 0
 {
 	global g_DoubleAlt := (A_PriorHotkey = "~Alt" and A_TimeSincePriorHotkey < 400)
 	Sleep 0
+	if g_DoubleAlt {
+		StateBulb[StateBulb.MaxBulbs].Create()
+	}
 	KeyWait "Alt"  ; This prevents the keyboard's auto-repeat feature from interfering.
+	StateBulb[StateBulb.MaxBulbs].Destroy()
 }
 #HotIf g_DoubleAlt
 !d:: {
@@ -541,7 +550,11 @@ g_DoubleShift := 0
 {
 	global g_DoubleShift := (A_PriorHotkey = "~Shift" and A_TimeSincePriorHotkey < 400)
 	Sleep 0
+	if g_DoubleShift {
+		StateBulb[StateBulb.MaxBulbs].Create()
+	}
 	KeyWait "Shift"  ; This prevents the keyboard's auto-repeat feature from interfering.
+	StateBulb[StateBulb.MaxBulbs].Destroy()
 }
 #HotIf g_DoubleShift
 
