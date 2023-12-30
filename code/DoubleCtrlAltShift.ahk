@@ -586,6 +586,11 @@ g_DoubleShift := 0
 ^+LButton::+#Left
 ^+RButton::+#Right
 
++':: {
+	saveReg()
+}
++;:: Runner.openRunner()
+
 +m::1
 +,::2
 +.::3
@@ -604,10 +609,6 @@ g_DoubleShift := 0
 +BackSpace::BackSpace
 +Enter::Enter
 
-; +h::Left
-; +j::Down
-; +k::Up
-; +l::Right
 +LButton:: {
 	; Get the initial mouse position and window id, and
 	; abort if the window is maximized.

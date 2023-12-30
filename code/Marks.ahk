@@ -7,7 +7,7 @@ class Marks {
 	static sessionNames := []
 	static mouseWindows := []
 	static recording := false
-	static MarksDirectory := "C:\Marks"
+	static MarksDirectory := "C:\Veem\Marks"
 	static _session := ""
 
 	static GetPath(key) => Marks.MarksDirectory "\mark_" key ".txt"
@@ -31,7 +31,7 @@ class Marks {
 	static Write(text, key) {
 		path := Marks.GetPath(key)
 		WriteFile(path, text)
-		Info(key " clipboard written", Registers.InfoTimeout)
+		Info(key " window mark written", Registers.InfoTimeout)
 	}
 
 

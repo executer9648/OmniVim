@@ -16,7 +16,7 @@ class RecordQ {
 	 * Format: C:\Programming\registers
 	 * @type {String}
 	 */
-	static RegistersDirectory := "C:\Recording"
+	static RegistersDirectory := "C:\Veem\Recording"
 
 	/**
 	 * A string of characters that are accepted as register names.
