@@ -19,6 +19,8 @@ g_ctrl_count3 := 0
 	if g_ctrl_count == 1 and g_DoubleCtrl {
 		g_ctrl_count2 := true
 		StateBulb[StateBulb.MaxBulbs].Create()
+		ToolTip("ctrl 2")
+		SetTimer(ToolTip, 500)
 	}
 	else {
 		g_ctrl_count2 := false
@@ -26,6 +28,8 @@ g_ctrl_count3 := 0
 	if g_ctrl_count == 2 and g_DoubleCtrl {
 		g_ctrl_count3 := true
 		StateBulb[StateBulb.MaxBulbs - 1].Create()
+		ToolTip("ctrl 3")
+		SetTimer(ToolTip, 500)
 	}
 	else {
 		g_ctrl_count3 := false
@@ -491,6 +495,8 @@ g_DoubleAlt := 0
 	Sleep 0
 	if g_DoubleAlt {
 		StateBulb[StateBulb.MaxBulbs].Create()
+		ToolTip("alt 2")
+		SetTimer(ToolTip, 500)
 	}
 	KeyWait "Alt"  ; This prevents the keyboard's auto-repeat feature from interfering.
 	StateBulb[StateBulb.MaxBulbs].Destroy()
@@ -552,6 +558,8 @@ g_DoubleShift := 0
 	Sleep 0
 	if g_DoubleShift {
 		StateBulb[StateBulb.MaxBulbs].Create()
+		ToolTip("shift 2")
+		SetTimer(ToolTip, 500)
 	}
 	KeyWait "Shift"  ; This prevents the keyboard's auto-repeat feature from interfering.
 	StateBulb[StateBulb.MaxBulbs].Destroy()

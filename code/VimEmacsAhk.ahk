@@ -29,6 +29,7 @@ CoordMode "Mouse", "Screen"
 CoordMode "Pixel", "Screen"
 
 Info("Script Reloaded-Active", 2000)
+myGlobal.checkDir()
 
 ;################ Global Key-Bindings ################
 
@@ -5501,17 +5502,11 @@ saveReg() {
 		inf.Destroy()
 		Exit
 	}
-	mark := markgi.EndKey
 	var := markgi.EndMods
 	var .= markgi.EndMods
 	if var == "<!``" {
 		exitVim()
 		inf.Destroy()
-	}
-	else if mark == "Escape" {
-		StateBulb[7].Destroy()
-		inf.Destroy()
-		Exit
 	}
 	inf.Destroy()
 	infs := '"'
