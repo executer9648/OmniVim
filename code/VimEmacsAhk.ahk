@@ -5423,9 +5423,9 @@ openMark() {
 		Exit
 	}
 	Registers.ValidateKey(mark)
-	; try win_id := Marks.MarkA.%mark%
 	try {
-		win_id := Marks.Read(mark)
+		win_id := StrSplit(Marks.Read(mark), ",")
+		win_id := Integer(win_id[1])
 	}
 	catch {
 		Infos("Mark " mark " was not set", 2000)
@@ -5460,10 +5460,10 @@ saveMark() {
 	}
 	Registers.ValidateKey(mark)
 	actw := WinExist("A")
-	Marks.Pushindex(mark)
-	Marks.MarkA.%mark% := actw
-	; Infos(Type(actw))
-	Marks.Write(actw, mark)
+	Infos("window Title: " WinGetTitle(actw), 3000)
+	Infos("window Process Path: " WinGetProcessPath(actw), 3000)
+	markContents := actw "," WinGetProcessPath(actw)
+	Marks.Write(markContents, mark)
 	StateBulb[7].Destroy()
 	inf.Destroy()
 }
