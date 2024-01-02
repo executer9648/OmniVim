@@ -7,7 +7,7 @@ class Marks {
 	static sessionNames := []
 	static mouseWindows := []
 	static recording := false
-	static MarksDirectory := "C:\Marks"
+	static MarksDirectory := "C:\Veem\Marks"
 	static _session := ""
 
 	static GetPath(key) => Marks.MarksDirectory "\mark_" key ".txt"
@@ -31,58 +31,113 @@ class Marks {
 	static Write(text, key) {
 		path := Marks.GetPath(key)
 		WriteFile(path, text)
-		Info(key " clipboard written", Registers.InfoTimeout)
+		Info(key " window mark written", Registers.InfoTimeout)
 	}
 
 
 	static showMarks() {
+		closedMarks := ""
+		numofmarks := 0
 		Infos.DestroyAll()
-		if this.MarkIndex.Length <= 0 {
-			Infos("No Marks Set", 2000)
-			return
+		loop files, this.MarksDirectory "\*.txt" {
+
+			mark := StrSplit(A_LoopFilePath, "mark_")
+			mark := StrSplit(mark[2], ".txt")
+			mark := mark[1]
+
+			markText := StrSplit(this.__TryGetMarkText(A_LoopFilePath), ",")
+
+			win_id := Integer(markText[1])
+
+			exename := StrSplit(markText[2], "\")
+			exename := StrSplit(exename[exename.Length], ".exe")
+			exename := exename[1]
+
+			if !WinExist(win_id) {
+				closedMarks .= mark ": " exename " - closed"
+				closedMarks .= "`n"
+				numofmarks += 1
+				continue
+			}
+			Infos(mark ": " WinGetTitle(win_id) " | " exename)
+			numofmarks += 1
 		}
-		for i in this.MarkIndex {
-			arr := StrSplit(WinGetTitle(this.MarkA.%i%), " - ")
-			Infos(i ": " arr[arr.Length])
+		if (numofmarks == 0) {
+			Infos("No Marks Set", 2000)
+			exit
+		}
+		else {
+			if not (closedMarks == "") {
+				closedMarks .= "`nTo reopen them up do the command `"mark 'key'`""
+				Infos(closedMarks)
+			}
 		}
 	}
+
 	static showMark(mark) {
 		Infos.DestroyAll()
-		if this.MarkIndex.Length <= 0 {
-			Infos("No Marks Set", 2000)
-			Infos("Mark " mark " not Set", 2000)
+		markText := StrSplit(Marks.Read(mark), ",")
+		win_id := Integer(markText[1])
+		exename := StrSplit(markText[2], "\")
+		exename := StrSplit(exename[exename.Length], ".exe")
+		if !WinExist(win_id) {
+			Infos("Mark " mark " window closed")
+			Infos("Would you like to open " exename[1] " [y/n]")
+			operator := GetInput("L1", "{esc}{space}{Backspace}").Input
+			if (operator == "y") {
+				Infos.DestroyAll()
+				Run markText[2], , , &w_pid
+				actw := WinWaitActive("ahk_exe " markText[2], , 5.5)
+				Infos("window Title: " WinGetTitle(actw), 3000)
+				Infos("window Process Path: " WinGetProcessPath(actw), 3000)
+				markContents := actw "," WinGetProcessPath(actw)
+				Marks.Write(markContents, mark)
+			}
+			else {
+				Infos.DestroyAll()
+			}
 			return
 		}
-		try arr := StrSplit(WinGetTitle(this.MarkA.%mark%), " - ")
-		catch {
-			Infos("Mark " mark " not Set")
-			return
-		}
-		Infos(mark ": " arr[arr.Length])
+		Infos(mark ": " WinGetTitle(win_id) "-" win_id " | " exename[1])
 	}
+
 	static clearMarks() {
+		numofmarks := 0
 		Infos.DestroyAll()
-		if this.MarkIndex.Length <= 0 {
-			Infos("No Marks Set", 2000)
-			return
+		loop files, this.MarksDirectory "\*.txt" {
+
+			mark := StrSplit(A_LoopFilePath, "mark_")
+			mark := StrSplit(mark[2], ".txt")
+			mark := mark[1]
+
+			markText := StrSplit(this.__TryGetMarkText(A_LoopFilePath), ",")
+
+			win_id := Integer(markText[1])
+
+			exename := StrSplit(markText[2], "\")
+			exename := StrSplit(exename[exename.Length], ".exe")
+			exename := exename[1]
+
+			if !WinExist(win_id) {
+				FileDelete A_LoopFilePath
+				numofmarks += 1
+				continue
+			}
 		}
-		this.MarkA := {}
-		this.MarkIndex := []
-		Infos("Delted Marks")
+		if (numofmarks == 0) {
+			Infos("No Closed Marks", 2000)
+			exit
+		}
+		Infos("Deleted Closed Marks")
 	}
+
 	static clearMark(mark) {
 		Infos.DestroyAll()
-		if this.MarkIndex.Length <= 0 {
-			Infos("No Marks Set", 2000)
-			return
-		}
-		this.MarkA.%mark% := ""
-		for i in this.MarkIndex {
-			if i == mark
-				this.MarkIndex.RemoveAt(A_Index)
-		}
+		if FileExist(this.MarksDirectory "\mark_" mark ".txt")
+			FileDelete(this.MarksDirectory "\mark_" mark ".txt")
 		Infos("Delted Mark " mark)
 	}
+
 	static killMark(mark) {
 		Infos.DestroyAll()
 		if this.MarkIndex.Length <= 0 {

@@ -869,21 +869,26 @@ ButtonWheelAccelerationEnd()
 	g_Button := 0
 }
 
+mouseslowfastSpeed() {
+	global
+	if g_MouseSpeed != 10 and g_MouseSpeed != 1 {
+		oldg_MouseSpeed := g_MouseSpeed
+	}
+	if g_MouseAccelerationSpeed != 50 and g_MouseAccelerationSpeed != 10 {
+		oldg_MouseAccelerationSpeed := g_MouseAccelerationSpeed
+	}
+	if g_MouseMaxSpeed != 90 and g_MouseMaxSpeed != 20 {
+		oldg_MouseMaxSpeed := g_MouseMaxSpeed
+	}
+
+	g_MouseSpeed := 1
+	g_MouseAccelerationSpeed := 50
+	g_MouseMaxSpeed := 90
+}
+
 controlSpeed() {
 
 	global
-
-	; if shfitToggle == 1
-	; 	shfitToggle := 0
-
-	; if ctrlToggle == 1 {
-	; 	ctrlToggle := 0
-	; 	normalSpeed()
-	; 	return
-	; }
-	; else
-	; 	ctrlToggle := 1
-
 	if g_MouseSpeed != 10 and g_MouseSpeed != 1 {
 		oldg_MouseSpeed := g_MouseSpeed
 	}
@@ -903,18 +908,6 @@ controlSpeed() {
 shiftSpeed() {
 
 	global
-
-	; if ctrlToggle == 1
-	; 	ctrlToggle := 0
-
-	; if shfitToggle == 1 {
-	; 	shfitToggle := 0
-	; 	normalSpeed()
-	; 	return
-	; }
-	; else
-	; 	shfitToggle := 1
-
 	if g_MouseSpeed != 10 and g_MouseSpeed != 1 {
 		oldg_MouseSpeed := g_MouseSpeed
 	}

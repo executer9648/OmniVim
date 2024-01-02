@@ -10,14 +10,14 @@ class Registers {
 	 * In milliseconds.
 	 * @type {Integer}
 	 */
-	static InfoTimeout := 1000
+	static InfoTimeout := 3000
 
 	/**
 	 * The directory where you keep all of your register files.
 	 * Format: C:\Programming\registers
 	 * @type {String}
 	 */
-	static RegistersDirectory := "C:\registers"
+	static RegistersDirectory := "C:\Veem\Registers"
 
 	/**
 	 * A string of characters that are accepted as register names.

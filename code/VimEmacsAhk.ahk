@@ -29,6 +29,7 @@ CoordMode "Mouse", "Screen"
 CoordMode "Pixel", "Screen"
 
 Info("Script Reloaded-Active", 2000)
+myGlobal.checkDir()
 
 ;################ Global Key-Bindings ################
 
@@ -3223,6 +3224,10 @@ w:: {
 #HotIf insertMode = 1
 HotIf "insertMode = 1"
 
+!w::^c
+
+^y::^v
+
 ^=::+f10
 
 !^,:: {
@@ -4569,6 +4574,9 @@ tab & b:: Mouse.HoldIfUp("M")
 !3:: {
 	controlSpeed()
 }
+!4:: {
+	mouseslowfastSpeed()
+}
 
 Hotkey "u", ButtonAcceleration
 Hotkey "o", ButtonAcceleration
@@ -4596,6 +4604,8 @@ Hotkey "^j", ButtonAcceleration
 Hotkey "^k", ButtonAcceleration
 Hotkey "^l", ButtonAcceleration
 
+space & f:: Click "WD 20"
+space & b:: Click "WU 20"
 space & e::wheeldown
 space & y::WheelUp
 space & ,:: {
@@ -4926,7 +4936,6 @@ reloadfunc() {
 		Infos("changing to english")
 		Send "#{space}"
 		Sleep 1000
-		Reload
 	}
 	Reload
 }
@@ -4969,6 +4978,7 @@ exitVim() {
 	StateBulb[6].Destroy() ; Mouse Movement
 	StateBulb[7].Destroy() ; mark Mode
 	StateBulb[StateBulb.MaxBulbs - 1].Destroy()
+	StateBulb[StateBulb.MaxBulbs].Destroy()
 	; StateBulb[4].Destroy() ; Delete
 	; StateBulb[5].Destroy() ; Change
 	; StateBulb[6].Destroy() ; Yank
@@ -5413,9 +5423,9 @@ openMark() {
 		Exit
 	}
 	Registers.ValidateKey(mark)
-	; try win_id := Marks.MarkA.%mark%
 	try {
-		win_id := Marks.Read(mark)
+		win_id := StrSplit(Marks.Read(mark), ",")
+		win_id := Integer(win_id[1])
 	}
 	catch {
 		Infos("Mark " mark " was not set", 2000)
@@ -5450,10 +5460,10 @@ saveMark() {
 	}
 	Registers.ValidateKey(mark)
 	actw := WinExist("A")
-	Marks.Pushindex(mark)
-	Marks.MarkA.%mark% := actw
-	; Infos(Type(actw))
-	Marks.Write(actw, mark)
+	Infos("window Title: " WinGetTitle(actw), 3000)
+	Infos("window Process Path: " WinGetProcessPath(actw), 3000)
+	markContents := actw "," WinGetProcessPath(actw)
+	Marks.Write(markContents, mark)
 	StateBulb[7].Destroy()
 	inf.Destroy()
 }
@@ -5492,17 +5502,11 @@ saveReg() {
 		inf.Destroy()
 		Exit
 	}
-	mark := markgi.EndKey
 	var := markgi.EndMods
 	var .= markgi.EndMods
 	if var == "<!``" {
 		exitVim()
 		inf.Destroy()
-	}
-	else if mark == "Escape" {
-		StateBulb[7].Destroy()
-		inf.Destroy()
-		Exit
 	}
 	inf.Destroy()
 	infs := '"'

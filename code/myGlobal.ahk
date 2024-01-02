@@ -1231,4 +1231,14 @@ class myGlobal {
 		}
 	}
 
+	static checkDir() {
+		if !DirExist(Registers.RegistersDirectory) {
+			DirCreate(Registers.RegistersDirectory)
+			Info("missing registers directory added")
+		}
+		if !DirExist(Marks.MarksDirectory) {
+			DirCreate(Marks.MarksDirectory)
+			Info("missing registers directory added")
+		}
+	}
 }

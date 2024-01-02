@@ -18,23 +18,32 @@ g_ctrl_count3 := 0
 	}
 	if g_ctrl_count == 1 and g_DoubleCtrl {
 		g_ctrl_count2 := true
+		StateBulb[StateBulb.MaxBulbs].Create()
+		ToolTip("ctrl 2")
+		SetTimer(ToolTip, 500)
 	}
 	else {
 		g_ctrl_count2 := false
 	}
 	if g_ctrl_count == 2 and g_DoubleCtrl {
 		g_ctrl_count3 := true
+		StateBulb[StateBulb.MaxBulbs - 1].Create()
+		ToolTip("ctrl 3")
+		SetTimer(ToolTip, 500)
 	}
 	else {
 		g_ctrl_count3 := false
 	}
 	Sleep 0
 	KeyWait "Ctrl"  ; This prevents the keyboard's auto-repeat feature from interfering.
+	StateBulb[StateBulb.MaxBulbs].Destroy()
+	StateBulb[StateBulb.MaxBulbs - 1].Destroy()
 	; g_ctrl_count2 := (g_ctrl_count == 2 and g_DoubleCtrl)
 	; g_ctrl_count3 := (g_ctrl_count == 3 and g_DoubleCtrl)
 }
 
 #HotIf g_ctrl_count3
+
 
 ^h::left
 ^j::Down
@@ -484,7 +493,13 @@ g_DoubleAlt := 0
 {
 	global g_DoubleAlt := (A_PriorHotkey = "~Alt" and A_TimeSincePriorHotkey < 400)
 	Sleep 0
+	if g_DoubleAlt {
+		StateBulb[StateBulb.MaxBulbs].Create()
+		ToolTip("alt 2")
+		SetTimer(ToolTip, 500)
+	}
 	KeyWait "Alt"  ; This prevents the keyboard's auto-repeat feature from interfering.
+	StateBulb[StateBulb.MaxBulbs].Destroy()
 }
 #HotIf g_DoubleAlt
 !d:: {
@@ -541,7 +556,13 @@ g_DoubleShift := 0
 {
 	global g_DoubleShift := (A_PriorHotkey = "~Shift" and A_TimeSincePriorHotkey < 400)
 	Sleep 0
+	if g_DoubleShift {
+		StateBulb[StateBulb.MaxBulbs].Create()
+		ToolTip("shift 2")
+		SetTimer(ToolTip, 500)
+	}
 	KeyWait "Shift"  ; This prevents the keyboard's auto-repeat feature from interfering.
+	StateBulb[StateBulb.MaxBulbs].Destroy()
 }
 #HotIf g_DoubleShift
 
@@ -565,6 +586,11 @@ g_DoubleShift := 0
 ^+LButton::+#Left
 ^+RButton::+#Right
 
++':: {
+	saveReg()
+}
++;:: Runner.openRunner()
+
 +m::1
 +,::2
 +.::3
@@ -583,10 +609,6 @@ g_DoubleShift := 0
 +BackSpace::BackSpace
 +Enter::Enter
 
-; +h::Left
-; +j::Down
-; +k::Up
-; +l::Right
 +LButton:: {
 	; Get the initial mouse position and window id, and
 	; abort if the window is maximized.
