@@ -167,9 +167,7 @@ Tab & x:: {
 		Send "^{f4}"
 }
 Tab & r:: {
-	global insertMode := false
 	insertReg()
-	global insertMode := true
 }
 Tab & s::^f
 Tab & =::+f10
