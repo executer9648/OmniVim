@@ -10,7 +10,7 @@ class Registers {
 	 * In milliseconds.
 	 * @type {Integer}
 	 */
-	static InfoTimeout := 3000
+	static InfoTimeout := 5000
 
 	/**
 	 * The directory where you keep all of your register files.

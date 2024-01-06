@@ -68,37 +68,89 @@ class Marks {
 		}
 		else {
 			if not (closedMarks == "") {
-				closedMarks .= "`nTo reopen them up do the command `"mark 'key'`""
+				closedMarks .= "`n|--> To reopen them up do the command `"mark 'key'`""
 				Infos(closedMarks)
 			}
 		}
 	}
 
-	static showMark(mark) {
-		Infos.DestroyAll()
+	static validateMark(mark) {
+		Registers.ValidateKey(mark)
 		markText := StrSplit(Marks.Read(mark), ",")
 		win_id := Integer(markText[1])
+		exePathName := markText[2]
+		windowClass := markText[3]
 		exename := StrSplit(markText[2], "\")
-		exename := StrSplit(exename[exename.Length], ".exe")
+		operator := ""
 		if !WinExist(win_id) {
-			Infos("Mark " mark " window closed")
-			Infos("Would you like to open " exename[1] " [y/n]")
-			operator := GetInput("L1", "{esc}{space}{Backspace}").Input
-			if (operator == "y") {
+			; found other exe window
+			actw := WinExist("ahk_class " windowClass)
+			if actw {
+				actwTitle := WinGetTitle(actw)
+				sameClase := WinGetClass(actw) = windowClass
+			}
+			else {
+				actwTitle := ""
+				sameClase := ""
+			}
+			if sameClase and actw and actwTitle {
+				Infos("Original window closed`nFound similar!`nWould you like to update the Mark or save a new instance [(Y)es/(N)ew/ ]")
+				operator := GetInput("L1", "{esc}{space}{Backspace}").Input
+				if (operator == "y") {
+					Infos("Updated Mark " mark "with new window id" actw, 3000)
+					this.saveMarkinFile(mark, actw)
+					return 1
+				}
+				else if (operator == "n") {
+					operator := "y"
+				}
+				else {
+					return 0
+				}
+			}
+			; no other exe window found
+			if !operator {
+				Infos.DestroyAll()
+				Infos("Mark " mark " window closed")
+				Infos("Would you like to open " exename[exename.Length] " [y/n/ ]`nn - Would clear mark")
+				operator := GetInput("L1", "{esc}{space}{Backspace}").Input
+			}
+			else if (operator == "y") {
 				Infos.DestroyAll()
 				Run markText[2], , , &w_pid
 				actw := WinWaitActive("ahk_exe " markText[2], , 5.5)
-				Infos("window Title: " WinGetTitle(actw), 3000)
-				Infos("window Process Path: " WinGetProcessPath(actw), 3000)
-				markContents := actw "," WinGetProcessPath(actw)
-				Marks.Write(markContents, mark)
+				this.saveMarkinFile(mark, actw)
 			}
-			else {
+			else if (operator == "n") {
+				this.clearMark(mark)
 				Infos.DestroyAll()
+				return 0
 			}
-			return
+			Infos.DestroyAll()
+			return 0
 		}
-		Infos(mark ": " WinGetTitle(win_id) "-" win_id " | " exename[1])
+		return 1
+	}
+
+	static saveMarkinFile(mark, actw) {
+		Infos.DestroyAll()
+		Infos("window Title: " WinGetTitle(actw), Registers.InfoTimeout)
+		Infos("window Process Path: " WinGetProcessPath(actw), Registers.InfoTimeout)
+		windowPath := WinGetProcessPath(actw)
+		windowClass := WinGetClass(actw)
+		markContents := actw "," windowPath "," windowClass
+		Marks.Write(markContents, mark)
+	}
+
+	static showMark(mark) {
+		Infos.DestroyAll()
+		if this.validateMark(mark)
+		{
+			markText := StrSplit(Marks.Read(mark), ",")
+			win_id := Integer(markText[1])
+			exename := StrSplit(markText[2], "\")
+			Infos(mark ": " WinGetTitle(win_id) "-" win_id " | " exename[exename.Length])
+		}
 	}
 
 	static clearMarks() {
