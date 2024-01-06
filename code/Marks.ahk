@@ -75,8 +75,15 @@ class Marks {
 	}
 
 	static validateMark(mark) {
+		Infos.DestroyAll()
 		Registers.ValidateKey(mark)
-		markText := StrSplit(Marks.Read(mark), ",")
+		markText := Marks.Read(mark)
+		if !markText {
+			Infos("mark `"" mark "`" not set")
+			return 0
+		}
+		markText := StrSplit(markText, ",")
+		Infos(markText)
 		win_id := Integer(markText[1])
 		exePathName := markText[2]
 		windowClass := markText[3]
@@ -84,16 +91,16 @@ class Marks {
 		operator := ""
 		if !WinExist(win_id) {
 			; found other exe window
-			actw := WinExist("ahk_class " windowClass)
+			idsPath := WinGetList("ahk_exe " exePathName)
+			actw := ""
+			for id in idsPath {
+				if (WinGetClass(id) == windowClass)
+				{
+					actw := id
+					break
+				}
+			}
 			if actw {
-				actwTitle := WinGetTitle(actw)
-				sameClase := WinGetClass(actw) = windowClass
-			}
-			else {
-				actwTitle := ""
-				sameClase := ""
-			}
-			if sameClase and actw and actwTitle {
 				Infos("Original window closed`nFound similar!`nWould you like to update the Mark or save a new instance [(Y)es/(N)ew/ ]")
 				operator := GetInput("L1", "{esc}{space}{Backspace}").Input
 				if (operator == "y") {
@@ -115,10 +122,10 @@ class Marks {
 				Infos("Would you like to open " exename[exename.Length] " [y/n/ ]`nn - Would clear mark")
 				operator := GetInput("L1", "{esc}{space}{Backspace}").Input
 			}
-			else if (operator == "y") {
+			if (operator == "y") {
 				Infos.DestroyAll()
 				Run markText[2], , , &w_pid
-				actw := WinWaitActive("ahk_exe " markText[2], , 5.5)
+				actw := WinWaitActive("ahk_class " markText[3], , 5.5)
 				this.saveMarkinFile(mark, actw)
 			}
 			else if (operator == "n") {
