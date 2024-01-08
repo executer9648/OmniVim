@@ -83,7 +83,6 @@ class Marks {
 			return 0
 		}
 		markText := StrSplit(markText, ",")
-		Infos(markText)
 		win_id := Integer(markText[1])
 		exePathName := markText[2]
 		windowClass := markText[3]
