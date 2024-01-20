@@ -77,7 +77,7 @@ myGlobal.checkDir()
 }
 #SuspendExempt False
 
-*CapsLock::LCtrl
+; *CapsLock::LCtrl
 
 #WheelDown:: Send "#{down}"
 #Wheelup:: Send "#{up}"
