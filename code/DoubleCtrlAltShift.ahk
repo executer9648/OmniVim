@@ -489,6 +489,7 @@ g_ctrl_count3 := 0
 #HotIf
 g_DoubleAlt := 0
 ; This detects "double-clicks" of the ctrl key.
+~LControl & RAlt::
 ~Alt::
 {
 	global g_DoubleAlt := (A_PriorHotkey = "~Alt" and A_TimeSincePriorHotkey < 400)
@@ -500,8 +501,13 @@ g_DoubleAlt := 0
 	}
 	KeyWait "Alt"  ; This prevents the keyboard's auto-repeat feature from interfering.
 	StateBulb[StateBulb.MaxBulbs].Destroy()
+	Send "{Blind}{vkE8}"
 }
+; #HotIf WinActive("A")
+; ~Alt::Send "{Blind}{vkE8}"
+; #HotIf
 #HotIf g_DoubleAlt
+
 !d:: {
 	langid := Language.GetKeyboardLanguage()
 	if (LangID = 0x040D) {
@@ -550,6 +556,7 @@ g_DoubleAlt := 0
 !+BackSpace::BackSpace
 !+Enter::Enter
 #HotIf
+
 g_DoubleShift := 0
 ; This detects "double-clicks" of the ctrl key.
 ~Shift::

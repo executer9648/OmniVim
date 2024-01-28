@@ -131,7 +131,33 @@ tab & v:: {
 	else
 		send "{WheelDown}"
 }
-tab & `:: exitVim()
+tab & `:: {
+	if GetKeyState("shift") or GetKeyState("vkE8") {
+		oldclip := A_Clipboard
+		A_Clipboard := ""
+		Send "^{insert}"
+		ClipWait
+		formatstr := A_Clipboard
+		if (formatstr == oldclip) {
+			exit
+		}
+		if RegExMatch(formatstr, "^[A-Z\s\p{P}]+$") {
+			string1 := StrLower(formatstr)
+			SendText string1
+		}
+		else if RegExMatch(formatstr, "^[a-z\s\p{P}]+$") {
+			string1 := StrUpper(formatstr)
+			SendText string1
+		}
+		else {
+			string1 := StrUpper(formatstr)
+			SendText string1
+		}
+		A_Clipboard := oldclip
+	}
+	else
+		exitVim()
+}
 tab & ':: {
 	if GetKeyState("ctrl") or GetKeyState("vkE8")
 		saveReg()
@@ -3240,6 +3266,30 @@ w:: {
 ; Insert Mode
 #HotIf insertMode = 1
 HotIf "insertMode = 1"
+
++!`:: {
+	oldclip := A_Clipboard
+	A_Clipboard := ""
+	Send "^{insert}"
+	ClipWait
+	formatstr := A_Clipboard
+	if (formatstr == oldclip) {
+		exit
+	}
+	if RegExMatch(formatstr, "^[A-Z\s\p{P}]+$") {
+		string1 := StrLower(formatstr)
+		SendText string1
+	}
+	else if RegExMatch(formatstr, "^[a-z\s\p{P}]+$") {
+		string1 := StrUpper(formatstr)
+		SendText string1
+	}
+	else {
+		string1 := StrUpper(formatstr)
+		SendText string1
+	}
+	A_Clipboard := oldclip
+}
 
 !w::^c
 
