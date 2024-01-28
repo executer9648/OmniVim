@@ -90,6 +90,20 @@ myGlobal.checkDir()
 +#k:: Send "+#{Up}"
 +#l:: Send "+#{Right}"
 
+; Esc SECTION =================
+^Esc::CapsLock
+Esc::Esc
+Esc & h::Left
+Esc & j::Down
+Esc & k::Up
+Esc & l::Right
+Esc & b::Left
+Esc & p::Up
+Esc & n::Down
+Esc & f::Right
+Esc & y::WheelUp
+Esc & e::WheelDown
+
 ; `(tilda) SECTION =================
 ^`::CapsLock
 `::`
@@ -5296,7 +5310,6 @@ capdelChanYanFmotion() {
 	Haystack := A_Clipboard
 	FoundPos := InStr(Haystack, var, false, -1)
 	Send "{Home}"
-	infos (FoundPos)
 	loop FoundPos {
 		Send "+{Right}"
 	}
