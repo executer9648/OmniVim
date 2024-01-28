@@ -583,8 +583,6 @@ g_DoubleShift := 0
 		Send "!{f4}"
 	}
 }
-^+LButton::+#Left
-^+RButton::+#Right
 
 +':: {
 	saveReg()

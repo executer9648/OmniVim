@@ -79,6 +79,9 @@ myGlobal.checkDir()
 
 ; *CapsLock::LCtrl
 
++#LButton::+#Left
++#RButton::+#Right
+
 #WheelDown:: Send "#{down}"
 #Wheelup:: Send "#{up}"
 
