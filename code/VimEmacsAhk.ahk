@@ -95,7 +95,7 @@ myGlobal.checkDir()
 
 ; Esc SECTION =================
 ^Esc::CapsLock
-Esc::Esc
+~Esc::Esc
 Esc & h::Left
 Esc & j::Down
 Esc & k::Up
@@ -5552,7 +5552,7 @@ insertReg() {
 saveReg() {
 	inf := Infos('"', , true)
 	StateBulb[7].Create()
-	markgi := GetInput("L1", "{esc}{space}{Backspace}")
+	markgi := GetInput("L1", "{Esc}{space}{Backspace}")
 	mark := markgi.Input
 	if mark = "" {
 		StateBulb[7].Destroy()
@@ -5569,7 +5569,7 @@ saveReg() {
 	infs := '"'
 	infs .= mark
 	inf := Infos(infs, , true)
-	operator := GetInput("L1", "{esc}{space}{Backspace}").Input
+	operator := GetInput("L1", "{Esc}{space}{Backspace}").Input
 	if (operator == "y") {
 		oldclip := A_Clipboard
 		A_Clipboard := ""
