@@ -31,6 +31,8 @@ class HoverScreenshot {
 
 	guiHwnd := unset
 
+	alwaysOnTopStatus := unset
+
 	/**
 	 * Make a picture of your choosing appear on your screen
 	 * @example <caption>Choose a picture to hover and do so</caption>
@@ -48,6 +50,7 @@ class HoverScreenshot {
 		; this.gHover := Gui("AlwaysOnTop -Caption")
 		this.gHover := Gui(" -Caption")
 		this.guiHwnd := this.gHover.Hwnd
+		this.alwaysOnTopStatus := false
 		this.picturePath := picturePath ?? ""
 	}
 
@@ -120,6 +123,20 @@ class HoverScreenshot {
 		this.gcPicture.OnEvent("DoubleClick", (*) => this.Destroy())
 		this.gcPicture.OnEvent("Click", (guiCtrlObj, *) => guiCtrlObj.Gui.PressTitleBar())
 		this.gHover.OnEvent("Close", (*) => this.Destroy())
+		this.gcPicture.OnEvent("ContextMenu", (*) => this.alwaysOnTop())
+	}
+
+	alwaysOnTop() {
+		if !this.alwaysOnTopStatus {
+			WinSetTransColor("off", this.gHover.Hwnd)
+			this.gHover.opt("AlwaysOnTop -Caption")
+			this.alwaysOnTopStatus := true
+		}
+		else {
+			this.gHover.opt("-AlwaysOnTop -Caption")
+			WinSetTransColor(808080, this.gHover.Hwnd)
+			this.alwaysOnTopStatus := false
+		}
 	}
 
 
@@ -136,8 +153,8 @@ class HoverScreenshot {
 					Use the "SelectPath()" method to let the user pick the picture to show in a menu interactively
 					Set the "picturePath" property manually if you have your own way of getting the path
 				)",
-	-2,
-		"
+				-2,
+				"
 				(
 					picturePath property
 					value:
@@ -145,7 +162,7 @@ class HoverScreenshot {
 				(
 					type:
 				)" Type(picturePath)
-	)
+			)
 		}
 	}
 }

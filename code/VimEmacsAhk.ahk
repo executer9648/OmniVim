@@ -84,6 +84,8 @@ myGlobal.checkDir()
 
 #WheelDown:: Send "#{down}"
 #Wheelup:: Send "#{up}"
++#WheelDown:: Send "#{Left}"
++#Wheelup:: Send "#{Right}"
 
 ^#h:: Send "^#{Left}"
 ^#l:: Send "^#{Right}"
