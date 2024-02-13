@@ -2475,6 +2475,58 @@ Esc:: {
 	clearCounter()
 }
 
+r:: {
+	global counter
+	if counter != 0 {
+		Loop counter {
+			Send "^r"
+		}
+		if WasInMouseManagerMode == true {
+			gotoNormal()
+			gotoMouseMode()
+		}
+		else {
+			gotoNormal()
+		}
+		Exit
+	}
+	Send "^r"
+	if (WasInMouseManagerMode == true) {
+		gotoNormal()
+		gotoMouseMode()
+	}
+	else {
+		gotoNormal()
+	}
+	clearCounter()
+}
+
++r:: {
+	global counter
+	if counter != 0 {
+		Loop counter {
+			Send "^+r"
+		}
+		if WasInMouseManagerMode == true {
+			gotoNormal()
+			gotoMouseMode()
+		}
+		else {
+			gotoNormal()
+		}
+		Exit
+	}
+	Send "+^r"
+	if (WasInMouseManagerMode == true) {
+		gotoNormal()
+		gotoMouseMode()
+	}
+	else {
+		gotoNormal()
+	}
+	clearCounter()
+}
+
 t:: {
 	global counter
 	if counter != 0 {
