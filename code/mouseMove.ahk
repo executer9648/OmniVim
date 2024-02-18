@@ -369,28 +369,28 @@ ButtonAcceleration(ThisHotkey)
 	g_Button := StrReplace(ThisHotkey, "*")
 
 	if g_Button = "+h" {
-		shiftSpeed()
+		mouseslowfastSpeed()
 	}
 	else if g_Button = "+j" {
-		shiftSpeed()
+		mouseslowfastSpeed()
 	}
 	else if g_Button = "+k" {
-		shiftSpeed()
+		mouseslowfastSpeed()
 	}
 	else if g_Button = "+l" {
-		shiftSpeed()
+		mouseslowfastSpeed()
 	}
 	else if g_Button = "+u" {
-		shiftSpeed()
+		mouseslowfastSpeed()
 	}
 	else if g_Button = "+o" {
-		shiftSpeed()
+		mouseslowfastSpeed()
 	}
 	else if g_Button = "+n" {
-		shiftSpeed()
+		mouseslowfastSpeed()
 	}
 	else if g_Button = "+," {
-		shiftSpeed()
+		mouseslowfastSpeed()
 	}
 	else if g_Button = "^h" {
 		controlSpeed()
