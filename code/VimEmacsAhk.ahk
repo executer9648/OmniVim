@@ -95,19 +95,6 @@ myGlobal.checkDir()
 +#k:: Send "+#{Up}"
 +#l:: Send "+#{Right}"
 
-; Esc SECTION =================
-~Esc::Esc
-Esc & h::Left
-Esc & j::Down
-Esc & k::Up
-Esc & l::Right
-Esc & b::Left
-Esc & p::Up
-Esc & n::Down
-Esc & f::Right
-Esc & y::WheelUp
-Esc & e::WheelDown
-
 ; `(tilda) SECTION =================
 ^`::CapsLock
 `::`
@@ -4236,14 +4223,14 @@ n:: WindowManager().MoveDownLeft(Mouse.MediumMove)
 +n:: WindowManager().MoveDownLeft(Mouse.SmallMove)
 +,:: WindowManager().MoveDownRight(Mouse.SmallMove)
 
-space & h:: WindowManager().MoveLeft(Mouse.SmallMove)
-space & k:: WindowManager().MoveUp(Mouse.SmallMove)
-space & j:: WindowManager().MoveDown(Mouse.SmallMove)
-space & l:: WindowManager().MoveRight(Mouse.SmallMove)
-space & u:: WindowManager().MoveUpLeft(Mouse.SmallMove)
-space & o:: WindowManager().MoveUpRight(Mouse.SmallMove)
-space & n:: WindowManager().MoveDownLeft(Mouse.SmallMove)
-space & ,:: WindowManager().MoveDownRight(Mouse.SmallMove)
+; space & h:: WindowManager().MoveLeft(Mouse.SmallMove)
+; space & k:: WindowManager().MoveUp(Mouse.SmallMove)
+; space & j:: WindowManager().MoveDown(Mouse.SmallMove)
+; space & l:: WindowManager().MoveRight(Mouse.SmallMove)
+; space & u:: WindowManager().MoveUpLeft(Mouse.SmallMove)
+; space & o:: WindowManager().MoveUpRight(Mouse.SmallMove)
+; space & n:: WindowManager().MoveDownLeft(Mouse.SmallMove)
+; space & ,:: WindowManager().MoveDownRight(Mouse.SmallMove)
 
 ^h:: WindowManager().MoveLeft(Mouse.BigMove)
 ^k:: WindowManager().MoveUp(Mouse.BigMove)
@@ -4253,7 +4240,6 @@ space & ,:: WindowManager().MoveDownRight(Mouse.SmallMove)
 ^o:: WindowManager().MoveUpRight(Mouse.BigMove)
 ^n:: WindowManager().MoveDownLeft(Mouse.BigMove)
 ^,:: WindowManager().MoveDownRight(Mouse.BigMove)
-
 
 s:: WindowManager().DecreaseWidth(Mouse.MediumMove)
 d:: WindowManager().IncreaseHeight(Mouse.MediumMove)
@@ -4281,18 +4267,18 @@ v:: {
 	WindowManager().IncreaseWidth(Mouse.SmallMove)
 }
 
-space & s:: WindowManager().DecreaseWidth(Mouse.SmallMove)
-space & d:: WindowManager().IncreaseHeight(Mouse.SmallMove)
-space & f:: WindowManager().DecreaseHeight(Mouse.SmallMove)
-space & g:: WindowManager().IncreaseWidth(Mouse.SmallMove)
-space & e:: {
-	WindowManager().DecreaseWidth(Mouse.SmallMove)
-	WindowManager().DecreaseHeight(Mouse.SmallMove)
-}
-space & v:: {
-	WindowManager().IncreaseHeight(Mouse.SmallMove)
-	WindowManager().IncreaseWidth(Mouse.SmallMove)
-}
+; space & s:: WindowManager().DecreaseWidth(Mouse.SmallMove)
+; space & d:: WindowManager().IncreaseHeight(Mouse.SmallMove)
+; space & f:: WindowManager().DecreaseHeight(Mouse.SmallMove)
+; space & g:: WindowManager().IncreaseWidth(Mouse.SmallMove)
+; space & e:: {
+; 	WindowManager().DecreaseWidth(Mouse.SmallMove)
+; 	WindowManager().DecreaseHeight(Mouse.SmallMove)
+; }
+; space & v:: {
+; 	WindowManager().IncreaseHeight(Mouse.SmallMove)
+; 	WindowManager().IncreaseWidth(Mouse.SmallMove)
+; }
 
 
 ^s:: WindowManager().DecreaseWidth(Mouse.BigMove)
@@ -4724,8 +4710,12 @@ Hotkey "^j", ButtonAcceleration
 Hotkey "^k", ButtonAcceleration
 Hotkey "^l", ButtonAcceleration
 
+^f::
 space & f:: Click "WD 20"
+
+^b::
 space & b:: Click "WU 20"
+
 space & e::wheeldown
 space & y::WheelUp
 space & ,:: {
