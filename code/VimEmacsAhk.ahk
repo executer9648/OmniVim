@@ -96,7 +96,6 @@ myGlobal.checkDir()
 +#l:: Send "+#{Right}"
 
 ; Esc SECTION =================
-^Esc::CapsLock
 ~Esc::Esc
 Esc & h::Left
 Esc & j::Down
