@@ -97,6 +97,7 @@ Tab & RButton::
 		WinSetTransColor("off", gHover.Hwnd)
 	}
 	aspectRatio := KDE_WinH / KDE_WinW
+	; aspectRatio := KDE_WinW / KDE_WinH
 	Loop
 	{
 		if !GetKeyState("RButton", "P") ; Break if button has been released.
@@ -117,59 +118,70 @@ Tab & RButton::
 			}
 			break
 		}
-		; if (ghover != "") {
-		; 	MouseGetPos &KDE_X2, &KDE_Y2 ; Get the current mouse position.
-		; 	; Get the current window position and size.
-		; 	WinGetPos &KDE_WinX1, &KDE_WinY1, &KDE_WinW, &KDE_WinH, KDE_id
-		; 	deltaX := Abs(KDE_X2 -= KDE_X1) ; Obtain an offset from the initial mouse position.
-		; 	deltaY := Abs(deltaX) * aspectRatio
+		if (ghover != "") {
+			MouseGetPos &KDE_X2, &KDE_Y2 ; Get the current mouse position.
+			; Get the current window position and size.
+			WinGetPos &KDE_WinX1, &KDE_WinY1, &KDE_WinW, &KDE_WinH, KDE_id
+			; deltaX := Abs(KDE_X2 -= KDE_X1) ; Obtain an offset from the initial mouse position.
+			; deltaY := Abs(deltaX) * aspectRatio
+			deltaX := KDE_X2 -= KDE_X1 ; Obtain an offset from the initial mouse position.
+			newHieght := aspectRatio * (KDE_WinW + deltaX)
+			newHiehgtAbs := aspectRatio * (KDE_WinW + abs(deltaX))
+			if (deltaX != 0) {
+				deltaY := newHieght - KDE_WinH
+				deltaYAbs := newHiehgtAbs - KDE_WinH
+			}
+			else {
+				deltaY := 0
+				deltaYAbs := 0
+			}
 
-		; 	if (KDE_WinUp == 1 and KDE_WinLeft == -1) { ;down right corner
-		; 		WinMove ; X of resized window
-		; 			, ; Y of resized window - same y
-		; 			, KDE_WinW + deltaX  ; W of resized window
-		; 			, KDE_WinH + deltaY ; H of resized window
-		; 			, KDE_id
-		; 	}
-		; 	else if (KDE_WinUp == 1 and KDE_WinLeft == 1) { ;down left corner
-		; 		WinMove KDE_WinX1 - deltaX  ; X of resized window
-		; 			, ; Y of resized window
-		; 			, KDE_WinW + deltaX  ; W of resized window
-		; 			, KDE_WinH + deltaY ; H of resized window
-		; 			, KDE_id
-		; 	}
-		; 	else if (KDE_WinUp == -1 and KDE_WinLeft == 1) { ;up left corner
-		; 		WinMove KDE_WinX1 - deltaX  ; X of resized window
-		; 			, KDE_WinY1 - deltaY ; Y of resized window
-		; 			, KDE_WinW + deltaX  ; W of resized window
-		; 			, KDE_WinH + deltaY ; H of resized window
-		; 			, KDE_id
-		; 	}
-		; 	else if (KDE_WinUp == -1 and KDE_WinLeft == -1) { ;up right corner
-		; 		WinMove ; X of resized window
-		; 			, KDE_WinY1 - deltaY ; Y of resized window
-		; 			, KDE_WinW + deltaX  ; W of resized window
-		; 			, KDE_WinH + deltaY ; H of resized window
-		; 			, KDE_id
-		; 	}
-		; 	KDE_X1 := (KDE_X2 + KDE_X1) ; Reset the initial position for the next iteration.
-		; 	KDE_Y1 := (KDE_Y2 + KDE_Y1)
-		; }
-		; else {
-		MouseGetPos &KDE_X2, &KDE_Y2 ; Get the current mouse position.
-		; Get the current window position and size.
-		WinGetPos &KDE_WinX1, &KDE_WinY1, &KDE_WinW, &KDE_WinH, KDE_id
-		KDE_X2 -= KDE_X1 ; Obtain an offset from the initial mouse position.
-		KDE_Y2 -= KDE_Y1
-		; Then, act according to the defined region.
-		WinMove KDE_WinX1 + (KDE_WinLeft + 1) / 2 * KDE_X2  ; X of resized window
-			, KDE_WinY1 + (KDE_WinUp + 1) / 2 * KDE_Y2  ; Y of resized window
-			, KDE_WinW - KDE_WinLeft * KDE_X2  ; W of resized window
-			, KDE_WinH - KDE_WinUp * KDE_Y2  ; H of resized window
-			, KDE_id
-		KDE_X1 := (KDE_X2 + KDE_X1) ; Reset the initial position for the next iteration.
-		KDE_Y1 := (KDE_Y2 + KDE_Y1)
-		; }
+			if (KDE_WinUp == 1 and KDE_WinLeft == -1) { ;up right corner
+				WinMove ; X of resized window
+					, KDE_WinY1 - deltaY ; Y of resized window
+					, KDE_WinW + deltaX  ; W of resized window
+					, KDE_WinH + deltaY ; H of resized window
+					, KDE_id
+			}
+			else if (KDE_WinUp == 1 and KDE_WinLeft == 1) { ;up left corner
+				WinMove KDE_WinX1 + deltaX  ; X of resized window
+					, KDE_WinY1 - deltaY ; Y of resized window
+					, KDE_WinW - deltaX  ; W of resized window
+					, KDE_WinH + deltaY ; H of resized window
+					, KDE_id
+			}
+			else if (KDE_WinUp == -1 and KDE_WinLeft == 1) { ;down left corner
+				WinMove KDE_WinX1 + deltaX  ; X of resized window
+					, ; Y of resized window
+					, KDE_WinW - deltaX  ; W of resized window
+					, KDE_WinH + deltaY ; H of resized window
+					, KDE_id
+			}
+			else if (KDE_WinUp == -1 and KDE_WinLeft == -1) { ;down right corner
+				WinMove ; X of resized window - same x
+					, ; Y of resized window - same y
+					, KDE_WinW + deltaX  ; W of resized window
+					, KDE_WinH + deltaY ; H of resized window
+					, KDE_id
+			}
+			KDE_X1 := (KDE_X2 + KDE_X1) ; Reset the initial position for the next iteration.
+			KDE_Y1 := (deltaY)
+		}
+		else {
+			MouseGetPos &KDE_X2, &KDE_Y2 ; Get the current mouse position.
+			; Get the current window position and size.
+			WinGetPos &KDE_WinX1, &KDE_WinY1, &KDE_WinW, &KDE_WinH, KDE_id
+			KDE_X2 -= KDE_X1 ; Obtain an offset from the initial mouse position.
+			KDE_Y2 -= KDE_Y1
+			; Then, act according to the defined region.
+			WinMove KDE_WinX1 + (KDE_WinLeft + 1) / 2 * KDE_X2  ; X of resized window
+				, KDE_WinY1 + (KDE_WinUp + 1) / 2 * KDE_Y2  ; Y of resized window
+				, KDE_WinW - KDE_WinLeft * KDE_X2  ; W of resized window
+				, KDE_WinH - KDE_WinUp * KDE_Y2  ; H of resized window
+				, KDE_id
+			KDE_X1 := (KDE_X2 + KDE_X1) ; Reset the initial position for the next iteration.
+			KDE_Y1 := (KDE_Y2 + KDE_Y1)
+		}
 	}
 }
 

@@ -127,6 +127,8 @@ class HoverScreenshot {
 	}
 
 	alwaysOnTop() {
+		if GetKeyState("Tab", "P")
+			return
 		if !this.alwaysOnTopStatus {
 			WinSetTransColor("off", this.gHover.Hwnd)
 			this.gHover.opt("AlwaysOnTop -Caption")
