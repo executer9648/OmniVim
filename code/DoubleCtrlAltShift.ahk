@@ -508,6 +508,8 @@ g_DoubleAlt := 0
 ; #HotIf
 #HotIf g_DoubleAlt
 
+!esc::Escape
+
 !d:: {
 	langid := Language.GetKeyboardLanguage()
 	if (LangID = 0x040D) {
