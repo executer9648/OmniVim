@@ -35,6 +35,12 @@ class Registers {
 	static RussianCharacters := "йцукенгшщзхъфывапролджэячсмить"
 
 	/**
+	 * I never want to accidentally write to a russian-named register, so there's a check
+	 * @type {String}
+	 */
+	static HebrewCharacters := "אבגדהוזחטיכלמנסעפצקרשתץף"
+
+	/**
 	 * The maximum amount of characters shown when Peeking a register
 	 * @type {Integer}
 	 */
@@ -72,7 +78,7 @@ class Registers {
 			(
 				You didn't pass any key
 			)", -1)
-	}
+		}
 
 		sValidKeys := sValidKeys ?? Registers.ValidRegisters
 
@@ -83,7 +89,7 @@ class Registers {
 				Add it to the Registers.ValidRegisters string if you want to use it.
 				Some keys aren't going to work even if you do.
 			)", -1, key)
-	}
+		}
 
 		return key
 	}

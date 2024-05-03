@@ -147,7 +147,7 @@ tab & `:: {
 		exitVim()
 }
 tab & ':: {
-	if GetKeyState("ctrl") or GetKeyState("vkE8")
+	if GetKeyState("ctrl") or GetKeyState("vkE8") or GetKeyState("shift")
 		saveReg()
 	else
 		openMark()
@@ -3502,6 +3502,15 @@ Esc:: {
 #HotIf normalMode = 1
 HotIf "normalMode = 1"
 
+tab & ':: {
+	global normalMode := false
+	if GetKeyState("ctrl") or GetKeyState("vkE8") or GetKeyState("shift")
+		saveReg()
+	else
+		openMark()
+	global mouseManagerMode := true
+}
+
 zkeyCount := 0
 +z::
 {
@@ -4356,6 +4365,14 @@ Esc:: {
 #HotIf mouseManagerMode = 1
 HotIf "mouseManagerMode = 1"
 
+tab & ':: {
+	global mouseManagerMode := false
+	if GetKeyState("ctrl") or GetKeyState("vkE8") or GetKeyState("shift")
+		saveReg()
+	else
+		openMark()
+	global mouseManagerMode := true
+}
 
 m:: {
 	global mouseManagerMode := false
@@ -5666,6 +5683,7 @@ saveReg() {
 	StateBulb[7].Destroy()
 	inf.Destroy()
 }
+
 setMouseDefSpeed() {
 	Mouse.SmallMove := 20
 	Mouse.MediumMove := 70
@@ -5851,10 +5869,10 @@ exitVisualMode() {
 	global visual_x := 0
 }
 
-
 StartRecordingKey(key) {
 	global recordedKeys .= key
 }
+
 StopRecordingKey() {
 	global recordedKeys
 	global recordReg
