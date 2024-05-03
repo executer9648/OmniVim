@@ -575,6 +575,56 @@ g_DoubleShift := 0
 }
 #HotIf g_DoubleShift
 
++`:: {
+	exitVisualMode()
+	clearCounter()
+	if visualMode == true {
+		oldclip := A_Clipboard
+		A_Clipboard := ""
+		Send "^{insert}"
+		ClipWait
+		formatstr := A_Clipboard
+		if RegExMatch(formatstr, "^[A-Z\s\p{P}!]+$") {
+			string1 := StrLower(formatstr)
+			SendText string1
+		}
+		else if RegExMatch(formatstr, "^[a-z\s\p{P}!]+$") {
+			string1 := StrUpper(formatstr)
+			SendText string1
+		}
+		else {
+			string1 := StrUpper(formatstr)
+			SendText string1
+		}
+		Send "{Left}"
+		Send "+{Right}"
+		gotoNormal()
+		A_Clipboard := oldclip
+	}
+	else {
+		oldclip := A_Clipboard
+		A_Clipboard := ""
+		Send "^{insert}"
+		ClipWait
+		formatstr := A_Clipboard
+		if RegExMatch(formatstr, "^[A-Z\s\p{P}]+$") {
+			string1 := StrLower(formatstr)
+			SendText string1
+		}
+		else if RegExMatch(formatstr, "^[a-z\s\p{P}]+$") {
+			string1 := StrUpper(formatstr)
+			SendText string1
+		}
+		else {
+			string1 := StrUpper(formatstr)
+			SendText string1
+		}
+		Send "{Left}"
+		Send "+{Right}"
+		A_Clipboard := oldclip
+	}
+}
+
 +z::
 {
 	global zKey := (A_PriorHotkey = "+z" and A_TimeSincePriorHotkey < 400)
