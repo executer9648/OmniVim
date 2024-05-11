@@ -11,6 +11,8 @@ class RecordQ {
 	 */
 	static InfoTimeout := 1000
 
+	static Reg := ""
+
 	/**
 	 * The directory where you keep all of your register files.
 	 * Format: C:\Programming\registers
@@ -52,10 +54,10 @@ class RecordQ {
 	/**
 	 * Write the contents of your clipboard to a register
 	 */
-	static Write(text, key) {
-		path := Marks.GetPath(key)
+	static Write(text) {
+		path := Marks.GetPath(this.Reg)
 		WriteFile(path, text)
-		Info(key " clipboard written", Registers.InfoTimeout)
+		Info(this.Reg " clipboard written", Registers.InfoTimeout)
 	}
 
 	/**

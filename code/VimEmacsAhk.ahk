@@ -10,10 +10,12 @@
 #Include HoverScreenshot.ahk
 #Include EasyWindowDragginKde.ahk
 #Include Marks.ahk
+#Include MouseMarks.ahk
 #Include DoubleCtrlAltShift.ahk
 #Include Functions.ahk
 #Include myGlobal.ahk
 #Include RecordQ.ahk
+#Include RecordKeys.ahk
 #SingleInstance force
 #MaxThreadsBuffer true
 #MaxThreads 250
@@ -30,6 +32,7 @@ CoordMode "Pixel", "Screen"
 
 Info("Script Reloaded-Active", 2000)
 myGlobal.checkDir()
+
 
 ;################ Global Key-Bindings ################
 
@@ -153,10 +156,14 @@ tab & ':: {
 		openMark()
 }
 tab & `;:: {
+	Infos(A_ThisHotkey)
 	Runner.openRunner()
 }
 tab & m:: {
-	saveMark()
+	if GetKeyState("shift") or GetKeyState("Ctrl")
+		openMouseMark()
+	else
+		saveMark()
 }
 tab & y::+insert
 tab & ,:: {
@@ -244,6 +251,7 @@ global gMode := false
 global yMode := false
 global fMode := false
 global qMode := false
+global recordMode := false
 global shiftfMode := false
 global altfMode := false
 global cMode := false
@@ -260,8 +268,6 @@ global WasInRegMode := false
 global WasInWindowManagerMode := false
 global wasInInsertMode := false
 global wasinCmdMode := false
-global recordedKeys := ""
-global recordReg := ""
 global infcounter := Infos("")
 infcounter.Destroy()
 
@@ -5558,6 +5564,37 @@ openMark() {
 	inf.Destroy()
 }
 
+openMouseMark() {
+	inf := Infos('openMouseMark', , true)
+	StateBulb[7].Create()
+	marko := InputHook("C")
+	marko.KeyOpt("{All}", "ESI") ;End Keys & Suppress
+	marko.KeyOpt("{LCtrl}{RCtrl}{LAlt}{RAlt}{LShift}{RShift}{LWin}{RWin}", "-ES") ;Exclude the modifiers
+	marko.Start()
+	marko.Wait()
+	var := marko.EndMods
+	var .= marko.EndKey
+	mark := marko.EndKey
+	if var == "<!``" {
+		exitVim()
+		inf.Destroy()
+		Exit
+	}
+	else if mark == "Escape" {
+		StateBulb[7].Destroy()
+		inf.Destroy()
+		Exit
+	}
+	{
+		pos := StrSplit(MouseMarks.Read(mark), ",")
+		xpos := Integer(pos[1])
+		ypos := Integer(pos[2])
+		MouseMove(xpos, ypos, 0)
+	}
+	StateBulb[7].Destroy()
+	inf.Destroy()
+}
+
 saveMark() {
 	inf := Infos('m', , true)
 	StateBulb[7].Create()
@@ -5584,6 +5621,34 @@ saveMark() {
 	StateBulb[7].Destroy()
 	inf.Destroy()
 }
+
+saveMouseMark() {
+	inf := Infos('Saving Mouse Mark', , true)
+	StateBulb[7].Create()
+	marko := InputHook("C")
+	marko.KeyOpt("{All}", "ESI") ;End Keys & Suppress
+	marko.KeyOpt("{LCtrl}{RCtrl}{LAlt}{RAlt}{LShift}{RShift}{LWin}{RWin}", "-ES") ;Exclude the modifiers
+	marko.Start()
+	marko.Wait()
+	var := marko.EndMods
+	var .= marko.EndKey
+	mark := marko.EndKey
+	if var == "<!``" {
+		exitVim()
+		inf.Destroy()
+	}
+	else if mark == "Escape" {
+		StateBulb[7].Destroy()
+		inf.Destroy()
+		Exit
+	}
+	Registers.ValidateKey(mark)
+	MouseGetPos &xPos, &yPos
+	MouseMarks.saveMarkinFile(mark, xPos, yPos)
+	StateBulb[7].Destroy()
+	inf.Destroy()
+}
+
 insertReg() {
 	inf := Infos('"', , true)
 	StateBulb[7].Create()
@@ -5870,11 +5935,13 @@ exitVisualMode() {
 }
 
 StartRecordingKey(key) {
-	global recordedKeys .= key
+	global recordMode := true
+	RecordQ.Reg := key
 }
 
-StopRecordingKey() {
-	global recordedKeys
-	global recordReg
-	RecordQ.Write(recordedKeys, recordReg)
+StopRecordingKey(text) {
+	global recordMode := false
+	RecordQ.Write(text)
+	Infos("stoped recording macro " RecordQ.Reg)
+	RecordQ.Reg := ""
 }

@@ -30,7 +30,9 @@ CoordMode "Mouse"
 
 Tab & LButton::
 {
-	if GetKeyState("vkE8")
+	if GetKeyState("shift") or GetKeyState("Ctrl")
+		saveMouseMark()
+	else if GetKeyState("vkE8")
 	{
 		; MouseGetPos , , &KDE_id
 		; ; This message is mostly equivalent to WinMinimize,

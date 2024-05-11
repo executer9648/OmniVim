@@ -9,7 +9,7 @@ class Infos {
 	 * @param text *String*
 	 * @param autoCloseTimeout *Integer* in milliseconds. Doesn't close automatically
 	 */
-	__New(text, autoCloseTimeout := 0, islast := false) {
+	__New(text, autoCloseTimeout := 0, islast := false, ismouse := false, x := 0, y := 0) {
 		this.autoCloseTimeout := autoCloseTimeout
 		this.text := text
 		this._CreateGui()
@@ -20,7 +20,12 @@ class Infos {
 		}
 		this._SetupHotkeysAndEvents()
 		this._SetupAutoclose()
-		if islast
+		if ismouse {
+			newX := x - Infos.guiWidth / 2
+			newY := y - infos.guiWidth / 2
+			this._ShowXY(newX, newY)
+		}
+		else if islast
 			this._ShowLast()
 		else
 			this._Show()
@@ -188,6 +193,7 @@ class Infos {
 	}
 
 	_Show() => this.gInfo.Show("AutoSize NA x0 y" this._CalculateYCoord())
+	_ShowXY(x, y) => this.gInfo.Show("AutoSize NA x" x "y" y)
 	_ShowLast() => this.gInfo.Show("AutoSize NA x0 y" this._CalculateLastCoord())
 
 }

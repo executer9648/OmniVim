@@ -1238,7 +1238,15 @@ class myGlobal {
 		}
 		if !DirExist(Marks.MarksDirectory) {
 			DirCreate(Marks.MarksDirectory)
-			Info("missing registers directory added")
+			Info("missing marks directory added")
+		}
+		if !DirExist(MouseMarks.MouseMarksDirectory) {
+			DirCreate(MouseMarks.MouseMarksDirectory)
+			Info("missing mouse marks directory added")
+		}
+		if !DirExist(RecordQ.RegistersDirectory) {
+			DirCreate(MouseMarks.RegistersDirectory)
+			Info("missing recording registers directory added")
 		}
 	}
 }
