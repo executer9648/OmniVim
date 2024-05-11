@@ -156,7 +156,6 @@ tab & ':: {
 		openMark()
 }
 tab & `;:: {
-	Infos(A_ThisHotkey)
 	Runner.openRunner()
 }
 tab & m:: {
