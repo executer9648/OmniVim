@@ -1245,7 +1245,7 @@ class myGlobal {
 			Info("missing mouse marks directory added")
 		}
 		if !DirExist(RecordQ.RegistersDirectory) {
-			DirCreate(MouseMarks.RegistersDirectory)
+			DirCreate(RecordQ.RegistersDirectory)
 			Info("missing recording registers directory added")
 		}
 	}
