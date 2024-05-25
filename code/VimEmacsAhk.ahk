@@ -259,6 +259,7 @@ global visualMode := false
 global visualLineMode := false
 global insertMode := false
 global windowMode := false
+global fancywmMode := false
 global WindowManagerMode := false
 global mouseManagerMode := false
 global wasInNormalMode := false
@@ -283,6 +284,12 @@ tab & ]::
 	gotoMouseMode()
 	setMouseDefSpeed()
 }
+
+^#w:: {
+	global fancywmMode := true
+	StateBulb[StateBulb.MaxBulbs].Create()
+}
+
 #HotIf Marks.recording = 1
 HotIf "Marks.recording = 1"
 ~LButton:: {
@@ -4810,6 +4817,113 @@ BackSpace:: {
 }
 #HotIf
 
+
+#HotIf fancywmMode = 1
+HotIf "fancywmMode = 1"
+
+Esc:: {
+	global fancywmMode := false
+	StateBulb[StateBulb.MaxBulbs].Destroy()
+}
+
+!1:: {
+	global fancywmMode := false
+	StateBulb[StateBulb.MaxBulbs].Destroy()
+}
+
+q:: {
+	global fancywmMode := false
+	Run('fancywm.exe --action ToggleManager')
+	StateBulb[StateBulb.MaxBulbs].Destroy()
+}
+
+f:: {
+	global fancywmMode := false
+	Run('fancywm.exe --action ToggleFloatingMode')
+	StateBulb[StateBulb.MaxBulbs].Destroy()
+}
+r:: {
+	global fancywmMode := false
+	Run('fancywm.exe --action RefreshWorkspace')
+	StateBulb[StateBulb.MaxBulbs].Destroy()
+}
+h:: {
+	global fancywmMode := false
+	Run('fancywm.exe --action MoveFocusLeft')
+	StateBulb[StateBulb.MaxBulbs].Destroy()
+}
+
+k:: {
+	global fancywmMode := false
+	Run('fancywm.exe --action MoveFocusUp')
+	StateBulb[StateBulb.MaxBulbs].Destroy()
+}
+l:: {
+	global fancywmMode := false
+	Run('fancywm.exe --action MoveFocusRight')
+	StateBulb[StateBulb.MaxBulbs].Destroy()
+}
+
++h:: {
+	global fancywmMode := false
+	Run('fancywm.exe --action MoveLeft')
+	StateBulb[StateBulb.MaxBulbs].Destroy()
+}
++j:: {
+	global fancywmMode := false
+	Run('fancywm.exe --action MoveDown')
+	StateBulb[StateBulb.MaxBulbs].Destroy()
+}
++k:: {
+	global fancywmMode := false
+	Run('fancywm.exe --action MoveUp')
+	StateBulb[StateBulb.MaxBulbs].Destroy()
+}
++l:: {
+	global fancywmMode := false
+	Run('fancywm.exe --action MoveRight')
+	StateBulb[StateBulb.MaxBulbs].Destroy()
+}
+
+^+h:: {
+	global fancywmMode := false
+	Run('fancywm.exe --action SwapLeft')
+	StateBulb[StateBulb.MaxBulbs].Destroy()
+}
+^+j:: {
+	global fancywmMode := false
+	Run('fancywm.exe --action SwapDown')
+	StateBulb[StateBulb.MaxBulbs].Destroy()
+}
+^+k:: {
+	global fancywmMode := false
+	Run('fancywm.exe --action SwapUp')
+	StateBulb[StateBulb.MaxBulbs].Destroy()
+}
+^+l:: {
+	global fancywmMode := false
+	Run('fancywm.exe --action SwapRight')
+	StateBulb[StateBulb.MaxBulbs].Destroy()
+}
+^v:: {
+	global fancywmMode := false
+	Run('fancywm.exe --action CreateVerticalPanel')
+	StateBulb[StateBulb.MaxBulbs].Destroy()
+}
+^h:: {
+	global fancywmMode := false
+	Run('fancywm.exe --action CreateHorizontalPanel')
+	StateBulb[StateBulb.MaxBulbs].Destroy()
+}
+^s:: {
+	global fancywmMode := false
+	Run('fancywm.exe --action CreateStackPanel')
+	StateBulb[StateBulb.MaxBulbs].Destroy()
+}
+
+
+#HotIf
+
 ; Functions
 disableClick() {
 	if GetKeyState("LButton")
@@ -5087,6 +5201,7 @@ chCounter(number, mode := "") {
 exitVim() {
 	Infos.DestroyAll()
 	Infos("Exit Vim", 1500)
+	global fancywmMode := false
 	global normalMode := false
 	global insertMode := false
 	global dMode := false
