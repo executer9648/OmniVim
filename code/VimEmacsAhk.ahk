@@ -16,7 +16,7 @@
 #Include myGlobal.ahk
 #Include RecordQ.ahk
 #Include RecordKeys.ahk
-#Include "C:\Users\Benni\komorebi.ahk"
+;#Include "C:\Users\Benni\komorebi.ahk"
 #SingleInstance force
 #MaxThreadsBuffer true
 #MaxThreads 250
@@ -261,6 +261,7 @@ global visualLineMode := false
 global insertMode := false
 global windowMode := false
 global fancywmMode := false
+global gkomorebi := false
 global WindowManagerMode := false
 global mouseManagerMode := false
 global wasInNormalMode := false
@@ -289,6 +290,10 @@ tab & ]::
 ^#w:: {
 	global fancywmMode := true
 	StateBulb[StateBulb.MaxBulbs].Create()
+}
++#w:: {
+	global gkomorebi := true
+	StateBulb[StateBulb.MaxBulbs - 1].Create()
 }
 
 #HotIf Marks.recording = 1
@@ -5289,6 +5294,7 @@ exitVim() {
 	Infos.DestroyAll()
 	Infos("Exit Vim", 1500)
 	global fancywmMode := false
+	global gkomorebi := false
 	global normalMode := false
 	global insertMode := false
 	global dMode := false
@@ -6146,3 +6152,228 @@ StopRecordingKey(text) {
 	Infos("stoped recording macro " RecordQ.Reg)
 	RecordQ.Reg := ""
 }
+
+
+Komorebic(cmd) {
+	RunWait(format("komorebic.exe {}", cmd), , "Hide")
+}
+
+#HotIf gkomorebi = 1
+HotIf "gkomorebi = 1"
+
+
+Esc:: {
+	global gkomorebi := false
+	StateBulb[StateBulb.MaxBulbs - 1].Destroy()
+}
+
+!1:: {
+	global gkomorebi := false
+	StateBulb[StateBulb.MaxBulbs - 1].Destroy()
+	Komorebic("focus-workspace 0")
+}
+
+!2:: {
+	global gkomorebi := false
+	StateBulb[StateBulb.MaxBulbs - 1].Destroy()
+	Komorebic("focus-workspace 1")
+}
+!3:: {
+	global gkomorebi := false
+	StateBulb[StateBulb.MaxBulbs - 1].Destroy()
+	Komorebic("focus-workspace 2")
+}
+!4:: {
+	global gkomorebi := false
+	StateBulb[StateBulb.MaxBulbs - 1].Destroy()
+	Komorebic("focus-workspace 3")
+}
+!5:: {
+	global gkomorebi := false
+	StateBulb[StateBulb.MaxBulbs - 1].Destroy()
+	Komorebic("focus-workspace 4")
+}
+!6:: {
+	global gkomorebi := false
+	StateBulb[StateBulb.MaxBulbs - 1].Destroy()
+	Komorebic("focus-workspace 5")
+}
+!7:: {
+	global gkomorebi := false
+	StateBulb[StateBulb.MaxBulbs - 1].Destroy()
+	Komorebic("focus-workspace 6")
+}
+!8:: {
+	global gkomorebi := false
+	StateBulb[StateBulb.MaxBulbs - 1].Destroy()
+	Komorebic("focus-workspace 7")
+}
+
++1::
++!1:: {
+	global gkomorebi := false
+	StateBulb[StateBulb.MaxBulbs - 1].Destroy()
+	Komorebic("move-to-workspace 0")
+}
++2::
++!2:: {
+	global gkomorebi := false
+	StateBulb[StateBulb.MaxBulbs - 1].Destroy()
+	Komorebic("move-to-workspace 1")
+}
++3::
++!3:: {
+	global gkomorebi := false
+	StateBulb[StateBulb.MaxBulbs - 1].Destroy()
+	Komorebic("move-to-workspace 2")
+}
++4::
++!4:: {
+	global gkomorebi := false
+	StateBulb[StateBulb.MaxBulbs - 1].Destroy()
+	Komorebic("move-to-workspace 3")
+}
++5::
++!5:: {
+	global gkomorebi := false
+	StateBulb[StateBulb.MaxBulbs - 1].Destroy()
+	Komorebic("move-to-workspace 4")
+}
++6::
++!6:: {
+	global gkomorebi := false
+	StateBulb[StateBulb.MaxBulbs - 1].Destroy()
+	Komorebic("move-to-workspace 5")
+}
++7::
++!7:: {
+	global gkomorebi := false
+	StateBulb[StateBulb.MaxBulbs - 1].Destroy()
+	Komorebic("move-to-workspace 6")
+}
++8::
++!8:: {
+	global gkomorebi := false
+	StateBulb[StateBulb.MaxBulbs - 1].Destroy()
+	Komorebic("move-to-workspace 7")
+}
+
+q:: {
+	global gkomorebi := false
+	Komorebic("toggle-pause")
+	StateBulb[StateBulb.MaxBulbs - 1].Destroy()
+}
+
+f:: {
+	global gkomorebi := false
+	Komorebic("toggle-float")
+	StateBulb[StateBulb.MaxBulbs - 1].Destroy()
+}
+r:: {
+	global gkomorebi := false
+	Komorebic("retile")
+	StateBulb[StateBulb.MaxBulbs - 1].Destroy()
+}
+
+m:: {
+	global gkomorebi := false
+	Komorebic("minimize")
+	StateBulb[StateBulb.MaxBulbs - 1].Destroy()
+}
+x:: {
+	global gkomorebi := false
+	Komorebic("toggle-monocle")
+	StateBulb[StateBulb.MaxBulbs - 1].Destroy()
+}
+h:: {
+	global gkomorebi := false
+	Komorebic("focus left")
+	StateBulb[StateBulb.MaxBulbs - 1].Destroy()
+}
+j:: {
+	global gkomorebi := false
+	Komorebic("focus down")
+	StateBulb[StateBulb.MaxBulbs - 1].Destroy()
+}
+k:: {
+	global gkomorebi := false
+	Komorebic("focus up")
+	StateBulb[StateBulb.MaxBulbs - 1].Destroy()
+}
+l:: {
+	global gkomorebi := false
+	Komorebic("focus right")
+	StateBulb[StateBulb.MaxBulbs - 1].Destroy()
+}
+
++h:: {
+	global gkomorebi := false
+	Komorebic("move left")
+	StateBulb[StateBulb.MaxBulbs - 1].Destroy()
+}
++j:: {
+	global gkomorebi := false
+	Komorebic("move down")
+	StateBulb[StateBulb.MaxBulbs - 1].Destroy()
+}
++k:: {
+	global gkomorebi := false
+	Komorebic("move up")
+	StateBulb[StateBulb.MaxBulbs - 1].Destroy()
+}
++l:: {
+	global gkomorebi := false
+	Komorebic("move right")
+	StateBulb[StateBulb.MaxBulbs - 1].Destroy()
+}
+
+^+h:: {
+	global gkomorebi := false
+	Komorebic("stack left")
+	StateBulb[StateBulb.MaxBulbs - 1].Destroy()
+}
+^+j:: {
+	global gkomorebi := false
+	Komorebic("stack down")
+	StateBulb[StateBulb.MaxBulbs - 1].Destroy()
+}
+^+k:: {
+	global gkomorebi := false
+	Komorebic("stack up")
+	StateBulb[StateBulb.MaxBulbs - 1].Destroy()
+}
+^+l:: {
+	global gkomorebi := false
+	Komorebic("stack right")
+	StateBulb[StateBulb.MaxBulbs - 1].Destroy()
+}
+
+^s:: {
+	global gkomorebi := false
+	Komorebic("unstack")
+	StateBulb[StateBulb.MaxBulbs - 1].Destroy()
+}
+
+
+!q:: Komorebic("close")
+
+; Focus windows
+
+!+[:: Komorebic("cycle-focus previous")
+!+]:: Komorebic("cycle-focus next")
+
+
+![:: Komorebic("cycle-stack previous")
+!]:: Komorebic("cycle-stack next")
+
+; Resize
+!=:: Komorebic("resize-axis horizontal increase")
+!-:: Komorebic("resize-axis horizontal decrease")
+!+=:: Komorebic("resize-axis vertical increase")
+!+_:: Komorebic("resize-axis vertical decrease")
+
+
+; Layouts
+!x:: Komorebic("flip-layout horizontal")
+!y:: Komorebic("flip-layout vertical")
+#HotIf
