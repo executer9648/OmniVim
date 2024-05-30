@@ -16,6 +16,7 @@
 #Include myGlobal.ahk
 #Include RecordQ.ahk
 #Include RecordKeys.ahk
+#Include "C:\Users\Benni\komorebi.ahk"
 #SingleInstance force
 #MaxThreadsBuffer true
 #MaxThreads 250
