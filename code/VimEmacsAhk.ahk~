@@ -288,7 +288,7 @@ tab & ]::
 +#w::
 ^#w:: {
 	global fancywmMode := true
-	StateBulb[StateBulb.MaxBulbs - 1].Create()
+	StateBulb[StateBulb.MaxBulbs-1].Create()
 }
 
 #HotIf Marks.recording = 1
@@ -4824,222 +4824,200 @@ HotIf "fancywmMode = 1"
 
 Esc:: {
 	global fancywmMode := false
-	StateBulb[StateBulb.MaxBulbs - 1].Destroy()
+	StateBulb[StateBulb.MaxBulbs].Destroy()
 }
 
 !1:: {
 	global fancywmMode := false
-	StateBulb[StateBulb.MaxBulbs - 1].Destroy()
+	StateBulb[StateBulb.MaxBulbs].Destroy()
 	Run('fancywm.exe --action SwitchToDesktop1')
 }
 
 !2:: {
 	global fancywmMode := false
-	StateBulb[StateBulb.MaxBulbs - 1].Destroy()
+	StateBulb[StateBulb.MaxBulbs].Destroy()
 	Run('fancywm.exe --action SwitchToDesktop2')
 }
 !3:: {
 	global fancywmMode := false
-	StateBulb[StateBulb.MaxBulbs - 1].Destroy()
+	StateBulb[StateBulb.MaxBulbs].Destroy()
 	Run('fancywm.exe --action SwitchToDesktop3')
 }
 !4:: {
 	global fancywmMode := false
-	StateBulb[StateBulb.MaxBulbs - 1].Destroy()
+	StateBulb[StateBulb.MaxBulbs].Destroy()
 	Run('fancywm.exe --action SwitchToDesktop4')
 }
 !5:: {
 	global fancywmMode := false
-	StateBulb[StateBulb.MaxBulbs - 1].Destroy()
+	StateBulb[StateBulb.MaxBulbs].Destroy()
 	Run('fancywm.exe --action SwitchToDesktop5')
 }
 !6:: {
 	global fancywmMode := false
-	StateBulb[StateBulb.MaxBulbs - 1].Destroy()
+	StateBulb[StateBulb.MaxBulbs].Destroy()
 	Run('fancywm.exe --action SwitchToDesktop6')
 }
 !7:: {
 	global fancywmMode := false
-	StateBulb[StateBulb.MaxBulbs - 1].Destroy()
+	StateBulb[StateBulb.MaxBulbs].Destroy()
 	Run('fancywm.exe --action SwitchToDesktop7')
 }
 !8:: {
 	global fancywmMode := false
-	StateBulb[StateBulb.MaxBulbs - 1].Destroy()
+	StateBulb[StateBulb.MaxBulbs].Destroy()
 	Run('fancywm.exe --action SwitchToDesktop8')
 }
 
 +1::
 +!1:: {
 	global fancywmMode := false
-	StateBulb[StateBulb.MaxBulbs - 1].Destroy()
+	StateBulb[StateBulb.MaxBulbs].Destroy()
 	Run('fancywm.exe --action MoveToDesktop1')
 }
 +2::
 +!2:: {
 	global fancywmMode := false
-	StateBulb[StateBulb.MaxBulbs - 1].Destroy()
+	StateBulb[StateBulb.MaxBulbs].Destroy()
 	Run('fancywm.exe --action MoveToDesktop2')
 }
 +3::
 +!3:: {
 	global fancywmMode := false
-	StateBulb[StateBulb.MaxBulbs - 1].Destroy()
+	StateBulb[StateBulb.MaxBulbs].Destroy()
 	Run('fancywm.exe --action MoveToDesktop3')
 }
 +4::
 +!4:: {
 	global fancywmMode := false
-	StateBulb[StateBulb.MaxBulbs - 1].Destroy()
+	StateBulb[StateBulb.MaxBulbs].Destroy()
 	Run('fancywm.exe --action MoveToDesktop4')
 }
 +5::
 +!5:: {
 	global fancywmMode := false
-	StateBulb[StateBulb.MaxBulbs - 1].Destroy()
+	StateBulb[StateBulb.MaxBulbs].Destroy()
 	Run('fancywm.exe --action MoveToDesktop5')
 }
 +6::
 +!6:: {
 	global fancywmMode := false
-	StateBulb[StateBulb.MaxBulbs - 1].Destroy()
+	StateBulb[StateBulb.MaxBulbs].Destroy()
 	Run('fancywm.exe --action MoveToDesktop6')
 }
 +7::
 +!7:: {
 	global fancywmMode := false
-	StateBulb[StateBulb.MaxBulbs - 1].Destroy()
+	StateBulb[StateBulb.MaxBulbs].Destroy()
 	Run('fancywm.exe --action MoveToDesktop7')
 }
 +8::
 +!8:: {
 	global fancywmMode := false
-	StateBulb[StateBulb.MaxBulbs - 1].Destroy()
+	StateBulb[StateBulb.MaxBulbs].Destroy()
 	Run('fancywm.exe --action MoveToDesktop8')
 }
 
 q:: {
 	global fancywmMode := false
 	Run('fancywm.exe --action ToggleManager')
-	StateBulb[StateBulb.MaxBulbs - 1].Destroy()
+	StateBulb[StateBulb.MaxBulbs].Destroy()
 }
 
 f:: {
 	global fancywmMode := false
 	Run('fancywm.exe --action ToggleFloatingMode')
-	StateBulb[StateBulb.MaxBulbs - 1].Destroy()
+	StateBulb[StateBulb.MaxBulbs].Destroy()
 }
 r:: {
 	global fancywmMode := false
 	Run('fancywm.exe --action RefreshWorkspace')
-	StateBulb[StateBulb.MaxBulbs - 1].Destroy()
+	StateBulb[StateBulb.MaxBulbs].Destroy()
 }
 
 #+h::
 h:: {
 	global fancywmMode := false
 	Run('fancywm.exe --action MoveFocusLeft')
-	StateBulb[StateBulb.MaxBulbs - 1].Destroy()
+	StateBulb[StateBulb.MaxBulbs].Destroy()
 }
 
 #+k::
 k:: {
 	global fancywmMode := false
 	Run('fancywm.exe --action MoveFocusUp')
-	StateBulb[StateBulb.MaxBulbs - 1].Destroy()
+	StateBulb[StateBulb.MaxBulbs].Destroy()
 }
 #+l::
 l:: {
 	global fancywmMode := false
 	Run('fancywm.exe --action MoveFocusRight')
-	StateBulb[StateBulb.MaxBulbs - 1].Destroy()
+	StateBulb[StateBulb.MaxBulbs].Destroy()
 }
 #+j::
 j:: {
 	global fancywmMode := false
 	Run('fancywm.exe --action MoveFocusDown')
-	StateBulb[StateBulb.MaxBulbs - 1].Destroy()
+	StateBulb[StateBulb.MaxBulbs].Destroy()
 }
 
 +h:: {
 	global fancywmMode := false
 	Run('fancywm.exe --action MoveLeft')
-	StateBulb[StateBulb.MaxBulbs - 1].Destroy()
+	StateBulb[StateBulb.MaxBulbs].Destroy()
 }
 +j:: {
 	global fancywmMode := false
 	Run('fancywm.exe --action MoveDown')
-	StateBulb[StateBulb.MaxBulbs - 1].Destroy()
+	StateBulb[StateBulb.MaxBulbs].Destroy()
 }
 +k:: {
 	global fancywmMode := false
 	Run('fancywm.exe --action MoveUp')
-	StateBulb[StateBulb.MaxBulbs - 1].Destroy()
+	StateBulb[StateBulb.MaxBulbs].Destroy()
 }
 +l:: {
 	global fancywmMode := false
 	Run('fancywm.exe --action MoveRight')
-	StateBulb[StateBulb.MaxBulbs - 1].Destroy()
+	StateBulb[StateBulb.MaxBulbs].Destroy()
 }
 
 ^+h:: {
 	global fancywmMode := false
 	Run('fancywm.exe --action SwapLeft')
-	StateBulb[StateBulb.MaxBulbs - 1].Destroy()
+	StateBulb[StateBulb.MaxBulbs].Destroy()
 }
 ^+j:: {
 	global fancywmMode := false
 	Run('fancywm.exe --action SwapDown')
-	StateBulb[StateBulb.MaxBulbs - 1].Destroy()
+	StateBulb[StateBulb.MaxBulbs].Destroy()
 }
 ^+k:: {
 	global fancywmMode := false
 	Run('fancywm.exe --action SwapUp')
-	StateBulb[StateBulb.MaxBulbs - 1].Destroy()
+	StateBulb[StateBulb.MaxBulbs].Destroy()
 }
 ^+l:: {
 	global fancywmMode := false
 	Run('fancywm.exe --action SwapRight')
-	StateBulb[StateBulb.MaxBulbs - 1].Destroy()
+	StateBulb[StateBulb.MaxBulbs].Destroy()
 }
 ^v:: {
 	global fancywmMode := false
 	Run('fancywm.exe --action CreateVerticalPanel')
-	StateBulb[StateBulb.MaxBulbs - 1].Destroy()
+	StateBulb[StateBulb.MaxBulbs].Destroy()
 }
 ^h:: {
 	global fancywmMode := false
 	Run('fancywm.exe --action CreateHorizontalPanel')
-	StateBulb[StateBulb.MaxBulbs - 1].Destroy()
+	StateBulb[StateBulb.MaxBulbs].Destroy()
 }
 ^s:: {
 	global fancywmMode := false
 	Run('fancywm.exe --action CreateStackPanel')
-	StateBulb[StateBulb.MaxBulbs - 1].Destroy()
+	StateBulb[StateBulb.MaxBulbs].Destroy()
 }
 
-#+x::
-x:: {
-	global fancywmMode := false
-	MouseGetPos , , &KDE_id
-	KDE_id := WinActive("A")
-	; Toggle between maximized and restored state.
-	if WinGetMinMax(KDE_id)
-		WinRestore KDE_id
-	Else
-		WinMaximize KDE_id
-	StateBulb[StateBulb.MaxBulbs - 1].Destroy()
-}
-
-#+m::
-m:: {
-	global fancywmMode := false
-	MouseGetPos , , &KDE_id
-	KDE_id := WinActive("A")
-	; Toggle between maximized and restored state.
-	WinMinimize KDE_id
-	StateBulb[StateBulb.MaxBulbs - 1].Destroy()
-}
 
 #HotIf
 
