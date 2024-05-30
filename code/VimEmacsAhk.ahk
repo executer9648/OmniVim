@@ -287,12 +287,11 @@ tab & ]::
 	setMouseDefSpeed()
 }
 
-+#w::
-^#w:: {
++#w:: {
 	global fancywmMode := true
 	StateBulb[StateBulb.MaxBulbs - 1].Create()
 }
-+#w:: {
+^#w:: {
 	global gkomorebi := true
 	StateBulb[StateBulb.MaxBulbs - 1].Create()
 }
