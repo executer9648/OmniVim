@@ -4832,12 +4832,17 @@ Esc:: {
 	StateBulb[StateBulb.MaxBulbs - 1].Destroy()
 }
 
+Enter:: {
+	global fancywmMode := false
+	StateBulb[StateBulb.MaxBulbs - 1].Destroy()
+	Run('fancywm.exe --action PullWindowUp')
+}
+
 !1:: {
 	global fancywmMode := false
 	StateBulb[StateBulb.MaxBulbs - 1].Destroy()
 	Run('fancywm.exe --action SwitchToDesktop1')
 }
-
 !2:: {
 	global fancywmMode := false
 	StateBulb[StateBulb.MaxBulbs - 1].Destroy()
