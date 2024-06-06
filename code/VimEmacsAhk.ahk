@@ -4884,48 +4884,56 @@ Enter:: {
 	global fancywmMode := false
 	StateBulb[StateBulb.MaxBulbs - 1].Destroy()
 	Run('fancywm.exe --action MoveToDesktop1')
+	Run('fancywm.exe --action SwitchToDesktop1')
 }
 +2::
 +!2:: {
 	global fancywmMode := false
 	StateBulb[StateBulb.MaxBulbs - 1].Destroy()
 	Run('fancywm.exe --action MoveToDesktop2')
+	Run('fancywm.exe --action SwitchToDesktop2')
 }
 +3::
 +!3:: {
 	global fancywmMode := false
 	StateBulb[StateBulb.MaxBulbs - 1].Destroy()
 	Run('fancywm.exe --action MoveToDesktop3')
+	Run('fancywm.exe --action SwitchToDesktop3')
 }
 +4::
 +!4:: {
 	global fancywmMode := false
 	StateBulb[StateBulb.MaxBulbs - 1].Destroy()
 	Run('fancywm.exe --action MoveToDesktop4')
+	Run('fancywm.exe --action SwitchToDesktop4')
 }
 +5::
 +!5:: {
 	global fancywmMode := false
 	StateBulb[StateBulb.MaxBulbs - 1].Destroy()
 	Run('fancywm.exe --action MoveToDesktop5')
+	Run('fancywm.exe --action SwitchToDesktop5')
 }
 +6::
 +!6:: {
 	global fancywmMode := false
 	StateBulb[StateBulb.MaxBulbs - 1].Destroy()
 	Run('fancywm.exe --action MoveToDesktop6')
+	Run('fancywm.exe --action SwitchToDesktop6')
 }
 +7::
 +!7:: {
 	global fancywmMode := false
 	StateBulb[StateBulb.MaxBulbs - 1].Destroy()
 	Run('fancywm.exe --action MoveToDesktop7')
+	Run('fancywm.exe --action SwitchToDesktop7')
 }
 +8::
 +!8:: {
 	global fancywmMode := false
 	StateBulb[StateBulb.MaxBulbs - 1].Destroy()
 	Run('fancywm.exe --action MoveToDesktop8')
+	Run('fancywm.exe --action SwitchToDesktop8')
 }
 
 q:: {
