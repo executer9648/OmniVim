@@ -4942,6 +4942,19 @@ q:: {
 	StateBulb[StateBulb.MaxBulbs - 1].Destroy()
 }
 
+!x:: {
+	global fancywmMode := false
+	WinHide "ahk_class Shell_TrayWnd"
+	StateBulb[StateBulb.MaxBulbs - 1].Destroy()
+}
+
+;~ Show the task bar when pressing "w"
++!x:: {
+	global fancywmMode := false
+	WinShow "ahk_class Shell_TrayWnd"
+	StateBulb[StateBulb.MaxBulbs - 1].Destroy()
+}
+
 f:: {
 	global fancywmMode := false
 	Run('fancywm.exe --action ToggleFloatingMode')
