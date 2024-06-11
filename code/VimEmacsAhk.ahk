@@ -242,6 +242,7 @@ tab & e::End
 
 ; Set initial state to normal (disabled)
 global counter := 0
+global hide := false
 global monitorCount := 0
 global p_key := 0
 global visual_y := 0
@@ -4944,14 +4945,9 @@ q:: {
 
 !x:: {
 	global fancywmMode := false
-	WinHide "ahk_class Shell_TrayWnd"
-	StateBulb[StateBulb.MaxBulbs - 1].Destroy()
-}
-
-;~ Show the task bar when pressing "w"
-+!x:: {
-	global fancywmMode := false
-	WinShow "ahk_class Shell_TrayWnd"
+	global hide
+	hide := !hide
+	HideShowTaskbar(hide)
 	StateBulb[StateBulb.MaxBulbs - 1].Destroy()
 }
 
@@ -6211,6 +6207,15 @@ StopRecordingKey(text) {
 	RecordQ.Reg := ""
 }
 
+HideShowTaskbar(action) {
+	static ABM_SETSTATE := 0xA, ABS_AUTOHIDE := 0x1, ABS_ALWAYSONTOP := 0x2
+	size := 2 * A_PtrSize + 2 * 4 + 16 + A_PtrSize
+	APPBARDATA := Buffer(size, 0)
+	NumPut("int", size, APPBARDATA)
+	NumPut("int", WinExist("ahk_class Shell_TrayWnd"), APPBARDATA, A_PtrSize)
+	NumPut("int", action ? ABS_AUTOHIDE : ABS_ALWAYSONTOP, APPBARDATA, size - A_PtrSize)
+	DllCall("Shell32\SHAppBarMessage", "UInt", ABM_SETSTATE, "ptr", APPBARDATA)
+}
 
 Komorebic(cmd) {
 	RunWait(format("komorebic.exe {}", cmd), , "Hide")
