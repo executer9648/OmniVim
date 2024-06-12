@@ -5045,6 +5045,28 @@ j:: {
 	StateBulb[StateBulb.MaxBulbs - 1].Destroy()
 }
 
+]:: {
+	global fancywmMode := false
+	Run('fancywm.exe --action IncreaseWidth')
+	StateBulb[StateBulb.MaxBulbs - 1].Destroy()
+}
+[:: {
+	global fancywmMode := false
+	Run('fancywm.exe --action DecreaseWidth')
+	StateBulb[StateBulb.MaxBulbs - 1].Destroy()
+}
+':: {
+	global fancywmMode := false
+	Run('fancywm.exe --action IncreaseHeight')
+	StateBulb[StateBulb.MaxBulbs - 1].Destroy()
+}
+`;:: {
+	global fancywmMode := false
+	Run('fancywm.exe --action DecreaseHeight')
+	StateBulb[StateBulb.MaxBulbs - 1].Destroy()
+}
+
+
 #+x::
 x:: {
 	global fancywmMode := false
