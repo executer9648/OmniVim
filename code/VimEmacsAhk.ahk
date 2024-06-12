@@ -5066,6 +5066,17 @@ j:: {
 	StateBulb[StateBulb.MaxBulbs - 1].Destroy()
 }
 
+#w:: {
+	global fancywmMode := false
+	Run('fancywm.exe --action SwitchToPreviousDesktop')
+	StateBulb[StateBulb.MaxBulbs - 1].Destroy()
+}
+
+w:: {
+	global fancywmMode := false
+	Run('fancywm.exe --action SwitchToPreviousDisplay')
+	StateBulb[StateBulb.MaxBulbs - 1].Destroy()
+}
 
 #+x::
 x:: {
