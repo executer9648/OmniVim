@@ -14,11 +14,17 @@ class Infos {
 		this.text := text
 		this._CreateGui()
 		this.hwnd := this.gInfo.hwnd
-		if !this._GetAvailableSpace() {
-			this._StopDueToNoSpace()
-			return
+		if !ismouse {
+			if !this._GetAvailableSpace() {
+				this._StopDueToNoSpace()
+				return
+			}
+			this._SetupHotkeysAndEvents()
 		}
-		this._SetupHotkeysAndEvents()
+		else {
+			this._GetAvailableSpacenoLimit()
+			this._SetupHotkeysAndEventsNoLimit()
+		}
 		this._SetupAutoclose()
 		if ismouse {
 			newX := x - Infos.guiWidth / 2
@@ -38,16 +44,25 @@ class Infos {
 	static guiWidth := Infos.fontSize * Infos.unit * Infos.distance
 	static maximumInfos := Floor(A_ScreenHeight / Infos.guiWidth)
 	static spots := Infos._GeneratePlacesArray()
+	static spotsMouse := Infos._GeneratePlacesArray60()
 	static foDestroyAll := (*) => Infos.DestroyAll()
+	static foDestroyAllmouse := (*) => Infos.DestroyAllMouse()
 	static maxNumberedHotkeys := 12
 	static maxWidthInChars := 104
-
 
 	static DestroyAll() {
 		for index, infoObj in Infos.spots {
 			if !infoObj
 				continue
 			infoObj.Destroy()
+		}
+	}
+
+	static DestroyAllMouse() {
+		for index, infoObj in Infos.spotsMouse {
+			if !infoObj
+				continue
+			infoObj.Destroy60()
 		}
 	}
 
@@ -60,9 +75,18 @@ class Infos {
 		return availablePlaces
 	}
 
+	static _GeneratePlacesArray60() {
+		availablePlaces := []
+		loop 60 {
+			availablePlaces.Push(false)
+		}
+		return availablePlaces
+	}
+
 
 	autoCloseTimeout := 0
 	bfDestroy := this.Destroy.Bind(this)
+	bfDestroyMouse := this.Destroy60.Bind(this)
 
 
 	/**
@@ -105,6 +129,17 @@ class Infos {
 			Hotkey("F" this.spaceIndex, "Off")
 		this.gInfo.Destroy()
 		Infos.spots[this.spaceIndex] := false
+		return true
+	}
+
+	Destroy60(*) {
+		try HotIfWinExist("ahk_id " this.gInfo.Hwnd)
+		catch Any {
+			return false
+		}
+		Hotkey("^Space", "Off")
+		this.gInfo.Destroy()
+		Infos.spotsMouse[this.spaceIndex] := false
 		return true
 	}
 
@@ -170,6 +205,21 @@ class Infos {
 		return true
 	}
 
+	_GetAvailableSpacenoLimit() {
+		spaceIndex := unset
+		for index, isOccupied in Infos.spotsMouse {
+			if isOccupied
+				continue
+			spaceIndex := index
+			Infos.spotsMouse[spaceIndex] := this
+			break
+		}
+		if !IsSet(spaceIndex)
+			return false
+		this.spaceIndex := spaceIndex
+		return true
+	}
+
 	_CalculateYCoord() => Round(this.spaceIndex * Infos.guiWidth - Infos.guiWidth)
 
 	_CalculateLastCoord() => Round(this.lastSpot * Infos.guiWidth - Infos.guiWidth)
@@ -182,6 +232,14 @@ class Infos {
 		Hotkey("^Space", Infos.foDestroyAll, "On")
 		if this.spaceIndex <= Infos.maxNumberedHotkeys
 			Hotkey("F" this.spaceIndex, this.bfDestroy, "On")
+		this.gcText.OnEvent("Click", this.bfDestroy)
+		this.gInfo.OnEvent("Close", this.bfDestroy)
+	}
+
+	_SetupHotkeysAndEventsNoLimit() {
+		HotIfWinExist("ahk_id " this.gInfo.Hwnd)
+		; Hotkey("Escape", this.bfDestroy, "On")
+		Hotkey("^Space", Infos.foDestroyAllmouse, "On")
 		this.gcText.OnEvent("Click", this.bfDestroy)
 		this.gInfo.OnEvent("Close", this.bfDestroy)
 	}

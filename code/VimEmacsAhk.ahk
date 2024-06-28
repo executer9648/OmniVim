@@ -288,6 +288,7 @@ tab & ]::
 	setMouseDefSpeed()
 }
 
+#w::
 +#w:: {
 	global fancywmMode := true
 	StateBulb[StateBulb.MaxBulbs - 1].Create()
@@ -400,6 +401,7 @@ else {
 		gotoNormal()
 		gotoMouseMode()
 	}
+	Infos.DestroyAllMouse()
 	Exit
 }
 1:: {
@@ -433,6 +435,7 @@ else {
 		MouseMove(Mouse.x2, Mouse.tildaCol)
 		gotoMouseMode()
 	}
+	Infos.DestroyAllMouse()
 	Exit
 }
 2:: {
@@ -455,9 +458,11 @@ else {
 				gotoNormal()
 				gotoMouseMode()
 				infcounter.Destroy()
+				Infos.DestroyAllMouse()
 				Exit
 			}
 			MouseMove(Mouse.getx(counter, 3, Mouse.numberRow), Mouse.tildaCol)
+			Infos.DestroyAllMouse()
 			Exit
 		}
 		MouseMove(Mouse.x3, Mouse.tildaCol)
@@ -465,6 +470,7 @@ else {
 	else {
 		MouseMove(Mouse.x3, Mouse.tildaCol)
 		gotoMouseMode()
+		Infos.DestroyAllMouse()
 		Exit
 	}
 }
@@ -488,9 +494,11 @@ else {
 				gotoNormal()
 				gotoMouseMode()
 				infcounter.Destroy()
+				Infos.DestroyAllMouse()
 				Exit
 			}
 			MouseMove(Mouse.getx(counter, 4, Mouse.numberRow), Mouse.tildaCol)
+			Infos.DestroyAllMouse()
 			Exit
 		}
 		MouseMove(Mouse.x4, Mouse.tildaCol)
@@ -498,6 +506,7 @@ else {
 	else {
 		MouseMove(Mouse.x4, Mouse.tildaCol)
 		gotoMouseMode()
+		Infos.DestroyAllMouse()
 		Exit
 	}
 }
@@ -521,9 +530,11 @@ else {
 				gotoNormal()
 				gotoMouseMode()
 				infcounter.Destroy()
+				Infos.DestroyAllMouse()
 				Exit
 			}
 			MouseMove(Mouse.getx(counter, 5, Mouse.numberRow), Mouse.tildaCol)
+			Infos.DestroyAllMouse()
 			Exit
 		}
 		MouseMove(Mouse.x5, Mouse.tildaCol)
@@ -531,6 +542,7 @@ else {
 	else {
 		MouseMove(Mouse.x5, Mouse.tildaCol)
 		gotoMouseMode()
+		Infos.DestroyAllMouse()
 		Exit
 	}
 }
@@ -554,9 +566,11 @@ else {
 				gotoNormal()
 				gotoMouseMode()
 				infcounter.Destroy()
+				Infos.DestroyAllMouse()
 				Exit
 			}
 			MouseMove(Mouse.getx(counter, 6, Mouse.numberRow), Mouse.tildaCol)
+			Infos.DestroyAllMouse()
 			Exit
 		}
 		MouseMove(Mouse.x6, Mouse.tildaCol)
@@ -564,6 +578,7 @@ else {
 	else {
 		MouseMove(Mouse.x6, Mouse.tildaCol)
 		gotoMouseMode()
+		Infos.DestroyAllMouse()
 		Exit
 	}
 }
@@ -587,9 +602,11 @@ else {
 				gotoNormal()
 				gotoMouseMode()
 				infcounter.Destroy()
+				Infos.DestroyAllMouse()
 				Exit
 			}
 			MouseMove(Mouse.getx(counter, 7, Mouse.numberRow), Mouse.tildaCol)
+			Infos.DestroyAllMouse()
 			Exit
 		}
 		MouseMove(Mouse.x7, Mouse.tildaCol)
@@ -597,6 +614,7 @@ else {
 	else {
 		MouseMove(Mouse.x7, Mouse.tildaCol)
 		gotoMouseMode()
+		Infos.DestroyAllMouse()
 		Exit
 	}
 }
@@ -620,9 +638,11 @@ else {
 				gotoNormal()
 				gotoMouseMode()
 				infcounter.Destroy()
+				Infos.DestroyAllMouse()
 				Exit
 			}
 			MouseMove(Mouse.getx(counter, 8, Mouse.numberRow), Mouse.tildaCol)
+			Infos.DestroyAllMouse()
 			Exit
 		}
 		MouseMove(Mouse.x8, Mouse.tildaCol)
@@ -630,6 +650,7 @@ else {
 	else {
 		MouseMove(Mouse.x8, Mouse.tildaCol)
 		gotoMouseMode()
+		Infos.DestroyAllMouse()
 		Exit
 	}
 }
@@ -653,9 +674,11 @@ else {
 				gotoNormal()
 				gotoMouseMode()
 				infcounter.Destroy()
+				Infos.DestroyAllMouse()
 				Exit
 			}
 			MouseMove(Mouse.getx(counter, 9, Mouse.numberRow), Mouse.tildaCol)
+			Infos.DestroyAllMouse()
 			Exit
 		}
 		MouseMove(Mouse.x9, Mouse.tildaCol)
@@ -663,6 +686,7 @@ else {
 	else {
 		MouseMove(Mouse.x9, Mouse.tildaCol)
 		gotoMouseMode()
+		Infos.DestroyAllMouse()
 		Exit
 	}
 }
@@ -686,9 +710,11 @@ else {
 				gotoNormal()
 				gotoMouseMode()
 				infcounter.Destroy()
+				Infos.DestroyAllMouse()
 				Exit
 			}
 			MouseMove(Mouse.getx(counter, 10, Mouse.numberRow), Mouse.tildaCol)
+			Infos.DestroyAllMouse()
 			Exit
 		}
 		MouseMove(Mouse.x10, Mouse.tildaCol)
@@ -696,6 +722,7 @@ else {
 	else {
 		MouseMove(Mouse.x10, Mouse.tildaCol)
 		gotoMouseMode()
+		Infos.DestroyAllMouse()
 		Exit
 	}
 }
@@ -719,9 +746,11 @@ else {
 				gotoNormal()
 				gotoMouseMode()
 				infcounter.Destroy()
+				Infos.DestroyAllMouse()
 				Exit
 			}
 			MouseMove(Mouse.getx(counter, 11, Mouse.numberRow), Mouse.tildaCol)
+			Infos.DestroyAllMouse()
 			Exit
 		}
 		MouseMove(Mouse.x11, Mouse.tildaCol)
@@ -729,6 +758,7 @@ else {
 	else {
 		MouseMove(Mouse.x11, Mouse.tildaCol)
 		gotoMouseMode()
+		Infos.DestroyAllMouse()
 		Exit
 	}
 }
@@ -752,9 +782,11 @@ else {
 				gotoNormal()
 				gotoMouseMode()
 				infcounter.Destroy()
+				Infos.DestroyAllMouse()
 				Exit
 			}
 			MouseMove(Mouse.getx(counter, 12, Mouse.numberRow), Mouse.tildaCol)
+			Infos.DestroyAllMouse()
 			Exit
 		}
 		MouseMove(Mouse.x12, Mouse.tildaCol)
@@ -762,6 +794,7 @@ else {
 	else {
 		MouseMove(Mouse.x12, Mouse.tildaCol)
 		gotoMouseMode()
+		Infos.DestroyAllMouse()
 		Exit
 	}
 }
@@ -785,9 +818,11 @@ else {
 				gotoNormal()
 				gotoMouseMode()
 				infcounter.Destroy()
+				Infos.DestroyAllMouse()
 				Exit
 			}
 			MouseMove(Mouse.getx(counter, 13, Mouse.numberRow), Mouse.tildaCol)
+			Infos.DestroyAllMouse()
 			Exit
 		}
 		MouseMove(Mouse.x13, Mouse.tildaCol)
@@ -795,6 +830,7 @@ else {
 	else {
 		MouseMove(Mouse.x13, Mouse.tildaCol)
 		gotoMouseMode()
+		Infos.DestroyAllMouse()
 		Exit
 	}
 }
@@ -818,9 +854,11 @@ BackSpace:: {
 				gotoNormal()
 				gotoMouseMode()
 				infcounter.Destroy()
+				Infos.DestroyAllMouse()
 				Exit
 			}
 			MouseMove(Mouse.getx(counter, 14, Mouse.numberRow), Mouse.tildaCol)
+			Infos.DestroyAllMouse()
 			Exit
 		}
 		MouseMove(Mouse.x14, Mouse.tildaCol)
@@ -828,6 +866,7 @@ BackSpace:: {
 	else {
 		MouseMove(Mouse.x14, Mouse.tildaCol)
 		gotoMouseMode()
+		Infos.DestroyAllMouse()
 		Exit
 	}
 }
@@ -852,9 +891,11 @@ tab:: {
 				gotoNormal()
 				gotoMouseMode()
 				infcounter.Destroy()
+				Infos.DestroyAllMouse()
 				Exit
 			}
 			MouseMove(Mouse.getx(counter, 1, Mouse.numberRow), Mouse.tabCol)
+			Infos.DestroyAllMouse()
 			Exit
 		}
 		MouseMove(Mouse.x1, Mouse.tabCol)
@@ -862,6 +903,7 @@ tab:: {
 	else {
 		MouseMove(Mouse.x1, Mouse.tabCol)
 		gotoMouseMode()
+		Infos.DestroyAllMouse()
 		Exit
 	}
 }
@@ -885,9 +927,11 @@ q:: {
 				gotoNormal()
 				gotoMouseMode()
 				infcounter.Destroy()
+				Infos.DestroyAllMouse()
 				Exit
 			}
 			MouseMove(Mouse.getx(counter, 2, Mouse.numberRow), Mouse.tabCol)
+			Infos.DestroyAllMouse()
 			Exit
 		}
 		MouseMove(Mouse.x2, Mouse.tabCol)
@@ -895,6 +939,7 @@ q:: {
 	else {
 		MouseMove(Mouse.x2, Mouse.tabCol)
 		gotoMouseMode()
+		Infos.DestroyAllMouse()
 		Exit
 	}
 }
@@ -918,9 +963,11 @@ w:: {
 				gotoNormal()
 				gotoMouseMode()
 				infcounter.Destroy()
+				Infos.DestroyAllMouse()
 				Exit
 			}
 			MouseMove(Mouse.getx(counter, 3, Mouse.numberRow), Mouse.tabCol)
+			Infos.DestroyAllMouse()
 			Exit
 		}
 		MouseMove(Mouse.x3, Mouse.tabCol)
@@ -928,6 +975,7 @@ w:: {
 	else {
 		MouseMove(Mouse.x3, Mouse.tabCol)
 		gotoMouseMode()
+		Infos.DestroyAllMouse()
 		Exit
 	}
 }
@@ -951,9 +999,11 @@ e:: {
 				gotoNormal()
 				gotoMouseMode()
 				infcounter.Destroy()
+				Infos.DestroyAllMouse()
 				Exit
 			}
 			MouseMove(Mouse.getx(counter, 4, Mouse.numberRow), Mouse.tabCol)
+			Infos.DestroyAllMouse()
 			Exit
 		}
 		MouseMove(Mouse.x4, Mouse.tabCol)
@@ -961,6 +1011,7 @@ e:: {
 	else {
 		MouseMove(Mouse.x4, Mouse.tabCol)
 		gotoMouseMode()
+		Infos.DestroyAllMouse()
 		Exit
 	}
 }
@@ -984,9 +1035,11 @@ r:: {
 				gotoNormal()
 				gotoMouseMode()
 				infcounter.Destroy()
+				Infos.DestroyAllMouse()
 				Exit
 			}
 			MouseMove(Mouse.getx(counter, 5, Mouse.numberRow), Mouse.tabCol)
+			Infos.DestroyAllMouse()
 			Exit
 		}
 		MouseMove(Mouse.x5, Mouse.tabCol)
@@ -994,6 +1047,7 @@ r:: {
 	else {
 		MouseMove(Mouse.x5, Mouse.tabCol)
 		gotoMouseMode()
+		Infos.DestroyAllMouse()
 		Exit
 	}
 }
@@ -1017,9 +1071,11 @@ t:: {
 				gotoNormal()
 				gotoMouseMode()
 				infcounter.Destroy()
+				Infos.DestroyAllMouse()
 				Exit
 			}
 			MouseMove(Mouse.getx(counter, 6, Mouse.numberRow), Mouse.tabCol)
+			Infos.DestroyAllMouse()
 			Exit
 		}
 		MouseMove(Mouse.x6, Mouse.tabCol)
@@ -1027,6 +1083,7 @@ t:: {
 	else {
 		MouseMove(Mouse.x6, Mouse.tabCol)
 		gotoMouseMode()
+		Infos.DestroyAllMouse()
 		Exit
 	}
 }
@@ -1050,9 +1107,11 @@ y:: {
 				gotoNormal()
 				gotoMouseMode()
 				infcounter.Destroy()
+				Infos.DestroyAllMouse()
 				Exit
 			}
 			MouseMove(Mouse.getx(counter, 7, Mouse.numberRow), Mouse.tabCol)
+			Infos.DestroyAllMouse()
 			Exit
 		}
 		MouseMove(Mouse.x7, Mouse.tabCol)
@@ -1060,6 +1119,7 @@ y:: {
 	else {
 		MouseMove(Mouse.x7, Mouse.tabCol)
 		gotoMouseMode()
+		Infos.DestroyAllMouse()
 		Exit
 	}
 }
@@ -1083,9 +1143,11 @@ u:: {
 				gotoNormal()
 				gotoMouseMode()
 				infcounter.Destroy()
+				Infos.DestroyAllMouse()
 				Exit
 			}
 			MouseMove(Mouse.getx(counter, 8, Mouse.numberRow), Mouse.tabCol)
+			Infos.DestroyAllMouse()
 			Exit
 		}
 		MouseMove(Mouse.x8, Mouse.tabCol)
@@ -1093,6 +1155,7 @@ u:: {
 	else {
 		MouseMove(Mouse.x8, Mouse.tabCol)
 		gotoMouseMode()
+		Infos.DestroyAllMouse()
 		Exit
 	}
 }
@@ -1116,9 +1179,11 @@ i:: {
 				gotoNormal()
 				gotoMouseMode()
 				infcounter.Destroy()
+				Infos.DestroyAllMouse()
 				Exit
 			}
 			MouseMove(Mouse.getx(counter, 9, Mouse.numberRow), Mouse.tabCol)
+			Infos.DestroyAllMouse()
 			Exit
 		}
 		MouseMove(Mouse.x9, Mouse.tabCol)
@@ -1126,6 +1191,7 @@ i:: {
 	else {
 		MouseMove(Mouse.x9, Mouse.tabCol)
 		gotoMouseMode()
+		Infos.DestroyAllMouse()
 		Exit
 	}
 }
@@ -1149,9 +1215,11 @@ o:: {
 				gotoNormal()
 				gotoMouseMode()
 				infcounter.Destroy()
+				Infos.DestroyAllMouse()
 				Exit
 			}
 			MouseMove(Mouse.getx(counter, 10, Mouse.numberRow), Mouse.tabCol)
+			Infos.DestroyAllMouse()
 			Exit
 		}
 		MouseMove(Mouse.x10, Mouse.tabCol)
@@ -1159,6 +1227,7 @@ o:: {
 	else {
 		MouseMove(Mouse.x10, Mouse.tabCol)
 		gotoMouseMode()
+		Infos.DestroyAllMouse()
 		Exit
 	}
 }
@@ -1182,9 +1251,11 @@ p:: {
 				gotoNormal()
 				gotoMouseMode()
 				infcounter.Destroy()
+				Infos.DestroyAllMouse()
 				Exit
 			}
 			MouseMove(Mouse.getx(counter, 11, Mouse.numberRow), Mouse.tabCol)
+			Infos.DestroyAllMouse()
 			Exit
 		}
 		MouseMove(Mouse.x11, Mouse.tabCol)
@@ -1192,6 +1263,7 @@ p:: {
 	else {
 		MouseMove(Mouse.x11, Mouse.tabCol)
 		gotoMouseMode()
+		Infos.DestroyAllMouse()
 		Exit
 	}
 }
@@ -1215,9 +1287,11 @@ p:: {
 				gotoNormal()
 				gotoMouseMode()
 				infcounter.Destroy()
+				Infos.DestroyAllMouse()
 				Exit
 			}
 			MouseMove(Mouse.getx(counter, 12, Mouse.numberRow), Mouse.tabCol)
+			Infos.DestroyAllMouse()
 			Exit
 		}
 		MouseMove(Mouse.x12, Mouse.tabCol)
@@ -1225,6 +1299,7 @@ p:: {
 	else {
 		MouseMove(Mouse.x12, Mouse.tabCol)
 		gotoMouseMode()
+		Infos.DestroyAllMouse()
 		Exit
 	}
 }
@@ -1248,9 +1323,11 @@ p:: {
 				gotoNormal()
 				gotoMouseMode()
 				infcounter.Destroy()
+				Infos.DestroyAllMouse()
 				Exit
 			}
 			MouseMove(Mouse.getx(counter, 13, Mouse.numberRow), Mouse.tabCol)
+			Infos.DestroyAllMouse()
 			Exit
 		}
 		MouseMove(Mouse.x13, Mouse.tabCol)
@@ -1258,6 +1335,7 @@ p:: {
 	else {
 		MouseMove(Mouse.x13, Mouse.tabCol)
 		gotoMouseMode()
+		Infos.DestroyAllMouse()
 		Exit
 	}
 }
@@ -1281,9 +1359,11 @@ p:: {
 				gotoNormal()
 				gotoMouseMode()
 				infcounter.Destroy()
+				Infos.DestroyAllMouse()
 				Exit
 			}
 			MouseMove(Mouse.getx(counter, 14, Mouse.numberRow), Mouse.tabCol)
+			Infos.DestroyAllMouse()
 			Exit
 		}
 		MouseMove(Mouse.x14, Mouse.tabCol)
@@ -1291,6 +1371,7 @@ p:: {
 	else {
 		MouseMove(Mouse.x14, Mouse.tabCol)
 		gotoMouseMode()
+		Infos.DestroyAllMouse()
 		Exit
 	}
 }
@@ -1314,9 +1395,11 @@ LControl:: {
 				gotoNormal()
 				gotoMouseMode()
 				infcounter.Destroy()
+				Infos.DestroyAllMouse()
 				Exit
 			}
 			MouseMove(Mouse.getx(counter, 1, Mouse.aRow), Mouse.capsCol)
+			Infos.DestroyAllMouse()
 			Exit
 		}
 		MouseMove(Mouse.ax1, Mouse.capsCol)
@@ -1324,6 +1407,7 @@ LControl:: {
 	else {
 		MouseMove(Mouse.ax1, Mouse.capsCol)
 		gotoMouseMode()
+		Infos.DestroyAllMouse()
 		Exit
 	}
 }
@@ -1347,9 +1431,11 @@ a:: {
 				gotoNormal()
 				gotoMouseMode()
 				infcounter.Destroy()
+				Infos.DestroyAllMouse()
 				Exit
 			}
 			MouseMove(Mouse.getx(counter, 2, Mouse.aRow), Mouse.capsCol)
+			Infos.DestroyAllMouse()
 			Exit
 		}
 		MouseMove(Mouse.ax2, Mouse.capsCol)
@@ -1357,6 +1443,7 @@ a:: {
 	else {
 		MouseMove(Mouse.ax2, Mouse.capsCol)
 		gotoMouseMode()
+		Infos.DestroyAllMouse()
 		Exit
 	}
 }
@@ -1380,9 +1467,11 @@ s:: {
 				gotoNormal()
 				gotoMouseMode()
 				infcounter.Destroy()
+				Infos.DestroyAllMouse()
 				Exit
 			}
 			MouseMove(Mouse.getx(counter, 3, Mouse.aRow), Mouse.capsCol)
+			Infos.DestroyAllMouse()
 			Exit
 		}
 		MouseMove(Mouse.ax3, Mouse.capsCol)
@@ -1390,6 +1479,7 @@ s:: {
 	else {
 		MouseMove(Mouse.ax3, Mouse.capsCol)
 		gotoMouseMode()
+		Infos.DestroyAllMouse()
 		Exit
 	}
 }
@@ -1413,9 +1503,11 @@ d:: {
 				gotoNormal()
 				gotoMouseMode()
 				infcounter.Destroy()
+				Infos.DestroyAllMouse()
 				Exit
 			}
 			MouseMove(Mouse.getx(counter, 4, Mouse.aRow), Mouse.capsCol)
+			Infos.DestroyAllMouse()
 			Exit
 		}
 		MouseMove(Mouse.ax4, Mouse.capsCol)
@@ -1423,6 +1515,7 @@ d:: {
 	else {
 		MouseMove(Mouse.ax4, Mouse.capsCol)
 		gotoMouseMode()
+		Infos.DestroyAllMouse()
 		Exit
 	}
 }
@@ -1446,9 +1539,11 @@ f:: {
 				gotoNormal()
 				gotoMouseMode()
 				infcounter.Destroy()
+				Infos.DestroyAllMouse()
 				Exit
 			}
 			MouseMove(Mouse.getx(counter, 5, Mouse.aRow), Mouse.capsCol)
+			Infos.DestroyAllMouse()
 			Exit
 		}
 		MouseMove(Mouse.ax5, Mouse.capsCol)
@@ -1456,6 +1551,7 @@ f:: {
 	else {
 		MouseMove(Mouse.ax5, Mouse.capsCol)
 		gotoMouseMode()
+		Infos.DestroyAllMouse()
 		Exit
 	}
 }
@@ -1479,9 +1575,11 @@ g:: {
 				gotoNormal()
 				gotoMouseMode()
 				infcounter.Destroy()
+				Infos.DestroyAllMouse()
 				Exit
 			}
 			MouseMove(Mouse.getx(counter, 6, Mouse.aRow), Mouse.capsCol)
+			Infos.DestroyAllMouse()
 			Exit
 		}
 		MouseMove(Mouse.ax6, Mouse.capsCol)
@@ -1489,6 +1587,7 @@ g:: {
 	else {
 		MouseMove(Mouse.ax6, Mouse.capsCol)
 		gotoMouseMode()
+		Infos.DestroyAllMouse()
 		Exit
 	}
 }
@@ -1512,9 +1611,11 @@ h:: {
 				gotoNormal()
 				gotoMouseMode()
 				infcounter.Destroy()
+				Infos.DestroyAllMouse()
 				Exit
 			}
 			MouseMove(Mouse.getx(counter, 7, Mouse.aRow), Mouse.capsCol)
+			Infos.DestroyAllMouse()
 			Exit
 		}
 		MouseMove(Mouse.ax7, Mouse.capsCol)
@@ -1522,6 +1623,7 @@ h:: {
 	else {
 		MouseMove(Mouse.ax7, Mouse.capsCol)
 		gotoMouseMode()
+		Infos.DestroyAllMouse()
 		Exit
 	}
 }
@@ -1545,9 +1647,11 @@ j:: {
 				gotoNormal()
 				gotoMouseMode()
 				infcounter.Destroy()
+				Infos.DestroyAllMouse()
 				Exit
 			}
 			MouseMove(Mouse.getx(counter, 8, Mouse.aRow), Mouse.capsCol)
+			Infos.DestroyAllMouse()
 			Exit
 		}
 		MouseMove(Mouse.ax8, Mouse.capsCol)
@@ -1555,6 +1659,7 @@ j:: {
 	else {
 		MouseMove(Mouse.ax8, Mouse.capsCol)
 		gotoMouseMode()
+		Infos.DestroyAllMouse()
 		Exit
 	}
 }
@@ -1578,9 +1683,11 @@ k:: {
 				gotoNormal()
 				gotoMouseMode()
 				infcounter.Destroy()
+				Infos.DestroyAllMouse()
 				Exit
 			}
 			MouseMove(Mouse.getx(counter, 9, Mouse.aRow), Mouse.capsCol)
+			Infos.DestroyAllMouse()
 			Exit
 		}
 		MouseMove(Mouse.ax9, Mouse.capsCol)
@@ -1588,6 +1695,7 @@ k:: {
 	else {
 		MouseMove(Mouse.ax9, Mouse.capsCol)
 		gotoMouseMode()
+		Infos.DestroyAllMouse()
 		Exit
 	}
 }
@@ -1611,9 +1719,11 @@ l:: {
 				gotoNormal()
 				gotoMouseMode()
 				infcounter.Destroy()
+				Infos.DestroyAllMouse()
 				Exit
 			}
 			MouseMove(Mouse.getx(counter, 10, Mouse.aRow), Mouse.capsCol)
+			Infos.DestroyAllMouse()
 			Exit
 		}
 		MouseMove(Mouse.ax10, Mouse.capsCol)
@@ -1621,6 +1731,7 @@ l:: {
 	else {
 		MouseMove(Mouse.ax10, Mouse.capsCol)
 		gotoMouseMode()
+		Infos.DestroyAllMouse()
 		Exit
 	}
 }
@@ -1644,9 +1755,11 @@ l:: {
 				gotoNormal()
 				gotoMouseMode()
 				infcounter.Destroy()
+				Infos.DestroyAllMouse()
 				Exit
 			}
 			MouseMove(Mouse.getx(counter, 11, Mouse.aRow), Mouse.capsCol)
+			Infos.DestroyAllMouse()
 			Exit
 		}
 		MouseMove(Mouse.ax11, Mouse.capsCol)
@@ -1654,6 +1767,7 @@ l:: {
 	else {
 		MouseMove(Mouse.ax11, Mouse.capsCol)
 		gotoMouseMode()
+		Infos.DestroyAllMouse()
 		Exit
 	}
 }
@@ -1677,9 +1791,11 @@ l:: {
 				gotoNormal()
 				gotoMouseMode()
 				infcounter.Destroy()
+				Infos.DestroyAllMouse()
 				Exit
 			}
 			MouseMove(Mouse.getx(counter, 12, Mouse.aRow), Mouse.capsCol)
+			Infos.DestroyAllMouse()
 			Exit
 		}
 		MouseMove(Mouse.ax12, Mouse.capsCol)
@@ -1687,6 +1803,7 @@ l:: {
 	else {
 		MouseMove(Mouse.ax12, Mouse.capsCol)
 		gotoMouseMode()
+		Infos.DestroyAllMouse()
 		Exit
 	}
 }
@@ -1710,9 +1827,11 @@ Enter:: {
 				gotoNormal()
 				gotoMouseMode()
 				infcounter.Destroy()
+				Infos.DestroyAllMouse()
 				Exit
 			}
 			MouseMove(Mouse.getx(counter, 13, Mouse.aRow), Mouse.capsCol)
+			Infos.DestroyAllMouse()
 			Exit
 		}
 		MouseMove(Mouse.ax13, Mouse.capsCol)
@@ -1720,6 +1839,7 @@ Enter:: {
 	else {
 		MouseMove(Mouse.ax13, Mouse.capsCol)
 		gotoMouseMode()
+		Infos.DestroyAllMouse()
 		Exit
 	}
 }
@@ -1744,9 +1864,11 @@ LShift:: {
 				gotoNormal()
 				gotoMouseMode()
 				infcounter.Destroy()
+				Infos.DestroyAllMouse()
 				Exit
 			}
 			MouseMove(Mouse.getx(counter, 1, Mouse.zRow), Mouse.shiftCol)
+			Infos.DestroyAllMouse()
 			Exit
 		}
 		MouseMove(Mouse.zx1, Mouse.shiftCol)
@@ -1754,6 +1876,7 @@ LShift:: {
 	else {
 		MouseMove(Mouse.zx1, Mouse.shiftCol)
 		gotoMouseMode()
+		Infos.DestroyAllMouse()
 		Exit
 	}
 }
@@ -1777,9 +1900,11 @@ z:: {
 				gotoNormal()
 				gotoMouseMode()
 				infcounter.Destroy()
+				Infos.DestroyAllMouse()
 				Exit
 			}
 			MouseMove(Mouse.getx(counter, 2, Mouse.zRow), Mouse.shiftCol)
+			Infos.DestroyAllMouse()
 			Exit
 		}
 		MouseMove(Mouse.zx2, Mouse.shiftCol)
@@ -1787,6 +1912,7 @@ z:: {
 	else {
 		MouseMove(Mouse.zx2, Mouse.shiftCol)
 		gotoMouseMode()
+		Infos.DestroyAllMouse()
 		Exit
 	}
 }
@@ -1810,9 +1936,11 @@ x:: {
 				gotoNormal()
 				gotoMouseMode()
 				infcounter.Destroy()
+				Infos.DestroyAllMouse()
 				Exit
 			}
 			MouseMove(Mouse.getx(counter, 3, Mouse.zRow), Mouse.shiftCol)
+			Infos.DestroyAllMouse()
 			Exit
 		}
 		MouseMove(Mouse.zx3, Mouse.shiftCol)
@@ -1820,6 +1948,7 @@ x:: {
 	else {
 		MouseMove(Mouse.zx3, Mouse.shiftCol)
 		gotoMouseMode()
+		Infos.DestroyAllMouse()
 		Exit
 	}
 }
@@ -1843,9 +1972,11 @@ c:: {
 				gotoNormal()
 				gotoMouseMode()
 				infcounter.Destroy()
+				Infos.DestroyAllMouse()
 				Exit
 			}
 			MouseMove(Mouse.getx(counter, 4, Mouse.zRow), Mouse.shiftCol)
+			Infos.DestroyAllMouse()
 			Exit
 		}
 		MouseMove(Mouse.zx4, Mouse.shiftCol)
@@ -1853,6 +1984,7 @@ c:: {
 	else {
 		MouseMove(Mouse.zx4, Mouse.shiftCol)
 		gotoMouseMode()
+		Infos.DestroyAllMouse()
 		Exit
 	}
 }
@@ -1876,9 +2008,11 @@ v:: {
 				gotoNormal()
 				gotoMouseMode()
 				infcounter.Destroy()
+				Infos.DestroyAllMouse()
 				Exit
 			}
 			MouseMove(Mouse.getx(counter, 5, Mouse.zRow), Mouse.shiftCol)
+			Infos.DestroyAllMouse()
 			Exit
 		}
 		MouseMove(Mouse.zx5, Mouse.shiftCol)
@@ -1886,6 +2020,7 @@ v:: {
 	else {
 		MouseMove(Mouse.zx5, Mouse.shiftCol)
 		gotoMouseMode()
+		Infos.DestroyAllMouse()
 		Exit
 	}
 }
@@ -1909,9 +2044,11 @@ b:: {
 				gotoNormal()
 				gotoMouseMode()
 				infcounter.Destroy()
+				Infos.DestroyAllMouse()
 				Exit
 			}
 			MouseMove(Mouse.getx(counter, 6, Mouse.zRow), Mouse.shiftCol)
+			Infos.DestroyAllMouse()
 			Exit
 		}
 		MouseMove(Mouse.zx6, Mouse.shiftCol)
@@ -1919,6 +2056,7 @@ b:: {
 	else {
 		MouseMove(Mouse.zx6, Mouse.shiftCol)
 		gotoMouseMode()
+		Infos.DestroyAllMouse()
 		Exit
 	}
 }
@@ -1942,9 +2080,11 @@ n:: {
 				gotoNormal()
 				gotoMouseMode()
 				infcounter.Destroy()
+				Infos.DestroyAllMouse()
 				Exit
 			}
 			MouseMove(Mouse.getx(counter, 7, Mouse.zRow), Mouse.shiftCol)
+			Infos.DestroyAllMouse()
 			Exit
 		}
 		MouseMove(Mouse.zx7, Mouse.shiftCol)
@@ -1952,6 +2092,7 @@ n:: {
 	else {
 		MouseMove(Mouse.zx7, Mouse.shiftCol)
 		gotoMouseMode()
+		Infos.DestroyAllMouse()
 		Exit
 	}
 }
@@ -1975,9 +2116,11 @@ m:: {
 				gotoNormal()
 				gotoMouseMode()
 				infcounter.Destroy()
+				Infos.DestroyAllMouse()
 				Exit
 			}
 			MouseMove(Mouse.getx(counter, 8, Mouse.zRow), Mouse.shiftCol)
+			Infos.DestroyAllMouse()
 			Exit
 		}
 		MouseMove(Mouse.zx8, Mouse.shiftCol)
@@ -1985,6 +2128,7 @@ m:: {
 	else {
 		MouseMove(Mouse.zx8, Mouse.shiftCol)
 		gotoMouseMode()
+		Infos.DestroyAllMouse()
 		Exit
 	}
 }
@@ -2008,9 +2152,11 @@ m:: {
 				gotoNormal()
 				gotoMouseMode()
 				infcounter.Destroy()
+				Infos.DestroyAllMouse()
 				Exit
 			}
 			MouseMove(Mouse.getx(counter, 9, Mouse.zRow), Mouse.shiftCol)
+			Infos.DestroyAllMouse()
 			Exit
 		}
 		MouseMove(Mouse.zx9, Mouse.shiftCol)
@@ -2018,6 +2164,7 @@ m:: {
 	else {
 		MouseMove(Mouse.zx9, Mouse.shiftCol)
 		gotoMouseMode()
+		Infos.DestroyAllMouse()
 		Exit
 	}
 }
@@ -2041,9 +2188,11 @@ m:: {
 				gotoNormal()
 				gotoMouseMode()
 				infcounter.Destroy()
+				Infos.DestroyAllMouse()
 				Exit
 			}
 			MouseMove(Mouse.getx(counter, 10, Mouse.zRow), Mouse.shiftCol)
+			Infos.DestroyAllMouse()
 			Exit
 		}
 		MouseMove(Mouse.zx10, Mouse.shiftCol)
@@ -2051,6 +2200,7 @@ m:: {
 	else {
 		MouseMove(Mouse.zx10, Mouse.shiftCol)
 		gotoMouseMode()
+		Infos.DestroyAllMouse()
 		Exit
 	}
 }
@@ -2074,9 +2224,11 @@ m:: {
 				gotoNormal()
 				gotoMouseMode()
 				infcounter.Destroy()
+				Infos.DestroyAllMouse()
 				Exit
 			}
 			MouseMove(Mouse.getx(counter, 11, Mouse.zRow), Mouse.shiftCol)
+			Infos.DestroyAllMouse()
 			Exit
 		}
 		MouseMove(Mouse.zx11, Mouse.shiftCol)
@@ -2084,6 +2236,7 @@ m:: {
 	else {
 		MouseMove(Mouse.zx11, Mouse.shiftCol)
 		gotoMouseMode()
+		Infos.DestroyAllMouse()
 		Exit
 	}
 }
@@ -2107,9 +2260,11 @@ RShift:: {
 				gotoNormal()
 				gotoMouseMode()
 				infcounter.Destroy()
+				Infos.DestroyAllMouse()
 				Exit
 			}
 			MouseMove(Mouse.getx(counter, 12, Mouse.zRow), Mouse.shiftCol)
+			Infos.DestroyAllMouse()
 			Exit
 		}
 		MouseMove(Mouse.zx12, Mouse.shiftCol)
@@ -2117,6 +2272,7 @@ RShift:: {
 	else {
 		MouseMove(Mouse.zx12, Mouse.shiftCol)
 		gotoMouseMode()
+		Infos.DestroyAllMouse()
 		Exit
 	}
 }
@@ -2141,9 +2297,11 @@ LWin:: {
 				gotoNormal()
 				gotoMouseMode()
 				infcounter.Destroy()
+				Infos.DestroyAllMouse()
 				Exit
 			}
 			MouseMove(Mouse.getx(counter, 1, Mouse.spaceRow), Mouse.spaceCol)
+			Infos.DestroyAllMouse()
 			Exit
 		}
 		MouseMove(Mouse.sx1, Mouse.spaceCol)
@@ -2151,6 +2309,7 @@ LWin:: {
 	else {
 		MouseMove(Mouse.sx1, Mouse.spaceCol)
 		gotoMouseMode()
+		Infos.DestroyAllMouse()
 		Exit
 	}
 }
@@ -2174,9 +2333,11 @@ LAlt:: {
 				gotoNormal()
 				gotoMouseMode()
 				infcounter.Destroy()
+				Infos.DestroyAllMouse()
 				Exit
 			}
 			MouseMove(Mouse.getx(counter, 2, Mouse.spaceRow), Mouse.spaceCol)
+			Infos.DestroyAllMouse()
 			Exit
 		}
 		MouseMove(Mouse.sx2, Mouse.spaceCol)
@@ -2184,6 +2345,7 @@ LAlt:: {
 	else {
 		MouseMove(Mouse.sx2, Mouse.spaceCol)
 		gotoMouseMode()
+		Infos.DestroyAllMouse()
 		Exit
 	}
 }
@@ -2207,9 +2369,11 @@ Space:: {
 				gotoNormal()
 				gotoMouseMode()
 				infcounter.Destroy()
+				Infos.DestroyAllMouse()
 				Exit
 			}
 			MouseMove(Mouse.getx(counter, 3, Mouse.spaceRow), Mouse.spaceCol)
+			Infos.DestroyAllMouse()
 			Exit
 		}
 		MouseMove(Mouse.sx3, Mouse.spaceCol)
@@ -2217,6 +2381,7 @@ Space:: {
 	else {
 		MouseMove(Mouse.sx3, Mouse.spaceCol)
 		gotoMouseMode()
+		Infos.DestroyAllMouse()
 		Exit
 	}
 }
@@ -2240,9 +2405,11 @@ RAlt:: {
 				gotoNormal()
 				gotoMouseMode()
 				infcounter.Destroy()
+				Infos.DestroyAllMouse()
 				Exit
 			}
 			MouseMove(Mouse.getx(counter, 4, Mouse.spaceRow), Mouse.spaceCol)
+			Infos.DestroyAllMouse()
 			Exit
 		}
 		MouseMove(Mouse.sx4, Mouse.spaceCol)
@@ -2250,6 +2417,7 @@ RAlt:: {
 	else {
 		MouseMove(Mouse.sx4, Mouse.spaceCol)
 		gotoMouseMode()
+		Infos.DestroyAllMouse()
 		Exit
 	}
 }
@@ -2274,9 +2442,11 @@ AppsKey:: {
 				gotoNormal()
 				gotoMouseMode()
 				infcounter.Destroy()
+				Infos.DestroyAllMouse()
 				Exit
 			}
 			MouseMove(Mouse.getx(counter, 5, Mouse.spaceRow), Mouse.spaceCol)
+			Infos.DestroyAllMouse()
 			Exit
 		}
 		MouseMove(Mouse.sx5, Mouse.spaceCol)
@@ -2284,6 +2454,7 @@ AppsKey:: {
 	else {
 		MouseMove(Mouse.sx5, Mouse.spaceCol)
 		gotoMouseMode()
+		Infos.DestroyAllMouse()
 		Exit
 	}
 }
@@ -2307,9 +2478,11 @@ Rctrl:: {
 				gotoNormal()
 				gotoMouseMode()
 				infcounter.Destroy()
+				Infos.DestroyAllMouse()
 				Exit
 			}
 			MouseMove(Mouse.getx(counter, 6, Mouse.spaceRow), Mouse.spaceCol)
+			Infos.DestroyAllMouse()
 			Exit
 		}
 		MouseMove(Mouse.sx6, Mouse.spaceCol)
@@ -2317,6 +2490,7 @@ Rctrl:: {
 	else {
 		MouseMove(Mouse.sx6, Mouse.spaceCol)
 		gotoMouseMode()
+		Infos.DestroyAllMouse()
 		Exit
 	}
 }
@@ -2332,6 +2506,7 @@ Esc:: {
 
 !`:: {
 	exitVim()
+	Infos.DestroyAllMouse()
 	Exit
 }
 
@@ -5460,6 +5635,65 @@ gotoFMode() {
 	global normalMode := false
 	global mouseManagerMode := false
 	global fMode := true
+	Infos("``", , , true, Mouse.x1, Mouse.tildaCol)
+	Infos("1", , , true, Mouse.x2, Mouse.tildaCol)
+	Infos("2", , , true, Mouse.x3, Mouse.tildaCol)
+	Infos("3", , , true, Mouse.x4, Mouse.tildaCol)
+	Infos("4", , , true, Mouse.x5, Mouse.tildaCol)
+	Infos("5", , , true, Mouse.x6, Mouse.tildaCol)
+	Infos("6", , , true, Mouse.x7, Mouse.tildaCol)
+	Infos("7", , , true, Mouse.x8, Mouse.tildaCol)
+	Infos("8", , , true, Mouse.x9, Mouse.tildaCol)
+	Infos("9", , , true, Mouse.x10, Mouse.tildaCol)
+	Infos("0", , , true, Mouse.x11, Mouse.tildaCol)
+	Infos("-", , , true, Mouse.x12, Mouse.tildaCol)
+	Infos("=", , , true, Mouse.x13, Mouse.tildaCol)
+	Infos("BackSpace", , , true, Mouse.x14, Mouse.tildaCol)
+	Infos("tab", , , true, Mouse.x1, Mouse.tabCol)
+	Infos("q", , , true, Mouse.x2, Mouse.tabCol)
+	Infos("w", , , true, Mouse.x3, Mouse.tabCol)
+	Infos("e", , , true, Mouse.x4, Mouse.tabCol)
+	Infos("r", , , true, Mouse.x5, Mouse.tabCol)
+	Infos("t", , , true, Mouse.x6, Mouse.tabCol)
+	Infos("y", , , true, Mouse.x7, Mouse.tabCol)
+	Infos("u", , , true, Mouse.x8, Mouse.tabCol)
+	Infos("i", , , true, Mouse.x9, Mouse.tabCol)
+	Infos("o", , , true, Mouse.x10, Mouse.tabCol)
+	Infos("p", , , true, Mouse.x11, Mouse.tabCol)
+	Infos("[", , , true, Mouse.x12, Mouse.tabCol)
+	Infos("]", , , true, Mouse.x13, Mouse.tabCol)
+	Infos("\", , , true, Mouse.x14, Mouse.tabCol)
+	Infos("LControl", , , true, Mouse.ax1, Mouse.capsCol)
+	Infos("a", , , true, Mouse.ax2, Mouse.capsCol)
+	Infos("s", , , true, Mouse.ax3, Mouse.capsCol)
+	Infos("d", , , true, Mouse.ax4, Mouse.capsCol)
+	Infos("f", , , true, Mouse.ax5, Mouse.capsCol)
+	Infos("g", , , true, Mouse.ax6, Mouse.capsCol)
+	Infos("h", , , true, Mouse.ax7, Mouse.capsCol)
+	Infos("j", , , true, Mouse.ax8, Mouse.capsCol)
+	Infos("k", , , true, Mouse.ax9, Mouse.capsCol)
+	Infos("l", , , true, Mouse.ax10, Mouse.capsCol)
+	Infos(";", , , true, Mouse.ax11, Mouse.capsCol)
+	Infos("'", , , true, Mouse.ax12, Mouse.capsCol)
+	Infos("Enter", , , true, Mouse.ax13, Mouse.capsCol)
+	Infos("LShift", , , true, Mouse.zx1, Mouse.shiftCol)
+	Infos("z", , , true, Mouse.zx2, Mouse.shiftCol)
+	Infos("x", , , true, Mouse.zx3, Mouse.shiftCol)
+	Infos("c", , , true, Mouse.zx4, Mouse.shiftCol)
+	Infos("v", , , true, Mouse.zx5, Mouse.shiftCol)
+	Infos("b", , , true, Mouse.zx6, Mouse.shiftCol)
+	Infos("n", , , true, Mouse.zx7, Mouse.shiftCol)
+	Infos("m", , , true, Mouse.zx8, Mouse.shiftCol)
+	Infos(",", , , true, Mouse.zx9, Mouse.shiftCol)
+	Infos(".", , , true, Mouse.zx10, Mouse.shiftCol)
+	Infos("/", , , true, Mouse.zx11, Mouse.shiftCol)
+	Infos("RShift", , , true, Mouse.zx12, Mouse.shiftCol)
+	Infos("LWin", , , true, Mouse.sx1, Mouse.spaceCol)
+	Infos("LAlt", , , true, Mouse.sx2, Mouse.spaceCol)
+	Infos("Space", , , true, Mouse.sx3, Mouse.spaceCol)
+	Infos("RAlt", , , true, Mouse.sx4, Mouse.spaceCol)
+	Infos("AppsKey", , , true, Mouse.sx5, Mouse.spaceCol)
+	Infos("Rctrl", , , true, Mouse.sx6, Mouse.spaceCol)
 	StateBulb[4].Create()
 	clearCounter()
 }
