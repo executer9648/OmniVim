@@ -389,10 +389,9 @@ else {
 				gotoNormal()
 				gotoMouseMode()
 				infcounter.Destroy()
-				Exit
 			}
-			MouseMove(Mouse.getx(counter, 1, Mouse.numberRow), Mouse.tildaCol)
-			Exit
+			else
+				MouseMove(Mouse.getx(counter, 1, Mouse.numberRow), Mouse.tildaCol)
 		}
 		MouseMove(Mouse.x1, Mouse.tildaCol)
 	}
@@ -402,7 +401,6 @@ else {
 		gotoMouseMode()
 	}
 	Infos.DestroyAllMouse()
-	Exit
 }
 1:: {
 	global counter
@@ -424,10 +422,9 @@ else {
 				gotoNormal()
 				gotoMouseMode()
 				infcounter.Destroy()
-				Exit
 			}
-			MouseMove(Mouse.getx(counter, 2, Mouse.numberRow), Mouse.tildaCol)
-			Exit
+			else
+				MouseMove(Mouse.getx(counter, 2, Mouse.numberRow), Mouse.tildaCol)
 		}
 		MouseMove(Mouse.x2, Mouse.tildaCol)
 	}
@@ -436,7 +433,6 @@ else {
 		gotoMouseMode()
 	}
 	Infos.DestroyAllMouse()
-	Exit
 }
 2:: {
 	global counter
@@ -459,20 +455,17 @@ else {
 				gotoMouseMode()
 				infcounter.Destroy()
 				Infos.DestroyAllMouse()
-				Exit
 			}
-			MouseMove(Mouse.getx(counter, 3, Mouse.numberRow), Mouse.tildaCol)
-			Infos.DestroyAllMouse()
-			Exit
+			else
+				MouseMove(Mouse.getx(counter, 3, Mouse.numberRow), Mouse.tildaCol)
 		}
 		MouseMove(Mouse.x3, Mouse.tildaCol)
 	}
 	else {
 		MouseMove(Mouse.x3, Mouse.tildaCol)
 		gotoMouseMode()
-		Infos.DestroyAllMouse()
-		Exit
 	}
+	Infos.DestroyAllMouse()
 }
 3:: {
 	global counter
@@ -870,7 +863,6 @@ BackSpace:: {
 		Exit
 	}
 }
-
 tab:: {
 	global counter
 	global monitorCount
@@ -1612,20 +1604,17 @@ h:: {
 				gotoMouseMode()
 				infcounter.Destroy()
 				Infos.DestroyAllMouse()
-				Exit
 			}
-			MouseMove(Mouse.getx(counter, 7, Mouse.aRow), Mouse.capsCol)
-			Infos.DestroyAllMouse()
-			Exit
+			else
+				MouseMove(Mouse.getx(counter, 7, Mouse.aRow), Mouse.capsCol)
 		}
 		MouseMove(Mouse.ax7, Mouse.capsCol)
 	}
 	else {
 		MouseMove(Mouse.ax7, Mouse.capsCol)
 		gotoMouseMode()
-		Infos.DestroyAllMouse()
-		Exit
 	}
+	Infos.DestroyAllMouse()
 }
 j:: {
 	global counter
@@ -5014,41 +5003,49 @@ Enter:: {
 	Run('fancywm.exe --action PullWindowUp')
 }
 
+1::
 !1:: {
 	global fancywmMode := false
 	StateBulb[StateBulb.MaxBulbs - 1].Destroy()
 	Run('fancywm.exe --action SwitchToDesktop1')
 }
+2::
 !2:: {
 	global fancywmMode := false
 	StateBulb[StateBulb.MaxBulbs - 1].Destroy()
 	Run('fancywm.exe --action SwitchToDesktop2')
 }
+3::
 !3:: {
 	global fancywmMode := false
 	StateBulb[StateBulb.MaxBulbs - 1].Destroy()
 	Run('fancywm.exe --action SwitchToDesktop3')
 }
+4::
 !4:: {
 	global fancywmMode := false
 	StateBulb[StateBulb.MaxBulbs - 1].Destroy()
 	Run('fancywm.exe --action SwitchToDesktop4')
 }
+5::
 !5:: {
 	global fancywmMode := false
 	StateBulb[StateBulb.MaxBulbs - 1].Destroy()
 	Run('fancywm.exe --action SwitchToDesktop5')
 }
+6::
 !6:: {
 	global fancywmMode := false
 	StateBulb[StateBulb.MaxBulbs - 1].Destroy()
 	Run('fancywm.exe --action SwitchToDesktop6')
 }
+7::
 !7:: {
 	global fancywmMode := false
 	StateBulb[StateBulb.MaxBulbs - 1].Destroy()
 	Run('fancywm.exe --action SwitchToDesktop7')
 }
+8::
 !8:: {
 	global fancywmMode := false
 	StateBulb[StateBulb.MaxBulbs - 1].Destroy()

@@ -37,7 +37,6 @@ class Infos {
 			this._Show()
 	}
 
-
 	static fontSize := 15
 	static distance := 3
 	static unit := A_ScreenDPI / 96
