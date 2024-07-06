@@ -5290,6 +5290,13 @@ h_motion()
 	global counter
 	global infcounter
 	global visual_x
+	static lastPress := 0  ; Static variable to store the time of the last key press
+	currentTime := A_TickCount  ; Get the current system time in milliseconds
+	if (currentTime - lastPress < 100)  ; Check if less than 100 ms has passed since the last key press
+	{
+		return  ; If true, ignore this key press
+	}
+	lastPress := currentTime  ; Update the time of the last key press
 	if counter != 0 {
 		Loop counter {
 			if visualLineMode {
@@ -5342,6 +5349,13 @@ j_motion()
 	global counter
 	global infcounter
 	global visual_y
+	static lastPress := 0  ; Static variable to store the time of the last key press
+	currentTime := A_TickCount  ; Get the current system time in milliseconds
+	if (currentTime - lastPress < 100)  ; Check if less than 100 ms has passed since the last key press
+	{
+		return  ; If true, ignore this key press
+	}
+	lastPress := currentTime  ; Update the time of the last key press
 	if counter != 0 {
 		Loop counter {
 			if visualLineMode == true
@@ -5410,6 +5424,13 @@ k_motion() {
 	global counter
 	global infcounter
 	global visual_y
+	static lastPress := 0  ; Static variable to store the time of the last key press
+	currentTime := A_TickCount  ; Get the current system time in milliseconds
+	if (currentTime - lastPress < 100)  ; Check if less than 100 ms has passed since the last key press
+	{
+		return  ; If true, ignore this key press
+	}
+	lastPress := currentTime  ; Update the time of the last key press
 	if counter != 0 {
 		Loop counter {
 			if visualLineMode == true
@@ -5478,6 +5499,13 @@ l_motion() {
 	global counter
 	global infcounter
 	global visual_x
+	static lastPress := 0  ; Static variable to store the time of the last key press
+	currentTime := A_TickCount  ; Get the current system time in milliseconds
+	if (currentTime - lastPress < 100)  ; Check if less than 100 ms has passed since the last key press
+	{
+		return  ; If true, ignore this key press
+	}
+	lastPress := currentTime  ; Update the time of the last key press
 	if counter != 0 {
 		Loop counter {
 			if visualLineMode {
