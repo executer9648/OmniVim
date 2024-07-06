@@ -5134,6 +5134,8 @@ r:: {
 	StateBulb[StateBulb.MaxBulbs - 1].Destroy()
 }
 
+LButton::
+#LButton::
 #+h::
 h:: {
 	global fancywmMode := false
@@ -5147,6 +5149,9 @@ k:: {
 	Run('fancywm.exe --action MoveFocusUp')
 	StateBulb[StateBulb.MaxBulbs - 1].Destroy()
 }
+
+RButton::
+#RButton::
 #+l::
 l:: {
 	global fancywmMode := false
@@ -5160,6 +5165,7 @@ j:: {
 	StateBulb[StateBulb.MaxBulbs - 1].Destroy()
 }
 
++LButton::
 +h:: {
 	global fancywmMode := false
 	Run('fancywm.exe --action MoveLeft')
@@ -5175,6 +5181,7 @@ j:: {
 	Run('fancywm.exe --action MoveUp')
 	StateBulb[StateBulb.MaxBulbs - 1].Destroy()
 }
++RButton::
 +l:: {
 	global fancywmMode := false
 	Run('fancywm.exe --action MoveRight')
