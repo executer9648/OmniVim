@@ -21,6 +21,10 @@ class Runner {
 	"delm", () => Marks.clearMarks(),
 	"dm", () => Marks.clearMarks(),
 	"w", () => Send("^s"),
+	"min", () => WinMinimize("A"),
+	"res", () => WinRestore("A"),
+	"restore", () => WinRestore("A"),
+	"max", () => WinMaximize("A"),
 	"sh", () => Marks.showSessionRecored(),)
 
 	static runner_regex := Map(

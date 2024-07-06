@@ -6083,7 +6083,10 @@ openMark() {
 	{
 		win_id := StrSplit(Marks.Read(mark), ",")
 		win_id := Integer(win_id[1])
-		WinActivate(Integer(win_id))
+		if (WinActive("A") == win_id)
+			WinMinimize("A")
+		else
+			WinActivate(Integer(win_id))
 	}
 	StateBulb[7].Destroy()
 	inf.Destroy()
