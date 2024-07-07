@@ -5188,6 +5188,7 @@ j:: {
 	StateBulb[StateBulb.MaxBulbs - 1].Destroy()
 }
 
+^+LButton::
 ^+h:: {
 	global fancywmMode := false
 	Run('fancywm.exe --action SwapLeft')
@@ -5203,6 +5204,8 @@ j:: {
 	Run('fancywm.exe --action SwapUp')
 	StateBulb[StateBulb.MaxBulbs - 1].Destroy()
 }
+
+^+RButton::
 ^+l:: {
 	global fancywmMode := false
 	Run('fancywm.exe --action SwapRight')
