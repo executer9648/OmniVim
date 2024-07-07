@@ -5137,6 +5137,7 @@ r:: {
 LButton::
 #LButton::
 #+h::
+#h::
 h:: {
 	global fancywmMode := false
 	Run('fancywm.exe --action MoveFocusLeft')
@@ -5144,6 +5145,7 @@ h:: {
 }
 
 #+k::
+#k::
 k:: {
 	global fancywmMode := false
 	Run('fancywm.exe --action MoveFocusUp')
@@ -5153,12 +5155,14 @@ k:: {
 RButton::
 #RButton::
 #+l::
+#l::
 l:: {
 	global fancywmMode := false
 	Run('fancywm.exe --action MoveFocusRight')
 	StateBulb[StateBulb.MaxBulbs - 1].Destroy()
 }
 #+j::
+#j::
 j:: {
 	global fancywmMode := false
 	Run('fancywm.exe --action MoveFocusDown')
