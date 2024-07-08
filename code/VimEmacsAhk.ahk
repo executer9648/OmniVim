@@ -5306,7 +5306,7 @@ h_motion()
 	global visual_x
 	static lastPress := 0  ; Static variable to store the time of the last key press
 	currentTime := A_TickCount  ; Get the current system time in milliseconds
-	if (currentTime - lastPress < 100)  ; Check if less than 100 ms has passed since the last key press
+	if (currentTime - lastPress < 10)  ; Check if less than 100 ms has passed since the last key press
 	{
 		return  ; If true, ignore this key press
 	}
@@ -5365,7 +5365,7 @@ j_motion()
 	global visual_y
 	static lastPress := 0  ; Static variable to store the time of the last key press
 	currentTime := A_TickCount  ; Get the current system time in milliseconds
-	if (currentTime - lastPress < 100)  ; Check if less than 100 ms has passed since the last key press
+	if (currentTime - lastPress < 10)  ; Check if less than 100 ms has passed since the last key press
 	{
 		return  ; If true, ignore this key press
 	}
@@ -5440,7 +5440,7 @@ k_motion() {
 	global visual_y
 	static lastPress := 0  ; Static variable to store the time of the last key press
 	currentTime := A_TickCount  ; Get the current system time in milliseconds
-	if (currentTime - lastPress < 100)  ; Check if less than 100 ms has passed since the last key press
+	if (currentTime - lastPress < 10)  ; Check if less than 100 ms has passed since the last key press
 	{
 		return  ; If true, ignore this key press
 	}
@@ -5515,7 +5515,7 @@ l_motion() {
 	global visual_x
 	static lastPress := 0  ; Static variable to store the time of the last key press
 	currentTime := A_TickCount  ; Get the current system time in milliseconds
-	if (currentTime - lastPress < 100)  ; Check if less than 100 ms has passed since the last key press
+	if (currentTime - lastPress < 10)  ; Check if less than 100 ms has passed since the last key press
 	{
 		return  ; If true, ignore this key press
 	}
