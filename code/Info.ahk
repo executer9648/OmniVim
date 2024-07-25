@@ -22,6 +22,11 @@ class Infos {
 			this._SetupHotkeysAndEvents()
 		}
 		else {
+			if Infos.stop {
+				this._StopDueToNoSpace()
+				Infos.stop := false
+				return false
+			}
 			this._GetAvailableSpacenoLimit()
 			this._SetupHotkeysAndEventsNoLimit()
 		}
@@ -37,6 +42,7 @@ class Infos {
 			this._Show()
 	}
 
+	static stop := false
 	static fontSize := 15
 	static distance := 3
 	static unit := A_ScreenDPI / 96
@@ -58,11 +64,13 @@ class Infos {
 	}
 
 	static DestroyAllMouse() {
+		Infos.stop := true
 		for index, infoObj in Infos.spotsMouse {
 			if !infoObj
 				continue
 			infoObj.Destroy60()
 		}
+		Infos.stop := false
 	}
 
 

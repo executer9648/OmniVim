@@ -288,8 +288,7 @@ tab & ]::
 	setMouseDefSpeed()
 }
 
-#w::
-+#w:: {
+#w:: {
 	global fancywmMode := true
 	StateBulb[StateBulb.MaxBulbs - 1].Create()
 }
@@ -5674,66 +5673,8 @@ gotoFMode() {
 	global normalMode := false
 	global mouseManagerMode := false
 	global fMode := true
-	Infos("``", , , true, Mouse.x1, Mouse.tildaCol)
-	Infos("1", , , true, Mouse.x2, Mouse.tildaCol)
-	Infos("2", , , true, Mouse.x3, Mouse.tildaCol)
-	Infos("3", , , true, Mouse.x4, Mouse.tildaCol)
-	Infos("4", , , true, Mouse.x5, Mouse.tildaCol)
-	Infos("5", , , true, Mouse.x6, Mouse.tildaCol)
-	Infos("6", , , true, Mouse.x7, Mouse.tildaCol)
-	Infos("7", , , true, Mouse.x8, Mouse.tildaCol)
-	Infos("8", , , true, Mouse.x9, Mouse.tildaCol)
-	Infos("9", , , true, Mouse.x10, Mouse.tildaCol)
-	Infos("0", , , true, Mouse.x11, Mouse.tildaCol)
-	Infos("-", , , true, Mouse.x12, Mouse.tildaCol)
-	Infos("=", , , true, Mouse.x13, Mouse.tildaCol)
-	Infos("BackSpace", , , true, Mouse.x14, Mouse.tildaCol)
-	Infos("tab", , , true, Mouse.x1, Mouse.tabCol)
-	Infos("q", , , true, Mouse.x2, Mouse.tabCol)
-	Infos("w", , , true, Mouse.x3, Mouse.tabCol)
-	Infos("e", , , true, Mouse.x4, Mouse.tabCol)
-	Infos("r", , , true, Mouse.x5, Mouse.tabCol)
-	Infos("t", , , true, Mouse.x6, Mouse.tabCol)
-	Infos("y", , , true, Mouse.x7, Mouse.tabCol)
-	Infos("u", , , true, Mouse.x8, Mouse.tabCol)
-	Infos("i", , , true, Mouse.x9, Mouse.tabCol)
-	Infos("o", , , true, Mouse.x10, Mouse.tabCol)
-	Infos("p", , , true, Mouse.x11, Mouse.tabCol)
-	Infos("[", , , true, Mouse.x12, Mouse.tabCol)
-	Infos("]", , , true, Mouse.x13, Mouse.tabCol)
-	Infos("\", , , true, Mouse.x14, Mouse.tabCol)
-	Infos("LControl", , , true, Mouse.ax1, Mouse.capsCol)
-	Infos("a", , , true, Mouse.ax2, Mouse.capsCol)
-	Infos("s", , , true, Mouse.ax3, Mouse.capsCol)
-	Infos("d", , , true, Mouse.ax4, Mouse.capsCol)
-	Infos("f", , , true, Mouse.ax5, Mouse.capsCol)
-	Infos("g", , , true, Mouse.ax6, Mouse.capsCol)
-	Infos("h", , , true, Mouse.ax7, Mouse.capsCol)
-	Infos("j", , , true, Mouse.ax8, Mouse.capsCol)
-	Infos("k", , , true, Mouse.ax9, Mouse.capsCol)
-	Infos("l", , , true, Mouse.ax10, Mouse.capsCol)
-	Infos(";", , , true, Mouse.ax11, Mouse.capsCol)
-	Infos("'", , , true, Mouse.ax12, Mouse.capsCol)
-	Infos("Enter", , , true, Mouse.ax13, Mouse.capsCol)
-	Infos("LShift", , , true, Mouse.zx1, Mouse.shiftCol)
-	Infos("z", , , true, Mouse.zx2, Mouse.shiftCol)
-	Infos("x", , , true, Mouse.zx3, Mouse.shiftCol)
-	Infos("c", , , true, Mouse.zx4, Mouse.shiftCol)
-	Infos("v", , , true, Mouse.zx5, Mouse.shiftCol)
-	Infos("b", , , true, Mouse.zx6, Mouse.shiftCol)
-	Infos("n", , , true, Mouse.zx7, Mouse.shiftCol)
-	Infos("m", , , true, Mouse.zx8, Mouse.shiftCol)
-	Infos(",", , , true, Mouse.zx9, Mouse.shiftCol)
-	Infos(".", , , true, Mouse.zx10, Mouse.shiftCol)
-	Infos("/", , , true, Mouse.zx11, Mouse.shiftCol)
-	Infos("RShift", , , true, Mouse.zx12, Mouse.shiftCol)
-	Infos("LWin", , , true, Mouse.sx1, Mouse.spaceCol)
-	Infos("LAlt", , , true, Mouse.sx2, Mouse.spaceCol)
-	Infos("Space", , , true, Mouse.sx3, Mouse.spaceCol)
-	Infos("RAlt", , , true, Mouse.sx4, Mouse.spaceCol)
-	Infos("AppsKey", , , true, Mouse.sx5, Mouse.spaceCol)
-	Infos("Rctrl", , , true, Mouse.sx6, Mouse.spaceCol)
 	StateBulb[4].Create()
+	;generateKeysOnScreen()
 	clearCounter()
 }
 
@@ -6502,6 +6443,186 @@ exitVisualMode() {
 	global visualMode := false
 	global visual_y := 0
 	global visual_x := 0
+}
+
+generateKeysOnScreen() {
+	if !Infos("``", , , true, Mouse.x1, Mouse.tildaCol) {
+		return
+	}
+	if !Infos("1", , , true, Mouse.x2, Mouse.tildaCol) {
+		return
+	}
+	if !Infos("2", , , true, Mouse.x3, Mouse.tildaCol) {
+		return
+	}
+	if !Infos("3", , , true, Mouse.x4, Mouse.tildaCol) {
+		return
+	}
+	if !Infos("4", , , true, Mouse.x5, Mouse.tildaCol) {
+		return
+	}
+	if !Infos("5", , , true, Mouse.x6, Mouse.tildaCol) {
+		return
+	}
+	if !Infos("6", , , true, Mouse.x7, Mouse.tildaCol) {
+		return
+	}
+	if !Infos("7", , , true, Mouse.x8, Mouse.tildaCol) {
+		return
+	}
+	if !Infos("8", , , true, Mouse.x9, Mouse.tildaCol) {
+		return
+	}
+	if !Infos("9", , , true, Mouse.x10, Mouse.tildaCol) {
+		return
+	}
+	if !Infos("0", , , true, Mouse.x11, Mouse.tildaCol) {
+		return
+	}
+	if !Infos("-", , , true, Mouse.x12, Mouse.tildaCol) {
+		return
+	}
+	if !Infos("=", , , true, Mouse.x13, Mouse.tildaCol) {
+		return
+	}
+	if !Infos("BackSpace", , , true, Mouse.x14, Mouse.tildaCol) {
+		return
+	}
+	if !Infos("tab", , , true, Mouse.x1, Mouse.tabCol) {
+		return
+	}
+	if !Infos("q", , , true, Mouse.x2, Mouse.tabCol) {
+		return
+	}
+	if !Infos("w", , , true, Mouse.x3, Mouse.tabCol) {
+		return
+	}
+	if !Infos("e", , , true, Mouse.x4, Mouse.tabCol) {
+		return
+	}
+	if !Infos("r", , , true, Mouse.x5, Mouse.tabCol) {
+		return
+	}
+	if !Infos("t", , , true, Mouse.x6, Mouse.tabCol) {
+		return
+	}
+	if !Infos("y", , , true, Mouse.x7, Mouse.tabCol) {
+		return
+	}
+	if !Infos("u", , , true, Mouse.x8, Mouse.tabCol) {
+		return
+	}
+	if !Infos("i", , , true, Mouse.x9, Mouse.tabCol) {
+		return
+	}
+	if !Infos("o", , , true, Mouse.x10, Mouse.tabCol) {
+		return
+	}
+	if !Infos("p", , , true, Mouse.x11, Mouse.tabCol) {
+		return
+	}
+	if !Infos("[", , , true, Mouse.x12, Mouse.tabCol) {
+		return
+	}
+	if !Infos("]", , , true, Mouse.x13, Mouse.tabCol) {
+		return
+	}
+	if !Infos("\", , , true, Mouse.x14, Mouse.tabCol) {
+		return
+	}
+	if !Infos("LControl", , , true, Mouse.ax1, Mouse.capsCol) {
+		return
+	}
+	if !Infos("a", , , true, Mouse.ax2, Mouse.capsCol) {
+		return
+	}
+	if !Infos("s", , , true, Mouse.ax3, Mouse.capsCol) {
+		return
+	}
+	if !Infos("d", , , true, Mouse.ax4, Mouse.capsCol) {
+		return
+	}
+	if !Infos("f", , , true, Mouse.ax5, Mouse.capsCol) {
+		return
+	}
+	if !Infos("g", , , true, Mouse.ax6, Mouse.capsCol) {
+		return
+	}
+	if !Infos("h", , , true, Mouse.ax7, Mouse.capsCol) {
+		return
+	}
+	if !Infos("j", , , true, Mouse.ax8, Mouse.capsCol) {
+		return
+	}
+	if !Infos("k", , , true, Mouse.ax9, Mouse.capsCol) {
+		return
+	}
+	if !Infos("l", , , true, Mouse.ax10, Mouse.capsCol) {
+		return
+	}
+	if !Infos(";", , , true, Mouse.ax11, Mouse.capsCol) {
+		return
+	}
+	if !Infos("'", , , true, Mouse.ax12, Mouse.capsCol) {
+		return
+	}
+	if !Infos("Enter", , , true, Mouse.ax13, Mouse.capsCol) {
+		return
+	}
+	if !Infos("LShift", , , true, Mouse.zx1, Mouse.shiftCol) {
+		return
+	}
+	if !Infos("z", , , true, Mouse.zx2, Mouse.shiftCol) {
+		return
+	}
+	if !Infos("x", , , true, Mouse.zx3, Mouse.shiftCol) {
+		return
+	}
+	if !Infos("c", , , true, Mouse.zx4, Mouse.shiftCol) {
+		return
+	}
+	if !Infos("v", , , true, Mouse.zx5, Mouse.shiftCol) {
+		return
+	}
+	if !Infos("b", , , true, Mouse.zx6, Mouse.shiftCol) {
+		return
+	}
+	if !Infos("n", , , true, Mouse.zx7, Mouse.shiftCol) {
+		return
+	}
+	if !Infos("m", , , true, Mouse.zx8, Mouse.shiftCol) {
+		return
+	}
+	if !Infos(",", , , true, Mouse.zx9, Mouse.shiftCol) {
+		return
+	}
+	if !Infos(".", , , true, Mouse.zx10, Mouse.shiftCol) {
+		return
+	}
+	if !Infos("/", , , true, Mouse.zx11, Mouse.shiftCol) {
+		return
+	}
+	if !Infos("RShift", , , true, Mouse.zx12, Mouse.shiftCol) {
+		return
+	}
+	if !Infos("LWin", , , true, Mouse.sx1, Mouse.spaceCol) {
+		return
+	}
+	if !Infos("LAlt", , , true, Mouse.sx2, Mouse.spaceCol) {
+		return
+	}
+	if !Infos("Space", , , true, Mouse.sx3, Mouse.spaceCol) {
+		return
+	}
+	if !Infos("RAlt", , , true, Mouse.sx4, Mouse.spaceCol) {
+		return
+	}
+	if !Infos("AppsKey", , , true, Mouse.sx5, Mouse.spaceCol) {
+		return
+	}
+	if !Infos("Rctrl", , , true, Mouse.sx6, Mouse.spaceCol) {
+		return
+	}
 }
 
 StartRecordingKey(key) {
