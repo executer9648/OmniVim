@@ -8,7 +8,7 @@ general:
 
   # Whether to switch back and forth between the previously focused
   # workspace when focusing the current workspace.
-  toggle_workspace_on_refocus: false
+  toggle_workspace_on_refocus: true
 
   cursor_jump:
     # Whether to automatically move the cursor on the specified trigger.
@@ -63,7 +63,7 @@ window_behavior:
     fullscreen:
       # Maximize the window if possible. If the window doesn't have a
       # maximize button, then it'll be fullscreen'ed normally instead.
-      maximized: false
+      maximized: true
 
 workspaces:
   - name: '1'
@@ -127,10 +127,8 @@ binding_modes:
       - commands: ['toggle-tiling-direction',"wm-disable-binding-mode --name vim"]
         bindings: ['v']
 
-      - commands: ['toggle-fullscreen']
-        bindings: ['alt+x']
       - commands: ['toggle-fullscreen',"wm-disable-binding-mode --name vim"]
-        bindings: ['x']
+        bindings: ['x','alt+x']
 
       - commands: ['toggle-minimized']
         bindings: ['alt+m']
@@ -285,7 +283,7 @@ binding_modes:
         bindings: ['alt+shift+j']
 
       # Focus the workspace that last had focus.
-      - commands: ['focus --recent-workspace',"wm-disable-binding-mode --name vim"]
+      - commands: ["wm-disable-binding-mode --name vim",'focus --recent-workspace']
         bindings: ['w',"alt+w"]
 
       # Move the focused window's parent workspace to a monitor in a given
