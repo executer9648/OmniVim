@@ -25,10 +25,10 @@ gaps:
 
   # Gap between windows and the screen edge.
   outer_gap:
-    top: '60px'
-    right: '20px'
-    bottom: '20px'
-    left: '20px'
+    top: '40px'
+    right: '10px'
+    bottom: '10px'
+    left: '10px'
 
 window_effects:
   # Visual effects to apply to the focused window.
@@ -111,53 +111,88 @@ binding_modes:
 
   - name: "vim"
     keybindings:
-      # Change the focused window to be floating / tiling.
-      - commands: ['toggle-floating --centered', "wm-disable-binding-mode --name vim"]
-        bindings: ["f","control+f","alt+f"]
 
+      - commands: ['toggle-floating --centered']
+        bindings: ["alt+f"]
+      - commands: ['toggle-floating --centered',"wm-disable-binding-mode --name vim"]
+        bindings: ["f"]
+
+      - commands: ['toggle-tiling']
+        bindings: ['alt+t']
       - commands: ['toggle-tiling',"wm-disable-binding-mode --name vim"]
         bindings: ['t']
 
+      - commands: ['toggle-tiling-direction']
+        bindings: ['alt+v']
+      - commands: ['toggle-tiling-direction',"wm-disable-binding-mode --name vim"]
+        bindings: ['v']
+
+      - commands: ['toggle-fullscreen']
+        bindings: ['alt+x']
       - commands: ['toggle-fullscreen',"wm-disable-binding-mode --name vim"]
         bindings: ['x']
 
+      - commands: ['toggle-minimized']
+        bindings: ['alt+m']
       - commands: ['toggle-minimized',"wm-disable-binding-mode --name vim"]
         bindings: ['m']
 
       # Close focused window.
-      - commands: ['close',"wm-disable-binding-mode --name vim"]
+      - commands: ['close']
         bindings: ['alt+shift+q']
 
       # Kill GlazeWM process safely.
-      - commands: ['wm-exit']
+      - commands: ['wm-exit',"wm-disable-binding-mode --name vim"]
         bindings: ['alt+shift+e']
 
       # Change focus between floating / tiling windows.
+      - commands: ["wm-cycle-focus"]
+        bindings: ["alt+s"]
       - commands: ["wm-cycle-focus","wm-disable-binding-mode --name vim"]
-        bindings: ["s","control+s","alt+s"]
+        bindings: ["s"]
 
+      - commands: ['wm-reload-config']
+        bindings: ["alt+r"]
       - commands: ['wm-reload-config',"wm-disable-binding-mode --name vim"]
         bindings: ["r"]
 
       # Change focus to a workspace defined in `workspaces` config.
       - commands: ['focus --workspace 1',"wm-disable-binding-mode --name vim"]
-        bindings: ['alt+1',1]
+        bindings: ['1']
       - commands: ['focus --workspace 2',"wm-disable-binding-mode --name vim"]
-        bindings: ['alt+2',2]
+        bindings: ['2']
       - commands: ['focus --workspace 3',"wm-disable-binding-mode --name vim"]
-        bindings: ['alt+3',3]
+        bindings: ['3']
       - commands: ['focus --workspace 4',"wm-disable-binding-mode --name vim"]
-        bindings: ['alt+4',4]
+        bindings: ['4']
       - commands: ['focus --workspace 5',"wm-disable-binding-mode --name vim"]
-        bindings: ['alt+5',5]
+        bindings: ['5']
       - commands: ['focus --workspace 6',"wm-disable-binding-mode --name vim"]
-        bindings: ['alt+6',6]
+        bindings: ['6']
       - commands: ['focus --workspace 7',"wm-disable-binding-mode --name vim"]
-        bindings: ['alt+7',7]
+        bindings: ['7']
       - commands: ['focus --workspace 8',"wm-disable-binding-mode --name vim"]
-        bindings: ['alt+8',8]
+        bindings: ['8']
       - commands: ['focus --workspace 9',"wm-disable-binding-mode --name vim"]
-        bindings: ['alt+9',9]
+        bindings: ['9']
+      - commands: ['focus --workspace 1']
+        bindings: ['alt+1']
+      - commands: ['focus --workspace 2']
+        bindings: ['alt+2']
+      - commands: ['focus --workspace 3']
+        bindings: ['alt+3']
+      - commands: ['focus --workspace 4']
+        bindings: ['alt+4']
+      - commands: ['focus --workspace 5']
+        bindings: ['alt+5']
+      - commands: ['focus --workspace 6']
+        bindings: ['alt+6']
+      - commands: ['focus --workspace 7']
+        bindings: ['alt+7']
+      - commands: ['focus --workspace 8']
+        bindings: ['alt+8']
+      - commands: ['focus --workspace 9']
+        bindings: ['alt+9']
 
       # Launch CMD terminal. Alternatively, use `shell-exec --command wt` or
       # `shell-exec --command %ProgramFiles%/Git/git-bash.exe` to start Windows
@@ -167,33 +202,59 @@ binding_modes:
 
       # Move focused window to a workspace defined in `workspaces` config.
       - commands: ['move --workspace 1', 'focus --workspace 1',"wm-disable-binding-mode --name vim"]
-        bindings: ['alt+shift+1','shift+1']
+        bindings: ['shift+1']
       - commands: ['move --workspace 2', 'focus --workspace 2',"wm-disable-binding-mode --name vim"]
-        bindings: ['alt+shift+2','shift+2']
+        bindings: ['shift+2']
       - commands: ['move --workspace 3', 'focus --workspace 3',"wm-disable-binding-mode --name vim"]
-        bindings: ['alt+shift+3','shift+3']
+        bindings: ['shift+3']
       - commands: ['move --workspace 4', 'focus --workspace 4',"wm-disable-binding-mode --name vim"]
-        bindings: ['alt+shift+4','shift+4']
+        bindings: ['shift+4']
       - commands: ['move --workspace 5', 'focus --workspace 5',"wm-disable-binding-mode --name vim"]
-        bindings: ['alt+shift+5','shift+5']
+        bindings: ['shift+5']
       - commands: ['move --workspace 6', 'focus --workspace 6',"wm-disable-binding-mode --name vim"]
-        bindings: ['alt+shift+6','shift+6']
+        bindings: ['shift+6']
       - commands: ['move --workspace 7', 'focus --workspace 7',"wm-disable-binding-mode --name vim"]
-        bindings: ['alt+shift+7','shift+7']
+        bindings: ['shift+7']
       - commands: ['move --workspace 8', 'focus --workspace 8',"wm-disable-binding-mode --name vim"]
-        bindings: ['alt+shift+8','shift+8']
+        bindings: ['shift+8']
       - commands: ['move --workspace 9', 'focus --workspace 9',"wm-disable-binding-mode --name vim"]
-        bindings: ['alt+shift+9','shift+9']
+        bindings: ['shift+9']
+      - commands: ['move --workspace 1', 'focus --workspace 1']
+        bindings: ['alt+shift+1']
+      - commands: ['move --workspace 2', 'focus --workspace 2']
+        bindings: ['alt+shift+2']
+      - commands: ['move --workspace 3', 'focus --workspace 3']
+        bindings: ['alt+shift+3']
+      - commands: ['move --workspace 4', 'focus --workspace 4']
+        bindings: ['alt+shift+4']
+      - commands: ['move --workspace 5', 'focus --workspace 5']
+        bindings: ['alt+shift+5']
+      - commands: ['move --workspace 6', 'focus --workspace 6']
+        bindings: ['alt+shift+6']
+      - commands: ['move --workspace 7', 'focus --workspace 7']
+        bindings: ['alt+shift+7']
+      - commands: ['move --workspace 8', 'focus --workspace 8']
+        bindings: ['alt+shift+8']
+      - commands: ['move --workspace 9', 'focus --workspace 9']
+        bindings: ['alt+shift+9']
 
       # Shift focus in a given direction.
-      - commands: ['focus --direction left', "wm-disable-binding-mode --name vim"]
-        bindings: ["h","alt+h","control+h"]
-      - commands: ['focus --direction right', "wm-disable-binding-mode --name vim"]
-        bindings: ["l","alt+l","control+l"]
-      - commands: ['focus --direction up', "wm-disable-binding-mode --name vim"]
-        bindings: ["k","alt+k","control+k"]
-      - commands: ['focus --direction down', "wm-disable-binding-mode --name vim"]
-        bindings: ["j","alt+j","control+j"]
+      - commands: ['focus --direction left',"wm-disable-binding-mode --name vim"]
+        bindings: ["h"]
+      - commands: ['focus --direction right',"wm-disable-binding-mode --name vim"]
+        bindings: ["l"]
+      - commands: ['focus --direction up',"wm-disable-binding-mode --name vim"]
+        bindings: ["k"]
+      - commands: ['focus --direction down',"wm-disable-binding-mode --name vim"]
+        bindings: ["j"]
+      - commands: ['focus --direction left']
+        bindings: ["alt+h"]
+      - commands: ['focus --direction right']
+        bindings: ["alt+l"]
+      - commands: ['focus --direction up']
+        bindings: ["alt+k"]
+      - commands: ['focus --direction down']
+        bindings: ["alt+j"]
 
     # Resize focused window by a percentage or pixel amount.
       - commands: ['resize --width -2%']
@@ -207,28 +268,36 @@ binding_modes:
 
       # Move focused window in a given direction.
       - commands: ['move --direction left',"wm-disable-binding-mode --name vim"]
-        bindings: ['shift+h', 'shift+left']
+        bindings: ['shift+h']
       - commands: ['move --direction right',"wm-disable-binding-mode --name vim"]
-        bindings: ['shift+l', 'shift+right']
+        bindings: ['shift+l']
       - commands: ['move --direction up',"wm-disable-binding-mode --name vim"]
-        bindings: ['shift+k', 'shift+up']
+        bindings: ['shift+k']
       - commands: ['move --direction down',"wm-disable-binding-mode --name vim"]
-        bindings: ['shift+j', 'shift+down']
+        bindings: ['shift+j']
+      - commands: ['move --direction left']
+        bindings: ['alt+shift+h']
+      - commands: ['move --direction right']
+        bindings: ['alt+shift+l']
+      - commands: ['move --direction up']
+        bindings: ['alt+shift+k']
+      - commands: ['move --direction down']
+        bindings: ['alt+shift+j']
 
       # Focus the workspace that last had focus.
       - commands: ['focus --recent-workspace',"wm-disable-binding-mode --name vim"]
-        bindings: ['alt+w']
+        bindings: ['w',"alt+w"]
 
       # Move the focused window's parent workspace to a monitor in a given
       # direction.
       - commands: ['move-workspace --direction left',"wm-disable-binding-mode --name vim"]
-        bindings: ['alt+shift+h']
+        bindings: ['alt+shift+ctrl+h']
       - commands: ['move-workspace --direction right',"wm-disable-binding-mode --name vim"]
-        bindings: ['alt+shift+l']
+        bindings: ['alt+shift+ctrl+l']
       - commands: ['move-workspace --direction up',"wm-disable-binding-mode --name vim"]
-        bindings: ['alt+shift+k']
+        bindings: ['alt+shift+ctrl+k']
       - commands: ['move-workspace --direction down',"wm-disable-binding-mode --name vim"]
-        bindings: ['alt+shift+j']
+        bindings: ['alt+shift+ctrl+j']
 
       # Change tiling direction. This determines where new tiling windows will be inserted.
 #      - commands: ["tiling direction vertical","wm-disable-binding-mode --name vim"]
@@ -237,6 +306,10 @@ binding_modes:
 #      - commands: ["tiling direction horizontal","wm-disable-binding-mode --name vim"]
 #        bindings: ["Control+Alt+S","Control+S","S"]
 #
+
+      # Redraw all windows.
+      - commands: ['wm-redraw']
+        bindings: ['alt+shift+w']
       # Press enter/escape to return to default keybindings.
       - commands: ["wm-disable-binding-mode --name vim"]
         bindings: ["Escape", "Enter"]
@@ -277,8 +350,6 @@ keybindings:
     bindings: ["alt+w"]
   # Change tiling direction. This determines where new tiling windows will
   # be inserted.
-  - commands: ['toggle-tiling-direction']
-    bindings: ['alt+v']
 
 #  # Change the focused window to be floating.
 #  - commands: ['toggle-floating --centered']
@@ -301,9 +372,6 @@ keybindings:
 #  - commands: ['wm-reload-config']
 #    bindings: ['alt+shift+r']
 
-  # Redraw all windows.
-  - commands: ['wm-redraw']
-    bindings: ['alt+shift+w']
 
   # Launch CMD terminal. Alternatively, use `shell-exec --command wt` or
   # `shell-exec --command %ProgramFiles%/Git/git-bash.exe` to start Windows
