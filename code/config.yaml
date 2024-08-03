@@ -8,7 +8,7 @@ general:
 
   # Whether to switch back and forth between the previously focused
   # workspace when focusing the current workspace.
-  toggle_workspace_on_refocus: true
+  toggle_workspace_on_refocus: false
 
   cursor_jump:
     # Whether to automatically move the cursor on the specified trigger.
@@ -21,14 +21,14 @@ general:
 
 gaps:
   # Gap between adjacent windows.
-  inner_gap: '10px'
+  inner_gap: '5px'
 
   # Gap between windows and the screen edge.
   outer_gap:
     top: '40px'
-    right: '10px'
-    bottom: '10px'
-    left: '10px'
+    right: '5px'
+    bottom: '5px'
+    left: '5px'
 
 window_effects:
   # Visual effects to apply to the focused window.
@@ -41,7 +41,7 @@ window_effects:
   # Visual effects to apply to non-focused windows.
   other_windows:
     border:
-      enabled: false
+      enabled: true
       color: "#d3d3d3"
 
 window_behavior:
@@ -112,10 +112,10 @@ binding_modes:
   - name: 'pause4vim'
     keybindings:
       - commands: ['wm-enable-binding-mode --name vim2']
-        bindings: ['alt+shift+p']
+        bindings: ['alt+shift+p','escape']
 
       - commands: ["wm-disable-binding-mode --name pause4vim"]
-        bindings: ['shift+win+w','escape']
+        bindings: ['shift+win+w']
 
   - name: "vim2"
     keybindings:
@@ -152,6 +152,10 @@ binding_modes:
 
       - commands: ['wm-reload-config']
         bindings: ["alt+shift+r"]
+
+      # Redraw all windows.
+      - commands: ['wm-redraw']
+        bindings: ['alt+shift+w']
 
       # Change focus to a workspace defined in `workspaces` config.
       - commands: ['focus --workspace 1']
@@ -219,7 +223,7 @@ binding_modes:
       - commands: ['resize --height -2%']
         bindings: ['alt+i']
 
-      # Move focused window in a given direction.
+     # Move focused window in a given direction.
       - commands: ['move --direction left']
         bindings: ['alt+shift+h']
       - commands: ['move --direction right']
@@ -231,18 +235,7 @@ binding_modes:
 
       # Focus the workspace that last had focus.
       - commands: ['focus --recent-workspace']
-        bindings: ["alt+w"]
-
-      # Move the focused window's parent workspace to a monitor in a given
-      # direction.
-      - commands: ['move-workspace --direction left',"wm-disable-binding-mode --name vim"]
-        bindings: ['alt+shift+ctrl+h']
-      - commands: ['move-workspace --direction right',"wm-disable-binding-mode --name vim"]
-        bindings: ['alt+shift+ctrl+l']
-      - commands: ['move-workspace --direction up',"wm-disable-binding-mode --name vim"]
-        bindings: ['alt+shift+ctrl+k']
-      - commands: ['move-workspace --direction down',"wm-disable-binding-mode --name vim"]
-        bindings: ['alt+shift+ctrl+j']
+        bindings: ["alt+d"]
 
       # Redraw all windows.
       - commands: ['wm-redraw']
@@ -250,7 +243,7 @@ binding_modes:
 
       # Press enter/escape to return to default keybindings.
       - commands: ["wm-disable-binding-mode --name vim2"]
-        bindings: ["shift+win+w"]
+        bindings: ["shift+win+w","alt+`"]
 
       - commands: ['wm-enable-binding-mode --name pause4vim']
         bindings: ['alt+shift+p']
@@ -690,8 +683,8 @@ keybindings:
 #    bindings: ['alt+r']
 
   # Disables all keybindings until alt+shift+p is pressed again.
-  - commands: ['wm-enable-binding-mode --name pause']
-    bindings: ['alt+shift+p']
+#  - commands: ['wm-enable-binding-mode --name pause']
+#    bindings: ['alt+shift+p']
 
   - commands: ["wm-enable-binding-mode --name vim"]
     bindings: ["alt+w"]
