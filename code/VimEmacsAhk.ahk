@@ -5141,16 +5141,17 @@ LButton::
 #h::
 h:: {
 	global fancywmMode := false
-	Run('fancywm.exe --action MoveFocusLeft')
+	Runwait('fancywm.exe --action MoveFocusLeft')
 	StateBulb[StateBulb.MaxBulbs - 1].Destroy()
+	movemousetocenter()
 }
-
 #+k::
 #k::
 k:: {
 	global fancywmMode := false
-	Run('fancywm.exe --action MoveFocusUp')
+	Runwait('fancywm.exe --action MoveFocusUp')
 	StateBulb[StateBulb.MaxBulbs - 1].Destroy()
+	movemousetocenter()
 }
 
 RButton::
@@ -5159,38 +5160,44 @@ RButton::
 #l::
 l:: {
 	global fancywmMode := false
-	Run('fancywm.exe --action MoveFocusRight')
+	RunWait('fancywm.exe --action MoveFocusRight')
 	StateBulb[StateBulb.MaxBulbs - 1].Destroy()
+	movemousetocenter()
 }
 #+j::
 #j::
 j:: {
 	global fancywmMode := false
-	Run('fancywm.exe --action MoveFocusDown')
+	RunWait('fancywm.exe --action MoveFocusDown')
 	StateBulb[StateBulb.MaxBulbs - 1].Destroy()
+	movemousetocenter()
 }
 
 +LButton::
 +h:: {
 	global fancywmMode := false
-	Run('fancywm.exe --action MoveLeft')
+	RunWait('fancywm.exe --action MoveLeft')
 	StateBulb[StateBulb.MaxBulbs - 1].Destroy()
+	movemousetocenter()
 }
 +j:: {
 	global fancywmMode := false
-	Run('fancywm.exe --action MoveDown')
+	RunWait('fancywm.exe --action MoveDown')
 	StateBulb[StateBulb.MaxBulbs - 1].Destroy()
+	movemousetocenter()
 }
 +k:: {
 	global fancywmMode := false
-	Run('fancywm.exe --action MoveUp')
+	RunWait('fancywm.exe --action MoveUp')
 	StateBulb[StateBulb.MaxBulbs - 1].Destroy()
+	movemousetocenter()
 }
 +RButton::
 +l:: {
 	global fancywmMode := false
-	Run('fancywm.exe --action MoveRight')
+	RunWait('fancywm.exe --action MoveRight')
 	StateBulb[StateBulb.MaxBulbs - 1].Destroy()
+	movemousetocenter()
 }
 
 ^+LButton::
@@ -5253,6 +5260,18 @@ j:: {
 	StateBulb[StateBulb.MaxBulbs - 1].Destroy()
 }
 
+d:: {
+	global fancywmMode := false
+	Run('fancywm.exe --action SwitchToPreviousDesktop')
+	StateBulb[StateBulb.MaxBulbs - 1].Destroy()
+}
+
+#d:: {
+	global fancywmMode := false
+	Run('fancywm.exe --action SwitchToPreviousDesktop')
+	StateBulb[StateBulb.MaxBulbs - 1].Destroy()
+}
+
 #w:: {
 	global fancywmMode := false
 	Run('fancywm.exe --action SwitchToPreviousDesktop')
@@ -5261,7 +5280,7 @@ j:: {
 
 w:: {
 	global fancywmMode := false
-	Run('fancywm.exe --action SwitchToPreviousDisplay')
+	Run('fancywm.exe --action SwitchToPreviousDesktop')
 	StateBulb[StateBulb.MaxBulbs - 1].Destroy()
 }
 
@@ -5298,6 +5317,20 @@ disableClick() {
 		Click("R Up")
 	else if GetKeyState("MButton")
 		Click("M Up")
+}
+
+movemousetocenter() {
+	; Get the position and size of the active window
+	try WinGetPos &winX, &winY, &winWidth, &winHeight, "A"
+	catch
+		return
+
+	; Calculate the center position
+	centerX := winX + winWidth // 2
+	centerY := winY + winHeight // 2
+
+	; Move the mouse cursor to the center of the active window
+	MouseMove centerX, centerY
 }
 
 h_motion()
