@@ -5072,6 +5072,7 @@ Enter:: {
 	Run('fancywm.exe --action MoveToDesktop3')
 	Run('fancywm.exe --action SwitchToDesktop3')
 }
+
 +4::
 +!4:: {
 	global fancywmMode := false
@@ -5085,6 +5086,7 @@ Enter:: {
 	StateBulb[StateBulb.MaxBulbs - 1].Destroy()
 	Run('fancywm.exe --action MoveToDesktop5')
 	Run('fancywm.exe --action SwitchToDesktop5')
+
 }
 +6::
 +!6:: {
@@ -6645,6 +6647,10 @@ HideShowTaskbar(action) {
 	NumPut("int", WinExist("ahk_class Shell_TrayWnd"), APPBARDATA, A_PtrSize)
 	NumPut("int", action ? ABS_AUTOHIDE : ABS_ALWAYSONTOP, APPBARDATA, size - A_PtrSize)
 	DllCall("Shell32\SHAppBarMessage", "UInt", ABM_SETSTATE, "ptr", APPBARDATA)
+}
+
+glazewm(cmd) {
+	RunWait(format("C:\Program Files\glzr.io\GlazeWM\glazewm.exe command {}", cmd), , "Hide")
 }
 
 Komorebic(cmd) {
