@@ -2998,7 +2998,6 @@ Esc:: {
 *f:: return
 *g:: return
 *h:: return
-*i:: return
 *j:: return
 *k:: return
 *l:: return
@@ -3111,11 +3110,9 @@ w:: {
 	if (LangID = 0x040D) {
 		Send "{right}"
 		Send "{Left}"
-		Send "+{right}"
 	}
 	else {
 		Send "{Left}"
-		Send "+{right}"
 	}
 	gotoInsert()
 }
@@ -4266,8 +4263,13 @@ y:: {
 }
 
 +p:: {
+	if visualMode == true {
+		Send "+{insert}"
+		Send "{Right}"
+		exitVisualMode()
+		Exit
+	}
 	Send "{Left}"
-	sleep 10
 	Send "+{insert}"
 	exitVisualMode()
 }
@@ -4275,6 +4277,8 @@ y:: {
 p:: {
 	if visualMode == true {
 		Send "+{insert}"
+		Send "{Right}"
+		exitVisualMode()
 		Exit
 	}
 	Send "{Right}"
@@ -5801,6 +5805,7 @@ gotoNormal() {
 	StateBulb[4].Destroy()
 	if visualMode == true {
 		StateBulb[3].Destroy()
+		Send "{Right}"
 	}
 	if insertMode == true {
 		StateBulb[2].Destroy()
@@ -6478,6 +6483,7 @@ exitVisualMode() {
 	global visualMode := false
 	global visual_y := 0
 	global visual_x := 0
+	StateBulb[3].Destroy()
 }
 
 generateKeysOnScreen() {
