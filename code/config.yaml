@@ -128,6 +128,15 @@ binding_modes:
   - name: "vim2"
     keybindings:
 
+      - commands: ['move-workspace --direction left']
+        bindings: ['alt+shift+ctrl+h']
+      - commands: ['move-workspace --direction right']
+        bindings: ['alt+shift+ctrl+l']
+      - commands: ['move-workspace --direction up']
+        bindings: ['alt+shift+ctrl+k']
+      - commands: ['move-workspace --direction down']
+        bindings: ['alt+shift+ctrl+j']
+
       - commands: ['shell-exec cmd']
         bindings: ['alt+enter']
 
@@ -158,12 +167,12 @@ binding_modes:
       - commands: ["wm-cycle-focus"]
         bindings: ["alt+s"]
 
-      - commands: ['wm-reload-config']
-        bindings: ["alt+shift+r"]
+      - commands: ['wm-reload-config',"wm-disable-binding-mode --name vim2"]
+        bindings: ["alt+r"]
 
       # Redraw all windows.
       - commands: ['wm-redraw']
-        bindings: ['alt+shift+w']
+        bindings: ['alt+w']
 
       # Change focus to a workspace defined in `workspaces` config.
       - commands: ['focus --workspace 1']
