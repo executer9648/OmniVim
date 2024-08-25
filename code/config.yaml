@@ -4,7 +4,7 @@ general:
   startup_commands: ['shell-exec %userprofile%/.glzr/zebar/start.bat','shell-exec %userprofile%/.glzr/gat-gwm.exe']
 
   # Whether to automatically focus windows underneath the cursor.
-  focus_follows_cursor: true
+  focus_follows_cursor: false
 
   # Whether to switch back and forth between the previously focused
   # workspace when focusing the current workspace.
