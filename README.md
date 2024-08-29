@@ -1,4 +1,6 @@
-# My-Vim-With-Ahk
+# OmniVim (was My-Vim-With-Ahk)
+I'm actively working on sorting this repo and the documentation.
+sorry for the inconvenience.
 ## TLDR
 Enables vim and emacs shortcuts everywhere.
 features include controlling the mouse with Vim, Vim Normal mode, Vim Insert, Vim Command, Vim Reg, and emacs in insert mode.
