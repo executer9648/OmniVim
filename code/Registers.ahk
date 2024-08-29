@@ -17,7 +17,7 @@ class Registers {
 	 * Format: C:\Programming\registers
 	 * @type {String}
 	 */
-	static RegistersDirectory := "C:\Veem\Registers"
+	static RegistersDirectory := "C:\OmniVim\Registers"
 
 	/**
 	 * A string of characters that are accepted as register names.

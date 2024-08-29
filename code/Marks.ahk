@@ -7,7 +7,7 @@ class Marks {
 	static sessionNames := []
 	static mouseWindows := []
 	static recording := false
-	static MarksDirectory := "C:\Veem\Marks"
+	static MarksDirectory := "C:\OmniVim\Marks"
 	static _session := ""
 
 	static GetPath(key) => Marks.MarksDirectory "\mark_" key ".txt"
